@@ -61,17 +61,18 @@ const init = async () => {
   const registry = await response.json();
   const includedApps = registry.apps.filter((app) => app.status === "included");
   const excludedApps = registry.apps.filter((app) => app.status === "excluded");
-  const visiblePassword = registry.demoAuth.displayOnShowcase ? registry.demoAuth.password : "Skjult";
 
   document.getElementById("included-count").textContent = String(includedApps.length);
   document.getElementById("excluded-count").textContent = String(excludedApps.length);
-  document.getElementById("auth-summary").textContent = `${registry.demoAuth.username} / ${visiblePassword}`;
+  document.getElementById("auth-summary").textContent = `${registry.demoAuth.username} / fast demo-passord utenfor repo`;
 
   renderDetails(document.getElementById("auth-details"), [
     ["Strategi", registry.demoAuth.strategy],
     ["Brukernavn", registry.demoAuth.username],
-    ["Passord", visiblePassword],
-    ["Synlig i showcase", registry.demoAuth.displayOnShowcase ? "Ja" : "Nei"],
+    ["Delt innlogging", registry.demoAuth.hasSharedCredentials ? "Ja" : "Nei"],
+    ["Passordkilde", registry.demoAuth.passwordSource],
+    ["Passord i register", registry.demoAuth.passwordDisplayStatus],
+    ["Synlig i showcase", registry.demoAuth.displayOnShowcase ? "Ja, som konsept" : "Nei"],
     ["Notat", registry.demoAuth.notes]
   ]);
 

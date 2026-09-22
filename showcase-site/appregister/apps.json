@@ -88,10 +88,12 @@
   ],
   "demoAuth": {
     "strategy": "shared-fixed-credentials",
+    "hasSharedCredentials": true,
     "username": "demo",
-    "password": "SET_AT_DEPLOY_TIME",
     "displayOnShowcase": true,
-    "notes": "Kun for demo. Skal ikke kobles til produksjonsautentisering. Selve passordverdien skal settes i deploy-konfigurasjon."
+    "passwordSource": "deployment-config-or-protected-demo-service",
+    "passwordDisplayStatus": "not-stored-in-registry",
+    "notes": "Kun for demo. Skal ikke kobles til produksjonsautentisering. Selve passordverdien skal ikke lagres i repo eller statiske assets."
   },
   "stateStrategy": {
     "primaryMode": "browser-local-storage",

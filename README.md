@@ -89,15 +89,16 @@ Dette er kun et startpunkt for informasjonsarkitektur, ikke en ferdig produktise
 Foreslått felles demo-innlogging for showcase:
 
 - brukernavn: `demo`
-- passord: settes som fast demo-passord i deploy-konfigurasjon og kan vises på showcase-siden
+- passord: fast demo-passord settes utenfor repo, for eksempel via deploy-konfigurasjon eller en beskyttet demo-tjeneste
 
 Prinsipper:
 
-- samme faste credentials kan vises åpent på showcase-siden
+- samme faste credentials brukes på tvers av showcase-apper når det er hensiktsmessig
 - kun for demoformål
 - ingen kobling mot produksjonsbrukere eller produksjonsleverandører for auth
 - hver app bør på sikt kunne bruke en lokal demo-auth-adapter eller et felles mock-lag
-- selve passordverdien bør injiseres ved deploy fremfor å lagres hardkodet i repoet
+- selve passordverdien bør ikke lagres i repo eller i statiske frontend-assets
+- showcase-siden kan dokumentere at delt demo-auth finnes, men bør ikke publisere hemmeligheten direkte i denne første statiske løsningen
 
 ## Foreslått lagring og nullstilling
 
@@ -125,7 +126,8 @@ Alternativ ved senere behov:
 - Hvilke konkrete apper fra `diverse-apper` skal tas med?
 - Hvilke apper fra øvrige kilder er godkjent for showcase?
 - Skal showcase på sikt være ren statisk presentasjon, eller også hoste innpakkede demo-versjoner av appene?
-- Skal demo-auth være helt felles for alle showcase-apper, eller kan enkelte apper ha egne synlige demo-brukere?
+- Skal demo-auth være helt felles for alle showcase-apper, eller kan enkelte apper ha egne demo-brukere?
+- Hvis passord må vises til sluttbruker, hvordan skal det distribueres uten å lagres i repo eller åpne statiske filer?
 
 ## Neste anbefalte issue
 
