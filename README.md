@@ -40,7 +40,7 @@ Showcase skal være en **isolert demo-plattform**:
 
 ## Appregister
 
-Appregisteret ligger i `/home/runner/work/showcase/showcase/appregister/apps.json`.
+Appregisteret ligger i `appregister/apps.json`.
 
 - Registeret er strukturert for én oppføring per app
 - Det skiller mellom `included`, `excluded` og fremtidige godkjente apper
@@ -70,7 +70,7 @@ Følgende apper er registrert som eksplisitt ekskludert:
 
 ## Grunnlag for sentral showcase-side
 
-Det er opprettet en enkel statisk side i `/home/runner/work/showcase/showcase/showcase-site`.
+Det er opprettet en enkel statisk side i `showcase-site/`.
 
 Formålet med denne er å gi et lettvekts grunnlag for videre arbeid:
 
