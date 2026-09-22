@@ -31,20 +31,30 @@ const renderTable = (apps) => {
 
   apps.forEach((app) => {
     const row = document.createElement("tr");
-    const values = [
+    const plainValues = [
       app.name,
       app.usage,
       app.sourceRepo ?? "Uavklart",
       app.status,
-      app.authStatus,
-      app.showcaseUrl ?? "Ikke etablert"
+      app.authStatus
     ];
 
-    values.forEach((value) => {
+    plainValues.forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = value;
       row.append(cell);
     });
+
+    const linkCell = document.createElement("td");
+    if (app.showcaseUrl) {
+      const link = document.createElement("a");
+      link.href = app.showcaseUrl;
+      link.textContent = app.showcaseUrl;
+      linkCell.append(link);
+    } else {
+      linkCell.textContent = "Ikke etablert";
+    }
+    row.append(linkCell);
 
     tbody.append(row);
   });
@@ -54,7 +64,7 @@ const renderTable = (apps) => {
 };
 
 const init = async () => {
-  const response = await fetch("./appregister/apps.json");
+  const response = await fetch("/appregister/apps.json");
   if (!response.ok) {
     throw new Error(`Kunne ikke laste appregister (${response.status})`);
   }
@@ -102,9 +112,14 @@ const init = async () => {
 };
 
 init().catch((error) => {
+  const errorText = `Kunne ikke laste appregister: ${error.message}`;
   document.getElementById("auth-summary").textContent = "Kunne ikke laste appregister";
+  document.getElementById("included-apps").textContent = errorText;
+  document.getElementById("excluded-apps").textContent = errorText;
+  renderDetails(document.getElementById("auth-details"), [["Feil", errorText]]);
+  renderDetails(document.getElementById("state-details"), [["Feil", errorText]]);
   const message = document.createElement("p");
   message.className = "empty-state";
-  message.textContent = error.message;
+  message.textContent = errorText;
   document.getElementById("excluded-apps").replaceChildren(message);
 });
