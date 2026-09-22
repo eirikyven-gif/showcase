@@ -33,6 +33,8 @@ Showcase skal være en **isolert demo-plattform**:
 ├── appregister/
 │   └── apps.json
 └── showcase-site/
+    ├── appregister/
+    │   └── apps.json
     ├── app.js
     ├── index.html
     └── styles.css
@@ -45,6 +47,7 @@ Appregisteret ligger i `appregister/apps.json`.
 - Registeret er strukturert for én oppføring per app
 - Det skiller mellom `included`, `excluded` og fremtidige godkjente apper
 - Det inneholder også foreslått demo-auth og strategi for lagring/nullstilling
+- `showcase-site/appregister/apps.json` er en deploybar kopi for den statiske showcase-siden
 
 ### Inkluderte apper i denne første leveransen
 
@@ -86,7 +89,7 @@ Dette er kun et startpunkt for informasjonsarkitektur, ikke en ferdig produktise
 Foreslått felles demo-innlogging for showcase:
 
 - brukernavn: `demo`
-- passord: `showcase-demo`
+- passord: settes som fast demo-passord i deploy-konfigurasjon og kan vises på showcase-siden
 
 Prinsipper:
 
@@ -94,6 +97,7 @@ Prinsipper:
 - kun for demoformål
 - ingen kobling mot produksjonsbrukere eller produksjonsleverandører for auth
 - hver app bør på sikt kunne bruke en lokal demo-auth-adapter eller et felles mock-lag
+- selve passordverdien bør injiseres ved deploy fremfor å lagres hardkodet i repoet
 
 ## Foreslått lagring og nullstilling
 

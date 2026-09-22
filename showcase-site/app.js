@@ -54,7 +54,7 @@ const renderTable = (apps) => {
 };
 
 const init = async () => {
-  const response = await fetch("../appregister/apps.json");
+  const response = await fetch("./appregister/apps.json");
   if (!response.ok) {
     throw new Error(`Kunne ikke laste appregister (${response.status})`);
   }
@@ -86,7 +86,9 @@ const init = async () => {
     document.getElementById("included-apps").replaceChildren(renderTable(includedApps));
   }
 
-  document.getElementById("excluded-apps").replaceChildren(renderTable(excludedApps));
+  if (excludedApps.length > 0) {
+    document.getElementById("excluded-apps").replaceChildren(renderTable(excludedApps));
+  }
 };
 
 init().catch((error) => {
