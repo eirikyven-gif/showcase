@@ -59,19 +59,28 @@ const init = async () => {
     throw new Error(`Kunne ikke laste appregister (${response.status})`);
   }
   const registry = await response.json();
+  if (!Array.isArray(registry.apps)) {
+    throw new Error("Appregisteret mangler en gyldig apps-liste");
+  }
+  if (!registry.demoAuth || typeof registry.demoAuth !== "object") {
+    throw new Error("Appregisteret mangler demoAuth-konfigurasjon");
+  }
+  if (!registry.stateStrategy || typeof registry.stateStrategy !== "object") {
+    throw new Error("Appregisteret mangler stateStrategy-konfigurasjon");
+  }
+
   const includedApps = registry.apps.filter((app) => app.status === "included");
   const excludedApps = registry.apps.filter((app) => app.status === "excluded");
 
   document.getElementById("included-count").textContent = String(includedApps.length);
   document.getElementById("excluded-count").textContent = String(excludedApps.length);
-  document.getElementById("auth-summary").textContent = `${registry.demoAuth.username} / fast demo-passord utenfor repo`;
+  document.getElementById("auth-summary").textContent = "Faste demo-credentials settes utenfor repo";
 
   renderDetails(document.getElementById("auth-details"), [
     ["Strategi", registry.demoAuth.strategy],
-    ["Brukernavn", registry.demoAuth.username],
     ["Delt innlogging", registry.demoAuth.hasSharedCredentials ? "Ja" : "Nei"],
-    ["Passordkilde", registry.demoAuth.passwordSource],
-    ["Passord i register", registry.demoAuth.passwordDisplayStatus],
+    ["Credential-kilde", registry.demoAuth.credentialSource],
+    ["Credentials i register", registry.demoAuth.credentialDisplayStatus],
     ["Synlig i showcase", registry.demoAuth.displayOnShowcase ? "Ja, som konsept" : "Nei"],
     ["Notat", registry.demoAuth.notes]
   ]);

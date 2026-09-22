@@ -30,13 +30,11 @@ Showcase skal være en **isolert demo-plattform**:
 ```text
 /
 ├── README.md
+├── index.html
 ├── appregister/
 │   └── apps.json
 └── showcase-site/
-    ├── appregister/
-    │   └── apps.json
     ├── app.js
-    ├── index.html
     └── styles.css
 ```
 
@@ -47,7 +45,6 @@ Appregisteret ligger i `appregister/apps.json`.
 - Registeret er strukturert for én oppføring per app
 - Det skiller mellom `included`, `excluded` og fremtidige godkjente apper
 - Det inneholder også foreslått demo-auth og strategi for lagring/nullstilling
-- `showcase-site/appregister/apps.json` er en deploybar kopi for den statiske showcase-siden
 
 ### Inkluderte apper i denne første leveransen
 
@@ -73,7 +70,7 @@ Følgende apper er registrert som eksplisitt ekskludert:
 
 ## Grunnlag for sentral showcase-side
 
-Det er opprettet en enkel statisk side i `showcase-site/`.
+Det er opprettet en enkel statisk side med `index.html` i repo-roten og tilhørende assets i `showcase-site/`.
 
 Formålet med denne er å gi et lettvekts grunnlag for videre arbeid:
 
@@ -88,8 +85,8 @@ Dette er kun et startpunkt for informasjonsarkitektur, ikke en ferdig produktise
 
 Foreslått felles demo-innlogging for showcase:
 
-- brukernavn: `demo`
-- passord: fast demo-passord settes utenfor repo, for eksempel via deploy-konfigurasjon eller en beskyttet demo-tjeneste
+- ett fast demo-brukernavn og ett fast demo-passord per showcase-miljø
+- credentials settes utenfor repo, for eksempel via deploy-konfigurasjon eller en beskyttet demo-tjeneste
 
 Prinsipper:
 
@@ -98,7 +95,7 @@ Prinsipper:
 - ingen kobling mot produksjonsbrukere eller produksjonsleverandører for auth
 - hver app bør på sikt kunne bruke en lokal demo-auth-adapter eller et felles mock-lag
 - selve passordverdien bør ikke lagres i repo eller i statiske frontend-assets
-- showcase-siden kan dokumentere at delt demo-auth finnes, men bør ikke publisere hemmeligheten direkte i denne første statiske løsningen
+- showcase-siden kan dokumentere at delt demo-auth finnes, men bør ikke publisere konkrete verdier direkte i denne første statiske løsningen
 
 ## Foreslått lagring og nullstilling
 
