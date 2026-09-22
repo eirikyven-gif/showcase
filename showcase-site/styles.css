@@ -1,0 +1,110 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.5;
+  background: #f5f7fb;
+  color: #162033;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.layout {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 2rem 1rem 4rem;
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: #4a5a7a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 60ch;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 2rem;
+}
+
+.card,
+.panel {
+  background: #fff;
+  border: 1px solid #d8e0ef;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(22, 32, 51, 0.05);
+}
+
+.card {
+  padding: 1rem 1.25rem;
+}
+
+.card h2,
+.panel h2 {
+  margin-top: 0;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.panel {
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+}
+
+.details {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(120px, 180px) 1fr;
+  margin: 0;
+}
+
+.details dt {
+  font-weight: 700;
+}
+
+.details dd {
+  margin: 0;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #d8e0ef;
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  color: #4a5a7a;
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  color: #4a5a7a;
+}
