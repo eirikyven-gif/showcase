@@ -1,0 +1,102 @@
+{
+  "showcase": {
+    "name": "showcase",
+    "purpose": "Sentral demo- og presentasjonsflate for utvalgte apper.",
+    "isolationPolicy": {
+      "productionData": false,
+      "productionAuth": false
+    }
+  },
+  "sources": [
+    {
+      "id": "apps-fagskolen",
+      "repo": "eirikyven-gif/apps-fagskolen",
+      "status": "inventory-pending"
+    },
+    {
+      "id": "diverse-apper",
+      "repo": "eirikyven-gif/diverse-apper",
+      "status": "inventory-pending"
+    },
+    {
+      "id": "other-approved-sources",
+      "repo": null,
+      "status": "approval-required"
+    }
+  ],
+  "apps": [
+    {
+      "id": "gardsbehov",
+      "name": "Gårdsbehov",
+      "usage": "Ekskludert fra showcase",
+      "sourceRepo": null,
+      "status": "excluded",
+      "authStatus": "not-applicable",
+      "showcaseUrl": null,
+      "storageMode": "not-applicable",
+      "resetPolicy": "not-applicable",
+      "notes": "Eksplisitt utelatt fra showcase i oppstartsbestillingen."
+    },
+    {
+      "id": "vinterlagring",
+      "name": "Vinterlagring",
+      "usage": "Ekskludert fra showcase",
+      "sourceRepo": null,
+      "status": "excluded",
+      "authStatus": "not-applicable",
+      "showcaseUrl": null,
+      "storageMode": "not-applicable",
+      "resetPolicy": "not-applicable",
+      "notes": "Eksplisitt utelatt fra showcase i oppstartsbestillingen."
+    },
+    {
+      "id": "laeringssti-for-fagskole",
+      "name": "Læringssti for fagskole",
+      "usage": "Ekskludert fra showcase",
+      "sourceRepo": null,
+      "status": "excluded",
+      "authStatus": "not-applicable",
+      "showcaseUrl": null,
+      "storageMode": "not-applicable",
+      "resetPolicy": "not-applicable",
+      "notes": "Eksplisitt utelatt fra showcase i oppstartsbestillingen."
+    },
+    {
+      "id": "bilag",
+      "name": "Bilag",
+      "usage": "Ekskludert fra showcase",
+      "sourceRepo": null,
+      "status": "excluded",
+      "authStatus": "not-applicable",
+      "showcaseUrl": null,
+      "storageMode": "not-applicable",
+      "resetPolicy": "not-applicable",
+      "notes": "Eksplisitt utelatt fra showcase i oppstartsbestillingen."
+    },
+    {
+      "id": "bilag-v5",
+      "name": "Bilag v5",
+      "usage": "Ekskludert fra showcase",
+      "sourceRepo": null,
+      "status": "excluded",
+      "authStatus": "not-applicable",
+      "showcaseUrl": null,
+      "storageMode": "not-applicable",
+      "resetPolicy": "not-applicable",
+      "notes": "Eksplisitt utelatt fra showcase i oppstartsbestillingen."
+    }
+  ],
+  "demoAuth": {
+    "strategy": "shared-fixed-credentials",
+    "username": "demo",
+    "password": "showcase-demo",
+    "displayOnShowcase": true,
+    "notes": "Kun for demo. Skal ikke kobles til produksjonsautentisering."
+  },
+  "stateStrategy": {
+    "primaryMode": "browser-local-storage",
+    "resetIntervalMinutes": 60,
+    "resetMechanism": "Slett lagrede demo-data automatisk ved lasting når data er eldre enn 60 minutter.",
+    "fallbackMode": "hourly-automatic-reset"
+  }
+}

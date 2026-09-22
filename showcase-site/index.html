@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>showcase</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header class="hero">
+        <p class="eyebrow">Demo-plattform</p>
+        <h1>showcase</h1>
+        <p class="lead">
+          Grunnlag for en sentral showcase-side for utvalgte apper, med isolert demo-auth og lokal demo-state.
+        </p>
+      </header>
+
+      <section class="cards" aria-label="Oppsummering">
+        <article class="card">
+          <h2>Inkluderte apper</h2>
+          <p id="included-count">0</p>
+        </article>
+        <article class="card">
+          <h2>Ekskluderte apper</h2>
+          <p id="excluded-count">0</p>
+        </article>
+        <article class="card">
+          <h2>Demo-auth</h2>
+          <p id="auth-summary">Laster …</p>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>Planlagt demo-auth</h2>
+        <dl id="auth-details" class="details"></dl>
+      </section>
+
+      <section class="panel">
+        <h2>Planlagt lagring og nullstilling</h2>
+        <dl id="state-details" class="details"></dl>
+      </section>
+
+      <section class="panel">
+        <h2>Inkluderte apper</h2>
+        <div id="included-apps" class="empty-state">Ingen apper er inkludert ennå.</div>
+      </section>
+
+      <section class="panel">
+        <h2>Ekskluderte apper</h2>
+        <div id="excluded-apps"></div>
+      </section>
+    </main>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
