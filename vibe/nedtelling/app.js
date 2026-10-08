@@ -22,6 +22,19 @@
     const title = titleInput.value.trim() || 'Noe fint';
     const date = targetDate();
     previewTitle.textContent = title;
+    const style = form.elements.style.value;
+    const accent = accentInput.value || styleColors[style];
+    card.dataset.style = style;
+    card.style.setProperty('--accent', accent);
+    card.style.setProperty('--soft-accent', `${accent}1a`);
+
+    if (!dateInput.value || !timeInput.value || !Number.isFinite(date.getTime())) {
+      previewDate.textContent = 'Velg en gyldig dato og et klokkeslett';
+      units.forEach((unit) => { unit.textContent = '—'; });
+      status.textContent = 'Velg dato og klokkeslett for å starte nedtellingen.';
+      return;
+    }
+
     previewDate.textContent = new Intl.DateTimeFormat('nb-NO', { dateStyle: 'full', timeStyle: 'short' }).format(date);
     const remaining = date.getTime() - Date.now();
     if (remaining <= 0) {
@@ -33,11 +46,6 @@
       units.forEach((unit, index) => { unit.textContent = String(values[index]).padStart(2, '0'); });
       status.textContent = 'Tiden går — snart skjer det.';
     }
-    const style = form.elements.style.value;
-    const accent = accentInput.value || styleColors[style];
-    card.dataset.style = style;
-    card.style.setProperty('--accent', accent);
-    card.style.setProperty('--soft-accent', `${accent}1a`);
   }
 
   form.addEventListener('input', update);
