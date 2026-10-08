@@ -14,7 +14,7 @@
 - **Avhengigheter:** Ingen runtime-avhengigheter; HTML, CSS og nettleser-JavaScript. Lokalt hub-stilark.
 - **Risiko:** Kildekandidaten kan behandle sensitive vurderings- og studentdata. Ingen data eller intern kildekode er undersøkt. Demoen har ingen personfelt, poeng, karakterer, innlogging, lagring eller nettverkskall. Kildeinnhold/rettigheter er uavklart.
 - **Estimert omfang:** Liten, selvstendig statisk rute; ett syntetisk eksempel og en lokal sjekkliste.
-- **Kildestatus og usikkerhet:** Kildens metadata kunne ikke verifiseres: GitHub API-oppslag for `apps-fagskolen/apps` returnerte 404 i denne arbeidsøkten. Kilderepoet ble ikke klonet eller åpnet, eikä kode, README, issue, pakkeinnhold eller studentdata leset. Brukerens interne inventar sier at dette kan være en migrasjonspakke med uklar entrypoint. Teknologistakk, faktisk funksjon, avhengigheter, tester, utrulling og dataflyt er derfor ukjent.
+- **Kildestatus og usikkerhet:** Kildens metadata kunne ikke verifiseres: GitHub API-oppslag for `apps-fagskolen/apps` returnerte 404 i denne arbeidsøkten. Kilderepoet ble ikke klonet eller åpnet; ingen kode, README, issue, pakkeinnhold eller studentdata ble lest. Brukerens interne inventar sier at dette kan være en migrasjonspakke med uklar entrypoint. Teknologistakk, faktisk funksjon, avhengigheter, tester, utrulling og dataflyt er derfor ukjent.
 - **Mulig overlapp:** Intern inventarinformasjon peker på mulig overlapp med den separate `app-vurderingsarbeid`-kandidaten. Relasjonen og eventuell funksjonell duplisering er ikke verifisert; begge beholdes i bred gjennomgang.
 - **Kilde:** Oppgitt kandidatidentifikator `apps-fagskolen/apps/vurderingsarbeid`; metadataoppslag feilet med 404 2026-10-08. Ingen kildefiler lest.
 
