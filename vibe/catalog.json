@@ -241,6 +241,18 @@
       "simplifications": "Fire skjematiske rader og sju oppdiktede enheter. Kun søk, plassering, flytting og uttak. Ingen import, kundedata, sesongadministrasjon, eksport, betaling, meldinger eller venteliste.",
       "risk": "Kilden håndterer kunde- og kjøretøyopplysninger, admin-innlogging, privat filbasert lagring og venteliste. Produksjons- og testadresser finnes i kildedokumentasjonen, men ble ikke besøkt. Ingen kildedata eller hemmeligheter er kopiert. Demoen er statisk og ikke egnet for reell lagerplanlegging.",
       "scope": "Plain HTML/CSS/JavaScript på /vibe/lagerkart-vinter/ med syntetiske data i nettleserminnet. Ingen PHP, auth, serverlagring, API, persondata, ekstern data eller nettverkskall."
+    },
+    {
+      "slug": "vinterlagring-fornes",
+      "name": "Vinterlagring Fornes",
+      "useCase": "Se et enkelt, fiktivt eksempel på status for én enhet i vinterlagring.",
+      "category": "Gårdsadministrasjon og lagerstyring",
+      "audience": ["Lageransvarlige", "Gårdsbrukere", "Personer som utforsker vinterlagring"],
+      "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
+      "demoValue": "Viser hvordan lagringsstatus, plass og et enkelt miljøsignal kan samles i en oversikt for én oppdiktet enhet.",
+      "simplifications": "Én abstrakt enhet med én fast status: lagret. Ingen navn, kjennemerke, kundeprofil, bevegelser, flere plasser, administrasjon eller redigering.",
+      "risk": "Kildeappen er beskrevet som en innloggingspreget kunde-/adminflyt med e-post, PHP-session og database, og behandler kundeopplysninger. Kildeproduksjon og kildetest er ikke besøkt. Mulig overlapp med produktfamilien Lagerkart Vinter er uavklart; demoene har ulikt, selvstendig omfang. Demoen bruker kun syntetisk innhold og er ikke egnet for operativ lagerstyring.",
+      "scope": "Selvstendig, responsiv /vibe/vinterlagring-fornes/-rute. Kun statisk HTML, CSS og JavaScript; én skrivebeskyttet eksempeltilstand. Ingen skjema for personopplysninger, e-post, database, session, autentisering, API, ekstern ressurs eller lagring."
     }
   ]
 }
