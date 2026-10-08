@@ -2,6 +2,8 @@
 
 | Felt | Vurdering |
 |---|---|
+| Use case | Explore a static view of fictional lap times, race progress, and standings. |
+| Category | Sport and events. |
 | Audience | Løpsarrangører, deltakere, publikum og OBS-/skjermvisningsansvarlige. |
 | Slug | `backyard-stats` · `/vibe/backyard-stats/` |
 | Status | Beholdt i bred førstegangsvurdering; original, statisk visualiseringsprototype laget. Ingen kuratering eller utsiling. |
@@ -16,4 +18,4 @@ Kandidatens kilde ble inspisert skrivebeskyttet. Kilden ser ut til å bestå av 
 
 ## Kontroll og begrensninger
 
-Direkterute, mobilvisning, tastatur og tilgjengelighet, konsoll, nettverk og lagring må gjennomgås før en eventuell publisering. API/runtime og rettigheter er fortsatt uavklart. Denne leveransen løser Issue #2 delvis: den bidrar med én vurdert konseptdemo til den brede førstegangsrunden, uten å kuratere bort kandidaten.
+Chromium coordinator QA: direct route and refresh worked at 390px and 1440px; the page had no horizontal overflow, JavaScript errors, off-site requests, or browser storage. Keyboard focus reaches the skip link and hub-return link; keyboard activation returns to the hub. The visual chart has an accessible text alternative. API/runtime and rights are still unverified; this is a static display-only demo. Denne leveransen løser Issue #2 delvis: den bidrar med én vurdert konseptdemo til den brede førstegangsrunden, uten å kuratere bort kandidaten.
