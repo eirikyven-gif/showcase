@@ -124,6 +124,18 @@ test('Nedtelling e-post is a local canvas preview with an accessible direct rout
   assert.match(script, /addEventListener\(['"]click['"]/, 'reset control is interactive');
 });
 
+test('HTML-only app routes are valid deployment targets', () => {
+  const htmlOnly = read('vibe/backyard-stats/index.html');
+  assert.ok(statSync(path.join(vibeRoot, 'backyard-stats', 'index.html')).isFile());
+  assert.doesNotMatch(htmlOnly, /<script\b/i);
+  assert.doesNotMatch(htmlOnly, /<link[^>]+stylesheet/i);
+  const workflow = read('.github/workflows/deploy-vibe-onecom.yml');
+  assert.match(workflow, /Missing index\.html for/);
+  assert.match(workflow, /\[ -f "vibe\/\$slug\/\$asset" \] \|\| continue/);
+  assert.doesNotMatch(workflow, /test -f "\$stage\/\$slug\/app\.js"/);
+  assert.doesNotMatch(workflow, /test -f "\$stage\/\$slug\/style\.css"/);
+});
+
 test('route inventory has no duplicate app directory names', () => {
   const routeDirs = readdirSync(vibeRoot)
     .filter((name) => statSync(path.join(vibeRoot, name)).isDirectory() && name !== 'assets');

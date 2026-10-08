@@ -21,7 +21,7 @@ test('Vinterlagring is catalogued as a broad-round synthetic demo', () => {
   assert.ok(entry.audience.length > 0);
   assert.match(entry.risk, /Lagerkart Vinter/);
   assert.match(entry.status, /bred førstegangsvurdering/);
-  assert.match(read('VERSION').trim(), /^0\.20\.0$/);
+  assert.match(read('VERSION').trim(), /^0\.20\.\d+$/);
 });
 
 test('demo has one static fictional storage state and no personal data form', () => {

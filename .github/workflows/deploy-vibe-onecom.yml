@@ -49,8 +49,19 @@ jobs:
           const catalog = JSON.parse(fs.readFileSync('vibe/catalog.json', 'utf8'));
           for (const { slug } of catalog.apps) {
             if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('Invalid slug: ' + slug);
-            for (const file of ['index.html', 'app.js', 'style.css']) {
-              if (!fs.existsSync('vibe/' + slug + '/' + file)) throw new Error('Missing ' + file + ' for ' + slug);
+            const routeDir = 'vibe/' + slug + '/';
+            const entry = routeDir + 'index.html';
+            if (!fs.existsSync(entry)) throw new Error('Missing index.html for ' + slug);
+            const html = fs.readFileSync(entry, 'utf8');
+            for (const [, rawTarget] of html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)) {
+              if (/^(?:[a-z]+:|\/\/|#)/i.test(rawTarget)) continue;
+              let target = rawTarget;
+              if (target.startsWith('/vibe/')) target = 'vibe/' + target.slice('/vibe/'.length);
+              else if (target.startsWith('/')) continue;
+              else target = routeDir + target;
+              target = target.split(/[?#]/, 1)[0];
+              if (target.endsWith('/')) target += 'index.html';
+              if (!fs.existsSync(target)) throw new Error('Missing linked resource ' + target + ' for ' + slug);
             }
           }
           NODE
@@ -183,8 +194,12 @@ jobs:
           for slug in $route_slugs; do
             case "$slug" in ''|*[!a-z0-9-]*) echo 'Invalid route slug in package manifest'; exit 1 ;; esac
             test -f "$stage/$slug/index.html"
-            test -f "$stage/$slug/app.js"
-            test -f "$stage/$slug/style.css"
+            for asset in app.js style.css; do
+              if [ -e "$stage/$slug/$asset" ] && [ ! -f "$stage/$slug/$asset" ]; then
+                echo "Route asset is not a regular file: $slug/$asset"
+                exit 1
+              fi
+            done
           done
           find "$stage" -type d -exec chmod 755 {} +
           find "$stage" -type f -exec chmod 644 {} +
@@ -206,6 +221,7 @@ jobs:
             [ "$status" = '200' ] && grep -qi '<title' "$response"
             rm -f "$response"
             for asset in app.js style.css; do
+              [ -f "vibe/$slug/$asset" ] || continue
               status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' "${base}${path}${asset}?cb=${GITHUB_RUN_ID}")"
               echo "Smoke asset ${path}${asset}: $status"
               [ "$status" = '200' ] || exit 1
