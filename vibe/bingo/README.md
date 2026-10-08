@@ -22,7 +22,7 @@
 
 Automatisert test dekker katalogmetadata, semantisk knappestruktur, syntetisk brett, toggling, nullstilling, fokus og fravær av nettverk/lagring. `node --check` kjøres på JavaScript, og hele showcase-testpakken kjøres før PR.
 
-Manuell nettleser-/skjermleser-QA er ikke utført i denne arbeidsøkten. Tastaturtilgjengelighet bygger på native knapper og synlig fokusstil; faktisk skjermleseratferd og visuell kontroll på små skjermer gjenstår. Ingen live- eller deploykontroll er utført.
+Chromium 151 / Playwright QA ved 320, 375, 390, 768, 1024 og 1440 px: direkterute og hubretur virket uten horisontal overflow. Første Tab ga synlig fokus på skipplenken; rutevalg, fri midtrute, statusmelding og reset/fokusretur ble kontrollert. Reload nullstilte brettet. Ingen JavaScript-feil eller eksterne forespørsler. Skjermleser ble ikke manuelt testet. Ingen live- eller deploykontroll er utført.
 
 ## Issue #2 progress
 
