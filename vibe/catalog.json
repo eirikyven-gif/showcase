@@ -37,6 +37,18 @@
       "scope": "Kun statisk nettleserdemo med oppdiktede eksempler, uten vurdering av faktiske bygg."
     },
     {
+      "slug": "ns3424-arkivdemo",
+      "name": "Byggobservasjoner – arkivkandidat",
+      "useCase": "Øv på å skille observerbare forhold fra antakelser i to oppdiktede bygningsscener.",
+      "category": "Utdanning",
+      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
+      "status": "Kandidat fra arkivert ns3456-app beholdt i bred førstegangsvurdering. Arkivert kilde og rettigheter er ikke verifisert. Ruten er en ny, generisk øvelse, ikke kildeimplementasjonen.",
+      "demoValue": "En faktasorteringsøvelse med tilbakemelding, som skiller seg fra ns3424-labs enkeltscenario og prioriteringsspørsmål. Overlappet i tema og målgruppe er betydelig.",
+      "simplifications": "To korte, fiktive scener og forhåndsskrevne observasjoner. Ingen standardmetode, tilstandsgrader, faglig poengsetting eller vurdering av faktiske bygg.",
+      "risk": "Kildeinventar opplyser én HTML-fil med React/CDN, localStorage, blank Apps Script-endepunkt og demopinkode som ikke er reell autentisering. Koden ble ikke endret og eksterne endepunkter ble ikke besøkt. Kildens rettigheter er uavklart. Demoen er tydelig merket som generisk og uoffisiell.",
+      "scope": "Original statisk HTML/CSS/JS under /vibe/ns3424-arkivdemo/. Kun syntetisk tekst. Ingen CDN, React, API, Apps Script, nettverkskall, lagring, autentisering, input for fritekst, virkelige bygg, personer, PII eller hemmeligheter."
+    },
+    {
       "slug": "analog-synthesizer",
       "name": "Analog Synthesizer",
       "useCase": "Spill syntetiske toner og utforsk grunnleggende synthlyd i nettleseren.",
