@@ -28,7 +28,7 @@
 - Catalog has exactly one `stoppeklokke` entry, linked to this direct route; the slug does not collide with another route.
 - Automated route and catalog checks are in `tests/vibe-static.test.mjs`.
 - Run `node --test tests/vibe-static.test.mjs` from the repository root.
-- Manual browser QA should cover keyboard focus/activation, narrow viewport layout, start/pause/resume, lap recording, reset, and reload clearing the in-memory session. Deployment and live-host QA have not been performed.
+- Chromium 151 / Playwright 1.62.1 QA from the repo root: direct route returned 200 at 320, 390, 768, and 1440 px with no horizontal overflow. The first Tab focused the skip link with a visible focus outline. Start, pause, resume, lap recording, reset, and reload clearing the in-memory session worked; the hub-return link reached `/vibe/`. Network capture showed only same-origin requests, with no external calls or JavaScript errors. Deployment and live-host QA have not been performed.
 
 ## Issue #2 progress
 
