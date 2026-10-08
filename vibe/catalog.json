@@ -92,6 +92,16 @@
         "Workshopleder",
         "Fasilitatorer"
       ]
+    },
+    {
+      "slug": "laringssti-fagskolen",
+      "name": "Læringssti",
+      "useCase": "Prøv en kort leksjon med tekst, refleksjon og et kontrollspørsmål.",
+      "category": "Utdanning",
+      "audience": [
+        "Fagskolestudenter",
+        "Undervisere"
+      ]
     }
   ]
 }
