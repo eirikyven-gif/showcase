@@ -1,6 +1,22 @@
 {
   "apps": [
     {
+      "slug": "emnebeskrivelser-editor",
+      "name": "Emneoversikt – konsept",
+      "useCase": "Se et oppdiktet emne samlet i en lesbar oversikt med plan, læringsutbytte, arbeidskrav og pensum.",
+      "category": "Utdanning",
+      "audience": ["Undervisere", "Studieplanleggere", "Personer som utforsker emnesider"],
+      "status": "Beholdt i bred førstegangsvurdering; original statisk konseptside laget. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Kilden har en mulig duplicate familieversjon under apps-fagskolen; versjonsforhold, faktisk bruk og innholdsrettigheter er ikke verifisert. Se rutens README.",
+      "purpose": "Illustrere informasjonsstruktur for en emneside uten redigeringsfunksjon.",
+      "demoValue": "Viser representative deler av en emnebeskrivelse med fiktive data i en responsiv, skrivebeskyttet side.",
+      "simplifications": "Originalt syntetisk emne med representative metadata, læringsutbytte, melding, plan, arbeidskrav, pensum og vurdering. Ingen kildetekst eller virkelige personer.",
+      "risk": "Kildetypen kan inneholde studentdata, personopplysninger, interne emnetekster og lokal historikk. Ingen slikt materiale eller kildehemmeligheter er kopiert.",
+      "scope": "Statisk HTML/CSS på /vibe/emnebeskrivelser-editor/. Ingen editor, PIN/auth, skjema, JavaScript, lagring, historikk, API, nettverk eller eksterne ressurser.",
+      "source": "eirikyven-gif/fagskolen-emnebeskrivelser public main and docs, inspected 2026-10-08; no source edits.",
+      "separation": "Mulig duplicate family under apps-fagskolen er ikke verifisert; denne ruten er en original syntetisk konseptside, ikke en port av noen variant."
+    },
+    {
       "slug": "reservering",
       "name": "Ledige tider",
       "useCase": "Utforsk en statisk kalenderoversikt med oppdiktede ledige og opptatte tider.",
