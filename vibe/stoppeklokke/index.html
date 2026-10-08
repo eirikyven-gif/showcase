@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ta tiden og registrer rundetider med en enkel stoppeklokke.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Stoppeklokke — Vibe</title>
+  <link rel="canonical" href="/vibe/stoppeklokke/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/stoppeklokke/style.css">
+  <script src="/vibe/stoppeklokke/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#stopwatch">Hopp til stoppeklokken</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="stopwatch" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Tid, i ditt tempo</p>
+      <h1 id="page-title">Klar. <span>Ferdig.</span> Gå.</h1>
+      <p class="intro-copy">En enkel stoppeklokke for økter, små utfordringer og rundetider. Tiden måles presist og vises med hundredeler.</p>
+    </section>
+    <section class="timer-panel" aria-label="Stoppeklokke">
+      <p class="timer-label">MEDGÅTT TID</p>
+      <p id="display" class="timer-display" role="timer" aria-label="Medgått tid">00:00.00</p>
+      <div class="actions" aria-label="Stoppeklokkekontroller">
+        <button id="startStop" class="primary-button" type="button">Start</button>
+        <button id="lap" class="secondary-button" type="button" disabled>Runde</button>
+        <button id="reset" class="secondary-button" type="button" disabled>Nullstill</button>
+      </div>
+      <p id="status" class="status" aria-live="polite">Klar når du er.</p>
+    </section>
+    <section class="laps-panel" aria-labelledby="laps-title">
+      <div class="laps-heading"><div><p class="eyebrow">Dine målinger</p><h2 id="laps-title">Rundetider</h2></div><span id="lap-count" class="lap-count">0 runder</span></div>
+      <ol id="laps" class="laps-list" aria-live="polite"><li class="empty-laps">Rundetidene dine vises her.</li></ol>
+    </section>
+    <p class="privacy-note">Alt skjer i denne fanen. Ingenting lagres eller sendes.</p>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Ta tiden på det som betyr noe.</span></footer>
+</body>
+</html>
