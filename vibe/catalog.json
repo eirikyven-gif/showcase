@@ -13,6 +13,13 @@
       "useCase": "Ta tiden, pause og fortsett, og registrer rundetider direkte i nettleseren.",
       "category": "Tid",
       "audience": ["Alle som vil måle tid og rundetider"]
+    },
+    {
+      "slug": "klokke",
+      "name": "Klokke",
+      "useCase": "Se lokal tid og dato, og prøv pause og 12- eller 24-timersvisning.",
+      "category": "Hverdagsverktøy",
+      "audience": ["Alle som vil ha en tydelig klokke i nettleseren"]
     }
   ]
 }
