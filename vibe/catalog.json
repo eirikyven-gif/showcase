@@ -98,7 +98,13 @@
       "category": "Planlegging",
       "audience": [
         "Alle som gleder seg til noe"
-      ]
+      ],
+      "status": "Beholdt i bred førstegangsvurdering. Sluggen er allerede i bruk; eksisterende rute er vurdert i stedet for å opprette en kopi.",
+      "sourceUncertainty": "Kildestien diverse-apper/apps/nedtelling var ikke tilgjengelig ved vurderingen. Kildeversjon, stack, tester, API-er, autentisering, lagring, personvern og rettigheter er uverifisert. Showcase-ruten er ikke en verifisert kildekopi.",
+      "demoValue": "Prøv en nedtelling med live forhåndsvisning og lokale visuelle valg uten konto.",
+      "simplifications": "Generisk syntetisk eksempel og nettleserberegning. Ingen kildeinnhold eller kildefunksjoner er bekreftet eller kopiert.",
+      "risk": "Kildens databehandling og rettigheter er uavklart fordi kildefilene ikke var tilgjengelige. Showcase-ruten bruker bare syntetiske eksempelverdier i fanens minne og sender eller lagrer dem ikke.",
+      "scope": "Eksisterende statisk /vibe/nedtelling/-rute. Ingen ny rute, kildeendring, deling, innbygging, opplasting, eksterne bakgrunner, API, autentisering eller lagring."
     },
     {
       "slug": "stoppeklokke",
