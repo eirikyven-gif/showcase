@@ -144,6 +144,22 @@
       ]
     },
     {
+      "slug": "vurderingspraksis",
+      "name": "Vurderingspraksis",
+      "useCase": "Utforsk et syntetisk eksempel på sammenheng mellom læringsmål, observasjoner og vurdering.",
+      "category": "Utdanning",
+      "audience": [
+        "Faglærere",
+        "Vurderingsteam",
+        "Studieplanleggere"
+      ],
+      "status": "Beholdt i bred førstegangsvurdering; statisk demo laget. Ingen kuratering eller utsiling.",
+      "demoValue": "Se en fiktiv vurderingsøvelse gjennom forberedelse, observasjon, drøfting og oppfølging.",
+      "simplifications": "Én oppdiktet yrkesfaglig situasjon og fire tekstbaserte stopp. Ingen kildetekster, media, dokumenter eller læringsdata.",
+      "risk": "Lav for demoen: ingen personopplysninger eller innsamling. Kildens eksterne medier og innholdsrettigheter er ikke overført; senere kuratering bør avklare rettigheter for enhver eventuell bruk av kildemateriale.",
+      "scope": "Responsiv, statisk lesestøtte med tastaturbetjente fasetrinn. Ingen fritekst, svarinnsending, lagring, konto, server eller eksterne kall."
+    },
+    {
       "slug": "larebot",
       "name": "Lærebot",
       "useCase": "Se en kort, forhåndsskrevet læringsforklaring med syntetiske eksempelspørsmål.",
