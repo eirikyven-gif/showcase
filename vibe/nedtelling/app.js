@@ -42,6 +42,7 @@
 
   form.addEventListener('input', update);
   form.addEventListener('change', update);
+  form.addEventListener('submit', (event) => event.preventDefault());
   document.querySelector('#reset').addEventListener('click', () => {
     titleInput.value = defaults.title;
     dateInput.value = defaults.date;
