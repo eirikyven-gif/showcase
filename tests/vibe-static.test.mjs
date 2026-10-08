@@ -85,6 +85,7 @@ test('Ticker candidate assessment documents source uncertainty and its existing 
   assert.match(script, /textInput\.addEventListener\('input'/);
   assert.match(script, /speedInput\.addEventListener\('input'/);
   assert.match(script, /toggle\.addEventListener\('click'/);
+  assert.equal(formHasSubmitGuard('id=\"ticker-form\"', script), true, 'Enter cannot submit ticker text to the server');
   assert.match(css, /prefers-reduced-motion/);
 });
 

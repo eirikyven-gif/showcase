@@ -18,6 +18,6 @@
 
 ## Validering
 
-- Kjør `node --test tests/vibe-static.test.mjs` for showcase sine statiske kontroller.
-- Kjør `node --check vibe/ticker/app.js` og `git diff --check`.
+- `node --test tests/*.test.mjs` (23/23), `node --check vibe/ticker/app.js` og `git diff --check` bestod.
+- Chromium/Playwright ved 320, 390, 768 og 1440 px: direkte rute og hubretur virket uten overflow; tekst og hastighet endret forhåndsvisningen, pauseknappen og `aria-pressed` oppdaterte status, og redusert bevegelse stoppet animasjonen. Tastaturfokus var synlig. Enter i tekstfeltet ble stoppet lokalt; URL-en forble uendret, og etter omlasting kom eksempelteksten tilbake. Ingen eksterne forespørsler eller sidefeil.
 - Ruten er ikke publisert av denne endringen.
