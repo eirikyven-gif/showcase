@@ -1,3 +1,11 @@
 {
-  "apps": []
+  "apps": [
+    {
+      "slug": "nedtelling",
+      "name": "Nedtelling",
+      "useCase": "Lag en visuell nedtelling til en anledning, direkte i nettleseren.",
+      "category": "Planlegging",
+      "audience": ["Alle som gleder seg til noe"]
+    }
+  ]
 }

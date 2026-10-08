@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lag en enkel, personlig nedtelling direkte i nettleseren.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Nedtelling — Vibe</title>
+  <link rel="stylesheet" href="/vibe/nedtelling/style.css">
+  <script src="/vibe/nedtelling/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#builder">Hopp til nedtellingsbyggeren</a>
+  <header class="topbar"><a class="wordmark" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="builder" class="layout">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Et lite øyeblikk å glede seg til</p>
+      <h1 id="page-title">Tell ned til <span>noe fint.</span></h1>
+      <p>Lag en rolig, visuell nedtelling. Endringene finnes bare her i nettleseren og forsvinner når du tilbakestiller eller lukker siden.</p>
+    </section>
+    <div class="workbench">
+      <form id="countdown-form" class="controls" autocomplete="off">
+        <div class="section-title"><span class="step">01</span><div><h2>Din anledning</h2><p>Dette er et eksempel du kan endre.</p></div></div>
+        <label for="title">Hva teller vi ned til?</label>
+        <input id="title" name="title" type="text" maxlength="48" value="En liten feiring" aria-describedby="sample-note">
+        <p id="sample-note" class="sample-note">Eksempelinformasjon · skriv over med dine egne verdier</p>
+        <div class="field-row">
+          <div><label for="date">Dato</label><input id="date" name="date" type="date" value="2026-12-24" required></div>
+          <div><label for="time">Klokkeslett</label><input id="time" name="time" type="time" value="18:00" required></div>
+        </div>
+        <fieldset class="style-options"><legend>Uttrykk</legend><div class="style-picks">
+          <label class="style-choice"><input type="radio" name="style" value="classic" checked><span class="swatch classic" aria-hidden="true"></span><span>Klassisk</span></label>
+          <label class="style-choice"><input type="radio" name="style" value="soft"><span class="swatch soft" aria-hidden="true"></span><span>Myk</span></label>
+          <label class="style-choice"><input type="radio" name="style" value="bold"><span class="swatch bold" aria-hidden="true"></span><span>Markant</span></label>
+        </div></fieldset>
+        <label class="color-label" for="accent">Aksentfarge <input id="accent" name="accent" type="color" value="#a3263c"></label>
+        <button class="reset-button" id="reset" type="button">Tilbakestill eksempel</button>
+      </form>
+      <section class="preview-wrap" aria-labelledby="preview-label">
+        <div class="preview-heading"><span class="step">02</span><h2 id="preview-label">Forhåndsvisning</h2><span class="live-dot" aria-hidden="true"></span><span class="live-label">Oppdateres nå</span></div>
+        <article class="countdown-card" id="countdown-card" aria-label="Forhåndsvisning av nedtelling">
+          <div class="card-top"><span class="sun-mark" aria-hidden="true">✳</span><span class="preview-tag">Nedtelling</span></div>
+          <p id="preview-date" class="preview-date"></p>
+          <h2 id="preview-title">En liten feiring</h2>
+          <div id="timer" class="timer" role="timer" aria-live="off" aria-label="Tid igjen">
+            <div class="time-part"><span id="days" class="time-value">—</span><span class="time-unit">dager</span></div><span class="time-separator" aria-hidden="true">:</span>
+            <div class="time-part"><span id="hours" class="time-value">—</span><span class="time-unit">timer</span></div><span class="time-separator" aria-hidden="true">:</span>
+            <div class="time-part"><span id="minutes" class="time-value">—</span><span class="time-unit">minutter</span></div><span class="time-separator" aria-hidden="true">:</span>
+            <div class="time-part"><span id="seconds" class="time-value">—</span><span class="time-unit">sekunder</span></div>
+          </div>
+          <p id="status" class="status" aria-live="polite">Tiden går — snart skjer det.</p>
+          <span class="card-orbit orbit-one" aria-hidden="true"></span><span class="card-orbit orbit-two" aria-hidden="true"></span>
+        </article>
+        <p class="privacy-note"><span aria-hidden="true">◉</span> Privat på denne enheten. Ingen lagring eller deling.</p>
+      </section>
+    </div>
+  </main>
+  <footer><a href="/vibe/">Tilbake til Vibe</a><span>Laget for å glede seg litt.</span></footer>
+</body>
+</html>
