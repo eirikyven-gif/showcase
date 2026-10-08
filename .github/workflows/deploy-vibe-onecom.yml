@@ -8,11 +8,6 @@ on:
         required: true
         type: boolean
         default: true
-      smoke_check:
-        description: Check the public hub and Nedtelling route after deployment
-        required: true
-        type: boolean
-        default: true
 
 permissions:
   contents: read
@@ -23,10 +18,11 @@ concurrency:
 
 jobs:
   deploy:
+    # Live deployment only runs with the reviewed workflow on the trusted main ref.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     env:
       DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
-      SMOKE_CHECK: ${{ inputs.smoke_check && 'true' || 'false' }}
       ONECOM_HOST: ${{ vars.ONECOM_HOST }}
       ONECOM_USER: ${{ secrets.ONECOM_SSH_USER || vars.ONECOM_USER }}
       ONECOM_SSH_PASSWORD: ${{ secrets.ONECOM_SSH_PASSWORD }}
@@ -93,7 +89,7 @@ jobs:
           ssh-keygen -F "$host_pattern" -f ~/.ssh/known_hosts >/dev/null || { echo 'Known-hosts data does not contain ONECOM_HOST and ONECOM_SSH_PORT'; exit 1; }
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Upload and unpack Vibe
+      - name: Promote, smoke check, and rollback on failure
         if: env.DRY_RUN != 'true'
         shell: bash
         run: |
@@ -112,21 +108,72 @@ jobs:
               SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "cat > '$2'" < "$1"
             fi
           }
+          run_ssh_script() {
+            remote_command="bash -s -- '$target' '$stage' '$backup' '$remote_package'"
+            if [ "$SSH_AUTH_MODE" = 'key' ]; then
+              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
+            else
+              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
+            fi
+          }
           run_id="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           target="${DEPLOY_TARGET_PATH%/}"
           parent="$(dirname "$target")"
           stage="${parent}/.vibe-stage-${run_id}"
           backup="${parent}/.vibe-backup-${run_id}"
           remote_package="${stage}/vibe-site.tar.gz"
-          run_ssh "set -euo pipefail; mkdir -p '${stage}'"
+          run_ssh "set -euo pipefail; mkdir -m 700 '${stage}'"
           upload_via_ssh dist/vibe-site.tar.gz "$remote_package"
-          run_ssh "set -euo pipefail; test -s '${remote_package}'; tar -xzf '${remote_package}' -C '${stage}'; rm -f '${remote_package}'; test -f '${stage}/index.html'; test -f '${stage}/nedtelling/index.html'; test -f '${stage}/catalog.json'; if [ -e '${target}' ]; then mv '${target}' '${backup}'; fi; if mv '${stage}' '${target}'; then rm -rf '${backup}'; else if [ -e '${backup}' ]; then mv '${backup}' '${target}'; fi; exit 1; fi"
-
-      - name: Smoke check public routes
-        if: env.DRY_RUN != 'true' && env.SMOKE_CHECK == 'true'
-        shell: bash
-        run: |
+          deployment_committed=0
+          promotion_started=0
+          previous_target_exists="$(run_ssh "if [ -e '${target}' ]; then printf 1; else printf 0; fi")"
+          rollback_local() {
+            exit_code=$?
+            trap - EXIT HUP INT TERM
+            if [ "$deployment_committed" -ne 1 ]; then
+              if [ "$promotion_started" -eq 1 ]; then
+                if [ "$previous_target_exists" = '1' ]; then
+                  run_ssh "set -e; if [ -e '${backup}' ]; then rm -rf '${target}'; find '${backup}' -type d -exec chmod 755 {} +; find '${backup}' -type f -exec chmod 644 {} +; mv '${backup}' '${target}'; fi; rm -rf '${stage}'" || echo 'Rollback attempt failed; preserve backup path for manual recovery.'
+                else
+                  run_ssh "set -e; rm -rf '${target}' '${stage}'" || echo 'Rollback attempt failed; inspect the one.com target manually.'
+                fi
+              else
+                run_ssh "rm -rf '${stage}'" || echo 'Could not remove the incomplete staging folder.'
+              fi
+            fi
+            exit "$exit_code"
+          }
+          trap rollback_local EXIT HUP INT TERM
+          promotion_started=1
+          run_ssh_script "$target" "$stage" "$backup" "$remote_package" <<'REMOTE'
           set -euo pipefail
+          target="$1"
+          stage="$2"
+          backup="$3"
+          remote_package="$4"
+          restore_if_interrupted() {
+            code=$?
+            trap - EXIT HUP INT TERM
+            if [ -e "$backup" ] && [ ! -e "$target" ]; then
+              find "$backup" -type d -exec chmod 755 {} +
+              find "$backup" -type f -exec chmod 644 {} +
+              mv "$backup" "$target"
+            fi
+            exit "$code"
+          }
+          trap restore_if_interrupted EXIT HUP INT TERM
+          test -s "$remote_package"
+          tar -xzf "$remote_package" -C "$stage"
+          rm -f "$remote_package"
+          test -f "$stage/index.html"
+          test -f "$stage/nedtelling/index.html"
+          test -f "$stage/catalog.json"
+          find "$stage" -type d -exec chmod 755 {} +
+          find "$stage" -type f -exec chmod 644 {} +
+          if [ -e "$target" ]; then mv "$target" "$backup"; chmod -R 700 "$backup"; fi
+          mv "$stage" "$target"
+          trap - EXIT HUP INT TERM
+          REMOTE
           base="${ONECOM_PUBLIC_BASE_URL%/}"
           for path in /vibe/ /vibe/nedtelling/; do
             response="$(mktemp)"
@@ -141,3 +188,5 @@ jobs:
             echo "Smoke asset ${path}: ${status}"
             [ "$status" = '200' ] || exit 1
           done
+          deployment_committed=1
+          run_ssh "rm -rf '${backup}' '${stage}'" || echo 'Published successfully; stale backup/staging cleanup can be performed later.'
