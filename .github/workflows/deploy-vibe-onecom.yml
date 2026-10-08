@@ -1,0 +1,192 @@
+name: Deploy Vibe to one.com
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate packaging and target paths without uploading
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-vibe-onecom
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Live deployment only runs with the reviewed workflow on the trusted main ref.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    env:
+      DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+      ONECOM_HOST: ${{ vars.ONECOM_HOST }}
+      ONECOM_USER: ${{ secrets.ONECOM_SSH_USER || vars.ONECOM_USER }}
+      ONECOM_SSH_PASSWORD: ${{ secrets.ONECOM_SSH_PASSWORD }}
+      ONECOM_SSH_KEY: ${{ secrets.ONECOM_SSH_KEY }}
+      ONECOM_SSH_PORT: ${{ vars.ONECOM_SSH_PORT || '22' }}
+      ONECOM_SSH_KNOWN_HOSTS: ${{ vars.ONECOM_SSH_KNOWN_HOSTS }}
+      ONECOM_PUBLIC_BASE_URL: ${{ vars.ONECOM_PUBLIC_BASE_URL || 'https://yven.me' }}
+      DEPLOY_TARGET_PATH: /customers/3/3/f/yven.me/httpd.www/vibe/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Validate and package static site
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f vibe/index.html || { echo 'Missing vibe/index.html'; exit 1; }
+          test -f vibe/catalog.json || { echo 'Missing vibe/catalog.json'; exit 1; }
+          test -f vibe/nedtelling/index.html || { echo 'Missing Nedtelling direct route'; exit 1; }
+          node --check vibe/assets/hub.js
+          node --check vibe/nedtelling/app.js
+          node -e "JSON.parse(require('fs').readFileSync('vibe/catalog.json', 'utf8'))"
+          mkdir -p dist
+          tar -czf dist/vibe-site.tar.gz -C vibe .
+          tar -tzf dist/vibe-site.tar.gz
+          echo 'Package validated for /vibe/.'
+
+      - name: Validate fixed deploy target
+        shell: bash
+        run: |
+          set -euo pipefail
+          [ "${DEPLOY_TARGET_PATH}" = '/customers/3/3/f/yven.me/httpd.www/vibe/' ] || { echo 'Unexpected deploy target'; exit 1; }
+          case "${DEPLOY_TARGET_PATH}" in /customers/*/httpd.www/vibe/) ;; *) echo 'Deploy target is outside the expected public site tree'; exit 1 ;; esac
+          echo "Dry-run destination: ${DEPLOY_TARGET_PATH}"
+
+      - name: Validate deploy credentials and destination
+        if: env.DRY_RUN != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          [ -n "${ONECOM_HOST:-}" ] || { echo 'Missing ONECOM_HOST repository variable'; exit 1; }
+          [ -n "${ONECOM_USER:-}" ] || { echo 'Missing ONECOM_SSH_USER secret or ONECOM_USER variable'; exit 1; }
+          [ -n "${ONECOM_SSH_PASSWORD:-}${ONECOM_SSH_KEY:-}" ] || { echo 'Set ONECOM_SSH_PASSWORD or ONECOM_SSH_KEY'; exit 1; }
+          [ -n "${ONECOM_SSH_KNOWN_HOSTS:-}" ] || { echo 'Set the verified ONECOM_SSH_KNOWN_HOSTS repository variable'; exit 1; }
+
+      - name: Setup SSH
+        if: env.DRY_RUN != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          if [ -n "${ONECOM_SSH_KEY:-}" ]; then
+            printf '%s\n' "$ONECOM_SSH_KEY" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            echo 'SSH_AUTH_MODE=key' >> "$GITHUB_ENV"
+          else
+            sudo apt-get update
+            sudo apt-get install -y sshpass
+            echo 'SSH_AUTH_MODE=password' >> "$GITHUB_ENV"
+          fi
+          printf '%s\n' "$ONECOM_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          if [ "$ONECOM_SSH_PORT" = '22' ]; then host_pattern="$ONECOM_HOST"; else host_pattern="[$ONECOM_HOST]:$ONECOM_SSH_PORT"; fi
+          ssh-keygen -F "$host_pattern" -f ~/.ssh/known_hosts >/dev/null || { echo 'Known-hosts data does not contain ONECOM_HOST and ONECOM_SSH_PORT'; exit 1; }
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Promote, smoke check, and rollback on failure
+        if: env.DRY_RUN != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_ssh() {
+            if [ "$SSH_AUTH_MODE" = 'key' ]; then
+              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$1"
+            else
+              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$1"
+            fi
+          }
+          upload_via_ssh() {
+            if [ "$SSH_AUTH_MODE" = 'key' ]; then
+              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "cat > '$2'" < "$1"
+            else
+              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "cat > '$2'" < "$1"
+            fi
+          }
+          run_ssh_script() {
+            remote_command="bash -s -- '$target' '$stage' '$backup' '$remote_package'"
+            if [ "$SSH_AUTH_MODE" = 'key' ]; then
+              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
+            else
+              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
+            fi
+          }
+          run_id="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          target="${DEPLOY_TARGET_PATH%/}"
+          parent="$(dirname "$target")"
+          stage="${parent}/.vibe-stage-${run_id}"
+          backup="${parent}/.vibe-backup-${run_id}"
+          remote_package="${stage}/vibe-site.tar.gz"
+          run_ssh "set -euo pipefail; mkdir -m 700 '${stage}'"
+          upload_via_ssh dist/vibe-site.tar.gz "$remote_package"
+          deployment_committed=0
+          promotion_started=0
+          previous_target_exists="$(run_ssh "if [ -e '${target}' ]; then printf 1; else printf 0; fi")"
+          rollback_local() {
+            exit_code=$?
+            trap - EXIT HUP INT TERM
+            if [ "$deployment_committed" -ne 1 ]; then
+              if [ "$promotion_started" -eq 1 ]; then
+                if [ "$previous_target_exists" = '1' ]; then
+                  run_ssh "set -e; if [ -e '${backup}' ]; then rm -rf '${target}'; find '${backup}' -type d -exec chmod 755 {} +; find '${backup}' -type f -exec chmod 644 {} +; mv '${backup}' '${target}'; fi; rm -rf '${stage}'" || echo 'Rollback attempt failed; preserve backup path for manual recovery.'
+                else
+                  run_ssh "set -e; rm -rf '${target}' '${stage}'" || echo 'Rollback attempt failed; inspect the one.com target manually.'
+                fi
+              else
+                run_ssh "rm -rf '${stage}'" || echo 'Could not remove the incomplete staging folder.'
+              fi
+            fi
+            exit "$exit_code"
+          }
+          trap rollback_local EXIT HUP INT TERM
+          promotion_started=1
+          run_ssh_script "$target" "$stage" "$backup" "$remote_package" <<'REMOTE'
+          set -euo pipefail
+          target="$1"
+          stage="$2"
+          backup="$3"
+          remote_package="$4"
+          restore_if_interrupted() {
+            code=$?
+            trap - EXIT HUP INT TERM
+            if [ -e "$backup" ] && [ ! -e "$target" ]; then
+              find "$backup" -type d -exec chmod 755 {} +
+              find "$backup" -type f -exec chmod 644 {} +
+              mv "$backup" "$target"
+            fi
+            exit "$code"
+          }
+          trap restore_if_interrupted EXIT HUP INT TERM
+          test -s "$remote_package"
+          tar -xzf "$remote_package" -C "$stage"
+          rm -f "$remote_package"
+          test -f "$stage/index.html"
+          test -f "$stage/nedtelling/index.html"
+          test -f "$stage/catalog.json"
+          find "$stage" -type d -exec chmod 755 {} +
+          find "$stage" -type f -exec chmod 644 {} +
+          if [ -e "$target" ]; then mv "$target" "$backup"; chmod -R 700 "$backup"; fi
+          mv "$stage" "$target"
+          trap - EXIT HUP INT TERM
+          REMOTE
+          base="${ONECOM_PUBLIC_BASE_URL%/}"
+          for path in /vibe/ /vibe/nedtelling/; do
+            response="$(mktemp)"
+            status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' "${base}${path}?cb=${GITHUB_RUN_ID}")"
+            echo "Smoke ${path}: ${status}"
+            [ "$status" = '200' ] || { rm -f "$response"; exit 1; }
+            if [ "$path" = '/vibe/' ]; then grep -q 'Små verktøy' "$response"; else grep -q 'Nedtelling' "$response"; fi
+            rm -f "$response"
+          done
+          for path in /vibe/catalog.json /vibe/assets/hub.js /vibe/assets/hub.css /vibe/nedtelling/app.js /vibe/nedtelling/style.css; do
+            status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' "${base}${path}?cb=${GITHUB_RUN_ID}")"
+            echo "Smoke asset ${path}: ${status}"
+            [ "$status" = '200' ] || exit 1
+          done
+          deployment_committed=1
+          run_ssh "rm -rf '${backup}' '${stage}'" || echo 'Published successfully; stale backup/staging cleanup can be performed later.'
