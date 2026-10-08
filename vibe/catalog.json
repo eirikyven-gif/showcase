@@ -309,6 +309,27 @@
       "simplifications": "Én abstrakt enhet med én fast status: lagret. Ingen navn, kjennemerke, kundeprofil, bevegelser, flere plasser, administrasjon eller redigering.",
       "risk": "Kildeappen er beskrevet som en innloggingspreget kunde-/adminflyt med e-post, PHP-session og database, og behandler kundeopplysninger. Kildeproduksjon og kildetest er ikke besøkt. Mulig overlapp med produktfamilien Lagerkart Vinter er uavklart; demoene har ulikt, selvstendig omfang. Demoen bruker kun syntetisk innhold og er ikke egnet for operativ lagerstyring.",
       "scope": "Selvstendig, responsiv /vibe/vinterlagring-fornes/-rute. Kun statisk HTML, CSS og JavaScript; én skrivebeskyttet eksempeltilstand. Ingen skjema for personopplysninger, e-post, database, session, autentisering, API, ekstern ressurs eller lagring."
-    }
+    },
+  {
+    "slug": "vurderingsarbeid-fagskolen",
+    "name": "Kriterieverksted",
+    "useCase": "Planlegg synlige vurderingskriterier fra et oppdiktet kompetansemål og en oppgave.",
+    "category": "Utdanning",
+    "audience": [
+      "Faglærere",
+      "Vurderingsteam",
+      "Studieplanleggere ved fagskole"
+    ],
+    "status": "Beholdt som kandidat i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
+    "sourceUncertainty": "Oppgitt repo apps-fagskolen/apps ga 404 ved metadataoppslag 2026-10-08; kilden er ikke åpnet. Internt inventar beskriver migrasjonspakke med uklar entrypoint; funksjon, stack, tester, utrulling og dataflyt er ukjent.",
+    "purpose": "Støtte fagpersoners planlegging av observerbare vurderingskriterier.",
+    "demoValue": "Ett syntetisk kompetansemål, en oppgave, tre kriterieutkast og en planleggingssjekkliste gjør kriteriearbeidet konkret.",
+    "simplifications": "Originalt fiktivt tema om trygg overlevering. Ingen kildekode, kildeinnhold, elevsvar, poeng eller karakterer.",
+    "dependencies": "Kun statisk HTML/CSS/JS og lokalt hub-stilark; ingen tredjepartsavhengigheter.",
+    "risk": "Kandidaten kan omfatte sensitive vurderings- og studentdata; faktisk databehandling er ukjent. Demoen bruker ikke persondata eller elevresultater. Overlapp med separat app-vurderingsarbeid er rapportert, ikke verifisert.",
+    "scope": "Statisk route /vibe/vurderingsarbeid-fagskolen/. Ingen autentisering, personfelt, studentarbeid, scoring, API, backend, lagring, CDN, secrets eller eksterne forespørsler.",
+    "source": "Oppgitt apps-fagskolen/apps/vurderingsarbeid; GitHub metadataoppslag returnerte 404 2026-10-08. Ingen kildefiler lest.",
+    "separation": "Mulig overlapp med separat app-vurderingsarbeid ifølge internt inventar; forholdet er uavklart. Kandidaten beholdes separat i bred gjennomgang."
+  }
   ]
 }
