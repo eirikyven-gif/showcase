@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En kort, illustrativ øvelse i systematisk vedlikeholdsvurdering med oppdiktede eksempler.">
+  <title>NS3424 læringslab – illustrativ demo</title>
+  <link rel="stylesheet" href="/vibe/ns3424-lab/style.css">
+  <script src="/vibe/ns3424-lab/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header">
+    <a class="back" href="/vibe/">← Alle demoer</a>
+    <p class="eyebrow">Læringsskisse · oppdiktede eksempler</p>
+    <h1>Se mønsteret. Still gode spørsmål.</h1>
+    <p class="intro">En liten øvelse i å beskrive observasjoner, vurdere betydning og velge hva som bør undersøkes først.</p>
+  </header>
+  <main id="main">
+    <aside class="notice" aria-label="Viktig avgrensning">
+      <strong>Uoffisiell illustrasjon</strong>
+      <p>Denne demoen gjengir ikke NS 3424 og er ikke faglig veiledning. Ikke bruk den til å vurdere faktiske bygg eller ta beslutninger om sikkerhet og vedlikehold.</p>
+    </aside>
+    <section class="panel" aria-labelledby="steps-title">
+      <p class="eyebrow">Tre steg</p>
+      <h2 id="steps-title">En nyttig start på en vurdering</h2>
+      <ol class="steps">
+        <li><span>1</span><div><h3>Beskriv</h3><p>Skriv hva som faktisk er observert, uten å gjette på årsaken.</p></div></li>
+        <li><span>2</span><div><h3>Undersøk</h3><p>Finn ut hva som mangler av informasjon, og hvem som kan avklare det.</p></div></li>
+        <li><span>3</span><div><h3>Prioriter</h3><p>Se på mulig konsekvens og hvor raskt et forhold bør følges opp.</p></div></li>
+      </ol>
+    </section>
+    <section class="panel practice" aria-labelledby="practice-title">
+      <p class="eyebrow">Syntetisk scenario</p>
+      <h2 id="practice-title">Hva bør skje først?</h2>
+      <p class="scenario">I et fiktivt fellesrom oppdages en løs gulvlist og en svak, ny fuktflekk etter regnvær. Ingen vet ennå om flekken vokser.</p>
+      <fieldset>
+        <legend>Velg det mest forsiktige neste steget</legend>
+        <label class="choice"><input type="radio" name="answer" value="a"> Registrer begge observasjonene, undersøk fuktårsaken og følg utviklingen.</label>
+        <label class="choice"><input type="radio" name="answer" value="b"> Konkluder med at begge forhold er kosmetiske og lukk saken.</label>
+        <label class="choice"><input type="radio" name="answer" value="c"> Riv opp gulvet med en gang uten flere undersøkelser.</label>
+      </fieldset>
+      <div class="actions">
+        <button id="check" type="button">Se tilbakemelding</button>
+        <button id="reset" class="secondary" type="button">Prøv på nytt</button>
+      </div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1"></p>
+    </section>
+    <p class="footnote">Alle navn, hendelser og detaljer i øvelsen er oppdiktet. Demoen lagrer ikke svar.</p>
+  </main>
+  <footer><a href="/vibe/">Tilbake til Vibe</a></footer>
+</body>
+</html>
