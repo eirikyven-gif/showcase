@@ -41,10 +41,21 @@ jobs:
           set -euo pipefail
           test -f vibe/index.html || { echo 'Missing vibe/index.html'; exit 1; }
           test -f vibe/catalog.json || { echo 'Missing vibe/catalog.json'; exit 1; }
-          test -f vibe/nedtelling/index.html || { echo 'Missing Nedtelling direct route'; exit 1; }
           node --check vibe/assets/hub.js
-          node --check vibe/nedtelling/app.js
-          node -e "JSON.parse(require('fs').readFileSync('vibe/catalog.json', 'utf8'))"
+          for app_script in vibe/*/app.js; do node --check "$app_script"; done
+          node --test tests/*.test.mjs
+          node <<'NODE'
+          const fs = require('node:fs');
+          const catalog = JSON.parse(fs.readFileSync('vibe/catalog.json', 'utf8'));
+          for (const { slug } of catalog.apps) {
+            if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('Invalid slug: ' + slug);
+            for (const file of ['index.html', 'app.js', 'style.css']) {
+              if (!fs.existsSync('vibe/' + slug + '/' + file)) throw new Error('Missing ' + file + ' for ' + slug);
+            }
+          }
+          NODE
+          route_slugs="$(node -e "const c=require('./vibe/catalog.json'); process.stdout.write(c.apps.map(a=>a.slug).join(' '))")"
+          echo "VIBE_ROUTE_SLUGS=$route_slugs" >> "$GITHUB_ENV"
           mkdir -p dist
           tar -czf dist/vibe-site.tar.gz -C vibe .
           tar -tzf dist/vibe-site.tar.gz
@@ -109,13 +120,14 @@ jobs:
             fi
           }
           run_ssh_script() {
-            remote_command="bash -s -- '$target' '$stage' '$backup' '$remote_package'"
+            remote_command="bash -s -- '$target' '$stage' '$backup' '$remote_package' '$route_slugs'"
             if [ "$SSH_AUTH_MODE" = 'key' ]; then
               ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
             else
               SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
             fi
           }
+          route_slugs="$VIBE_ROUTE_SLUGS"
           run_id="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           target="${DEPLOY_TARGET_PATH%/}"
           parent="$(dirname "$target")"
@@ -166,8 +178,14 @@ jobs:
           tar -xzf "$remote_package" -C "$stage"
           rm -f "$remote_package"
           test -f "$stage/index.html"
-          test -f "$stage/nedtelling/index.html"
           test -f "$stage/catalog.json"
+          route_slugs="$5"
+          for slug in $route_slugs; do
+            case "$slug" in ''|*[!a-z0-9-]*) echo 'Invalid route slug in package manifest'; exit 1 ;; esac
+            test -f "$stage/$slug/index.html"
+            test -f "$stage/$slug/app.js"
+            test -f "$stage/$slug/style.css"
+          done
           find "$stage" -type d -exec chmod 755 {} +
           find "$stage" -type f -exec chmod 644 {} +
           if [ -e "$target" ]; then mv "$target" "$backup"; chmod -R 700 "$backup"; fi
@@ -175,17 +193,27 @@ jobs:
           trap - EXIT HUP INT TERM
           REMOTE
           base="${ONECOM_PUBLIC_BASE_URL%/}"
-          for path in /vibe/ /vibe/nedtelling/; do
+          response="$(mktemp)"
+          status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' "${base}/vibe/?cb=${GITHUB_RUN_ID}")"
+          echo "Smoke /vibe/: $status"
+          [ "$status" = '200' ] && grep -q 'Små verktøy' "$response"
+          rm -f "$response"
+          for slug in $route_slugs; do
+            path="/vibe/$slug/"
             response="$(mktemp)"
             status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' "${base}${path}?cb=${GITHUB_RUN_ID}")"
-            echo "Smoke ${path}: ${status}"
-            [ "$status" = '200' ] || { rm -f "$response"; exit 1; }
-            if [ "$path" = '/vibe/' ]; then grep -q 'Små verktøy' "$response"; else grep -q 'Nedtelling' "$response"; fi
+            echo "Smoke $path: $status"
+            [ "$status" = '200' ] && grep -qi '<title' "$response"
             rm -f "$response"
+            for asset in app.js style.css; do
+              status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' "${base}${path}${asset}?cb=${GITHUB_RUN_ID}")"
+              echo "Smoke asset ${path}${asset}: $status"
+              [ "$status" = '200' ] || exit 1
+            done
           done
-          for path in /vibe/catalog.json /vibe/assets/hub.js /vibe/assets/hub.css /vibe/nedtelling/app.js /vibe/nedtelling/style.css; do
+          for path in /vibe/catalog.json /vibe/assets/hub.js /vibe/assets/hub.css; do
             status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' "${base}${path}?cb=${GITHUB_RUN_ID}")"
-            echo "Smoke asset ${path}: ${status}"
+            echo "Smoke asset $path: $status"
             [ "$status" = '200' ] || exit 1
           done
           deployment_committed=1
