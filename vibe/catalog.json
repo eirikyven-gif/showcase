@@ -27,6 +27,13 @@
       "useCase": "Start en enkel nedtelling, sett den på pause, fortsett eller nullstill.",
       "category": "Fokus",
       "audience": ["Alle som vil holde oversikt over en kort økt eller pause"]
+    },
+    {
+      "slug": "inntekter-kostnader",
+      "name": "Inntekter og kostnader",
+      "useCase": "Utforsk en månedsoversikt med inntekter, kostnader og faste eksempelposter.",
+      "category": "Økonomi",
+      "audience": ["Alle som vil se et enkelt eksempel på månedsoversikt"]
     }
   ]
 }
