@@ -229,7 +229,20 @@
       "category": "Tid",
       "audience": [
         "Alle som vil følge med på forløpt tid"
-      ]
+      ],
+      "status": "Beholdt i bred førstegangsvurdering; eksisterende rute gjennomgått og dokumentert. Ingen kuratering eller utsiling.",
+      "source": "eirikyven-gif/diverse-apper, apps/opptelling/, public main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (checked 2026-10-08); source README identifies v1.2.0.",
+      "sourceUncertainty": "Source README lists manual checks but no automated app tests or results. It depends on shared UI assets. Deployment is listed but not verified; reuse rights are unverified. See route README.",
+      "purpose": "Vise forløpt tid fra et valgt tidspunkt eller fra nå.",
+      "demoValue": "En enkel, umiddelbart forståelig klokke viser oppdatert forløpt tid uten oppsett.",
+      "simplifications": "Original Vibe-utforming med ett starttidspunkt. Framtidige tidspunkt vises som null forløpt tid; kildeportal og delte kildeaktiva er utelatt.",
+      "risk": "Et tidspunkt kan indirekte beskrive en hendelse. Demoen ber ikke om identitet og sender eller lagrer ikke input. Kildens rettigheter og produksjonsdrift er ikke bekreftet.",
+      "scope": "Eksisterende responsiv statisk HTML/CSS/JS på /vibe/opptelling/. Ingen autentisering, server, API, eksterne kall, nettleserlagring, persistens, PII eller hemmeligheter.",
+      "sourceStack": "Kilden bruker HTML, JavaScript og delt CSS/JS fra apps/_shared/ui.css og apps/_shared/ui.js. Demoen bruker statisk HTML, CSS og JavaScript med Vibe-stiler.",
+      "sourceTests": "Kilde-README oppgir manuelle kontroller for direkte åpning, live opptelling, nullstilling og returlenke; ingen automatiserte app-tester/resultater er dokumentert.",
+      "sourceApiAuthStoragePrivacy": "Ingen API/serverkall, autentisering eller lagring er synlig i inspisert app-HTML/JS. Starttid står bare i sidens minne. Gjennomgangen dekker ikke hele produktet eller driftsmiljøet.",
+      "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse er bekreftet. Demoen kopierer ikke kildekode, designaktiva eller kildetekst.",
+      "routeState": "Eksisterende rute på main; denne endringen oppdaterer vurdering og testdekning uten å opprette en duplikat."
     },
     {
       "slug": "nedtelling-epost",
