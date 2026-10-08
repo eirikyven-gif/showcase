@@ -237,6 +237,32 @@ test('Nedtelling e-post is a local canvas preview with an accessible direct rout
   assert.doesNotMatch(html, /<input\b[^>]*type="text"|<textarea\b/i, 'demo has no free-text field');
 });
 
+test('Ukelønn is a distinct synthetic adult-only static candidate route', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'ukelonn');
+  const html = read('vibe/ukelonn/index.html');
+  const css = read('vibe/ukelonn/style.css');
+  const docs = read('vibe/ukelonn/README.md');
+
+  assert.ok(app, 'Ukelønn remains in the broad candidate catalog');
+  for (const field of ['status', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'source', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'routeState']) {
+    assert.equal(typeof app[field], 'string', `Ukelønn records ${field}`);
+    assert.ok(app[field].trim(), `Ukelønn ${field} is documented`);
+  }
+  assert.match(app.status, /Beholdt i bred førstegangsrunde/);
+  assert.match(app.source, /apps\/ukelonn.*0\.17\.0/);
+  assert.match(app.routeState, /Ny separat rute/);
+  assert.match(html, /href="\/vibe\/ukelonn\/"/);
+  assert.match(html, /href="\/vibe\/"/);
+  assert.match(html, /Syntetisk eksempel · voksne/);
+  assert.match(html, /Voksen A/);
+  assert.match(html, /Voksen B/);
+  assert.match(html, /Ikke skriv inn opplysninger om barn/);
+  assert.doesNotMatch(html, /<input\b|<form\b|<script[^>]+src="https?:/i);
+  assert.match(css, /@media\(max-width:700px\)/);
+  assert.match(docs, /Kildecheckoutet er kun lest/);
+  assert.match(docs, /Issue #2:\*\* Delvis fremdrift/);
+});
+
 test('Stoppeklokke candidate assessment is complete and retained in the broad review', () => {
   const app = catalog.apps.find((entry) => entry.slug === 'stoppeklokke');
   assert.ok(app, 'Stoppeklokke remains in the catalog');
