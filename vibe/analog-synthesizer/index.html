@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a51625">
+  <meta name="description" content="Spill enkle syntetiske toner direkte i nettleseren.">
+  <title>Analog Synthesizer · Vibe</title>
+  <link rel="stylesheet" href="/vibe/analog-synthesizer/style.css">
+  <script src="/vibe/analog-synthesizer/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="back" href="/vibe/">← Alle demoer</a><span class="badge">VIBE · LYDLEKE</span></header>
+  <main>
+    <p class="eyebrow">ET LITE SYNTHETISK INSTRUMENT</p>
+    <h1>Analog Synthesizer</h1>
+    <p class="lead">Velg en klang, form lyden og spill toner med tastene eller knappene.</p>
+    <section class="notice" aria-label="Personvern og lydtilgang"><strong>Alt skjer lokalt i nettleseren.</strong> Lyd starter bare når du trykker «Start lyd». Ingen mikrofon, opptak eller lagring.</section>
+    <section class="instrument" aria-label="Synthesizer">
+      <div class="transport"><div><span class="eyebrow">LYDMOTOR</span><p id="status" role="status" aria-live="polite">Av — trykk Start lyd for å begynne</p></div><button id="audio-toggle" class="primary" type="button">Start lyd</button></div>
+      <div class="preset-row"><label for="preset">Klangpreset</label><select id="preset"><option value="warm">Varm puls</option><option value="bright">Lys trekant</option><option value="deep">Dyp bass</option></select></div>
+      <div class="controls">
+        <label class="knob"><span>Frekvens</span><input id="frequency" type="range" min="120" max="1200" value="440"><output for="frequency">440 Hz</output></label>
+        <label class="knob"><span>Filter</span><input id="filter" type="range" min="250" max="8000" value="3200"><output for="filter">3.2 kHz</output></label>
+        <label class="knob"><span>Volum</span><input id="volume" type="range" min="0" max="35" value="16"><output for="volume">16%</output></label>
+      </div>
+      <div class="keyboard-wrap"><div class="keyboard-heading"><h2>Spill toner</h2><span>Tastatur: A W S E D F T G Y H U J</span></div>
+        <div class="keyboard" role="group" aria-label="Pianotangenter">
+          <button type="button" data-note="0" aria-label="C4, tast A">C</button><button type="button" data-note="1" class="black" aria-label="Ciss 4, tast W">C♯</button><button type="button" data-note="2" aria-label="D4, tast S">D</button><button type="button" data-note="3" class="black" aria-label="Diss 4, tast E">D♯</button><button type="button" data-note="4" aria-label="E4, tast D">E</button><button type="button" data-note="5" aria-label="F4, tast F">F</button><button type="button" data-note="6" class="black" aria-label="Fiss 4, tast T">F♯</button><button type="button" data-note="7" aria-label="G4, tast G">G</button><button type="button" data-note="8" class="black" aria-label="Giss 4, tast Y">G♯</button><button type="button" data-note="9" aria-label="A4, tast H">A</button><button type="button" data-note="10" class="black" aria-label="Aiss 4, tast U">A♯</button><button type="button" data-note="11" aria-label="B4, tast J">B</button>
+        </div>
+      </div>
+      <p class="hint">Lyd krever en nettleser som støtter Web Audio. Bruk hodetelefoner ved behov.</p>
+    </section>
+    <details class="about"><summary>Om denne demoen</summary><p>Dette er en forenklet, selvstendig utgave laget for Vibe. Tonene genereres lokalt med Web Audio API. Kontroller og valg finnes bare mens siden er åpen.</p></details>
+  </main>
+  <footer><a href="/vibe/">Tilbake til Vibe-huben</a></footer>
+</body>
+</html>
