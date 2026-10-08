@@ -136,6 +136,24 @@ test('HTML-only app routes are valid deployment targets', () => {
   assert.doesNotMatch(workflow, /test -f "\$stage\/\$slug\/style\.css"/);
 });
 
+test('Bilag v5 showcase keeps PDF and ZIP workflow as a synthetic, status-only demo', () => {
+  const html = read('vibe/bilag-v5/index.html');
+  const styles = read('vibe/bilag-v5/style.css');
+  const app = catalog.apps.find((entry) => entry.slug === 'bilag-v5');
+  assert.ok(app, 'Bilag v5 remains in the broad catalog');
+  assert.match(html, /href="\/vibe\/bilag-v5\/style\.css"/);
+  assert.match(html, /<h2 id="pdf-title">PDF-behandling<\/h2>/);
+  assert.match(html, /<h2 id="zip-title">ZIP-import<\/h2>/);
+  assert.match(html, /Ikke en revisjonslogg/);
+  assert.match(html, /Oppdiktet filnavn/);
+  assert.match(html, /Oppdiktet pakkenavn/);
+  assert.match(html, /ingen filer velges, leses, pakkes ut, konverteres, flyttes eller lastes ned/i);
+  assert.match(html, /class="skip-link" href="#main"/);
+  assert.match(styles, /@media\s*\(max-width:/);
+  assert.match(read('vibe/assets/hub.css'), /:focus-visible/);
+  assert.doesNotMatch(html, /<input\b|<form\b|<button\b/i);
+});
+
 test('route inventory has no duplicate app directory names', () => {
   const routeDirs = readdirSync(vibeRoot)
     .filter((name) => statSync(path.join(vibeRoot, name)).isDirectory() && name !== 'assets');
