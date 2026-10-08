@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En enkel lokal klokke med norsk dato og tid.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Klokke — Vibe</title>
+  <link rel="canonical" href="/vibe/klokke/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/klokke/style.css">
+  <script src="/vibe/klokke/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#clock">Hopp til klokken</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
+    <a class="back-link" href="/vibe/">← Alle verktøy</a>
+  </header>
+  <main id="clock" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">En liten pause i dagen</p>
+      <h1 id="page-title">Tiden, <span>akkurat nå.</span></h1>
+      <p class="intro-copy">En enkel klokke som viser lokal tid fra enheten din. Prøv pause eller bytt tidsformat — valgene gjelder bare mens siden er åpen.</p>
+    </section>
+    <section class="clock-panel" aria-label="Lokal klokke">
+      <div class="clock-mark" aria-hidden="true">◷</div>
+      <p class="clock-kicker">LOKAL TID</p>
+      <p id="clock-date" class="clock-date"></p>
+      <p id="clock-time" class="clock-time" aria-label="Klokkeslett">--:--:--</p>
+      <p id="clock-status" class="clock-status" aria-live="polite">Klokken går</p>
+      <div class="clock-controls" aria-label="Klokkeinnstillinger">
+        <button id="toggle-clock" class="primary-button" type="button">Sett på pause</button>
+        <button id="toggle-format" class="secondary-button" type="button" aria-pressed="false">Bruk 12-timersformat</button>
+      </div>
+      <p class="privacy-note">Klokken bruker enhetens egen tid. Ingen konto, lagring eller deling.</p>
+      <span class="clock-orbit orbit-one" aria-hidden="true"></span>
+      <span class="clock-orbit orbit-two" aria-hidden="true"></span>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Et lokalt eksempel</span></footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+:root { --clock-ink: #2c181c; --clock-muted: #654d52; --clock-red: #791b2b; }
+body { min-width: 320px; }
+.back-link { color: var(--muted); font-weight: 650; text-underline-offset: 4px; }
+.intro { padding: clamp(48px, 7vw, 78px) 0 38px; }
+.intro .eyebrow { color: var(--red-dark); }
+.intro h1 { font-size: clamp(2.7rem, 7vw, 5.3rem); }
+.intro h1 span { color: var(--red-dark); }
+.intro-copy { max-width: 650px; color: var(--clock-muted); line-height: 1.65; }
+.clock-panel { position: relative; isolation: isolate; width: min(840px, 100%); min-height: 390px; margin: 0 auto 82px; overflow: hidden; padding: clamp(32px, 7vw, 66px) 24px; border: 1px solid #ddc8cc; border-radius: 22px; background: #f7e9eb; text-align: center; box-shadow: 0 16px 44px #53101a12; }
+.clock-mark { color: var(--clock-red); font-size: 2rem; line-height: 1; }
+.clock-kicker { margin: 12px 0 14px; color: var(--clock-red); font-size: .72rem; font-weight: 800; letter-spacing: .15em; }
+.clock-date { position: relative; z-index: 1; margin: 0 0 8px; color: var(--clock-muted); font-size: clamp(.95rem, 2vw, 1.12rem); text-transform: capitalize; }
+.clock-time { position: relative; z-index: 1; margin: 0; color: var(--clock-ink); font-size: clamp(3.25rem, 11vw, 7.5rem); font-weight: 780; font-variant-numeric: tabular-nums; letter-spacing: -.075em; line-height: 1.1; }
+.clock-status { position: relative; z-index: 1; min-height: 1.5em; margin: 12px 0 26px; color: var(--clock-muted); font-size: .9rem; }
+.clock-controls { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.clock-controls button { min-height: 46px; padding: 10px 17px; border: 2px solid var(--clock-red); border-radius: 9px; font: inherit; font-size: .9rem; font-weight: 750; cursor: pointer; }
+.primary-button { background: var(--clock-red); color: white; }
+.primary-button:hover { background: #5e1422; }
+.secondary-button { background: #fffaf7; color: var(--clock-red); }
+.secondary-button:hover { background: white; }
+.clock-controls button:focus-visible { outline: 3px solid #183eaa; outline-offset: 4px; }
+.privacy-note { position: relative; z-index: 1; margin: 24px 0 0; color: var(--clock-muted); font-size: .8rem; line-height: 1.5; }
+.clock-orbit { position: absolute; z-index: -1; right: -90px; bottom: -115px; width: 260px; height: 260px; border: 1px solid var(--clock-red); border-radius: 50%; opacity: .12; pointer-events: none; }
+.orbit-two { right: -52px; bottom: -78px; width: 185px; height: 185px; }
+.site-footer { gap: 16px; }
+.footer-brand { color: var(--clock-muted); text-underline-offset: 4px; }
+@media (max-width: 600px) {
+  .site-header { min-height: 64px; padding-inline: 18px; }
+  .back-link { font-size: .82rem; }
+  .page-shell { width: calc(100% - 32px); }
+  .intro { padding: 44px 0 28px; }
+  .intro h1 { font-size: clamp(2.5rem, 11vw, 3.4rem); }
+  .intro-copy { font-size: .96rem; }
+  .clock-panel { min-height: 350px; margin-bottom: 48px; padding: 38px 16px; }
+  .clock-time { font-size: clamp(3.1rem, 15vw, 5rem); }
+  .clock-controls { flex-direction: column; align-items: stretch; max-width: 320px; margin-inline: auto; }
+  .site-footer { flex-wrap: wrap; padding-inline: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
