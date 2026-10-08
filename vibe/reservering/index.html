@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En statisk konseptdemo for kalender og oppdiktede ledige tider.">
+  <title>Ledige tider · Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/reservering/style.css">
+  <script src="/vibe/reservering/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til kalenderen</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – tilbake til apphub">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="main" class="page-shell">
+    <section class="intro"><p class="eyebrow">Kalender · konseptdemo</p><h1>Finn en ledig stund.</h1><p class="intro-copy">En rolig oversikt over oppdiktede tider for et fiktivt atelier. Se hvordan en kalender kan gjøre tilgjengelighet enkel å forstå.</p></section>
+    <aside class="demo-note" aria-label="Demomerking"><strong>Kun syntetiske eksempeldata</strong><span>Fiktivt atelier og oppdiktede tider. Dette er ingen bestilling, og ingenting sendes eller lagres.</span></aside>
+    <section class="calendar panel" aria-labelledby="calendar-title">
+      <div class="calendar-head"><div><p class="eyebrow">Eksempelkalender</p><h2 id="calendar-title">Lysrom atelier</h2><p class="sub">Tilgjengelighet · uke 42</p></div><div class="legend"><span><i class="available-dot"></i>Ledig i eksempelet</span><span><i class="busy-dot"></i>Opptatt i eksempelet</span></div></div>
+      <div class="calendar-scroll"><div class="week-grid" role="table" aria-label="Oppdiktet tilgjengelighet mandag til fredag i uke 42">
+        <div class="corner" role="columnheader">Tid</div><div role="columnheader">Man <b>12</b></div><div role="columnheader">Tir <b>13</b></div><div role="columnheader">Ons <b>14</b></div><div role="columnheader">Tor <b>15</b></div><div role="columnheader">Fre <b>16</b></div>
+        <div class="time" role="rowheader">09:00</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div>
+        <div class="time" role="rowheader">10:30</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div>
+        <div class="time" role="rowheader">13:00</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div>
+        <div class="time" role="rowheader">14:30</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div>
+      </div></div>
+      <p class="calendar-foot">Tider vises kun for å illustrere kalenderen. De kan ikke velges eller reserveres.</p>
+    </section>
+    <section class="how-it-works"><h2>En oversikt, ikke en bestilling</h2><p>Kalenderen viser et fast eksempel på ledige og opptatte tider. Tilgjengeligheten er oppdiktet og har ingen kobling til et faktisk lokale eller en kalender.</p></section>
+  </main>
+  <footer class="site-footer"><span>Vibe<span>.</span></span><a href="/vibe/">Tilbake til huben</a></footer>
+</body>
+</html>
