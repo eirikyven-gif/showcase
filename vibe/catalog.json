@@ -1,6 +1,13 @@
 {
   "apps": [
     {
+      "slug": "analog-synthesizer",
+      "name": "Analog Synthesizer",
+      "useCase": "Spill syntetiske toner og utforsk grunnleggende synthlyd i nettleseren.",
+      "category": "Musikk",
+      "audience": ["Musikere", "Lydinteresserte", "Nybegynnere innen synthesizere"]
+    },
+    {
       "slug": "nedtelling",
       "name": "Nedtelling",
       "useCase": "Lag en visuell nedtelling til en anledning, direkte i nettleseren.",
