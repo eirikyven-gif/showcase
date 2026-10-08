@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En oversikt over små verktøy og eksperimenter.">
+  <title>Vibe — små verktøy, store idéer</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <script src="/vibe/assets/hub.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a>
+    <span class="header-note">Et lite hjørne for gode idéer</span>
+  </header>
+
+  <main id="main" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Utforsk samlingen</p>
+      <h1 id="page-title">Små verktøy.<br><span>Store idéer.</span></h1>
+      <p class="intro-copy">En samling digitale eksperimenter laget for å gjøre hverdagen litt enklere, morsommere eller mer interessant.</p>
+      <div class="search-wrap">
+        <label for="app-search">Hva ser du etter?</label>
+        <div class="search-control">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="app-search" type="search" placeholder="Søk på navn, tema eller hvem det passer for" autocomplete="off" aria-describedby="search-help result-count">
+          <span class="search-key" aria-hidden="true">⌘ K</span>
+        </div>
+        <p id="search-help" class="search-help">Søk i navn, bruksområde, kategori og målgruppe.</p>
+      </div>
+    </section>
+
+    <section class="catalog" aria-labelledby="catalog-title">
+      <div class="catalog-heading">
+        <div>
+          <p class="eyebrow">Samlingen</p>
+          <h2 id="catalog-title">Finn din neste favoritt</h2>
+        </div>
+        <p id="result-count" class="result-count" aria-live="polite" aria-atomic="true"></p>
+      </div>
+      <div id="app-grid" class="app-grid" aria-live="polite" aria-busy="true"></div>
+      <div id="empty-state" class="empty-state" hidden>
+        <span class="empty-mark" aria-hidden="true">✳</span>
+        <h3>Her begynner det</h3>
+        <p>Vi samler vurderte verktøy her. Kom snart tilbake for å utforske.</p>
+      </div>
+      <div id="no-results" class="empty-state no-results" hidden>
+        <span class="empty-mark" aria-hidden="true">⌕</span>
+        <h3>Ingen treff denne gangen</h3>
+        <p>Prøv et annet søkeord, eller tøm søket for å se hele samlingen.</p>
+        <button id="clear-search" class="text-button" type="button">Tøm søket</button>
+      </div>
+      <p id="catalog-error" class="catalog-error" role="alert" hidden>Samlingen kunne ikke lastes akkurat nå. Prøv å laste siden på nytt.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a>
+    <p>Laget med nysgjerrighet <span aria-hidden="true">♥</span></p>
+  </footer>
+</body>
+</html>
