@@ -26,7 +26,7 @@
 
 ## Showcase-scope og kontroller
 
-- Rute: `/vibe/inntekter-kostnader/`. Ruten var allerede oppført én gang i katalogen; ingen slug- eller rutekollisjon ble funnet, og ingen kopi er lagt til.
+- Rute: `/vibe/inntekter-kostnader/`. Ruten var allerede oppført én gang i katalogen; metadataene for kandidaten er nå fullført. Ingen slug- eller rutekollisjon ble funnet, og ingen kopi er lagt til.
 - Siden viser tre syntetiske månedsoversikter, eksempelliste og faste eksempelposter. Tallene er kun demoverdier.
 - HTML, CSS og JavaScript er statiske filer. Månedvelgeren oppdaterer DOM-en lokalt i minnet; posttekst settes med `textContent`.
 - Ingen innlogging, passordfelt, skjema/brukerinput, opplasting, makroer, serverlagring, nettleserlagring, PII, hemmeligheter, private API-er, eksterne runtime-kall eller persistens.
@@ -36,12 +36,12 @@
 
 - Showcase-test: `node --test tests/vibe-static.test.mjs` kontrollerer katalogoppføring, unik slug, direkte canonical-rute, tastaturvennlig `<select>`, syntetiske data og fravær av eksterne kall/persistens i runtime-filer.
 - Kilde-QA: Ingen appspesifikk testkommando eller automatisert testdekning funnet.
-- Manuell nettleser-/skjermlesertest: Ikke utført i denne audit-endringen.
-- CI: Avventer PR-workflow.
+- Chromium QA på 320, 390, 768 og 1440 px: direkte rute og hubretur virket uten overflow. Tastaturfokus, månedsskifte, summer/status, reload som nullstiller valget, ingen JavaScript-feil og ingen eksterne forespørsler ble kontrollert. Skjermleser ble ikke testet manuelt.
+- CI: grønn på den QA-oppdaterte PR-headen.
 - Offentlig HTTP-/produksjonskontroll: Ikke utført.
 - Deploy: Ikke publisert av denne endringen.
 - **Issue #2:** Delvis løst; kandidaten beholdes i bred første runde.
 
 ## PR-diff
 
-Audit-endringen oppdaterer bare denne README-en, legger til en test for den eksisterende ruta og øker patchversjonen. Ingen appkode, katalogrute eller kildefiler endres.
+Audit-endringen oppdaterer README og katalogmetadata, legger til en test for den eksisterende ruta og øker patchversjonen. Ingen appkode, katalogrute eller kildefiler endres.

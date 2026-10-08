@@ -252,6 +252,10 @@ test('Inntekter og kostnader audits the existing route without duplicating it', 
 
   assert.equal(matches.length, 1, 'the existing route has exactly one catalog entry');
   assert.equal(matches[0].name, 'Inntekter og kostnader');
+  for (const field of ['status', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'source', 'separation']) {
+    assert.equal(typeof matches[0][field], 'string', `catalog records ${field}`);
+    assert.ok(matches[0][field].trim(), `catalog ${field} is not empty`);
+  }
   assert.match(html, /href="\/vibe\/inntekter-kostnader\/"/, 'direct route has a canonical URL');
   assert.match(html, /href="\/vibe\/"/, 'route links back to the hub');
   assert.match(html, /for="month-select"/, 'month selection has a visible label');
