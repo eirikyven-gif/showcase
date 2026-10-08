@@ -41,6 +41,13 @@
       "useCase": "Vis en kort, rullende tekst og juster farten eller sett den på pause.",
       "category": "Kommunikasjon",
       "audience": ["Alle som vil vise en kort melding"]
+    },
+    {
+      "slug": "lub-matrise",
+      "name": "LUB-matrise",
+      "useCase": "Se og rediger hvilke læringsutbytter som dekkes av hvert emne.",
+      "category": "Utdanning",
+      "audience": ["Faglærere", "Studieplanleggere", "Studenter"]
     }
   ]
 }
