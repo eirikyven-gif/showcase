@@ -169,6 +169,22 @@
         "Undervisere",
         "Alle som vil se et eksempel på læringsstøtte"
       ]
+    },
+    {
+      "slug": "bilag",
+      "name": "Bilag",
+      "useCase": "Få oversikt over fiktive bilag og prøv en enkel sorteringsstatus for gårdsadministrasjon.",
+      "category": "Gårdsadministrasjon og dokumentflyt",
+      "audience": [
+        "Gårdsbrukere",
+        "Regnskapsmedarbeidere",
+        "Dokumentansvarlige"
+      ],
+      "status": "Beholdt i bred førstegangsvurdering; statisk konseptdemo laget. Ingen kuratering eller utsiling.",
+      "demoValue": "Viser hvordan fiktive filnavn, kategorier, datoer og statuser kan gi oversikt over en enkel bilagsflyt.",
+      "simplifications": "Tre syntetiske rader. Handlingen endrer bare status- og mappetekst i DOM; ingen dokumenter eller filoperasjoner.",
+      "risk": "Bilagsflyt kan omfatte økonomiske og personlige opplysninger. Kildens faktiske databehandling kunne ikke verifiseres; demoen bruker bare fiktive data og har ingen opplasting, autentisering, lagring eller integrasjon.",
+      "scope": "Kun statisk /vibe/bilag/-rute med syntetisk innhold. Ingen dokumenter, opplasting/nedlasting, Drive/webhook, eksterne kall, PII, hemmeligheter, konto eller lagring."
     }
   ]
 }
