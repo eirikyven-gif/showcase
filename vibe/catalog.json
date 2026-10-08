@@ -25,6 +25,26 @@
       "scope": "Statisk HTML/CSS under /vibe/backyard-stats/. Ingen JavaScript, API-kall, eksterne tjenester, autentisering, lagring, input, personopplysninger eller hemmeligheter."
     },
     {
+      "slug": "wp-l-ringssti",
+      "name": "Plantekasse på papir",
+      "useCase": "Prøv en kort, oppdiktet læringsmodul med forklaring og kontrollspørsmål.",
+      "category": "Utdanning",
+      "audience": [
+        "Undervisere",
+        "Studenter",
+        "Personer som utforsker læringsgrensesnitt"
+      ],
+      "status": "Beholdt i bred kandidatgjennomgang; original konseptdemo laget. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Offentlig repo WP-l-ringssti: main viser README og ZIP v0.5.6. ZIP-dokumentasjon og pluginfil spriker om quizstatus; tidligere inventar beskriver bredere v0.4.x–0.5.x-status, planlagt WordPress-autentisering og Google Sheet-sync, samt servervalidert quiz. Test- og deploystatus er ikke bekreftet. Se README.",
+      "purpose": "Illustrere en liten læringsflyt med modultekst og quiztilbakemelding.",
+      "demoValue": "Gjør en læringssti med modulstruktur og umiddelbar tilbakemelding konkret i en selvstendig statisk demo.",
+      "simplifications": "Én original, fiktiv modul om å planlegge en plantekasse og ett flervalgs spørsmål. Ingen pluginredigering, WordPress-blokker eller kildeinnhold.",
+      "risk": "Kildeproduktet kan berøre student- og aktivitetsdata; faktisk utrulling og databruk er ikke verifisert, og kildedokumentasjonen spriker. Demoen bruker syntetisk innhold og samler ikke inn studentaktivitet eller persondata.",
+      "scope": "Selvstendig HTML/CSS/JS på /vibe/wp-l-ringssti/. Ingen WordPress/PHP, autentisering, Sheet-sync, API, backend, servervalidert quiz, aktivitetssporing, personlig data, lagring, hemmeligheter eller eksterne forespørsler. Valg finnes kun midlertidig i fanen.",
+      "source": "eirikyven-gif/WP-l-ringssti, offentlig main og ZIP wp-learningsti-mvp_v0.5.6.zip (lest 2026-10-08); versjons- og funksjonsusikkerhet dokumentert i rutens README.",
+      "separation": "WordPress-plugin-kandidaten WP-l-ringssti er separat fra WP-laringssti v0.9-webappen og fra Vibe-demoen laringssti-fagskolen."
+    },
+    {
       "slug": "ns3424-lab",
       "name": "NS3424 læringslab",
       "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
