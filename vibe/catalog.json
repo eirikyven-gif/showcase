@@ -5,49 +5,74 @@
       "name": "Nedtelling",
       "useCase": "Lag en visuell nedtelling til en anledning, direkte i nettleseren.",
       "category": "Planlegging",
-      "audience": ["Alle som gleder seg til noe"]
+      "audience": [
+        "Alle som gleder seg til noe"
+      ]
     },
     {
       "slug": "stoppeklokke",
       "name": "Stoppeklokke",
       "useCase": "Ta tiden, pause og fortsett, og registrer rundetider direkte i nettleseren.",
       "category": "Tid",
-      "audience": ["Alle som vil måle tid og rundetider"]
+      "audience": [
+        "Alle som vil måle tid og rundetider"
+      ]
     },
     {
       "slug": "klokke",
       "name": "Klokke",
       "useCase": "Se lokal tid og dato, og prøv pause og 12- eller 24-timersvisning.",
       "category": "Hverdagsverktøy",
-      "audience": ["Alle som vil ha en tydelig klokke i nettleseren"]
+      "audience": [
+        "Alle som vil ha en tydelig klokke i nettleseren"
+      ]
     },
     {
       "slug": "timer",
       "name": "Timer",
       "useCase": "Start en enkel nedtelling, sett den på pause, fortsett eller nullstill.",
       "category": "Fokus",
-      "audience": ["Alle som vil holde oversikt over en kort økt eller pause"]
+      "audience": [
+        "Alle som vil holde oversikt over en kort økt eller pause"
+      ]
     },
     {
       "slug": "inntekter-kostnader",
       "name": "Inntekter og kostnader",
       "useCase": "Utforsk en månedsoversikt med inntekter, kostnader og faste eksempelposter.",
       "category": "Økonomi",
-      "audience": ["Alle som vil se et enkelt eksempel på månedsoversikt"]
+      "audience": [
+        "Alle som vil se et enkelt eksempel på månedsoversikt"
+      ]
     },
     {
       "slug": "ticker",
       "name": "Ticker",
       "useCase": "Vis en kort, rullende tekst og juster farten eller sett den på pause.",
       "category": "Kommunikasjon",
-      "audience": ["Alle som vil vise en kort melding"]
+      "audience": [
+        "Alle som vil vise en kort melding"
+      ]
     },
     {
       "slug": "lub-matrise",
       "name": "LUB-matrise",
       "useCase": "Se og rediger hvilke læringsutbytter som dekkes av hvert emne.",
       "category": "Utdanning",
-      "audience": ["Faglærere", "Studieplanleggere", "Studenter"]
+      "audience": [
+        "Faglærere",
+        "Studieplanleggere",
+        "Studenter"
+      ]
+    },
+    {
+      "slug": "opptelling",
+      "name": "Opptelling",
+      "useCase": "Se hvor lenge det har gått siden et valgt tidspunkt, eller start opptellingen nå.",
+      "category": "Tid",
+      "audience": [
+        "Alle som vil følge med på forløpt tid"
+      ]
     }
   ]
 }
