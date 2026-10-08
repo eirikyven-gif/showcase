@@ -185,6 +185,22 @@
       "simplifications": "Tre syntetiske rader. Handlingen endrer bare status- og mappetekst i DOM; ingen dokumenter eller filoperasjoner.",
       "risk": "Bilagsflyt kan omfatte økonomiske og personlige opplysninger. Kildens faktiske databehandling kunne ikke verifiseres; demoen bruker bare fiktive data og har ingen opplasting, autentisering, lagring eller integrasjon.",
       "scope": "Kun statisk /vibe/bilag/-rute med syntetisk innhold. Ingen dokumenter, opplasting/nedlasting, Drive/webhook, eksterne kall, PII, hemmeligheter, konto eller lagring."
+    },
+    {
+      "slug": "gardsbehov-fornes",
+      "name": "Gårdsbehov",
+      "useCase": "Se et syntetisk eksempel på melding, prioritering og oppfølging av et gårdsbehov.",
+      "category": "Gårdsdrift",
+      "audience": [
+        "Gårdsbruk",
+        "Driftsansvarlige",
+        "Alle som vil utforske en enkel driftsflyt"
+      ],
+      "status": "Beholdt i bred førstegangsvurdering; syntetisk statisk demo laget. Ingen kuratering eller utsiling.",
+      "demoValue": "Følg én fiktiv vedlikeholdssak fra melding via prioriteringsgrunnlag til mulig neste steg.",
+      "simplifications": "Én oppdiktet sak, ett fiktivt sted og eksempelroller. Ingen saksregistrering, vedlegg, meldinger, tildeling, e-post, autentisering, API, database eller faktisk statusendring.",
+      "risk": "Kilden håndterer privat driftsinformasjon og kan inneholde personopplysninger og HMS-informasjon. Risikoen i demoen er lavere fordi alt innhold er laget som syntetisk eksempel uten identifiserende detaljer eller innsending. Kildens system må sikkerhetsvurderes separat før eventuell operativ bruk.",
+      "scope": "Responsiv, statisk, skrivebeskyttet visning av én eksempelmelding, prioriteringsfaktorer og hendelsesforløp. Ingen nettleser- eller serverlagring, eksterne kall, opplastinger eller brukerinput."
     }
   ]
 }

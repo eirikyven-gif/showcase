@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En syntetisk demonstrasjon av prioritering og oppfølging av et gårdsbehov.">
+  <meta name="color-scheme" content="light">
+  <title>Gårdsbehov · Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/gardsbehov-fornes/style.css">
+  <script src="/vibe/gardsbehov-fornes/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a>
+    <a class="header-note back-link" href="/vibe/">Til alle verktøy</a>
+  </header>
+  <main id="main" class="farm-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Gårdsbehov · syntetisk eksempel</p>
+      <h1 id="page-title">Fra behov til <span>neste steg.</span></h1>
+      <p class="lead">Se hvordan én driftsmelding kan bli vurdert, prioritert og fulgt opp i en enkel arbeidsflyt.</p>
+      <div class="demo-banner" role="note"><span aria-hidden="true">✳</span><p><strong>Oppdiktet demo.</strong> Dette er én fiktiv sak på et tenkt gårdsbruk. Ikke bruk siden til reelle drifts- eller HMS-meldinger. Ingenting sendes eller lagres.</p></div>
+    </section>
+
+    <section class="overview" aria-label="Eksempeloversikt">
+      <div class="overview-top"><div><p class="eyebrow">Eksempeloversikt</p><h2>Aktive behov</h2></div><span class="count"><span class="count-dot" aria-hidden="true"></span>1 fiktiv sak</span></div>
+      <div class="case-layout">
+        <nav class="case-list" aria-label="Saksoversikt">
+          <p class="list-caption">NYLIG MELDT <span>01</span></p>
+          <button class="case-item" id="case-selector" type="button" aria-current="true" aria-controls="case-detail">
+            <span class="case-item-top"><span class="case-id">GB-104</span><span class="priority-pill">Prioritet 6</span></span>
+            <strong>Portlås trenger justering</strong>
+            <span class="case-meta">Fiktiv driftsbygning · Vedlikehold</span>
+            <span class="case-item-bottom"><span class="status-mark" aria-hidden="true"></span>Til vurdering <span>›</span></span>
+          </button>
+          <p class="list-footnote">Kun eksempeldata vises</p>
+        </nav>
+        <article class="case-detail" id="case-detail" aria-labelledby="case-title">
+          <div class="detail-top"><div><p class="case-id">SAK GB-104 <span aria-hidden="true">·</span> MELDT I EKSEMPELET</p><h2 id="case-title">Portlås trenger justering</h2></div><span class="status-badge"><span aria-hidden="true"></span>Til vurdering</span></div>
+          <p class="case-description">En port i den oppdiktede redskapsboden går tregt igjen. Låsen ser hel ut, men trenger en enkel kontroll og justering før porten brukes videre.</p>
+          <dl class="facts">
+            <div><dt>Sted</dt><dd>Redskapsbod · port øst <span class="fiction-tag">fiktivt sted</span></dd></div>
+            <div><dt>Type</dt><dd>Vedlikehold</dd></div>
+            <div><dt>Meldt av</dt><dd>Eksempelrolle · Driftslaget</dd></div>
+            <div><dt>Frist</dt><dd>Ingen satt</dd></div>
+          </dl>
+          <section class="assessment" aria-labelledby="assessment-title"><div class="assessment-heading"><h3 id="assessment-title">Prioriteringsgrunnlag</h3><span class="score">6 <small>/ 12</small></span></div>
+            <div class="score-track" role="img" aria-label="Prioritet 6 av 12, beregnet fra drift 3 og hast 2; HMS er ikke markert"><span></span></div>
+            <div class="score-key"><span>Drift <strong>3 / 4</strong></span><span>Hast <strong>2 / 3</strong></span><span>HMS <strong>Ikke markert</strong></span></div>
+            <p class="formula-note">Eksempelscore: drift × hast. HMS-tillegg: 0 i dette eksempelet.</p>
+          </section>
+          <section class="timeline" aria-labelledby="timeline-title"><div class="timeline-heading"><h3 id="timeline-title">Hendelser</h3><span>Kun eksempel</span></div>
+            <ol class="events"><li><span class="event-icon reported" aria-hidden="true">↗</span><div><strong>Behov meldt</strong><p>Oppdiktet beskrivelse lagt inn i eksempelet.</p><time datetime="2026-05-12T09:20">12. mai · 09:20</time></div></li><li><span class="event-icon reviewed" aria-hidden="true">◎</span><div><strong>Venter på vurdering</strong><p>Eksempelrollen kan kontrollere omfang og foreslå neste steg.</p><time>Ikke startet</time></div></li></ol>
+          </section>
+          <div class="next-step"><span class="next-icon" aria-hidden="true">→</span><p><strong>Mulig neste steg</strong><br>Kontroller porten og sett en realistisk frist.</p><span class="read-only">Visning</span></div>
+        </article>
+      </div>
+    </section>
+    <section class="workflow" aria-labelledby="workflow-title"><p class="eyebrow">En enkel arbeidsflyt</p><h2 id="workflow-title">Tydelige steg gir oversikt.</h2><ol><li><span>01</span><strong>Meld</strong><p>Beskriv behov, sted og hva som haster.</p></li><li><span>02</span><strong>Vurder</strong><p>Se på drift, hast og eventuell HMS-betydning.</p></li><li><span>03</span><strong>Følg opp</strong><p>Avklar ansvar, status og neste handling.</p></li></ol></section>
+    <p class="closing-note">Demonstrasjonen viser et mulig grensesnitt. Den er ikke et operativt system, sikkerhetsråd eller kanal for varsling.</p>
+  </main>
+  <footer class="site-footer"><a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a><p>Et syntetisk driftsflyteksempel</p></footer>
+</body>
+</html>
