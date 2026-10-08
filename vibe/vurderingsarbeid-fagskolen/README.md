@@ -23,7 +23,7 @@
 - Alt scenario- og kriterieinnhold er oppdiktet og formulert for denne demoen.
 - Ingen studentopplysninger, svar, prestasjoner, poeng eller karakterer.
 - Ingen fritekstfelt, autentisering, API, backend, konto, analyse, cookies, storage, secrets, CDN eller eksterne forespørsler.
-- Sjekklistemarkeringer pys kun i sidens minne og forsvinner ved omlasting.
+- Sjekklistemarkeringer finnes kun i sidens minne og forsvinner ved omlasting.
 - Dette er et konsept for fagpersoners planlegging, ikke en vurderingsfasit eller offisiell veiledning.
 
 ## Test og QA

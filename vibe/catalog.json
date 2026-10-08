@@ -5,11 +5,7 @@
       "name": "Ledige tider",
       "useCase": "Utforsk en statisk kalenderoversikt med oppdiktede ledige og opptatte tider.",
       "category": "Planlegging",
-      "audience": [
-        "Små virksomheter",
-        "Tjenesteytere",
-        "Kalenderinteresserte"
-      ],
+      "audience": ["Små virksomheter", "Tjenesteytere", "Kalenderinteresserte"],
       "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Kildestatus er uverifisert.",
       "demoValue": "Viser hvordan en enkel ukevisning kan gjøre tilgjengelighet lett å lese.",
       "simplifications": "Fast visning med syntetiske tider. Ingen valg, booking eller bekreftelse.",
@@ -21,12 +17,7 @@
       "name": "Backyard løpsoversikt",
       "useCase": "Utforsk en statisk visualisering av oppdiktede rundetider, fremdrift og stilling i et Backyard-løp.",
       "category": "Sport og arrangement",
-      "audience": [
-        "Løpsarrangører",
-        "Deltakere",
-        "Publikum",
-        "OBS-ansvarlige"
-      ],
+      "audience": ["Løpsarrangører", "Deltakere", "Publikum", "OBS-ansvarlige"],
       "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Ingen kuratering eller utsiling.",
       "demoValue": "Illustrerer hvordan rundetider, fremdrift og en resultatliste kan samles i en lesbar løpsoversikt.",
       "simplifications": "Fast oversikt med syntetiske data og et statisk diagram. Ingen liveoppdatering, API, OBS-integrasjon, innlesing eller eksport.",
@@ -58,11 +49,7 @@
       "name": "NS3424 læringslab",
       "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
       "category": "Utdanning",
-      "audience": [
-        "Studenter",
-        "Undervisere",
-        "Nybegynnere innen byggforvaltning"
-      ],
+      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
       "status": "demo",
       "demoValue": "Viser hvordan korte scenarioer og umiddelbar tilbakemelding kan støtte læring.",
       "simplifications": "Originalt minieksempel med generiske scenarioer; dekker ikke eller gjengir NS 3424.",
@@ -74,11 +61,7 @@
       "name": "Byggobservasjoner – arkivkandidat",
       "useCase": "Øv på å skille observerbare forhold fra antakelser i to oppdiktede bygningsscener.",
       "category": "Utdanning",
-      "audience": [
-        "Studenter",
-        "Undervisere",
-        "Nybegynnere innen byggforvaltning"
-      ],
+      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
       "status": "Kandidat fra arkivert ns3456-app beholdt i bred førstegangsvurdering. Arkivert kilde og rettigheter er ikke verifisert. Ruten er en ny, generisk øvelse, ikke kildeimplementasjonen.",
       "demoValue": "En faktasorteringsøvelse med tilbakemelding, som skiller seg fra ns3424-labs enkeltscenario og prioriteringsspørsmål. Overlappet i tema og målgruppe er betydelig.",
       "simplifications": "To korte, fiktive scener og forhåndsskrevne observasjoner. Ingen standardmetode, tilstandsgrader, faglig poengsetting eller vurdering av faktiske bygg.",
@@ -90,11 +73,7 @@
       "name": "Analog Synthesizer",
       "useCase": "Spill syntetiske toner og utforsk grunnleggende synthlyd i nettleseren.",
       "category": "Musikk",
-      "audience": [
-        "Musikere",
-        "Lydinteresserte",
-        "Nybegynnere innen synthesizere"
-      ]
+      "audience": ["Musikere", "Lydinteresserte", "Nybegynnere innen synthesizere"]
     },
     {
       "slug": "nedtelling",
@@ -237,27 +216,6 @@
       "scope": "Responsiv, statisk lesestøtte med tastaturbetjente fasetrinn. Ingen fritekst, svarinnsending, lagring, konto, server eller eksterne kall."
     },
     {
-      "slug": "vurderingsarbeid-fagskolen",
-      "name": "Kriterieverksted",
-      "useCase": "Planlegg synlige vurderingskriterier fra et oppdiktet kompetansemål og en oppgave.",
-      "category": "Utdanning",
-      "audience": [
-        "Faglærere",
-        "Vurderingsteam",
-        "Studieplanleggere ved fagskole"
-      ],
-      "status": "Beholdt som kandidat i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Oppgitt repo apps-fagskolen/apps ga 404 ved metadataoppslag 2026-10-08; kilden er ikke åpnet. Internt inventar beskriver migrasjonspakke med uklar entrypoint; funksjon, stack, tester, utrulling og dataflyt er ukjent.",
-      "purpose": "Støtte fagpersoners planlegging av observerbare vurderingskriterier.",
-      "demoValue": "Ett syntetisk kompetansemål, en oppgave, tre kriterieutkast og en planleggingssjekkliste gjør kriteriearbeidet konkret.",
-      "simplifications": "Originalt fiktivt tema om trygg overlevering. Ingen kildekode, kildeinnhold, elevsvar, poeng eller karakterer.",
-      "dependencies": "Kun statisk HTML/CSS/JS og lokalt hub-stilark; ingen tredjepartsavhengigheter.",
-      "risk": "Kandidaten kan omfatte sensitive vurderings- og studentdata; faktisk databehandling er ukjent. Demoen bruker ikke persondata eller elevresultater. Overlapp med separat app-vurderingsarbeid er rapportert, ikke verifisert.",
-      "scope": "Statisk route /vibe/vurderingsarbeid-fagskolen/. Ingen autentisering, personfelt, studentarbeid, scoring, API, backend, lagring, CDN, secrets eller eksterne forespørsler.",
-      "source": "Oppgitt apps-fagskolen/apps/vurderingsarbeid; GitHub metadataoppslag returnerte 404 2026-10-08. Ingen kildefiler lest.",
-      "separation": "Mulig overlapp med separat app-vurderingsarbeid ifølge internt inventar; forholdet er uavklart. Kandidaten beholdes separat i bred gjennomgang."
-    },
-    {
       "slug": "larebot",
       "name": "Lærebot",
       "useCase": "Se en kort, forhåndsskrevet læringsforklaring med syntetiske eksempelspørsmål.",
@@ -289,12 +247,7 @@
       "name": "Bilag v5 · batchstatus",
       "useCase": "Se et syntetisk statusbilde av separate PDF-batch- og ZIP-importløp for bilagsflyt.",
       "category": "Gårdsadministrasjon og dokumentflyt",
-      "audience": [
-        "Gårdsbrukere",
-        "Regnskapsmedarbeidere",
-        "Dokumentansvarlige",
-        "Utviklere som vurderer batchflyt"
-      ],
+      "audience": ["Gårdsbrukere", "Regnskapsmedarbeidere", "Dokumentansvarlige", "Utviklere som vurderer batchflyt"],
       "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
       "demoValue": "Gjør forskjellen mellom PDF-behandling og separat ZIP-import synlig gjennom køstatus og oppdiktede hendelseslinjer.",
       "simplifications": "Kun fast eksempelstatus i to batchkort og en fiktiv logg. Ingen jobbkjøring, tidsstyring, ZIP-/PDF-tolkning, mappeoperasjoner, forsøk eller ekte revisjonslogg.",
@@ -322,11 +275,7 @@
       "name": "Kornfølgeseddel",
       "useCase": "Se og skriv ut en syntetisk følgeseddel for en oppdiktet kornlevering.",
       "category": "Gårdsdrift og dokumentflyt",
-      "audience": [
-        "Gårdsbrukere",
-        "Transportører",
-        "Mottak"
-      ],
+      "audience": ["Gårdsbrukere", "Transportører", "Mottak"],
       "status": "Beholdt i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
       "demoValue": "Viser en enkel, utskriftsvennlig oppstilling av leveringsdetaljer, varelinje og signaturfelt.",
       "simplifications": "Én ikke-redigerbar følgeseddel med utelukkende oppdiktede navn, datoer, referanser og mengder. Utskrift åpner nettleserens standarddialog.",
@@ -354,16 +303,33 @@
       "name": "Vinterlagring Fornes",
       "useCase": "Se et enkelt, fiktivt eksempel på status for én enhet i vinterlagring.",
       "category": "Gårdsadministrasjon og lagerstyring",
-      "audience": [
-        "Lageransvarlige",
-        "Gårdsbrukere",
-        "Personer som utforsker vinterlagring"
-      ],
+      "audience": ["Lageransvarlige", "Gårdsbrukere", "Personer som utforsker vinterlagring"],
       "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
       "demoValue": "Viser hvordan lagringsstatus, plass og et enkelt miljøsignal kan samles i en oversikt for én oppdiktet enhet.",
       "simplifications": "Én abstrakt enhet med én fast status: lagret. Ingen navn, kjennemerke, kundeprofil, bevegelser, flere plasser, administrasjon eller redigering.",
       "risk": "Kildeappen er beskrevet som en innloggingspreget kunde-/adminflyt med e-post, PHP-session og database, og behandler kundeopplysninger. Kildeproduksjon og kildetest er ikke besøkt. Mulig overlapp med produktfamilien Lagerkart Vinter er uavklart; demoene har ulikt, selvstendig omfang. Demoen bruker kun syntetisk innhold og er ikke egnet for operativ lagerstyring.",
       "scope": "Selvstendig, responsiv /vibe/vinterlagring-fornes/-rute. Kun statisk HTML, CSS og JavaScript; én skrivebeskyttet eksempeltilstand. Ingen skjema for personopplysninger, e-post, database, session, autentisering, API, ekstern ressurs eller lagring."
-    }
+    },
+  {
+    "slug": "vurderingsarbeid-fagskolen",
+    "name": "Kriterieverksted",
+    "useCase": "Planlegg synlige vurderingskriterier fra et oppdiktet kompetansemål og en oppgave.",
+    "category": "Utdanning",
+    "audience": [
+      "Faglærere",
+      "Vurderingsteam",
+      "Studieplanleggere ved fagskole"
+    ],
+    "status": "Beholdt som kandidat i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
+    "sourceUncertainty": "Oppgitt repo apps-fagskolen/apps ga 404 ved metadataoppslag 2026-10-08; kilden er ikke åpnet. Internt inventar beskriver migrasjonspakke med uklar entrypoint; funksjon, stack, tester, utrulling og dataflyt er ukjent.",
+    "purpose": "Støtte fagpersoners planlegging av observerbare vurderingskriterier.",
+    "demoValue": "Ett syntetisk kompetansemål, en oppgave, tre kriterieutkast og en planleggingssjekkliste gjør kriteriearbeidet konkret.",
+    "simplifications": "Originalt fiktivt tema om trygg overlevering. Ingen kildekode, kildeinnhold, elevsvar, poeng eller karakterer.",
+    "dependencies": "Kun statisk HTML/CSS/JS og lokalt hub-stilark; ingen tredjepartsavhengigheter.",
+    "risk": "Kandidaten kan omfatte sensitive vurderings- og studentdata; faktisk databehandling er ukjent. Demoen bruker ikke persondata eller elevresultater. Overlapp med separat app-vurderingsarbeid er rapportert, ikke verifisert.",
+    "scope": "Statisk route /vibe/vurderingsarbeid-fagskolen/. Ingen autentisering, personfelt, studentarbeid, scoring, API, backend, lagring, CDN, secrets eller eksterne forespørsler.",
+    "source": "Oppgitt apps-fagskolen/apps/vurderingsarbeid; GitHub metadataoppslag returnerte 404 2026-10-08. Ingen kildefiler lest.",
+    "separation": "Mulig overlapp med separat app-vurderingsarbeid ifølge internt inventar; forholdet er uavklart. Kandidaten beholdes separat i bred gjennomgang."
+  }
   ]
 }
