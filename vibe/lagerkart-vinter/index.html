@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e9">
+  <title>Lagerkart Vinter · Vibe-utstilling</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="../">← Alle demoer</a>
+    <span class="season">VINTERLAGER · EKSEMPELKART</span>
+    <div class="heading"><p>PLASSERING PÅ LAGER</p><h1>Lagerkart Vinter</h1><p class="subhead">Få oversikt over hvor vinterens kjøretøy står.</p></div>
+    <span class="demo-tag">Lokal demo · oppdiktede data</span>
+  </header>
+  <main>
+    <section class="notice" aria-label="Demoinformasjon"><span aria-hidden="true">✳</span><p><strong>Dette er et eksempel.</strong> Alle navn, kjennemerker og plasseringer er oppdiktet. Endringer finnes bare mens siden er åpen.</p></section>
+    <section class="summary" aria-label="Kapasitetsoversikt">
+      <article><span>Plassert</span><strong id="placed-count">0</strong><small>enheter på kartet</small></article>
+      <article><span>Ledig kapasitet</span><strong id="free-meters">0 m</strong><small>på eksempelradene</small></article>
+      <article><span>Venter på plass</span><strong id="waiting-count">0</strong><small>i enhetsbanken</small></article>
+    </section>
+    <div class="workspace">
+      <section class="map-panel" aria-labelledby="map-title">
+        <div class="panel-heading"><div><p class="eyebrow">SESONG 2026 / 2027</p><h2 id="map-title">Lagerområder</h2></div><div class="legend"><span><i class="dot vehicle"></i>Plassert</span><span><i class="dot blocked"></i>Sperret</span></div></div>
+        <p class="hint">Velg en enhet i kartet for å flytte den med knappene. Kartet er skjematisk.</p>
+        <div class="map-scroll" tabindex="0" aria-label="Lagerkart. Rull vannrett for å se hele kartet."><div class="map" id="map"></div></div>
+        <div class="selection" id="selection" aria-live="polite"><span class="selection-icon" aria-hidden="true">↖</span><p>Velg et kjøretøy på kartet for å se detaljer og flytte det.</p></div>
+      </section>
+      <aside class="bank" aria-labelledby="bank-title">
+        <div class="panel-heading"><div><p class="eyebrow">IKKE PLASSERT</p><h2 id="bank-title">Enhetsbank</h2></div><span class="count" id="bank-count">0</span></div>
+        <p class="hint">Eksempelkjøretøy som venter på en ledig rad.</p>
+        <label for="search">Søk i eksempeldata</label><input id="search" type="search" placeholder="Søk type eller kjennemerke" autocomplete="off">
+        <div class="bank-list" id="bank-list"></div>
+        <p class="empty" id="empty-state" hidden>Ingen enheter passer søket.</p>
+      </aside>
+    </div>
+    <footer><span>VIBE-UTSTILLING / 01</span><span>Ingen innlogging · ingen lagring · ingen nettverkskall</span></footer>
+  </main>
+</body>
+</html>
