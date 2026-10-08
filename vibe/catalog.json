@@ -34,6 +34,13 @@
       "useCase": "Utforsk en månedsoversikt med inntekter, kostnader og faste eksempelposter.",
       "category": "Økonomi",
       "audience": ["Alle som vil se et enkelt eksempel på månedsoversikt"]
+    },
+    {
+      "slug": "ticker",
+      "name": "Ticker",
+      "useCase": "Vis en kort, rullende tekst og juster farten eller sett den på pause.",
+      "category": "Kommunikasjon",
+      "audience": ["Alle som vil vise en kort melding"]
     }
   ]
 }
