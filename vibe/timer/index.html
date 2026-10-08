@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En enkel nedtelling for fokus og pauser, rett i nettleseren.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Timer — Vibe</title>
+  <link rel="canonical" href="/vibe/timer/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/timer/style.css">
+  <script src="/vibe/timer/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#timer-app">Hopp til timeren</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="timer-app" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Et lite pusterom</p>
+      <h1 id="page-title">Tid til <span>fokus.</span></h1>
+      <p class="intro-copy">En enkel nedtelling for arbeidsøkter, pauser eller det du vil rekke. Timeren kjører bare i denne fanen.</p>
+    </section>
+    <section class="timer-panel" aria-labelledby="timer-heading">
+      <div class="panel-heading"><div><p class="eyebrow">Timer · v1.2.0</p><h2 id="timer-heading">Still inn tiden</h2></div><span class="sample-badge">Syntetisk eksempel</span></div>
+      <label for="seconds">Varighet i sekunder</label>
+      <div class="duration-control"><input id="seconds" name="seconds" type="number" min="1" max="5999999" step="1" value="60" inputmode="numeric" aria-describedby="sample-note duration-help"><span>sekunder</span></div>
+      <p id="sample-note" class="sample-note">60 sekunder er et eksempel. Endre det til ønsket varighet.</p>
+      <p id="duration-help" class="visually-hidden">Skriv inn et helt tall fra 1 til 5 999 999 sekunder.</p>
+      <p id="display" class="timer-display" role="timer" aria-label="Tid igjen">01:00</p>
+      <p id="status" class="timer-status" role="status" aria-live="polite">Klar til å starte</p>
+      <div class="timer-actions">
+        <button id="start" class="primary-button" type="button">Start</button>
+        <button id="pause" class="secondary-button" type="button" disabled>Pause</button>
+        <button id="reset" class="reset-button" type="button">Nullstill eksempel</button>
+      </div>
+    </section>
+    <p class="privacy-note"><span aria-hidden="true">◉</span> Ingen innlogging eller lagring. Nullstill eller lukk fanen for å fjerne aktiviteten.</p>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Ta tiden i ditt eget tempo.</span></footer>
+</body>
+</html>
