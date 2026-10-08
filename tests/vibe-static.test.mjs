@@ -62,6 +62,19 @@ test('catalog fields are complete and slugs are unique, stable route segments', 
   }
 });
 
+test('Klokke candidate assessment documents source, scope, risk, and broad-round status', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'klokke');
+  assert.ok(app, 'Klokke remains in the candidate catalog');
+  for (const field of ['status', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'source']) {
+    assert.equal(typeof app[field], 'string', `Klokke has ${field} assessment metadata`);
+    assert.ok(app[field].trim(), `Klokke ${field} metadata is not empty`);
+  }
+  assert.match(app.status, /Beholdt i bred førstegangsvurdering/);
+  assert.match(app.source, /diverse-apper.*apps\/klokke/);
+  assert.match(read('vibe/klokke/README.md'), /lisens|rettighetsgrunnlaget/i);
+  assert.match(read('vibe/klokke/README.md'), /ingen.*API|ingen API/i);
+});
+
 test('hub search covers every catalog field and renders values as text', () => {
   const script = read('vibe/assets/hub.js');
   for (const field of ['app.name', 'app.useCase', 'app.category', 'app.audience']) {
