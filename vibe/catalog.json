@@ -1,6 +1,18 @@
 {
   "apps": [
     {
+      "slug": "reservering",
+      "name": "Ledige tider",
+      "useCase": "Utforsk en statisk kalenderoversikt med oppdiktede ledige og opptatte tider.",
+      "category": "Planlegging",
+      "audience": ["Små virksomheter", "Tjenesteytere", "Kalenderinteresserte"],
+      "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Kildestatus er uverifisert.",
+      "demoValue": "Viser hvordan en enkel ukevisning kan gjøre tilgjengelighet lett å lese.",
+      "simplifications": "Fast visning med syntetiske tider. Ingen valg, booking eller bekreftelse.",
+      "risk": "Kildebeskrivelser, funksjoner og implementasjon er uverifisert. Booking kan berøre personopplysninger og kalenderstatus; ingen slike data eller funksjoner finnes her.",
+      "scope": "Statisk HTML/CSS/JS under /vibe/reservering/. Ingen database, API, innlogging, kundeopplysninger, skjema, e-post, tokenlenker, lagring eller eksterne kall."
+    },
+    {
       "slug": "backyard-stats",
       "name": "Backyard løpsoversikt",
       "useCase": "Utforsk en statisk visualisering av oppdiktede rundetider, fremdrift og stilling i et Backyard-løp.",
