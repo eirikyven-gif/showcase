@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#9f1d2d">
+  <title>LUB-matrise – Vibe</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="back-link" href="/vibe/">← Til apphub</a>
+    <p class="eyebrow">Syntetisk demo · ingen lagring</p>
+    <h1>LUB-matrise</h1>
+    <p class="lede">Utforsk hvordan emner kan kobles til læringsutbytter. Velg en rute i matrisen for å slå koblingen av eller på.</p>
+  </header>
+
+  <main class="page">
+    <section class="notice" aria-label="Om demoen">
+      <strong>Kun eksempeldata.</strong> Emner, koder og læringsutbytter er oppdiktet. Endringene finnes bare mens denne siden er åpen.
+    </section>
+
+    <section class="panel" aria-labelledby="matrix-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Studieeksempel · 1. år</p>
+          <h2 id="matrix-title">Grunnleggende prosjektarbeid</h2>
+          <p class="muted">Trykk på en avkrysningsrute for å endre dekningen.</p>
+        </div>
+        <button class="button secondary" id="reset-matrix" type="button">Nullstill eksempel</button>
+      </div>
+      <p id="matrix-status" class="status" aria-live="polite"></p>
+      <div class="table-scroll" tabindex="0" aria-label="Rullbar læringsutbyttematrise">
+        <table id="matrix" class="matrix">
+          <caption>Kobling mellom syntetiske læringsutbytter og emner</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="outcome-heading">Læringsutbytte</th>
+              <th scope="col">Prosjektmetoder</th>
+              <th scope="col">Faglig kommunikasjon</th>
+              <th scope="col">Data og dokumentasjon</th>
+              <th scope="col">Samarbeid i praksis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><span class="kind">K</span> Forklare sentrale begreper i et avgrenset fagområde</th>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Forklare begreper – Prosjektmetoder">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Forklare begreper – Faglig kommunikasjon">–</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Forklare begreper – Data og dokumentasjon">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Forklare begreper – Samarbeid i praksis">–</button></td>
+            </tr>
+            <tr><th scope="row"><span class="kind">F</span> Finne og vurdere relevant informasjon for en oppgave</th>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Vurdere informasjon – Prosjektmetoder">–</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Vurdere informasjon – Faglig kommunikasjon">–</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Vurdere informasjon – Data og dokumentasjon">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Vurdere informasjon – Samarbeid i praksis">✓</button></td>
+            </tr>
+            <tr><th scope="row"><span class="kind">F</span> Planlegge og gjennomføre en enkel arbeidsoppgave</th>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Gjennomføre arbeidsoppgave – Prosjektmetoder">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Gjennomføre arbeidsoppgave – Faglig kommunikasjon">–</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Gjennomføre arbeidsoppgave – Data og dokumentasjon">–</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Gjennomføre arbeidsoppgave – Samarbeid i praksis">✓</button></td>
+            </tr>
+            <tr><th scope="row"><span class="kind">G</span> Dele erfaringer og bidra konstruktivt i en gruppe</th>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Bidra i gruppe – Prosjektmetoder">–</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Bidra i gruppe – Faglig kommunikasjon">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Bidra i gruppe – Data og dokumentasjon">–</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Bidra i gruppe – Samarbeid i praksis">✓</button></td>
+            </tr>
+            <tr><th scope="row"><span class="kind">G</span> Reflektere over kvalitet og forbedringsmuligheter</th>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Reflektere over kvalitet – Prosjektmetoder">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Reflektere over kvalitet – Faglig kommunikasjon">–</button></td>
+              <td><button class="check" type="button" aria-pressed="true" aria-label="Reflektere over kvalitet – Data og dokumentasjon">✓</button></td>
+              <td><button class="check" type="button" aria-pressed="false" aria-label="Reflektere over kvalitet – Samarbeid i praksis">–</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend" aria-label="Forklaring">
+        <span><b>K</b> Kunnskap</span><span><b>F</b> Ferdighet</span><span><b>G</b> Generell kompetanse</span>
+      </div>
+    </section>
+  </main>
+  <footer><a href="/vibe/">Tilbake til Vibe-huben</a></footer>
+</body>
+</html>
