@@ -126,6 +126,32 @@ test('Nedtelling e-post is a local canvas preview with an accessible direct rout
   assert.match(script, /addEventListener\(['"]click['"]/, 'reset control is interactive');
 });
 
+test('Timer candidate has source assessment, synthetic scope, and accessible memory-only controls', () => {
+  const html = read('vibe/timer/index.html');
+  const script = read('vibe/timer/app.js');
+  const css = read('vibe/timer/style.css');
+  const docs = read('vibe/timer/README.md');
+  const app = catalog.apps.find((entry) => entry.slug === 'timer');
+
+  assert.ok(app, 'timer candidate remains in the broad catalog');
+  for (const field of ['status', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope']) {
+    assert.equal(typeof app[field], 'string', `catalog records ${field}`);
+    assert.ok(app[field].trim(), `catalog ${field} is documented`);
+  }
+  assert.match(html, /href="\/vibe\/timer\/"/, 'route declares its canonical URL');
+  assert.match(html, /href="\/vibe\/"/g, 'route links back to the hub');
+  assert.match(html, /Syntetisk eksempel/i, 'timer preset is marked synthetic');
+  assert.match(html, /role="status"[^>]*aria-live="polite"/, 'status is announced accessibly');
+  assert.match(html, /type="number"[^>]*min="1"[^>]*max="5999999"/, 'duration has explicit bounds');
+  assert.match(script, /Number\.isSafeInteger/, 'duration is validated as an integer');
+  assert.match(script, /window\.setInterval/, 'timer is local browser behavior');
+  assert.match(script, /SAMPLE_SECONDS\s*=\s*60/, 'reset restores the synthetic example');
+  assert.match(css, /:focus-within|:focus-visible/, 'keyboard focus is visible');
+  assert.match(css, /@media\s*\(max-width:/, 'layout adapts to small screens');
+  assert.match(docs, /ingen testkommando eller automatisert testresultat/i, 'source test uncertainty is recorded');
+  assert.match(docs, /Skjermleser ble ikke kontrollert manuelt/i, 'manual QA status is explicit');
+});
+
 test('HTML-only app routes are valid deployment targets', () => {
   const htmlOnly = read('vibe/backyard-stats/index.html');
   assert.ok(statSync(path.join(vibeRoot, 'backyard-stats', 'index.html')).isFile());
