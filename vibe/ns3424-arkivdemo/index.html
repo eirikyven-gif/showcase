@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En generisk øvelse i å skille observasjoner fra antakelser i oppdiktede bygningsscener.">
+  <title>Byggobservasjoner – generisk øvelse</title>
+  <link rel="stylesheet" href="/vibe/ns3424-arkivdemo/style.css">
+  <script src="/vibe/ns3424-arkivdemo/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="masthead">
+    <a href="/vibe/">← Alle demoer</a>
+    <p class="tag">NY, GENERISK ØVELSE · ARKIVKANDIDAT</p>
+    <h1>Hva vet vi egentlig?</h1>
+    <p>Tren på å skille det som kan observeres, fra forklaringen vi ennå ikke har grunnlag for.</p>
+  </header>
+  <main id="main">
+    <aside class="notice">
+      <strong>Ikke NS 3424 eller faglig veiledning</strong>
+      <p>Dette er en original, generell skrivebordsøvelse laget rundt et arkivert appforslag. Den gjengir ikke standarder eller kildeinnhold. Ikke bruk den til å vurdere virkelige bygg.</p>
+      <p>Kildeappen er arkivert, og rettighetene til kildeinnholdet er ikke avklart. Denne siden er ikke kildeimplementasjonen. Den har tematisk overlapp med <a href="/vibe/ns3424-lab/">NS3424 læringslab</a>.</p>
+    </aside>
+    <section class="intro panel" aria-labelledby="how-title">
+      <p class="eyebrow">Slik øver du</p>
+      <h2 id="how-title">Sorter hver setning</h2>
+      <p>Velg <em>observert</em> når setningen beskriver noe en person kunne sett eller målt. Velg <em>antakelse</em> når den foreslår årsak, omfang eller konsekvens uten nok informasjon.</p>
+    </section>
+    <section class="case-grid" aria-label="Fiktive øvelsesscener">
+      <article class="panel case">
+        <p class="eyebrow">Fiktiv scene A</p>
+        <h2>Etter regnvær</h2>
+        <p>På en oppdiktet vegg er det en mørkere flekk nær vinduet. Scenen gir ingen målinger eller historikk.</p>
+        <fieldset>
+          <legend>Sorter påstandene</legend>
+          <label class="item"><span>«En mørkere flekk er synlig under vinduet.»</span><select data-answer="observation" aria-label="Sorter: En mørkere flekk er synlig under vinduet"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
+          <label class="item"><span>«Regnvann trenger inn gjennom vinduet.»</span><select data-answer="assumption" aria-label="Sorter: Regnvann trenger inn gjennom vinduet"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
+        </fieldset>
+      </article>
+      <article class="panel case">
+        <p class="eyebrow">Fiktiv scene B</p>
+        <h2>En dør som subber</h2>
+        <p>I en oppdiktet gang subber døren mot gulvet når den åpnes. Det finnes ingen opplysninger om når dette begynte.</p>
+        <fieldset>
+          <legend>Sorter påstandene</legend>
+          <label class="item"><span>«Døren berører gulvet når den åpnes.»</span><select data-answer="observation" aria-label="Sorter: Døren berører gulvet når den åpnes"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
+          <label class="item"><span>«Fundamentet har beveget seg.»</span><select data-answer="assumption" aria-label="Sorter: Fundamentet har beveget seg"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
+        </fieldset>
+      </article>
+    </section>
+    <div class="actions"><button id="check" type="button">Vis tilbakemelding</button><button id="reset" class="secondary" type="button">Nullstill</button></div>
+    <p id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1"></p>
+    <p class="footnote">Alle scener er oppdiktet. Valgene brukes bare mens siden er åpen og lagres ikke.</p>
+  </main>
+  <footer><a href="/vibe/">Tilbake til Vibe</a></footer>
+</body>
+</html>
