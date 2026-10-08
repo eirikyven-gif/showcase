@@ -201,6 +201,18 @@
       "simplifications": "Én oppdiktet sak, ett fiktivt sted og eksempelroller. Ingen saksregistrering, vedlegg, meldinger, tildeling, e-post, autentisering, API, database eller faktisk statusendring.",
       "risk": "Kilden håndterer privat driftsinformasjon og kan inneholde personopplysninger og HMS-informasjon. Risikoen i demoen er lavere fordi alt innhold er laget som syntetisk eksempel uten identifiserende detaljer eller innsending. Kildens system må sikkerhetsvurderes separat før eventuell operativ bruk.",
       "scope": "Responsiv, statisk, skrivebeskyttet visning av én eksempelmelding, prioriteringsfaktorer og hendelsesforløp. Ingen nettleser- eller serverlagring, eksterne kall, opplastinger eller brukerinput."
+    },
+    {
+      "slug": "kornseddel",
+      "name": "Kornfølgeseddel",
+      "useCase": "Se og skriv ut en syntetisk følgeseddel for en oppdiktet kornlevering.",
+      "category": "Gårdsdrift og dokumentflyt",
+      "audience": ["Gårdsbrukere", "Transportører", "Mottak"],
+      "status": "Beholdt i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
+      "demoValue": "Viser en enkel, utskriftsvennlig oppstilling av leveringsdetaljer, varelinje og signaturfelt.",
+      "simplifications": "Én ikke-redigerbar følgeseddel med utelukkende oppdiktede navn, datoer, referanser og mengder. Utskrift åpner nettleserens standarddialog.",
+      "risk": "En operativ følgeseddel kan omfatte person-, kontakt-, virksomhets-, identifikasjons-, steds- og leveringsopplysninger. Kildens behandling og innholdsrettigheter kunne ikke verifiseres. Demoen inneholder bare syntetiske eksempelverdier og ingen faktiske identifikatorer.",
+      "scope": "Statisk /vibe/kornseddel/-rute. Ingen opplasting/nedlasting, eksterne API-er eller lenker, autentisering, server- eller nettleserlagring, hemmeligheter, PII eller kildedata."
     }
   ]
 }
