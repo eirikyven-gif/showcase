@@ -1,6 +1,7 @@
 name: Vibe static validation
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
@@ -18,5 +19,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate Vibe catalog and static routes
-        run: node --test tests/vibe-static.test.mjs
+      - name: Validate Vibe catalog, routes, and app behavior
+        run: node --test tests/*.test.mjs
