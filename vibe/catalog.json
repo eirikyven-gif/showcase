@@ -1,6 +1,18 @@
 {
   "apps": [
     {
+      "slug": "ns3424-lab",
+      "name": "NS3424 læringslab",
+      "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
+      "category": "Utdanning",
+      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
+      "status": "demo",
+      "demoValue": "Viser hvordan korte scenarioer og umiddelbar tilbakemelding kan støtte læring.",
+      "simplifications": "Originalt minieksempel med generiske scenarioer; dekker ikke eller gjengir NS 3424.",
+      "risk": "Kan mistolkes som faglig veiledning eller standardinnhold; tydelig forbehold er vist i demoen.",
+      "scope": "Kun statisk nettleserdemo med oppdiktede eksempler, uten vurdering av faktiske bygg."
+    },
+    {
       "slug": "analog-synthesizer",
       "name": "Analog Synthesizer",
       "useCase": "Spill syntetiske toner og utforsk grunnleggende synthlyd i nettleseren.",
