@@ -1,6 +1,13 @@
 {
   "apps": [
     {
+      "slug": "ns3424-lab",
+      "name": "Byggtilstandslab",
+      "useCase": "Øv på å observere, beskrive og prioritere generiske eksempler på bygningsvedlikehold.",
+      "category": "Læring",
+      "audience": ["Byggdriftere", "Studenter", "Alle som vil lære om bygningsvedlikehold"]
+    },
+    {
       "slug": "nedtelling",
       "name": "Nedtelling",
       "useCase": "Lag en visuell nedtelling til en anledning, direkte i nettleseren.",

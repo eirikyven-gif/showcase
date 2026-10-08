@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a51d2d">
+  <title>Byggtilstandslab – Vibe</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="hub-link" href="/vibe/">← Til Vibe-huben</a>
+    <p class="eyebrow">INTERAKTIV ØVELSE · SYNTETISKE EKSEMPLER</p>
+    <h1>Byggtilstandslab</h1>
+    <p class="lede">Se en observasjon, velg et foreløpig nivå og tenk gjennom et fornuftig neste steg.</p>
+  </header>
+
+  <main>
+    <section class="notice" aria-labelledby="notice-title">
+      <h2 id="notice-title">En øvelse i å stille gode spørsmål</h2>
+      <p>Dette er en generell læringsdemo, ikke en inspeksjonsstandard eller faglig vurdering. Eksemplene er oppdiktet. Virkelige bygg må vurderes av kvalifiserte fagpersoner.</p>
+    </section>
+
+    <section aria-labelledby="method-title" class="method">
+      <h2 id="method-title">Fra observasjon til oppfølging</h2>
+      <ol class="steps">
+        <li><strong>Beskriv</strong><span>Hva ser du, og hvor?</span></li>
+        <li><strong>Vurder</strong><span>Hvor mye bør det undersøkes?</span></li>
+        <li><strong>Prioriter</strong><span>Hva er et trygt neste steg?</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="exercise-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">TRE OPPDIKTEDE SITUASJONER</p><h2 id="exercise-title">Prøv selv</h2></div>
+        <button id="reset" class="button secondary" type="button">Nullstill øvelsen</button>
+      </div>
+      <p id="progress" class="progress" role="status" aria-live="polite">0 av 3 vurdert</p>
+      <div id="cases" class="case-list"></div>
+    </section>
+  </main>
+
+  <footer>Byggtilstandslab · Frittstående statisk demonstrasjon</footer>
+</body>
+</html>
