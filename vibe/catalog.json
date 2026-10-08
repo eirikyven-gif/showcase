@@ -5,11 +5,7 @@
       "name": "NS3424 læringslab",
       "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
       "category": "Utdanning",
-      "audience": [
-        "Studenter",
-        "Undervisere",
-        "Nybegynnere innen byggforvaltning"
-      ],
+      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
       "status": "demo",
       "demoValue": "Viser hvordan korte scenarioer og umiddelbar tilbakemelding kan støtte læring.",
       "simplifications": "Originalt minieksempel med generiske scenarioer; dekker ikke eller gjengir NS 3424.",
@@ -21,11 +17,7 @@
       "name": "Analog Synthesizer",
       "useCase": "Spill syntetiske toner og utforsk grunnleggende synthlyd i nettleseren.",
       "category": "Musikk",
-      "audience": [
-        "Musikere",
-        "Lydinteresserte",
-        "Nybegynnere innen synthesizere"
-      ]
+      "audience": ["Musikere", "Lydinteresserte", "Nybegynnere innen synthesizere"]
     },
     {
       "slug": "nedtelling",
