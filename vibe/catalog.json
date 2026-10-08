@@ -6,6 +6,13 @@
       "useCase": "Lag en visuell nedtelling til en anledning, direkte i nettleseren.",
       "category": "Planlegging",
       "audience": ["Alle som gleder seg til noe"]
+    },
+    {
+      "slug": "stoppeklokke",
+      "name": "Stoppeklokke",
+      "useCase": "Ta tiden, pause og fortsett, og registrer rundetider direkte i nettleseren.",
+      "category": "Tid",
+      "audience": ["Alle som vil måle tid og rundetider"]
     }
   ]
 }
