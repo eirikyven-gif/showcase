@@ -1,0 +1,13 @@
+.timer-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px, .9fr);gap:1.25rem;align-items:start}
+.clock-card,.queue-card{background:#fff;border:1px solid #eadfe1;border-radius:1.25rem;padding:clamp(1.25rem,4vw,2rem);box-shadow:0 18px 50px #35141b0c}
+.clock-card{text-align:center;background:linear-gradient(145deg,#fff,#fff5f6)}
+.clock-caption{color:#65545a;margin:.25rem 0}.clock-card h2{font-size:clamp(1.4rem,4vw,2.2rem);margin:.45rem 0}
+.countdown{font-variant-numeric:tabular-nums;font-size:clamp(4rem,13vw,7rem);line-height:1;margin:1.25rem 0;color:#9e2638;font-weight:750;letter-spacing:-.06em}
+.timer-actions{display:flex;justify-content:center;gap:.7rem;margin:1.25rem 0}.timer-actions button,.add-segment button{min-height:2.8rem;padding:.65rem 1rem;border-radius:.65rem;font:inherit;font-weight:650;cursor:pointer}
+.primary{border:0;background:#9e2638;color:#fff}.secondary{border:1px solid #b9818a;color:#702031;background:#fff}.timer-actions button:focus-visible,.add-segment button:focus-visible,.segments button:focus-visible,.add-segment input:focus-visible{outline:3px solid #f0a944;outline-offset:3px}
+.status{min-height:1.5em;color:#65545a}.queue-heading{display:flex;justify-content:space-between;align-items:center}.queue-heading h2{margin:.1rem 0 1rem}.count-badge{background:#fae9ec;color:#702031;border-radius:99px;padding:.35rem .65rem;font-weight:700}
+.segments{list-style:none;padding:0;margin:0}.segment{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.65rem;padding:.8rem .4rem;border-top:1px solid #f0e7e9}.segment[aria-current="step"]{background:#fff5f6}.segment-index{color:#9e2638;font-weight:700}.segment-name{font-weight:650}.segment-duration{font-variant-numeric:tabular-nums;color:#65545a}.segment.done .segment-name{text-decoration:line-through;color:#65545a}
+.add-segment{display:grid;grid-template-columns:1fr auto;gap:.5rem .75rem;border-top:1px solid #eadfe1;padding-top:1rem;margin-top:1rem}.add-segment label{grid-column:1/-1;font-weight:650}.add-segment input{width:100%;min-width:0;border:1px solid #cdbdc0;border-radius:.55rem;padding:.65rem;font:inherit}.add-segment label[for="segment-minutes"]{grid-column:1}.add-segment #segment-minutes{grid-column:2;width:6rem}.add-segment button{grid-column:1/-1;justify-self:start}
+.privacy-note{color:#65545a;margin:1.25rem 0}
+@media(max-width:720px){.timer-layout{grid-template-columns:1fr}.countdown{font-size:clamp(4rem,22vw,6.5rem)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}

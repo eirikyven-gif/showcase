@@ -82,6 +82,16 @@
       "audience": [
         "Personer som vil vise en nedtelling i en e-postsignatur"
       ]
+    },
+    {
+      "slug": "workshop-timer",
+      "name": "Workshop-timer",
+      "useCase": "Følg en sekvens med tidsbolker gjennom en workshop.",
+      "category": "Verktøy",
+      "audience": [
+        "Workshopleder",
+        "Fasilitatorer"
+      ]
     }
   ]
 }
