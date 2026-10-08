@@ -110,6 +110,20 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
   assert.match(hub, /fetch\s*\(\s*['"]\/vibe\/catalog\.json['"]/, 'hub only fetches the static catalog');
 });
 
+test('Nedtelling e-post is a local canvas preview with an accessible direct route', () => {
+  const html = read('vibe/nedtelling-epost/index.html');
+  const script = read('vibe/nedtelling-epost/app.js');
+  const app = catalog.apps.find((entry) => entry.slug === 'nedtelling-epost');
+  assert.ok(app, 'candidate remains in the broad catalog');
+  assert.match(html, /href="\/vibe\/nedtelling-epost\/"/, 'route has a canonical direct URL');
+  assert.match(html, /href="\/vibe\/"/g, 'route links back to the hub');
+  assert.match(html, /<canvas\b[^>]*\brole="img"[^>]*\baria-label=/i, 'canvas has an accessible text alternative');
+  assert.match(html, /Syntetisk eksempel/, 'preview is marked as synthetic');
+  assert.match(script, /getContext\(['"]2d['"]\)/, 'preview is drawn locally on canvas');
+  assert.match(script, /preventDefault\(\)/, 'form submit is explicitly blocked');
+  assert.match(script, /addEventListener\(['"]click['"]/, 'reset control is interactive');
+});
+
 test('route inventory has no duplicate app directory names', () => {
   const routeDirs = readdirSync(vibeRoot)
     .filter((name) => statSync(path.join(vibeRoot, name)).isDirectory() && name !== 'assets');
