@@ -5,6 +5,7 @@
   const start = document.querySelector('#start');
   const pause = document.querySelector('#pause');
   const reset = document.querySelector('#reset');
+  const durationError = document.querySelector('#duration-error');
   const SAMPLE_SECONDS = 60;
 
   let remainingMs = SAMPLE_SECONDS * 1000;
@@ -14,6 +15,17 @@
   function configuredMs() {
     const value = Number(input.value);
     return Number.isSafeInteger(value) && value >= 1 && value <= 5999999 ? value * 1000 : null;
+  }
+
+  function validateDuration() {
+    const value = configuredMs();
+    const message = value === null
+      ? 'Skriv inn et helt tall fra 1 til 5 999 999 sekunder.'
+      : '';
+    input.setCustomValidity(message);
+    durationError.textContent = message;
+    durationError.hidden = !message;
+    return value;
   }
 
   function format(ms) {
@@ -50,6 +62,11 @@
 
   start.addEventListener('click', () => {
     if (intervalId !== null) return;
+    const durationMs = validateDuration();
+    if (durationMs === null) {
+      input.focus();
+      return;
+    }
     if (remainingMs <= 0) remainingMs = configuredMs() ?? SAMPLE_SECONDS * 1000;
     endTime = Date.now() + remainingMs;
     intervalId = window.setInterval(render, 200);
@@ -68,6 +85,9 @@
     if (intervalId !== null) clearInterval(intervalId);
     intervalId = null;
     input.value = String(SAMPLE_SECONDS);
+    input.setCustomValidity('');
+    durationError.textContent = '';
+    durationError.hidden = true;
     remainingMs = SAMPLE_SECONDS * 1000;
     start.textContent = 'Start';
     render();
@@ -75,8 +95,7 @@
 
   input.addEventListener('input', () => {
     if (intervalId !== null) return;
-    const value = configuredMs();
-    input.setCustomValidity(value === null ? 'Skriv inn et helt tall fra 1 til 5 999 999.' : '');
+    const value = validateDuration();
     if (value !== null) remainingMs = value;
     render();
   });

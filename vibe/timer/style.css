@@ -12,6 +12,7 @@
 .duration-control input:focus-visible { outline: none; }
 .duration-control span { color: var(--muted); font-size: .88rem; white-space: nowrap; }
 .sample-note { margin: 9px 0 0; color: var(--muted); font-size: .8rem; }
+.duration-error { margin: 8px 0 0; color: var(--red-dark); font-size: .88rem; font-weight: 700; }
 .timer-display { margin: 34px 0 4px; color: var(--red-dark); font-size: clamp(4.5rem, 17vw, 7.6rem); font-variant-numeric: tabular-nums; font-weight: 800; letter-spacing: -.075em; line-height: 1; text-align: center; }
 .timer-status { min-height: 1.5em; margin: 14px 0 26px; color: var(--muted); font-size: .95rem; text-align: center; }
 .timer-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }

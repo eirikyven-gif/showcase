@@ -23,9 +23,10 @@
     <section class="timer-panel" aria-labelledby="timer-heading">
       <div class="panel-heading"><div><p class="eyebrow">Timer · v1.2.0</p><h2 id="timer-heading">Still inn tiden</h2></div><span class="sample-badge">Syntetisk eksempel</span></div>
       <label for="seconds">Varighet i sekunder</label>
-      <div class="duration-control"><input id="seconds" name="seconds" type="number" min="1" max="5999999" step="1" value="60" inputmode="numeric" aria-describedby="sample-note duration-help"><span>sekunder</span></div>
+      <div class="duration-control"><input id="seconds" name="seconds" type="number" min="1" max="5999999" step="1" value="60" required inputmode="numeric" aria-describedby="sample-note duration-help duration-error"><span>sekunder</span></div>
       <p id="sample-note" class="sample-note">60 sekunder er et eksempel. Endre det til ønsket varighet.</p>
       <p id="duration-help" class="visually-hidden">Skriv inn et helt tall fra 1 til 5 999 999 sekunder.</p>
+      <p id="duration-error" class="duration-error" role="alert" hidden></p>
       <p id="display" class="timer-display" role="timer" aria-label="Tid igjen">01:00</p>
       <p id="status" class="timer-status" role="status" aria-live="polite">Klar til å starte</p>
       <div class="timer-actions">
