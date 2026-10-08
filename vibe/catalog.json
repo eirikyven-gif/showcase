@@ -1,6 +1,20 @@
 {
   "apps": [
     {
+      "slug": "bingo",
+      "name": "Bingo · eksempelbrett",
+      "useCase": "Prøv å markere tall på et syntetisk bingobrett og nullstill runden.",
+      "category": "Spill og arrangement",
+      "audience": ["Bingodeltakere", "Arrangører", "Personer som utforsker enkle spill"],
+      "status": "Beholdt i bred førstegangsvurdering; original statisk demo. Kilderettigheter og faktisk produksjonsbruk er uavklart.",
+      "purpose": "Illustrere deltakervisningen for en enkel bingorunde.",
+      "demoValue": "Besøkende kan markere et eksempelbrett og nullstille det.",
+      "simplifications": "Fast syntetisk brett; ingen trekking, PDF, utskrift, generering eller vinnerlogikk.",
+      "sourceUncertainty": "eirikyven-gif/diverse-apper Bingo lest på main 0900ffe 2026-10-08; kildens README oppgir v0.1.0/v0.1.1. Lisens og produksjonsbruk ikke uavhengig bekreftet. Se rutens README.",
+      "risk": "Kilden beskriver serverlagring, adminauth, mottaker-/leveringsmodell, betalingsinnstillinger, opplastinger og triggersecret. Demoen bruker kun syntetisk innhold.",
+      "scope": "Kun lokal statisk interaksjon under /vibe/bingo/. Ingen auth, API, cron, opplasting, PII, persistent lagring eller eksterne kall."
+    },
+    {
       "slug": "emnebeskrivelser-editor",
       "name": "Emneoversikt – konsept",
       "useCase": "Se et oppdiktet emne samlet i en lesbar oversikt med plan, læringsutbytte, arbeidskrav og pensum.",

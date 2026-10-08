@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prøv en enkel bingorunde med et syntetisk brett.">
+  <title>Bingo · Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/bingo/bingo.css">
+  <script src="/vibe/bingo/bingo.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="main" class="bingo-shell">
+    <p class="eyebrow">Et lite spill på papir</p>
+    <h1>Bingo,<br><span>bare for gøy.</span></h1>
+    <p class="lead">Marker rutene etter hvert som tallene ropes opp. Dette er et syntetisk eksempelbrett; ingenting blir lagret.</p>
+    <section class="game" aria-labelledby="board-title">
+      <div class="game-heading"><div><p class="eyebrow">Eksempelrunde · 5 × 5</p><h2 id="board-title">Ditt bingobrett</h2></div><button id="reset" class="reset-button" type="button">Nullstill brettet</button></div>
+      <div class="board" role="group" aria-label="Bingobrett. Velg rutene du har hørt.">
+        <div class="letters" aria-hidden="true"><span>B</span><span>I</span><span>N</span><span>G</span><span>O</span></div>
+        <div id="cells" class="cells"></div>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite">Velg en rute for å markere den. Midtruten er fri.</p>
+    </section>
+    <p class="fine-print">Demoen bruker kun et fast eksempelbrett og midlertidige valg i denne fanen.</p>
+  </main>
+  <footer class="site-footer"><a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a><p>Et syntetisk spill, uten premier eller innsamling.</p></footer>
+</body>
+</html>
