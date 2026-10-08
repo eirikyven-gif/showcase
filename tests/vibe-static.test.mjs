@@ -62,6 +62,32 @@ test('catalog fields are complete and slugs are unique, stable route segments', 
   }
 });
 
+test('Ticker candidate assessment documents source uncertainty and its existing isolated route', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'ticker');
+  const html = read('vibe/ticker/index.html');
+  const script = read('vibe/ticker/app.js');
+  const css = read('vibe/ticker/style.css');
+  const docs = read('vibe/ticker/README.md');
+
+  assert.ok(app, 'Ticker remains in the broad candidate catalog');
+  for (const field of ['status', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'source', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'routeState']) {
+    assert.equal(typeof app[field], 'string', `Ticker records ${field}`);
+    assert.ok(app[field].trim(), `Ticker ${field} is not empty`);
+  }
+  assert.match(app.status, /Beholdt i bred førstegangsrunde/);
+  assert.match(app.routeState, /Eksisterende rute/);
+  assert.match(docs, /fantes allerede i `main`/);
+  assert.match(html, /href="\/vibe\/ticker\/"/);
+  assert.match(html, /href="\/vibe\/"/);
+  assert.match(html, /aria-pressed="false"/);
+  assert.match(html, /id="ticker-text"/);
+  assert.match(html, /id="ticker-speed"/);
+  assert.match(script, /textInput\.addEventListener\('input'/);
+  assert.match(script, /speedInput\.addEventListener\('input'/);
+  assert.match(script, /toggle\.addEventListener\('click'/);
+  assert.match(css, /prefers-reduced-motion/);
+});
+
 test('Klokke candidate assessment documents source, scope, risk, and broad-round status', () => {
   const app = catalog.apps.find((entry) => entry.slug === 'klokke');
   assert.ok(app, 'Klokke remains in the candidate catalog');

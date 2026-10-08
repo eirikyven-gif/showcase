@@ -166,7 +166,20 @@
       "category": "Kommunikasjon",
       "audience": [
         "Alle som vil vise en kort melding"
-      ]
+      ],
+      "status": "Beholdt i bred førstegangsrunde; vurderingsmetadata og testdekning er oppdatert for den eksisterende ruten.",
+      "sourceUncertainty": "Kildens README oppgir v1.2.0 og manuelle testpunkter, men automatiserte tester, testkjøring og utrulling er ikke dokumentert eller uavhengig verifisert. Kildeproduktets rettigheter og fullstendige dataflyt er uavklart.",
+      "purpose": "Vise en kort, rullende tekst med justerbar hastighet og pause/fortsett.",
+      "demoValue": "Lar besøkende prøve tekst, fart og pause umiddelbart i en isolert nettleserdemo.",
+      "simplifications": "Originalt responsivt grensesnitt med syntetisk eksempeltekst. Ingen kildekode, kildeinnhold, portalintegrasjon eller kildeversjonsvisning.",
+      "risk": "Bevegelse kan være ubehagelig; redusert bevegelse viser derfor teksten statisk. Demoen bruker bare midlertidig tekst i fanen. Kildens rettigheter og fullstendige produksjonsdataflyt er ikke verifisert.",
+      "scope": "Statisk /vibe/ticker/-rute med tastaturbetjente tekst-, hastighets- og pausekontroller. Ingen auth, PII, hemmeligheter, API, eksterne kall, backend, nettleserlagring eller persistens.",
+      "source": "eirikyven-gif/diverse-apper/apps/ticker; README oppgir v1.2.0. Lest 2026-10-08 på main, commit 0900ffe48fa92dcefae1e6c0d6bbee8e0d02eec530. Source read only.",
+      "sourceStack": "Kilde: HTML, innebygd CSS, JavaScript og felles CSS/JS fra apps/_shared/. Demo: selvstendig HTML/CSS/JavaScript og eksisterende Vibe-stilark.",
+      "sourceTests": "Kildens README beskriver manuelle testpunkter for tekst, hastighet, pause/fortsett og redusert bevegelse. Ingen automatiserte tester er dokumentert.",
+      "sourceApiAuthStoragePrivacy": "Ingen API eller autentisering synlig i inspiserte appfiler. Kun DOM/CSS-oppdateringer, uten lagring; kildeinventaret er begrenset til README, index.html og app.js.",
+      "rightsUncertainty": "Kildekode- og innholdsrettigheter er ikke verifisert. Demoen gjenbruker ikke kildekode, kildedesign eller kildeinnhold.",
+      "routeState": "Eksisterende rute; auditerte fremfor å opprette en duplikat."
     },
     {
       "slug": "lub-matrise",
