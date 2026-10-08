@@ -16,6 +16,20 @@ function filesUnder(directory) {
   });
 }
 
+function formHasSubmitGuard(formAttributes, pageScripts) {
+  const formId = formAttributes.match(/\bid\s*=\s*['"]([^'"]+)['"]/i)?.[1];
+  if (!formId) return false;
+  const selectorPattern = new RegExp(
+    `(?:const|let|var)\\s+(\\w+)\\s*=\\s*document\\.(?:querySelector\\(\\s*['"]#${formId}['"]\\s*\\)|getElementById\\(\\s*['"]${formId}['"]\\s*\\))`,
+  );
+  const formVariable = pageScripts.match(selectorPattern)?.[1];
+  if (!formVariable) return false;
+  const submitPattern = new RegExp(
+    `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*\\w+\\s*\\)\\s*=>\\s*\\w+\\.preventDefault\\(\\)`,
+  );
+  return submitPattern.test(pageScripts);
+}
+
 test('hub assets and catalog exist', () => {
   for (const relativePath of [
     'vibe/index.html',
@@ -132,11 +146,14 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
         const scriptPath = path.join(vibeRoot, relativePath);
         return statSync(scriptPath).isFile() ? readFileSync(scriptPath, 'utf8') : '';
       }).join('\n');
-      assert.match(
-        pageScripts,
-        /addEventListener\s*\(\s*['"]submit['"]\s*,[\s\S]{0,200}?preventDefault\s*\(/,
-        `${file} form submission is prevented in its client-side submit handler`,
-      );
+      assert.ok(formHasSubmitGuard(match[1], pageScripts), `${file} prevents submission for its form`);
     }
   }
+});
+
+test('form submission guard must target that exact form and prevent its default action', () => {
+  const form = 'id="countdown-form"';
+  assert.equal(formHasSubmitGuard(form, `const form = document.querySelector('#countdown-form'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
+  assert.equal(formHasSubmitGuard(form, `const other = document.querySelector('#other-form'); other.addEventListener('submit', (event) => event.preventDefault());`), false);
+  assert.equal(formHasSubmitGuard(form, `const form = document.querySelector('#countdown-form'); form.addEventListener('submit', () => {});`), false);
 });
