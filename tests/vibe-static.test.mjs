@@ -243,6 +243,33 @@ test('Bilag v5 showcase keeps PDF and ZIP workflow as a synthetic, status-only d
   assert.doesNotMatch(html, /<input\b|<form\b|<button\b/i);
 });
 
+test('Inntekter og kostnader audits the existing route without duplicating it', () => {
+  const html = read('vibe/inntekter-kostnader/index.html');
+  const script = read('vibe/inntekter-kostnader/app.js');
+  const styles = read('vibe/inntekter-kostnader/style.css');
+  const docs = read('vibe/inntekter-kostnader/README.md');
+  const matches = catalog.apps.filter((entry) => entry.slug === 'inntekter-kostnader');
+
+  assert.equal(matches.length, 1, 'the existing route has exactly one catalog entry');
+  assert.equal(matches[0].name, 'Inntekter og kostnader');
+  assert.match(html, /href="\/vibe\/inntekter-kostnader\/"/, 'direct route has a canonical URL');
+  assert.match(html, /href="\/vibe\/"/, 'route links back to the hub');
+  assert.match(html, /for="month-select"/, 'month selection has a visible label');
+  assert.match(html, /Syntetiske eksempeldata/, 'the UI identifies synthetic finance examples');
+  assert.match(html, /<a class="skip-link" href="#overview">/, 'keyboard users can skip to the demo');
+  assert.doesNotMatch(script, /localStorage|sessionStorage|indexedDB/, 'month changes are not persisted');
+  assert.match(script, /textContent\s*=/, 'rendered entry text uses textContent');
+  assert.match(script, /income\s*-\s*data\.expenses/, 'balance is computed from example totals');
+  assert.match(styles, /@media\s*\(max-width:/, 'layout adapts to narrow screens');
+  assert.match(read('vibe/assets/hub.css') + styles, /:focus-visible|:focus-within/, 'interactive focus styling is present');
+  assert.match(docs, /0900ffe48fa92dcefae1c6d0bbee8e0d02eec530/, 'source snapshot is recorded');
+  assert.match(docs, /Ingen appversjon eller release-tag funnet/);
+  assert.match(docs, /Ingen lisensfil eller uttrykkelig gjenbrukstillatelse/);
+  assert.match(docs, /Ingen egne testfiler eller testkommando/);
+  assert.match(docs, /Ingen innlogging eller brukeridentiteter/);
+  assert.match(docs, /Issue #2:\*\* Delvis løst/);
+});
+
 test('route inventory has no duplicate app directory names', () => {
   const routeDirs = readdirSync(vibeRoot)
     .filter((name) => statSync(path.join(vibeRoot, name)).isDirectory() && name !== 'assets');
