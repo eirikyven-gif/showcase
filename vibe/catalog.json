@@ -251,7 +251,20 @@
       "category": "Kommunikasjon",
       "audience": [
         "Personer som vil vise en nedtelling i en e-postsignatur"
-      ]
+      ],
+      "status": "Beholdt i bred førstegangsvurdering; eksisterende rute gjennomgått og dokumentert. Ingen kuratering eller utsiling.",
+      "source": "eirikyven-gif/diverse-apper, apps/nedtelling-epost/, public main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (checked 2026-10-08); source README identifies v1.3.0.",
+      "sourceUncertainty": "Source README documents manual test points but no results or automated app tests. The source depends on shared UI files and PHP endpoints. Deployment and reuse rights are unverified; see route README.",
+      "purpose": "Forhåndsvise en nedtelling som kan brukes som bilde i en e-postsignatur.",
+      "demoValue": "En lokal canvas gjør signaturideen synlig uten å opprette en konto eller sende data.",
+      "simplifications": "Selvstendig illustrasjon med syntetiske valg og lokal dato/tid. Ingen lagring, delbar bildeadresse, GIF/PNG-eksport eller signaturkode.",
+      "risk": "Den opprinnelige appen lagrer konfigurasjon via PHP og lager delbare bilde-URL-er. Slike dataflyter er fjernet. Dato/tid kan likevel beskrive en hendelse, så demoen bruker ingen fritekst eller identitetsfelt.",
+      "scope": "Statisk /vibe/nedtelling-epost/-rute med responsiv HTML/CSS og lokal JavaScript-canvas. Ingen auth, PII, hemmeligheter, API, eksterne forespørsler, backend, nettleserlagring eller persistens.",
+      "sourceStack": "Kilden er HTML med innebygd JavaScript, delt CSS/JS fra apps/_shared/, og PHP-endepunkter i apps/tidteller/ for lagring og bildegjengivelse. Demoen bruker statisk HTML/CSS/JavaScript og nettleserens canvas.",
+      "sourceTests": "Kildens README oppgir manuelle punkter for oppretting, kopiering av bilde-URL/HTML og kontroll av parametre. Ingen automatiserte tester eller testresultater er dokumentert.",
+      "sourceApiAuthStoragePrivacy": "Kildens innsendingskode kaller counter-presets.php med POST for å lagre telleroppsett, og bygger bilde-URL mot PHP-renderer. App-README dokumenterer PHP-lagring/rendering. Innlogging, cookies og videre serverretensjon er ikke verifisert i avgrenset lesing.",
+      "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse er bekreftet. Demoen kopierer ikke kildekode, designaktiva eller kildetekst.",
+      "routeState": "Eksisterende rute på main; den er gjennomgått og dokumentert uten duplisering."
     },
     {
       "slug": "workshop-timer",
