@@ -19,8 +19,9 @@ function filesUnder(directory) {
 function formHasSubmitGuard(formAttributes, pageScripts) {
   const formId = formAttributes.match(/\bid\s*=\s*['"]([^'"]+)['"]/i)?.[1];
   if (!formId) return false;
+  const escapedId = formId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const selectorPattern = new RegExp(
-    `(?:const|let|var)\\s+(\\w+)\\s*=\\s*document\\.(?:querySelector\\(\\s*['"]#${formId}['"]\\s*\\)|getElementById\\(\\s*['"]${formId}['"]\\s*\\))`,
+    `(?:const|let|var)\\s+(\\w+)\\s*=\\s*document\\.(?:querySelector\\(\\s*['"]#${escapedId}['"]\\s*\\)|getElementById\\(\\s*['"]${escapedId}['"]\\s*\\))`,
   );
   const formVariable = pageScripts.match(selectorPattern)?.[1];
   if (!formVariable) return false;
@@ -156,4 +157,6 @@ test('form submission guard must target that exact form and prevent its default 
   assert.equal(formHasSubmitGuard(form, `const form = document.querySelector('#countdown-form'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
   assert.equal(formHasSubmitGuard(form, `const other = document.querySelector('#other-form'); other.addEventListener('submit', (event) => event.preventDefault());`), false);
   assert.equal(formHasSubmitGuard(form, `const form = document.querySelector('#countdown-form'); form.addEventListener('submit', () => {});`), false);
+  assert.equal(formHasSubmitGuard(form, `const form = document.getElementById('countdown-form'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
+  assert.equal(formHasSubmitGuard('id="form.one"', `const form = document.getElementById('form.one'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
 });
