@@ -157,6 +157,10 @@ test('Nedtelling e-post is a local canvas preview with an accessible direct rout
   const script = read('vibe/nedtelling-epost/app.js');
   const app = catalog.apps.find((entry) => entry.slug === 'nedtelling-epost');
   assert.ok(app, 'candidate remains in the broad catalog');
+  assert.equal(app.status, 'Beholdt i bred førstegangsvurdering; eksisterende rute gjennomgått og dokumentert. Ingen kuratering eller utsiling.');
+  for (const field of ['source', 'sourceUncertainty', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'routeState']) {
+    assert.ok(app[field], `assessment includes ${field}`);
+  }
   assert.match(html, /href="\/vibe\/nedtelling-epost\/"/, 'route has a canonical direct URL');
   assert.match(html, /href="\/vibe\/"/g, 'route links back to the hub');
   assert.match(html, /<canvas\b[^>]*\brole="img"[^>]*\baria-label=/i, 'canvas has an accessible text alternative');
@@ -164,6 +168,8 @@ test('Nedtelling e-post is a local canvas preview with an accessible direct rout
   assert.match(script, /getContext\(['"]2d['"]\)/, 'preview is drawn locally on canvas');
   assert.match(script, /preventDefault\(\)/, 'form submit is explicitly blocked');
   assert.match(script, /addEventListener\(['"]click['"]/, 'reset control is interactive');
+  assert.doesNotMatch(html + script, /\b(?:fetch|XMLHttpRequest|localStorage|sessionStorage)\b|https?:\/\//i, 'demo makes no external request and uses no browser persistence');
+  assert.doesNotMatch(html, /<input\b[^>]*type="text"|<textarea\b/i, 'demo has no free-text field');
 });
 
 test('Stoppeklokke candidate assessment is complete and retained in the broad review', () => {
