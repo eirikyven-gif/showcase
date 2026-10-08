@@ -19,5 +19,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate Vibe catalog and static routes
+      - name: Validate Vibe catalog, routes, and app behavior
         run: node --test tests/*.test.mjs
