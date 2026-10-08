@@ -102,6 +102,16 @@
         "Fagskolestudenter",
         "Undervisere"
       ]
+    },
+    {
+      "slug": "dugnadsplanlegging",
+      "name": "Dugnadsplanlegging",
+      "useCase": "Prøv å fordele oppdiktede deltakere på skift i en enkel eksempelplan.",
+      "category": "Planlegging",
+      "audience": [
+        "Arrangører",
+        "Lag og grupper"
+      ]
     }
   ]
 }
