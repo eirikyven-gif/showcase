@@ -123,6 +123,17 @@
         "Faglærere",
         "Alle som vil lære idé-til-test-arbeidsflyt"
       ]
+    },
+    {
+      "slug": "larebot",
+      "name": "Lærebot",
+      "useCase": "Se en kort, forhåndsskrevet læringsforklaring med syntetiske eksempelspørsmål.",
+      "category": "Utdanning",
+      "audience": [
+        "Elever",
+        "Undervisere",
+        "Alle som vil se et eksempel på læringsstøtte"
+      ]
     }
   ]
 }

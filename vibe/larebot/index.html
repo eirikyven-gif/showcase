@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Se et fiktivt eksempel på en læringsforklaring om vannets kretsløp.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Lærebot — Vibe</title>
+  <link rel="canonical" href="/vibe/larebot/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/larebot/style.css">
+  <script src="/vibe/larebot/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til eksempelet</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
+    <a class="back-link" href="/vibe/">← Alle verktøy</a>
+  </header>
+  <main id="main" class="demo-shell">
+    <p class="eyebrow">Oppdiktet eksempel · ingen AI</p>
+    <h1>Utforsk <span>vannets kretsløp.</span></h1>
+    <p class="lead">Velg et ferdig spørsmål og se et eksempel på en kort læringsforklaring. Innholdet er skrevet på forhånd.</p>
+
+    <section class="topic-card" aria-labelledby="topic-title">
+      <p class="card-label">Tema</p>
+      <h2 id="topic-title">Hvordan flytter vann seg i naturen?</h2>
+      <p>Vann kan skifte mellom flytende form, vanndamp og is. Solvarme og tyngdekraft driver en stadig rundreise.</p>
+      <div class="steps" aria-label="Tre deler av kretsløpet">
+        <span><b>1</b> Fordamping</span><span><b>2</b> Skydannelse</span><span><b>3</b> Nedbør</span>
+      </div>
+    </section>
+
+    <section class="question-card" aria-labelledby="question-title">
+      <h2 id="question-title">Velg et eksempelspørsmål</h2>
+      <div class="question-list" role="group" aria-label="Ferdigskrevne spørsmål">
+        <button class="question" type="button" data-question="Hva skjer når sola varmer opp vann?">Hva skjer når sola varmer opp vann?</button>
+        <button class="question" type="button" data-question="Hvordan blir skyer dannet?">Hvordan blir skyer dannet?</button>
+        <button class="question" type="button" data-question="Hvordan kommer vann tilbake til bakken?">Hvordan kommer vann tilbake til bakken?</button>
+      </div>
+      <div id="answer" class="answer" aria-live="polite" aria-atomic="true" hidden>
+        <p class="card-label">Syntetisk eksempelspørsmål</p>
+        <p id="selected-question" class="selected-question"></p>
+        <h3>Eksempelsvar</h3>
+        <p id="response"></p>
+      </div>
+      <button id="reset" class="reset-button" type="button" hidden>Nullstill eksempelet</button>
+    </section>
+
+    <p class="privacy-note">Demonstrasjonen har ikke innlogging eller fritekst. Valget og svaret vises bare i nettleserminnet og forsvinner når du oppdaterer siden. Ikke skriv inn eller del personopplysninger i demoer.</p>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Fiktivt læringseksempel</span></footer>
+</body>
+</html>
