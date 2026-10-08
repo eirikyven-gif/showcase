@@ -139,6 +139,27 @@ test('Nedtelling e-post is a local canvas preview with an accessible direct rout
   assert.match(script, /addEventListener\(['"]click['"]/, 'reset control is interactive');
 });
 
+test('Stoppeklokke candidate assessment is complete and retained in the broad review', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'stoppeklokke');
+  assert.ok(app, 'Stoppeklokke remains in the catalog');
+  for (const field of ['status', 'source', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope']) {
+    assert.equal(typeof app[field], 'string', `${field} is documented`);
+    assert.ok(app[field].trim(), `${field} is not empty`);
+  }
+  assert.match(app.status, /broad first-round candidate review/i);
+  assert.match(app.source, /v1\.2\.0/);
+  assert.match(app.scope, /No authentication, server, API, external calls, browser storage/i);
+  assert.match(app.sourceUncertainty, /rights remain unverified/i);
+
+  const readme = read('vibe/stoppeklokke/README.md');
+  for (const heading of ['Candidate assessment', 'Demo assessment', 'QA', 'Issue #2 progress']) {
+    assert.ok(readme.includes(`## ${heading}`), `route README includes ${heading}`);
+  }
+  assert.match(readme, /0900ffe48fa92dcefae1c6d0bbee8e0d02eec530/);
+  assert.match(readme, /rights to reuse source materials remain unverified/i);
+  assert.match(readme, /Deployment and live-host QA have not been performed/i);
+});
+
 test('Timer candidate has source assessment, synthetic scope, and accessible memory-only controls', () => {
   const html = read('vibe/timer/index.html');
   const script = read('vibe/timer/app.js');
