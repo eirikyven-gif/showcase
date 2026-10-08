@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lag en enkel tekstticker med justerbar fart og pauseknapp.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Ticker — Vibe</title>
+  <link rel="canonical" href="/vibe/ticker/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/ticker/style.css">
+  <script src="/vibe/ticker/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#ticker-maker">Hopp til tickerverktøyet</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="ticker-maker" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Ord på vandring</p>
+      <h1 id="page-title">Lag din egen <span>ticker.</span></h1>
+      <p class="intro-copy">Skriv en kort beskjed, velg farten og se teksten gli over skjermen. Alt skjer lokalt i denne fanen.</p>
+    </section>
+    <div class="workbench">
+      <form id="ticker-form" class="controls" autocomplete="off">
+        <div class="section-title"><span class="step">01</span><div><h2>Tilpass teksten</h2><p>Eksempeltekst – prøv å skrive noe eget.</p></div></div>
+        <label for="ticker-text">Tekst i ticker</label>
+        <input id="ticker-text" name="ticker-text" type="text" maxlength="100" value="Hei! Dette er en liten ticker-demo." aria-describedby="sample-note">
+        <p id="sample-note" class="sample-note">Eksempelinnhold · ikke sendes eller lagres</p>
+        <label for="ticker-speed">Hastighet <span id="speed-value">12</span> sekunder per runde</label>
+        <input id="ticker-speed" name="ticker-speed" type="range" min="5" max="30" value="12">
+        <button class="reset-button" id="toggle-motion" type="button" aria-pressed="false">Pause ticker</button>
+        <p class="sample-note">Når redusert bevegelse er aktivert i enheten, forblir teksten stille.</p>
+      </form>
+      <section class="preview-wrap" aria-labelledby="preview-label">
+        <div class="preview-heading"><span class="step">02</span><h2 id="preview-label">Forhåndsvisning</h2></div>
+        <div class="ticker-card">
+          <p class="ticker-caption">MELDING</p>
+          <div class="ticker-window" aria-label="Rullende forhåndsvisning"><span id="ticker-line" class="ticker-line" aria-hidden="true">Hei! Dette er en liten ticker-demo.</span></div>
+          <p id="ticker-status" class="status" aria-live="polite">Ticker kjører.</p>
+        </div>
+        <p class="privacy-note"><span aria-hidden="true">◉</span> Ingen innlogging, lagring eller sending. Tilbakestill siden for å starte på nytt.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En enkel tekstticker.</span></footer>
+</body>
+</html>
