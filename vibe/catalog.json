@@ -112,6 +112,17 @@
         "Arrangører",
         "Lag og grupper"
       ]
+    },
+    {
+      "slug": "vibe-coding",
+      "name": "Vibe coding læringsportal",
+      "useCase": "Følg et fiktivt eksempel fra idé via testbare krav til enkel testplan.",
+      "category": "Læring",
+      "audience": [
+        "Studenter",
+        "Faglærere",
+        "Alle som vil lære idé-til-test-arbeidsflyt"
+      ]
     }
   ]
 }
