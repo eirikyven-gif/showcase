@@ -274,6 +274,28 @@ test('Inntekter og kostnader audits the existing route without duplicating it', 
   assert.match(docs, /Issue #2:\*\* Delvis løst/);
 });
 
+test('Nedtelling candidate documents source uncertainty and keeps its existing route local and accessible', () => {
+  const html = read('vibe/nedtelling/index.html');
+  const script = read('vibe/nedtelling/app.js');
+  const styles = read('vibe/nedtelling/style.css');
+  const notes = read('vibe/nedtelling/README.md');
+  const app = catalog.apps.find((entry) => entry.slug === 'nedtelling');
+
+  assert.ok(app, 'candidate remains in the broad catalog');
+  assert.equal(catalog.apps.filter((entry) => entry.slug === 'nedtelling').length, 1, 'slug is not duplicated');
+  assert.match(app.status, /bred førstegangsvurdering/i);
+  assert.match(app.sourceUncertainty, /ikke tilgjengelig/i);
+  assert.match(notes, /Kildeversjon og kilde-stack:.*Ikke verifisert/s);
+  assert.match(notes, /\*\*Rettigheter:\*\*\s*Uavklart/i);
+  assert.match(html, /<main\b[^>]*id="builder"/i, 'route has a skip-link target');
+  assert.match(html, /<a class="skip-link" href="#builder"/i, 'route exposes a keyboard skip link');
+  assert.match(html, /<label for="title"/i, 'editable title has a visible label');
+  assert.match(script, /addEventListener\(['"]submit['"],\s*\(event\)\s*=>\s*event\.preventDefault\(\)/);
+  assert.doesNotMatch(script, /\b(?:fetch|localStorage|sessionStorage|indexedDB)\b/);
+  assert.match(styles, /@media\s*\(max-width:\s*760px\)/, 'layout collapses on smaller screens');
+  assert.match(styles, /prefers-reduced-motion:\s*reduce/, 'motion preference is respected');
+});
+
 test('route inventory has no duplicate app directory names', () => {
   const routeDirs = readdirSync(vibeRoot)
     .filter((name) => statSync(path.join(vibeRoot, name)).isDirectory() && name !== 'assets');
