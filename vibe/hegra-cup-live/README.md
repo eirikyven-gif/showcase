@@ -19,6 +19,13 @@ Ruten er med vilje en tekstlig assessment-only vurderingsside. Kildens UI-galler
 
 Ruten bruker kun statisk HTML og lokalt showcase-stilark. Ingen JavaScript, API-kall, innlogging, skjema, lagring, persondata, hemmeligheter eller eksterne ressurser.
 
+## QA
+
+- Full showcase suite: `node --test tests/*.test.mjs` (30/30 passed); catalog JSON and `git diff --check` pass.
+- Chromium QA at 320, 390, 768, 1024, and 1440 px: direct route, hub return, skip-link focus, and reload work; no horizontal overflow, page errors, external requests, or runtime data fields. Screen-reader use was not manually verified.
+- No source UI image, named club/team data, API, script, form, or external resource is served.
+- Deployment and public-host smoke checks have not been performed.
+
 ## Issue #2 progress
 
 Delvis fremdrift: kandidaten er vurdert på tilgjengelig kildedokumentasjon og beholdt i bred førstegangsrunde. Manglende runtime, legacy-kilde og uavklarte rettigheter/dataforhold gjør at ingen interaktiv appdemo er laget. Dette fullfører ikke den samlede kandidatgjennomgangen. Ingen merge eller deploy er utført.
