@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Utforsk en inntekts- og kostnadsoversikt med tydelig merkede, syntetiske eksempeldata.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Inntekter og kostnader — Vibe</title>
+  <link rel="canonical" href="/vibe/inntekter-kostnader/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/inntekter-kostnader/style.css">
+  <script src="/vibe/inntekter-kostnader/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Hopp til månedsoversikten</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="overview" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">En enkel økonomioversikt</p>
+      <h1 id="page-title">Inntekter og <span>kostnader.</span></h1>
+      <p class="intro-copy">Se hvordan en enkel månedsoversikt kan fungere. Alle beløp og poster på siden er oppdiktede demoeksempler.</p>
+    </section>
+    <section class="dashboard" aria-label="Eksempel på månedsoversikt">
+      <div class="dashboard-head">
+        <div><p class="sample-label">Syntetiske eksempeldata</p><h2>Månedsoversikt</h2></div>
+        <label class="month-control" for="month-select">Vis måned
+          <select id="month-select" aria-describedby="demo-note"><option value="juni">Juni 2026</option><option value="mai">Mai 2026</option><option value="april">April 2026</option></select>
+        </label>
+      </div>
+      <p id="demo-note" class="demo-note">Dette er fiktive tall laget kun for demonstrasjonen. Ingenting du velger sendes eller lagres.</p>
+      <div class="summary-grid" aria-live="polite" aria-atomic="true">
+        <article class="summary-card income"><p>Inntekter</p><strong id="income-total">—</strong><span>Eksempelsum</span></article>
+        <article class="summary-card expense"><p>Kostnader</p><strong id="expense-total">—</strong><span>Eksempelsum</span></article>
+        <article class="summary-card balance"><p>Til overs</p><strong id="balance-total">—</strong><span>Inntekter minus kostnader</span></article>
+      </div>
+      <div class="content-grid">
+        <section class="panel" aria-labelledby="entries-heading">
+          <div class="panel-heading"><div><p class="panel-kicker">Eksempelliste</p><h3 id="entries-heading">Posteringer</h3></div><span id="entry-count" class="count-pill"></span></div>
+          <div class="table-wrap"><table><caption class="visually-hidden">Syntetiske eksempelposteringer for valgt måned</caption><thead><tr><th scope="col">Beskrivelse</th><th scope="col">Type</th><th scope="col">Beløp</th></tr></thead><tbody id="entries-body"></tbody></table></div>
+        </section>
+        <section class="panel" aria-labelledby="recurring-heading">
+          <div class="panel-heading"><div><p class="panel-kicker">Planlagt eksempel</p><h3 id="recurring-heading">Faste poster</h3></div><span class="recurring-mark" aria-hidden="true">↻</span></div>
+          <ul id="recurring-list" class="recurring-list"></ul>
+          <p class="recurring-note">Faste poster er kun vist som eksempler; de oppretter ikke faktiske betalinger.</p>
+        </section>
+      </div>
+      <p id="activity-status" class="activity-status" role="status" aria-live="polite"></p>
+    </section>
+    <aside class="privacy-card" aria-labelledby="privacy-title"><span class="privacy-icon" aria-hidden="true">◎</span><div><h2 id="privacy-title">Demo uten lagring</h2><p>Du kan bytte måned for å se andre eksempelverdier. Denne siden har ingen registrering, konto, lagring eller tilkobling til bank eller andre tjenester.</p></div></aside>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Kun syntetiske eksempeldata.</span></footer>
+</body>
+</html>
