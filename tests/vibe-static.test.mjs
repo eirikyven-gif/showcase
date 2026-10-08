@@ -102,6 +102,30 @@ test('Klokke candidate assessment documents source, scope, risk, and broad-round
   assert.match(read('vibe/klokke/README.md'), /ingen.*API|ingen API/i);
 });
 
+test('Hegra Cup Live assessment records evidence without presenting a live app', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'hegra-cup-live');
+  const html = read('vibe/hegra-cup-live/index.html');
+  const docs = read('vibe/hegra-cup-live/README.md');
+
+  assert.ok(app, 'Hegra Cup Live remains in the broad first-round catalog');
+  for (const field of ['status', 'source', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'routeState']) {
+    assert.equal(typeof app[field], 'string', `Hegra Cup Live records ${field}`);
+    assert.ok(app[field].trim(), `Hegra Cup Live ${field} is not empty`);
+  }
+  assert.match(app.status, /Beholdt i bred førstegangsrunde/);
+  assert.match(app.sourceStack, /ingen implementert runtime-stack/i);
+  assert.match(app.sourceApiAuthStoragePrivacy, /ikke verifisert/i);
+  assert.match(app.rightsUncertainty, /uavklart/i);
+  assert.match(app.routeState, /Ingen eksisterende/);
+  assert.match(docs, /assessment-only/i);
+  assert.match(docs, /Ingen merge eller deploy/);
+  assert.match(html, /assessment-only side/i);
+  assert.match(html, /ingen implementert app-runtime/i);
+  assert.match(html, /href="\/vibe\/"/);
+  assert.doesNotMatch(html, /Hegra IL|Stjørdal FK|Lånke IL|Vinne SK/);
+  assert.doesNotMatch(html, /<script\b|<form\b|<input\b/i);
+});
+
 test('hub search covers every catalog field and renders values as text', () => {
   const script = read('vibe/assets/hub.js');
   for (const field of ['app.name', 'app.useCase', 'app.category', 'app.audience']) {

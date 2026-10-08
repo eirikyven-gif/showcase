@@ -1,6 +1,25 @@
 {
   "apps": [
     {
+      "slug": "hegra-cup-live",
+      "name": "Hegra Cup Live · vurdering",
+      "useCase": "Les en kildevurdering av en cup-/turneringsapp der dokumentasjonen skiller mellom legacy, planlagt målarkitektur og manglende runtime.",
+      "category": "Sport og arrangement",
+      "audience": ["Turneringsarrangører", "Utviklere", "Personer som vurderer appkandidater"],
+      "status": "Beholdt i bred førstegangsrunde; vurderingsside uten appdemo. Dette er ikke en beslutning om å kuratere eller forkaste kandidaten.",
+      "source": "eirikyven-gif/diverse-apper/apps/hegra-cup-live, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-08); ingen kildefiler endret.",
+      "sourceStack": "Appmappen inneholder README, tre markdown-dokumenter og en selvstendig statisk UI-fasitfil. README sier eksplisitt at det foreløpig bare finnes dokumentasjon og en statisk referanse; ingen implementert runtime-stack kan fastslås. Dokumentene omtaler legacy Google Apps Script + Google Sheets og foreslår HTML/CSS/JS med PHP eller tilsvarende API og MariaDB/MySQL eller tilsvarende database som målarkitektur.",
+      "sourceTests": "Ingen app-testfiler, testkommando eller testresultater finnes i den gjennomgåtte appmappen. Dette sier ikke noe om tester utenfor mappen eller tidligere legacy-filer.",
+      "sourceApiAuthStoragePrivacy": "Ingen kjørbar API, auth eller lagring i appmappen. SSoT beskriver legacy Sheet-fanene Settings, Teams, Matches, Users og Logs, og skisserer separate offentlige lese- og sekretariats-/admin-skriveflater med auth/autorisasjon og auditlogging i en framtidig løsning. Faktiske felt, tilgangsnivåer, drift og personvernpraksis er ikke verifisert. Ingen eksterne API-er er kalt.",
+      "rightsUncertainty": "Ingen lisens eller rettighetstillatelse er dokumentert i de gjennomgåtte appfilene. UI-fasitens innhold og designrettigheter er uavklart; den kopieres ikke til showcase.",
+      "purpose": "Dokumentasjonen beskriver en cup-/turneringsapp for publikum og sekretariat, med publikumsoversikt og separat skriveflate som mål.",
+      "demoValue": "Vurderingssiden synliggjør dokumentert status, målarkitektur og åpne avklaringer uten å fremstille en plan som fungerende produkt.",
+      "simplifications": "Ingen turneringsdata, lag, kamper, liveoppdatering, tabeller, handlinger eller UI-galleri. Bare nøytral vurderingstekst; ingen reelle team-, person- eller kontaktdata.",
+      "risk": "Kilden omtaler brukere, roller, lag, kamper og logger, men faktiske data, behandling, tilgang, retention, produksjonsbruk og legacy-implementasjon er ikke verifisert. Målarkitektur og baseline-versjoner er dokumentasjonsopplysninger, ikke bekreftet runtime-status.",
+      "scope": "Assessment-only statisk HTML under /vibe/hegra-cup-live/. Ingen JavaScript, API, nettverkskall, auth, skjema, persistent lagring, persondata, hemmeligheter eller eksterne ressurser.",
+      "routeState": "Ingen eksisterende katalogoppføring eller /vibe/hegra-cup-live/ -rute på origin/main f0b4b9d6ec73c0459119811f012f26a7be06874c; denne committen legger til assessment-only rute."
+    },
+    {
       "slug": "bingo",
       "name": "Bingo · eksempelbrett",
       "useCase": "Prøv å markere tall på et syntetisk bingobrett og nullstill runden.",
