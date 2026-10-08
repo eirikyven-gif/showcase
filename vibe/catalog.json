@@ -116,7 +116,15 @@
       "category": "Hverdagsverktøy",
       "audience": [
         "Alle som vil ha en tydelig klokke i nettleseren"
-      ]
+      ],
+      "status": "Beholdt i bred førstegangsvurdering; eksisterende isolert demo er gjennomgått. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Kilde-README oppgir versjon 1.2.0 og komplett grunnfunksjonalitet, med manuelle testpunkter. Ingen automatisert test eller resultat er dokumentert i appmappen; deploystatus er ikke bekreftet. Kilde-repoet mangler lisensfil på roten, så rettighetsgrunnlaget for kildekode/utforming er uavklart. Showcase-demoen er original.",
+      "purpose": "Vise lokal dato og klokkeslett på norsk med pause og fortsett.",
+      "demoValue": "Et tydelig, levende eksempel på et lite nettleserverktøy uten konto eller integrasjoner.",
+      "simplifications": "Begrenser eksempelet til enhetens lokale dato/tid og pause/fortsett; showcase-ruten har i tillegg 12-/24-timersvalg. Portalnavigasjon og delte kildekilderessurser er utelatt.",
+      "risk": "Kildekoden bruker ikke synlige API-er, autentisering eller lagring i gjennomgåtte app-/delte filer, men produksjonsdrift er ikke undersøkt. Lisens/rettigheter er uavklart; demoen er selvstendig implementert og har ingen persondata eller eksterne kall.",
+      "scope": "Original, responsiv og tastaturbetjent statisk HTML/CSS/JS på /vibe/klokke/. Bare lokal enhetstid; ingen konto, backend, API, lagring, PII, hemmeligheter eller eksterne forespørsler.",
+      "source": "eirikyven-gif/diverse-apper, apps/klokke og apps/_shared/ui.css + ui.js; main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-08)."
     },
     {
       "slug": "timer",
