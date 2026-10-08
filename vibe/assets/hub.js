@@ -9,6 +9,19 @@
   const normalize = (value) => String(value || '').toLocaleLowerCase('nb-NO').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const searchableText = (app) => [app.name, app.useCase, app.category, ...(app.audience || [])].join(' ');
 
+  function hasValidCatalogShape(catalog) {
+    if (!catalog || !Array.isArray(catalog.apps)) return false;
+    const slugs = new Set();
+    return catalog.apps.every((app) => {
+      if (!app || typeof app !== 'object') return false;
+      if (typeof app.slug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(app.slug) || slugs.has(app.slug)) return false;
+      if (!['name', 'useCase', 'category'].every((key) => typeof app[key] === 'string' && app[key].trim())) return false;
+      if (!Array.isArray(app.audience) || app.audience.length === 0 || !app.audience.every((value) => typeof value === 'string' && value.trim())) return false;
+      slugs.add(app.slug);
+      return true;
+    });
+  }
+
   function render(apps) {
     const query = normalize(input.value.trim());
     const matches = apps.filter((app) => normalize(searchableText(app)).includes(query));
@@ -21,7 +34,7 @@
       category.textContent = app.category;
       const title = document.createElement('h3');
       const link = document.createElement('a');
-      link.href = `/vibe/${encodeURIComponent(app.slug)}`;
+      link.href = `/vibe/${encodeURIComponent(app.slug)}/`;
       link.textContent = app.name;
       title.append(link);
       const description = document.createElement('p');
@@ -46,7 +59,7 @@
       return response.json();
     })
     .then((catalog) => {
-      if (!catalog || !Array.isArray(catalog.apps)) throw new Error('Ugyldig katalogformat');
+      if (!hasValidCatalogShape(catalog)) throw new Error('Ugyldig katalogformat');
       render(catalog.apps);
       input.addEventListener('input', () => render(catalog.apps));
       document.querySelector('#clear-search').addEventListener('click', () => {
