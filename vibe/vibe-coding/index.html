@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Et fiktivt eksempel på å gå fra idé til testbare krav i vibe coding.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Fra idé til test — Vibe</title>
+  <link rel="canonical" href="/vibe/vibe-coding/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/vibe-coding/style.css">
+  <script src="/vibe/vibe-coding/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
+    <a class="back-link" href="/vibe/">← Alle verktøy</a>
+  </header>
+  <main id="main" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">ET FIKTIVT LÆRINGSEKSEMPEL</p>
+      <h1 id="page-title">Fra idé til <span>test.</span></h1>
+      <p class="intro-copy">Se hvordan en liten idé blir til testbare krav og en enkel kontrollplan. Velg et steg for å utforske eksemplet.</p>
+    </section>
+    <aside class="privacy-callout" aria-label="Personvern">
+      <strong>Bruk bare dette fiktive eksemplet.</strong>
+      <span>Ikke skriv inn personopplysninger. Demoen har ingen fritekstfelt. Valg og avkryssinger finnes bare i minnet mens fanen er åpen; ingenting sendes eller lagres.</span>
+    </aside>
+    <section class="lesson" aria-labelledby="lesson-heading">
+      <div class="lesson-heading">
+        <p class="eyebrow">FIKTIV IDÉ · «PAUSEPLASS»</p>
+        <h2 id="lesson-heading">Finn et lite behov</h2>
+        <p id="step-summary" class="step-summary" aria-live="polite">En student vil finne et rolig sted å ta en kort pause på campus. Eksemplet bruker ingen faktiske steder eller personer.</p>
+      </div>
+      <nav class="step-list" aria-label="Steg i eksemplet">
+        <button type="button" class="step-button" data-step="0" aria-current="step"><span>01</span><strong>Idé</strong></button>
+        <button type="button" class="step-button" data-step="1"><span>02</span><strong>Krav</strong></button>
+        <button type="button" class="step-button" data-step="2"><span>03</span><strong>Test</strong></button>
+      </nav>
+      <div class="example-card" aria-labelledby="example-title">
+        <div class="example-mark" aria-hidden="true">✳</div>
+        <div>
+          <p class="example-label">SYNTHETISK EKSEMPEL</p>
+          <h3 id="example-title">Et enkelt pausekart</h3>
+          <ul id="example-points">
+            <li>Vis tre oppdiktede pauseområder.</li>
+            <li>Vis om hvert område er stille eller sosialt.</li>
+            <li>La besøkende velge en type pause.</li>
+          </ul>
+        </div>
+      </div>
+      <section class="check-panel" aria-labelledby="check-title">
+        <div>
+          <p class="eyebrow">PRØV EN EGENKONTROLL</p>
+          <h3 id="check-title">Har eksemplet det du trenger?</h3>
+          <p id="check-hint">Marker punktene som er tydelige for deg. Avkryssingen er kun lokal egenkontroll.</p>
+        </div>
+        <div class="check-list">
+          <label><input type="checkbox"><span>Behovet er forståelig.</span></label>
+          <label><input type="checkbox"><span>Kravene kan prøves.</span></label>
+          <label><input type="checkbox"><span>Testen sier hva som skal skje.</span></label>
+        </div>
+        <button type="button" id="reset-checks" class="secondary-button">Nullstill avkryssing</button>
+        <p id="check-status" class="visually-hidden" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En lokal, syntetisk demonstrasjon</span></footer>
+</body>
+</html>
