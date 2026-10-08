@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrativ oversikt over oppdiktede Backyard-løpsresultater.">
+  <title>Bakgårdsløpet · løpsoversikt (demo)</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101412;--panel:#191f1b;--line:#303a33;--muted:#aab5ad;--text:#f1f4ef;--lime:#d7f36a;--orange:#ff9c70;--cyan:#87d9cf;font:16px/1.5 system-ui,sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 90% 0,#273326 0,transparent 35rem),var(--bg);color:var(--text)}a{color:var(--lime)}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:#fff;color:#111;padding:.75rem;z-index:5}.wrap{max-width:1160px;margin:auto;padding:24px clamp(16px,4vw,48px) 56px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:16px}.top a{text-decoration:none}.tag,.eyebrow{color:var(--lime);text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;font-weight:750}.tag{border:1px solid #708044;border-radius:999px;padding:5px 10px}.hero{padding:42px 0 28px}.hero h1{font-size:clamp(2.2rem,7vw,5.3rem);line-height:.98;letter-spacing:-.055em;margin:.25rem 0 1rem;max-width:850px}.hero p{color:var(--muted);max-width:650px;margin:.4rem 0}.notice{border:1px solid #8e6537;background:#2c241a;color:#ffe2aa;border-radius:12px;padding:12px 16px;margin:0 0 24px}.notice strong{display:block}.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}.panel{background:linear-gradient(145deg,#1c241e,var(--panel));border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}.panel h2{font-size:1.05rem;margin:0 0 5px}.sub{color:var(--muted);font-size:.88rem;margin:0 0 18px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}.stat{background:#111613;border:1px solid var(--line);border-radius:12px;padding:13px}.stat span{display:block;color:var(--muted);font-size:.78rem}.stat strong{font-variant-numeric:tabular-nums;font-size:1.55rem}.chart{height:215px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;align-items:end;border-bottom:1px solid #536057;padding:12px 4px 0}.bar-col{height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px;color:var(--muted);font-size:.75rem}.bar{width:min(46px,70%);height:var(--h);min-height:12px;border-radius:7px 7px 2px 2px;background:linear-gradient(0deg,#829b35,var(--lime))}.bar-col:nth-child(2n) .bar{background:linear-gradient(0deg,#31887f,var(--cyan))}.chart-caption{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem;margin-top:9px}.leaders{display:grid;gap:8px}.runner{display:grid;grid-template-columns:35px 1fr auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.runner:last-child{border:0}.rank{color:var(--lime);font-variant-numeric:tabular-nums;font-weight:800}.name{font-weight:700}.meta{color:var(--muted);font-size:.78rem}.time{font-variant-numeric:tabular-nums;font-weight:750}.split{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.split div{background:#111613;padding:12px;border-radius:10px}.split span{display:block;color:var(--muted);font-size:.76rem}.split b{font-variant-numeric:tabular-nums}.footer{margin-top:18px;color:var(--muted);font-size:.8rem}.footer p{margin:.4rem 0}.live-label{display:inline-flex;align-items:center;gap:7px}.live-label:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange)}
+    @media(max-width:760px){.grid{grid-template-columns:1fr}.hero{padding-top:32px}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:1.3rem}.chart{gap:5px}.panel{padding:16px}.top{align-items:flex-start}.split{gap:6px}}
+    @media(max-width:390px){.stats{grid-template-columns:1fr}.stat{display:flex;justify-content:space-between;align-items:center}.stat strong{font-size:1.15rem}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Hopp til innhold</a>
+  <div class="wrap">
+    <header class="top"><a href="/vibe/">← Alle demoer</a><span class="tag">Konseptdemo</span></header>
+    <main id="main">
+      <section class="hero" aria-labelledby="title">
+        <p class="eyebrow">Backyard · løpsoversikt</p>
+        <h1 id="title">Hold ut.<br>Én runde til.</h1>
+        <p>Et visuelt konsept for å følge rundetider, deltakere og fremdrift gjennom et utholdenhetsløp.</p>
+      </section>
+      <aside class="notice" aria-label="Datamerking"><strong>Kun syntetiske eksempeldata</strong>Dette er en selvstendig visualiseringsprototype. Ingen live-resultater, løpsdata eller Race Result API er tilkoblet.</aside>
+      <div class="grid">
+        <section class="panel" aria-labelledby="pace-title">
+          <h2 id="pace-title">Runder fullført</h2><p class="sub">Eksempelløp · runde 6 av 12</p>
+          <div class="stats"><div class="stat"><span>Deltakere</span><strong>24</strong></div><div class="stat"><span>Runder totalt</span><strong>138</strong></div><div class="stat"><span>Ledende tid</span><strong>06:42</strong></div></div>
+          <div class="chart" role="img" aria-label="Søylediagram: runder fullført per time. Klokken 08: 12, 09: 29, 10: 41, 11: 25, 12: 19 og 13: 12 runder.">
+            <div class="bar-col"><span>12</span><div class="bar" style="--h:29%"></div><span>08</span></div><div class="bar-col"><span>29</span><div class="bar" style="--h:71%"></div><span>09</span></div><div class="bar-col"><span>41</span><div class="bar" style="--h:100%"></div><span>10</span></div><div class="bar-col"><span>25</span><div class="bar" style="--h:61%"></div><span>11</span></div><div class="bar-col"><span>19</span><div class="bar" style="--h:46%"></div><span>12</span></div><div class="bar-col"><span>12</span><div class="bar" style="--h:29%"></div><span>13</span></div>
+          </div><div class="chart-caption"><span>Runder per time</span><span>Eksempel, ikke live</span></div>
+        </section>
+        <section class="panel" aria-labelledby="rank-title"><h2 id="rank-title">Eksempel på stilling</h2><p class="sub">Oppdiktede deltakere og tider</p>
+          <div class="leaders"><div class="runner"><span class="rank">01</span><div><div class="name">Ravn</div><div class="meta">12 runder · snitt 06:42</div></div><span class="time">12:04</span></div><div class="runner"><span class="rank">02</span><div><div class="name">Myr</div><div class="meta">11 runder · snitt 07:08</div></div><span class="time">11:31</span></div><div class="runner"><span class="rank">03</span><div><div class="name">Furu</div><div class="meta">10 runder · snitt 07:26</div></div><span class="time">10:53</span></div><div class="runner"><span class="rank">04</span><div><div class="name">Stein</div><div class="meta">9 runder · snitt 07:51</div></div><span class="time">10:12</span></div></div>
+        </section>
+        <section class="panel" aria-labelledby="splits-title"><h2 id="splits-title">Rundetider · Ravn</h2><p class="sub">Eksempel på siste passeringer</p><div class="split"><div><span>Runde 10</span><b>06:39</b></div><div><span>Runde 11</span><b>06:44</b></div><div><span>Runde 12</span><b>06:42</b></div></div></section>
+        <section class="panel" aria-labelledby="state-title"><h2 id="state-title">Løpsstatus</h2><p class="sub live-label">Demotilstand · statisk oversikt</p><p style="margin:0">Start <b>08:00</b> <span aria-hidden="true">·</span> Eksempeldag <b>14. juni</b> <span aria-hidden="true">·</span> Mål <b>20:00</b></p></section>
+      </div>
+      <footer class="footer"><p>Alle navn, klokkeslett, tall og løpsdetaljer er oppdiktet. Ingen data oppdateres eller lagres.</p><p>API-kontrakt, resultatfelter og faktisk kjøremiljø er ikke verifisert.</p></footer>
+    </main>
+  </div>
+</body>
+</html>

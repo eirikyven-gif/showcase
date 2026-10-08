@@ -1,6 +1,18 @@
 {
   "apps": [
     {
+      "slug": "backyard-stats",
+      "name": "Backyard løpsoversikt",
+      "useCase": "Utforsk en statisk visualisering av oppdiktede rundetider, fremdrift og stilling i et Backyard-løp.",
+      "category": "Sport og arrangement",
+      "audience": ["Løpsarrangører", "Deltakere", "Publikum", "OBS-ansvarlige"],
+      "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Ingen kuratering eller utsiling.",
+      "demoValue": "Illustrerer hvordan rundetider, fremdrift og en resultatliste kan samles i en lesbar løpsoversikt.",
+      "simplifications": "Fast oversikt med syntetiske data og et statisk diagram. Ingen liveoppdatering, API, OBS-integrasjon, innlesing eller eksport.",
+      "risk": "Kildens faktiske kjøremiljø, Race Result API-kontrakt, datafelter og rettigheter er ikke verifisert. Ingen kilde-, test- eller live-data er brukt; verdier og navn i demoen er oppdiktet.",
+      "scope": "Statisk HTML/CSS under /vibe/backyard-stats/. Ingen JavaScript, API-kall, eksterne tjenester, autentisering, lagring, input, personopplysninger eller hemmeligheter."
+    },
+    {
       "slug": "ns3424-lab",
       "name": "NS3424 læringslab",
       "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
