@@ -21,3 +21,5 @@ Ruten `/vibe/opptelling/` er statisk HTML, CSS og JavaScript. Alle endringer fin
 ## QA
 
 Node-testene dekker katalog/rute, statisk innhold og fravær av nettverks- og lagringskall. Manuell Chromium-kontroll bør verifisere valgt tidspunkt, «Start nå», live oppdatering, framtidig starttid, nullstilling, tastaturfokus, mobilbredde og hub-lenker før publisering.
+
+Versjon ved publisering av ruten: `0.5.0`.
