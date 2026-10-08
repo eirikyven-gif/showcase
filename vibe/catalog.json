@@ -73,6 +73,15 @@
       "audience": [
         "Alle som vil følge med på forløpt tid"
       ]
+    },
+    {
+      "slug": "nedtelling-epost",
+      "name": "Nedtelling e-post",
+      "useCase": "Forhåndsvis en lokal nedtellingsgrafikk for en e-postsignatur.",
+      "category": "Kommunikasjon",
+      "audience": [
+        "Personer som vil vise en nedtelling i en e-postsignatur"
+      ]
     }
   ]
 }

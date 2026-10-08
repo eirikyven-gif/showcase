@@ -1,0 +1,5 @@
+.signature-card { display: grid; gap: 1rem; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid #eadadd; border-radius: 1.25rem; background: #fff; box-shadow: 0 1rem 2.5rem #47121a12; }
+.signature-caption { margin: 0; color: #72565a; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+#countdown-canvas { display: block; width: 100%; height: auto; border-radius: .85rem; background: #fff7f4; }
+.countdown-description { margin: 0; color: #39272a; font-weight: 700; }
+@media (max-width: 640px) { .signature-card { padding: .85rem; } }

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Se en lokal, syntetisk nedtellingsgrafikk slik den kan se ut i en e-postsignatur.">
+  <meta name="theme-color" content="#9e2638"><title>Nedtelling e-post — Vibe</title>
+  <link rel="canonical" href="/vibe/nedtelling-epost/"><link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/nedtelling-epost/style.css"><script src="/vibe/nedtelling-epost/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#signature-maker">Hopp til forhåndsvisningen</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="signature-maker" class="page-shell">
+    <section class="intro" aria-labelledby="page-title"><p class="eyebrow">Et lite blikk framover</p><h1 id="page-title">Nedtelling for <span>e-post.</span></h1><p class="intro-copy">Velg en dato og se hvordan en nedtelling kan passe i en signatur. Forhåndsvisningen tegnes lokalt i nettleseren.</p></section>
+    <div class="workbench">
+      <form id="countdown-form" class="controls" autocomplete="off">
+        <div class="section-title"><span class="step">01</span><div><h2>Velg anledning</h2><p>Bruk eksempelinnhold eller prøv en dato.</p></div></div>
+        <label for="event-title">Overskrift</label><select id="event-title" name="event-title"><option>Sommeren nærmer seg</option><option>Neste feriedag</option><option>Et nytt kapittel</option></select>
+        <label for="event-date">Dato</label><input id="event-date" name="event-date" type="date" value="2027-06-21" aria-describedby="sample-note">
+        <label for="event-time">Klokkeslett</label><input id="event-time" name="event-time" type="time" value="12:00">
+        <button class="reset-button" id="reset-preview" type="button">Tilbakestill eksempel</button>
+        <p id="sample-note" class="sample-note">Syntetisk eksempel · endringene blir i denne fanen</p>
+      </form>
+      <section class="preview-wrap" aria-labelledby="preview-label"><div class="preview-heading"><span class="step">02</span><h2 id="preview-label">Lokal forhåndsvisning</h2></div>
+        <div class="signature-card"><p class="signature-caption">EKSEMPEL PÅ SIGNATURBILDE</p><canvas id="countdown-canvas" width="640" height="220" role="img" aria-label="Nedtellingsgrafikk for Sommeren nærmer seg"></canvas>
+          <p id="countdown-description" class="countdown-description" aria-live="polite">Beregner eksempel.</p><p class="sample-note">Canvas-bildet finnes bare lokalt og genereres på nytt når du endrer dato.</p></div>
+        <p class="privacy-note"><span aria-hidden="true">◉</span> Ingen e-post sendes. Ingen innlogging, lagring eller eksterne forespørsler. Last siden på nytt for å nullstille.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En lokal nedtellingsskisse.</span></footer>
+</body>
+</html>
