@@ -123,8 +123,11 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
     const html = readFileSync(file, 'utf8');
     for (const match of html.matchAll(/<form\b([^>]*)>/gi)) {
       assert.doesNotMatch(match[1], /\b(?:action|method)\s*=/i, `${file} has no form action or network method`);
-      assert.match(scripts, /addEventListener\s*\(\s*['"]submit['"]/, `${file} form submit is handled in client code`);
-      assert.match(scripts, /preventDefault\s*\(/, `${file} form submission is prevented`);
+      assert.match(
+        scripts,
+        /addEventListener\s*\(\s*['"]submit['"]\s*,[\s\S]{0,200}?preventDefault\s*\(/,
+        `${file} form submission is prevented in its client-side submit handler`,
+      );
     }
   }
 });
