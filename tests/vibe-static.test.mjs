@@ -1,0 +1,103 @@
+import assert from 'node:assert/strict';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import test from 'node:test';
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const vibeRoot = path.join(repoRoot, 'vibe');
+const read = (relativePath) => readFileSync(path.join(repoRoot, relativePath), 'utf8');
+const catalog = JSON.parse(read('vibe/catalog.json'));
+
+function filesUnder(directory) {
+  return readdirSync(directory).flatMap((name) => {
+    const fullPath = path.join(directory, name);
+    return statSync(fullPath).isDirectory() ? filesUnder(fullPath) : [fullPath];
+  });
+}
+
+test('hub assets and catalog exist', () => {
+  for (const relativePath of [
+    'vibe/index.html',
+    'vibe/assets/hub.css',
+    'vibe/assets/hub.js',
+    'vibe/catalog.json',
+  ]) {
+    assert.ok(statSync(path.join(repoRoot, relativePath)).isFile(), `${relativePath} exists`);
+  }
+  assert.ok(Array.isArray(catalog.apps), 'catalog.apps is an array');
+});
+
+test('catalog fields are complete and slugs are unique, stable route segments', () => {
+  const slugs = new Set();
+  for (const app of catalog.apps) {
+    assert.match(app.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `valid slug: ${app.slug}`);
+    assert.ok(!slugs.has(app.slug), `unique slug: ${app.slug}`);
+    slugs.add(app.slug);
+    assert.equal(typeof app.name, 'string');
+    assert.ok(app.name.trim(), `${app.slug} has a name`);
+    assert.equal(typeof app.useCase, 'string');
+    assert.ok(app.useCase.trim(), `${app.slug} has a use case`);
+    assert.equal(typeof app.category, 'string');
+    assert.ok(app.category.trim(), `${app.slug} has a category`);
+    assert.ok(Array.isArray(app.audience) && app.audience.length > 0, `${app.slug} has audience metadata`);
+    assert.ok(app.audience.every((item) => typeof item === 'string' && item.trim()), `${app.slug} audience values are text`);
+    const route = path.join(vibeRoot, app.slug, 'index.html');
+    assert.ok(statSync(route).isFile(), `${app.slug} has a direct-route index`);
+  }
+});
+
+test('hub search covers every catalog field and renders values as text', () => {
+  const script = read('vibe/assets/hub.js');
+  for (const field of ['app.name', 'app.useCase', 'app.category', 'app.audience']) {
+    assert.ok(script.includes(field), `search includes ${field}`);
+  }
+  assert.match(script, /\.textContent\s*=/, 'catalog values are rendered as text');
+  assert.match(script, /catalog\.json/, 'catalog is loaded from the same static repository');
+});
+
+test('hub provides labeled search, focus visibility, and a small-screen layout', () => {
+  const html = read('vibe/index.html');
+  const css = read('vibe/assets/hub.css');
+  assert.match(html, /<label[^>]+for="app-search"/i);
+  assert.match(html, /id="app-search"[^>]+aria-describedby=/i);
+  assert.match(css, /:focus-visible/);
+  assert.match(css, /@media\s*\(max-width:/);
+  assert.match(css, /prefers-reduced-motion/);
+});
+
+test('demo runtime has no browser persistence, auth, secret-shaped value, or external runtime URL', () => {
+  const runtimeFiles = filesUnder(vibeRoot).filter((file) => /\.(?:html|js|css)$/i.test(file));
+  const secretPatterns = [
+    /\bAKIA[0-9A-Z]{16}\b/,
+    /\bgh[pousr]_[A-Za-z0-9]{20,}\b/,
+    /\bAIza[0-9A-Za-z_-]{30,}\b/,
+  ];
+  const hubScript = path.join(vibeRoot, 'assets/hub.js');
+
+  for (const file of runtimeFiles) {
+    const source = readFileSync(file, 'utf8');
+    assert.doesNotMatch(source, /\b(?:localStorage|sessionStorage|indexedDB)\b/, `${file} has no browser persistence`);
+    assert.doesNotMatch(source, /\bdocument\.cookie\b/, `${file} does not read/write cookies`);
+    assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
+    assert.doesNotMatch(source, /https?:\/\//i, `${file} has no external runtime URL`);
+    for (const secretPattern of secretPatterns) {
+      assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
+    }
+    if (file.endsWith('.js') && file !== hubScript) {
+      assert.doesNotMatch(source, /\bfetch\s*\(/, `${file} makes no API/network call`);
+    }
+  }
+
+  const hub = readFileSync(hubScript, 'utf8');
+  assert.match(hub, /fetch\s*\(\s*['"]\/vibe\/catalog\.json['"]/, 'hub only fetches the static catalog');
+});
+
+test('route inventory has no duplicate app directory names', () => {
+  const routeDirs = readdirSync(vibeRoot)
+    .filter((name) => statSync(path.join(vibeRoot, name)).isDirectory() && name !== 'assets');
+  const slugSet = new Set(catalog.apps.map((app) => app.slug));
+  for (const route of routeDirs) {
+    assert.ok(slugSet.has(route), `route folder ${route} has a catalog entry`);
+  }
+});
