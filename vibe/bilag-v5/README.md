@@ -21,4 +21,4 @@
 
 Siden er statisk HTML/CSS uten appskript. Demoen skal vurderes for liten skjerm, lesbar tabell ved horisontal rulling, overskriftsstruktur, skip-lenke, kontrast/fokus fra felles hub-stil, syntetiske verdier og ingen forespørsler utover statiske lokale ressurser. Kjør fra repo-roten: `node --test tests/*.test.mjs` og `git diff --check`; åpne `/vibe/bilag-v5/` med lokal HTTP-server for direkte-rute- og mobilkontroll.
 
-PR-en delvis løser Issue #2. Ingen publisering er utført. Deploystatus er derfor upublisert; den etablerte `diverse-apper`-baserte deployflyten krever merge til `main`, dry-run og deretter godkjent live-kjøring. Denne endringen setter `VERSION` til `0.21.0`, neste minor etter `0.20.1` på `main` ved oppstart.
+Denne leveransen er et delbidrag til Issue #2. Ingen publisering er utført. Deploystatus er derfor upublisert; den etablerte `diverse-apper`-baserte deployflyten krever merge til `main`, dry-run og deretter godkjent live-kjøring. Denne endringen setter `VERSION` til `0.22.0`, neste minor etter `0.21.0` på `main` ved integrering.
