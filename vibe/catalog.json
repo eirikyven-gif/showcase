@@ -107,7 +107,15 @@
       "category": "Tid",
       "audience": [
         "Alle som vil måle tid og rundetider"
-      ]
+      ],
+      "status": "Retained in the broad first-round candidate review; existing independent static demo audited and documented. No curation or exclusion decision.",
+      "source": "eirikyven-gif/diverse-apper, apps/stoppeklokke/, public main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (checked 2026-10-08); source README identifies v1.2.0.",
+      "sourceUncertainty": "Source README lists manual test points but no automated app tests were found. It documents shared UI dependencies. No license or reuse grant was identified; source rights remain unverified. See route README.",
+      "purpose": "Measure elapsed time, pause/resume, and record cumulative and split lap times.",
+      "demoValue": "An instantly usable, familiar timing interaction that makes elapsed and split time concrete without setup.",
+      "simplifications": "One in-memory stopwatch and lap list. No saved sessions, named laps, race coordination, or export.",
+      "risk": "Low for the synthetic local demo. Browser timing is intended for informal use and is not represented as certified or competition-grade measurement.",
+      "scope": "Original static HTML/CSS/JavaScript isolated to /vibe/stoppeklokke/. Keyboard-operable native controls; responsive layout. No authentication, server, API, external calls, browser storage, PII, secrets, or copied source assets/code. Timings exist only in the open tab."
     },
     {
       "slug": "klokke",
