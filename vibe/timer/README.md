@@ -1,11 +1,25 @@
-# Timer
+# Timer — kandidatvurdering og demo
 
-En frittstående, statisk kopi av Timer v1.2.0 på `/vibe/timer/`, laget med HTML, CSS og JavaScript. Den beholder nedtelling, start, pause/fortsett, nullstilling og ferdig-status fra kildeappen.
+**Status:** beholdt som kandidat i bred førstegangsvurdering. Ingen kuratering eller utsiling er gjort. Den opprinnelige appen er Timer v1.2.0 i `eirikyven-gif/diverse-apper/apps/timer`; kildeinventaret ble lest direkte fra offentlig `main` 2026-10-08 (`0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`). Denne ruten er en ny, original syntetisk demo, ikke en kopi eller port av kildekoden.
 
-Standardverdien 60 sekunder er et syntetisk eksempel. Brukerens tidsvalg og timeraktivitet finnes bare i minnet til den åpne fanen. «Nullstill eksempel» stopper timeren og gjenoppretter 60 sekunder; lasting på nytt gjør det samme. Ingen nettleserlagring, API, servertilstand, innlogging eller personopplysninger brukes. Ruten har ingen eksterne ressurser eller tredjepartskall.
+## Formål, kategori og målgruppe
 
-Ruten bruker den delte Vibe-hubstilen, kanonisk adresse `/vibe/timer/` og navigasjon tilbake til `/vibe/`. Katalogkortet peker direkte til denne ruten.
+Kandidaten er en enkel nedtelling for tidsavgrensede arbeidsøkter og pauser. Kategori: **Fokus**. Målgruppe: alle som vil følge med på en kort økt eller pause. Den lille, konkrete oppgaven gjør start, pause, fortsettelse og ferdigstatus enkel å utforske.
+
+## Kildestatus og usikkerhet
+
+Kildens README oppgir komplett grunnfunksjonalitet i v1.2.0: sekunder, start, pause/fortsett, nullstill, `aria-live`-status og vern mot flere intervaller. README oppgir `../_shared/ui.css` og `../_shared/ui.js` som lokale avhengigheter, samt en portal tilbake til `../tidteller/index.html`. Kilde-HTML/JS viser ingen API, innlogging, nettleserlagring, PII eller hemmeligheter, og ingen eksterne URL-er eller tjenestekall; implementasjonen bruker lokale delte UI-filer. Kilden setter bare nedre grense på ett sekund, og nullstilling bruker gjeldende innstilling. README gir manuelle testpunkter, men ingen testkommando eller automatisert testresultat. Deploy-sti og smoke-URL er oppgitt i README, men faktisk produksjonsstatus ble ikke bekreftet. Versjonsopplysninger bygger på README og HTML; annen versjonsmanifest eller CI-status ble ikke undersøkt. Kildekoden er lest, ikke endret.
+
+## Demo og avgrensing
+
+Åpne `/vibe/timer/`. Demoen har et syntetisk eksempel på 60 sekunder, validerer heltall fra 1 til 5 999 999 sekunder og lar brukeren starte, pause, fortsette og nullstille til eksempelet. Timer og valg finnes kun i minnet i gjeldende fane. Ny innlasting eller nullstilling fjerner tilstanden.
+
+Dette er en forenklet fokusnedtelling, ikke en full port: ingen felles kilde-UI, portalintegrasjon, varsling/lyd, historikk, bakgrunnsplanlegging eller persistens. Risikoen er lav for denne statiske demoen; en timer kan være unøyaktig når nettleseren settes i bakgrunnen, og den kan forveksles med kildeproduktet. Skjermen merker verdien som syntetisk og sier at timeren kjører bare i fanen.
+
+## Teknologi, data og personvern
+
+Original HTML, CSS og JavaScript; responsiv layout og tastaturbetjente native input/knapper. Ingen API, autentisering, server, lagring, PII, hemmeligheter eller eksterne kall. Ingen data forlater fanen. Siden laster bare de statiske Vibe-filene fra samme nettsted.
 
 ## QA
 
-Kontroller timerverdi og validering, start, pause, fortsett, fullført-tilstand, start på nytt etter fullføring, endring av varighet, nullstilling mens timeren kjører og etter fullføring, tastaturnavigasjon, skjermleserstatus og visningsbredder fra 320 til 1440 piksler. Kontroller også at direkte rute, kanonisk lenke, hublenke og katalogkort virker. Nettverkspanelet skal bare vise statiske filer fra samme nettsted; ingen data lagres mellom sideinnlastinger.
+Automatisert kontroll kjøres med `node --test tests/vibe-static.test.mjs`. Manuell QA: test gyldig/ugyldig varighet, start, pause, fortsett, fullføring, ny start, endring av varighet og nullstilling under kjøring/etter fullføring; kontroller tastaturfokus, live-status, direkte rute, kanonisk/hublenke og mobilbredder 320–1440 px. I nettverkspanelet skal bare statiske ressurser fra samme nettsted vises. Kontroller at valg ikke overlever sideinnlasting. Manuell nettleser-/skjermleser-QA er ikke utført i denne endringen.

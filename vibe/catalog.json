@@ -125,7 +125,14 @@
       "category": "Fokus",
       "audience": [
         "Alle som vil holde oversikt over en kort økt eller pause"
-      ]
+      ],
+      "status": "Beholdt som kandidat i bred førstegangsvurdering; original syntetisk demo. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Offentlig eirikyven-gif/diverse-apper/apps/timer lest 2026-10-08 på commit 0900ffe. README oppgir v1.2.0 og manuelle testpunkter, men ingen automatisert testkommando; deploy er ikke bekreftet. Se rute-README for kilde- og statusdetaljer.",
+      "purpose": "Gi en enkel nedtelling for arbeidsøkter eller pauser.",
+      "demoValue": "Gjør varighet, start, pause, fortsettelse og ferdigstatus umiddelbart utforskbare uten oppsett.",
+      "simplifications": "Original, frittstående timer med syntetisk 60-sekunders eksempel. Ingen kilde-UI, portalintegrasjon, lyd/varsling, historikk eller bakgrunnsplanlegging.",
+      "risk": "Lav for demoen. Bakgrunnsfaner kan forsinke oppdatering, og den generiske timeren må ikke forveksles med verifisert kildeutrulling.",
+      "scope": "Responsiv statisk HTML/CSS/JS på /vibe/timer/. Kun minnetilstand i fanen. Ingen konto, API, backend, lagring, persondata, hemmeligheter eller eksterne kall."
     },
     {
       "slug": "inntekter-kostnader",
