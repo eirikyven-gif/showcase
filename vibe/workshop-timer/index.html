@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prøv en enkel kø med workshop-timere i nettleseren.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Workshop-timer — Vibe</title>
+  <link rel="canonical" href="/vibe/workshop-timer/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/workshop-timer/style.css">
+  <script src="/vibe/workshop-timer/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#timer-app">Hopp til timeren</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="timer-app" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Hold flyt i økta</p>
+      <h1 id="page-title">Workshop-<span>timer.</span></h1>
+      <p class="intro-copy">Følg en enkel kø av tidssegmenter. Verdiene under er syntetiske eksempler; endringer finnes bare i denne fanen og nullstilles når siden lastes på nytt.</p>
+    </section>
+    <div class="timer-layout">
+      <section class="clock-card" aria-labelledby="current-label">
+        <p class="clock-caption" id="current-label">Nåværende segment</p>
+        <h2 id="active-name">Velkommen</h2>
+        <p class="countdown" id="countdown" role="timer" aria-label="Tid igjen">05:00</p>
+        <p class="clock-caption">Neste: <span id="next-name">Felles introduksjon</span></p>
+        <div class="timer-actions">
+          <button class="primary" id="start-pause" type="button">Start</button>
+          <button class="secondary" id="reset" type="button">Start på nytt</button>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite">Klar når du er.</p>
+      </section>
+      <section class="queue-card" aria-labelledby="queue-heading">
+        <div class="queue-heading"><div><p class="eyebrow">Eksempelplan</p><h2 id="queue-heading">Tidsplan</h2></div><span id="segment-count" class="count-badge"></span></div>
+        <ol id="segments" class="segments"></ol>
+        <div class="add-segment">
+          <label for="segment-name">Nytt segment</label>
+          <input id="segment-name" type="text" maxlength="48" value="Spørsmål og oppsummering" autocomplete="off">
+          <label for="segment-minutes">Varighet i minutter</label>
+          <input id="segment-minutes" type="number" min="1" max="180" value="5" inputmode="numeric">
+          <button id="add" class="secondary" type="button">Legg til i køen</button>
+        </div>
+      </section>
+    </div>
+    <p class="privacy-note">Ingen innlogging, lagring eller nettverkskall. Timeren går bare mens denne siden er åpen.</p>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En enkel lokal demonstrasjon.</span></footer>
+</body>
+</html>
