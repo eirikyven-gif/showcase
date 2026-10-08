@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En statisk statusoversikt for to fiktive batchløp. Ingen PDF- eller ZIP-filer behandles.">
+  <title>Bilag v5 · batchstatus — Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/bilag-v5/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="main" class="page-shell">
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">Bilag v5 · konseptskisse</p>
+      <h1 id="title">To løp.<br><span>Én statusoversikt.</span></h1>
+      <p class="lead">Et fiktivt blikk på hvordan en PDF-batch og en separat ZIP-import kan følges hver for seg.</p>
+      <aside class="notice" role="note"><strong>Kun eksempelstatus.</strong> Ingen filer velges, leses, pakkes ut, konverteres, flyttes eller lastes ned. Alle navn og statuser på siden er oppdiktet.</aside>
+    </section>
+
+    <section class="runs" aria-label="Fiktive batchløp">
+      <article class="run-card" aria-labelledby="pdf-title">
+        <div class="card-top"><span class="run-icon" aria-hidden="true">PDF</span><span class="status status-active">Eksempel · pågår</span></div>
+        <p class="eyebrow">Tidsstyrt batch A</p>
+        <h2 id="pdf-title">PDF-behandling</h2>
+        <p class="description">Fiktiv oversikt over filer som i en operativ flyt kan normaliseres og følges opp.</p>
+        <dl class="metrics"><div><dt>Eksempel i kø</dt><dd>3</dd></div><div><dt>Eksempelstatus</dt><dd>1 venter</dd></div><div><dt>Visning</dt><dd>Kun tekst</dd></div></dl>
+        <div class="sample-file"><span>Oppdiktet filnavn</span><strong>bilag-demo-104.pdf</strong></div>
+        <p class="state"><span class="state-dot" aria-hidden="true"></span>Venter på eksempelgjennomgang</p>
+      </article>
+      <article class="run-card zip-card" aria-labelledby="zip-title">
+        <div class="card-top"><span class="run-icon zip-icon" aria-hidden="true">ZIP</span><span class="status status-queued">Eksempel · i kø</span></div>
+        <p class="eyebrow">Separat tidsstyrt jobb B</p>
+        <h2 id="zip-title">ZIP-import</h2>
+        <p class="description">Et eget eksempel på køstatus for en pakke. Ingen arkivoppføring blir åpnet eller tolket.</p>
+        <dl class="metrics"><div><dt>Eksempel i kø</dt><dd>1</dd></div><div><dt>Eksempelstatus</dt><dd>Avventer</dd></div><div><dt>Visning</dt><dd>Kun tekst</dd></div></dl>
+        <div class="sample-file"><span>Oppdiktet pakkenavn</span><strong>pakke-eksempel-07.zip</strong></div>
+        <p class="state queued-state"><span class="state-dot" aria-hidden="true"></span>Venter i separat eksempeljobb</p>
+      </article>
+    </section>
+
+    <section class="log-panel" aria-labelledby="log-title">
+      <div class="section-heading"><div><p class="eyebrow">Syntetiske hendelser</p><h2 id="log-title">Eksempellogg</h2></div><span class="log-label">Ikke en revisjonslogg</span></div>
+      <div class="table-wrap"><table><caption class="visually-hidden">Oppdiktede statuslinjer uten filidentifikatorer eller lenker</caption><thead><tr><th scope="col">Eksempeltid</th><th scope="col">Løp</th><th scope="col">Oppdiktet navn</th><th scope="col">Status</th></tr></thead><tbody>
+        <tr><td>09:12</td><td>PDF-batch</td><td>bilag-demo-104.pdf</td><td><span class="table-status">Venter</span></td></tr>
+        <tr><td>09:10</td><td>ZIP-import</td><td>pakke-eksempel-07.zip</td><td><span class="table-status queued">I kø</span></td></tr>
+        <tr><td>09:04</td><td>PDF-batch</td><td>kvittering-demo-022.pdf</td><td><span class="table-status complete">Eksempel ferdig</span></td></tr>
+      </tbody></table></div>
+      <p class="log-note">Tidene og radene er faste illustrasjoner. Ingen faktisk jobb har kjørt, og ingen kilde- eller mållenker vises.</p>
+    </section>
+
+    <section class="boundary" aria-labelledby="boundary-title"><p class="eyebrow">Les dette som en skisse</p><h2 id="boundary-title">Arbeidsflyt i kilden, status i demoen</h2><p>Bilag v5 beskriver én tidsstyrt PDF-batch for normalisering og kontrollert flytting, pluss en separat tidsstyrt ZIP-import som legger utpakkede filer i Innboks. De bruker egne triggere og låser, men kan fortsatt berøre de samme dokumentene og regnearkbaserte oversiktene. Denne demoen viser bare den konseptuelle forskjellen mellom køene. Den representerer ikke kontrollene eller resultatene i den operative løsningen.</p><p class="disclaimer">Bruk aldri virkelige filnavn, økonomiopplysninger, identifikatorer eller personopplysninger i denne demoen. Den gir ikke regnskapsråd og skal ikke brukes til dokumenthåndtering.</p></section>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Statisk visning · kun syntetiske statusdata</span></footer>
+</body>
+</html>
