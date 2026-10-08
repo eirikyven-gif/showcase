@@ -149,7 +149,7 @@ test('Timer candidate has source assessment, synthetic scope, and accessible mem
   assert.match(css, /:focus-within|:focus-visible/, 'keyboard focus is visible');
   assert.match(css, /@media\s*\(max-width:/, 'layout adapts to small screens');
   assert.match(docs, /ingen testkommando eller automatisert testresultat/i, 'source test uncertainty is recorded');
-  assert.match(docs, /Manuell nettleser-\/skjermleser-QA er ikke utført/i, 'manual QA status is explicit');
+  assert.match(docs, /Skjermleser ble ikke kontrollert manuelt/i, 'manual QA status is explicit');
 });
 
 test('HTML-only app routes are valid deployment targets', () => {
