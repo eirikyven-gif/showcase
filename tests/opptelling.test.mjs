@@ -7,6 +7,7 @@ import test from 'node:test';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const appSource = readFileSync(path.join(repoRoot, 'vibe/opptelling/app.js'), 'utf8');
+const catalog = JSON.parse(readFileSync(path.join(repoRoot, 'vibe/catalog.json'), 'utf8'));
 
 function createDemo() {
   const listeners = new Map();
@@ -61,4 +62,18 @@ test('future start times do not produce a negative elapsed duration', () => {
   demo.elements.start.value = localFuture.toISOString().slice(0, 16);
   demo.input();
   assert.match(demo.elements.output.textContent, /^Forløpt: 0 dager · 0 timer · 0 minutter · 0 sekunder$/);
+});
+
+test('Opptelling remains a broad-round candidate with source and route assessment', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'opptelling');
+  assert.ok(app, 'Opptelling remains in the catalog');
+  for (const field of ['status', 'source', 'sourceUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'routeState']) {
+    assert.equal(typeof app[field], 'string', `catalog records ${field}`);
+    assert.ok(app[field].trim(), `${field} is not empty`);
+  }
+  assert.match(app.status, /Beholdt i bred førstegangsvurdering/);
+  assert.match(app.source, /v1\.2\.0/);
+  assert.match(app.rightsUncertainty, /Ingen lisens|gjenbrukstillatelse er bekreftet/i);
+  assert.match(app.routeState, /Eksisterende rute/);
+  assert.match(readFileSync(path.join(repoRoot, 'vibe/opptelling/README.md'), 'utf8'), /0900ffe48fa92dcefae1c6d0bbee8e0d02eec530/);
 });
