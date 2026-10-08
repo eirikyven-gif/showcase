@@ -66,8 +66,8 @@ test('hub provides labeled search, focus visibility, and a small-screen layout',
   assert.match(css, /prefers-reduced-motion/);
 });
 
-test('demo runtime has no browser persistence, auth, secret-shaped value, or external runtime URL', () => {
-  const runtimeFiles = filesUnder(vibeRoot).filter((file) => /\.(?:html|js|css)$/i.test(file));
+test('catalog and demo runtime have no browser persistence, login fields, recognizable secrets, or external runtime URL', () => {
+  const runtimeFiles = filesUnder(vibeRoot).filter((file) => /\.(?:html|js|css|json)$/i.test(file));
   const secretPatterns = [
     /\bAKIA[0-9A-Z]{16}\b/,
     /\bgh[pousr]_[A-Za-z0-9]{20,}\b/,
@@ -80,6 +80,8 @@ test('demo runtime has no browser persistence, auth, secret-shaped value, or ext
     assert.doesNotMatch(source, /\b(?:localStorage|sessionStorage|indexedDB)\b/, `${file} has no browser persistence`);
     assert.doesNotMatch(source, /\bdocument\.cookie\b/, `${file} does not read/write cookies`);
     assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
+    assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no real password field`);
+    assert.doesNotMatch(source, /\b(?:Authorization\s*:\s*['"]?Bearer|credentials\s*:\s*['"]include)/i, `${file} has no authenticated network request`);
     assert.doesNotMatch(source, /https?:\/\//i, `${file} has no external runtime URL`);
     for (const secretPattern of secretPatterns) {
       assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
@@ -99,5 +101,30 @@ test('route inventory has no duplicate app directory names', () => {
   const slugSet = new Set(catalog.apps.map((app) => app.slug));
   for (const route of routeDirs) {
     assert.ok(slugSet.has(route), `route folder ${route} has a catalog entry`);
+  }
+  assert.equal(routeDirs.length, slugSet.size, 'each catalog slug maps to exactly one route directory');
+  for (const slug of slugSet) {
+    assert.ok(routeDirs.includes(slug), `catalog slug ${slug} maps to a route directory`);
+  }
+});
+
+test('demo routes stay static and form data cannot fall through to a GET or POST', () => {
+  const allFiles = filesUnder(vibeRoot);
+  const forbiddenServerExtensions = /\.(?:php|gs|sql|py|rb|pl|sh|env)$/i;
+  const htmlFiles = allFiles.filter((file) => file.endsWith('.html'));
+  const scriptFiles = allFiles.filter((file) => file.endsWith('.js'));
+  const scripts = scriptFiles.map((file) => readFileSync(file, 'utf8')).join('\n');
+
+  for (const file of allFiles) {
+    assert.doesNotMatch(file, forbiddenServerExtensions, `${file} is not a server-side source/storage file`);
+  }
+
+  for (const file of htmlFiles) {
+    const html = readFileSync(file, 'utf8');
+    for (const match of html.matchAll(/<form\b([^>]*)>/gi)) {
+      assert.doesNotMatch(match[1], /\b(?:action|method)\s*=/i, `${file} has no form action or network method`);
+      assert.match(scripts, /addEventListener\s*\(\s*['"]submit['"]/, `${file} form submit is handled in client code`);
+      assert.match(scripts, /preventDefault\s*\(/, `${file} form submission is prevented`);
+    }
   }
 });
