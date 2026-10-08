@@ -211,18 +211,6 @@
       "scope": "Kun statisk /vibe/bilag/-rute med syntetisk innhold. Ingen dokumenter, opplasting/nedlasting, Drive/webhook, eksterne kall, PII, hemmeligheter, konto eller lagring."
     },
     {
-      "slug": "bilag-v5",
-      "name": "Bilag v5 · batchstatus",
-      "useCase": "Se et syntetisk statusbilde av separate PDF-batch- og ZIP-importløp for bilagsflyt.",
-      "category": "Gårdsadministrasjon og dokumentflyt",
-      "audience": ["Gårdsbrukere", "Regnskapsmedarbeidere", "Dokumentansvarlige", "Utviklere som vurderer batchflyt"],
-      "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
-      "demoValue": "Gjør forskjellen mellom PDF-behandling og separat ZIP-import synlig gjennom køstatus og oppdiktede hendelseslinjer.",
-      "simplifications": "Kun fast eksempelstatus i to batchkort og en fiktiv logg. Ingen jobbkjøring, tidsstyring, ZIP-/PDF-tolkning, mappeoperasjoner, forsøk eller ekte revisjonslogg.",
-      "risk": "Kildearbeidsflyten håndterer økonomiske dokumenter og kan eksponere filnavn, lenker og identifikatorer i logger. Kildens dataklassifisering og tilgangsoppsett er ikke uavhengig verifisert. Demoen bruker bare syntetiske navn og statiske statuser.",
-      "scope": "Kun statisk /vibe/bilag-v5/-rute. Ingen filopplasting/nedlasting, PDF/ZIP-parsing, Drive, Sheet, trigger, SYSTEM-identitet, API, autentisering, lagring, PII eller hemmeligheter."
-    },
-    {
       "slug": "gardsbehov-fornes",
       "name": "Gårdsbehov",
       "useCase": "Se et syntetisk eksempel på melding, prioritering og oppfølging av et gårdsbehov.",
