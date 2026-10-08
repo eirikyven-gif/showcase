@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Denne siden finnes ikke i Vibe-samlingen.">
+  <title>Fant ikke siden — Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><span class="header-note">Et lite hjørne for gode idéer</span></header>
+  <main id="main" class="route-message">
+    <p class="eyebrow">404 · Ikke her</p>
+    <h1 id="route-title">Denne siden finnes ikke (ennå).</h1>
+    <p id="route-description">Vi fant ingen app på denne adressen.</p>
+    <a class="return-link" href="/vibe/">← Tilbake til Vibe</a>
+  </main>
+  <footer class="site-footer"><a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a><p>Laget med nysgjerrighet <span aria-hidden="true">♥</span></p></footer>
+  <script>
+    // Static hosts may serve this file for unknown /vibe/[slug] routes.
+    // Keep this page self-contained so each slug gets a graceful return path.
+    const slug = decodeURIComponent(location.pathname.replace(/\/+$/, '').split('/').pop() || '');
+    if (slug && slug !== '404.html') {
+      document.getElementById('route-title').textContent = `Fant ikke «${slug}».`;
+    }
+  </script>
+</body>
+</html>
