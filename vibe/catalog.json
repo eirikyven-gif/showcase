@@ -1,6 +1,29 @@
 {
   "apps": [
     {
+      "slug": "soundscape",
+      "name": "Soundscape · vær som lyd",
+      "useCase": "Utforsk hvordan syntetisk temperatur påvirker en lokalt generert tone, mens vind bare endrer en visuell indikator.",
+      "category": "Musikk og eksperimentering",
+      "audience": [
+        "Lydinteresserte",
+        "Musikere",
+        "Personer som utforsker værvisualisering"
+      ],
+      "status": "Beholdt i bred førstegangsrunde; original, forenklet konseptdemo. Ingen kuratering eller utsiling er gjort.",
+      "source": "eirikyven-gif/diverse-apper/apps/soundscape, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530; README/package.json oppgir v0.8.0. Lest 2026-10-09; kilde-repo kun lest.",
+      "sourceStack": "Kilden er HTML/CSS/JavaScript-moduler med Web Audio/AudioWorklet, PWA/service worker og PHP-basert serverruntime.",
+      "sourceTests": "Kildepakka definerer node --check-basert check og node --test tests/*.test.mjs; ni testfiler finnes. Kildetestene ble ikke kjørt i denne vurderingen.",
+      "sourceApiAuthStoragePrivacy": "Kildedokumentasjonen beskriver offentlig vær-/lydflate, separat admininnlogging, sentral serverruntime og historikk, Netatmo som primær sensorleverandør og MET for prognose/sol og øvrige felt. OAuth, koordinater, kildehemmeligheter og lagring håndteres server-side. Faktisk produksjonsoppsett og datapraksis er ikke uavhengig verifisert. Showcase-demoen bruker ingen slike tjenester eller data.",
+      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte appfiler. Kode-, design- og innholdsrettigheter er uavklart; demoen er original og gjenbruker ikke kildeartefakter.",
+      "purpose": "Kildens låste SSoT beskriver en autonom offentlig vær-til-generativ-lyd-installasjon med eksakte liveverdier og separat autentisert admin som styrer sentral servertilstand.",
+      "demoValue": "En enkel lokal Web Audio-tone der syntetisk temperatur justerer tonehøyden. Syntetisk vind justerer bare den visuelle indikatoren; vind påvirker ikke lyden.",
+      "simplifications": "Illustrativ skisse med én oscillator. Verdiene er oppdiktede, endres lokalt og representerer ikke livevær eller kildens signal-/lydmappinger. Ingen solsyklus, øvrige sensorer, servertilstand, PWA eller admin.",
+      "risk": "Kilden har betydelig server-, autentiserings- og personvernflate. Driftsstatus og faktisk databehandling er ikke revidert. Demoen må ikke forveksles med en trofast modell av liveverdier eller kildens generative lyd.",
+      "scope": "Selvstendig statisk /vibe/soundscape/-rute med syntetiske verdier og Web Audio etter brukerhandling. Ingen API, nettverk, auth, OAuth, browser/serverlagring, opplasting, konto, persondata eller kildehemmeligheter.",
+      "routeState": "Slug og rute var fraværende i showcase main 68a4396c7455ddeef8824eb0a65f41acf351c988 med 31 katalogruter; ny isolert rute."
+    },
+    {
       "slug": "tidteller",
       "name": "Tidtellerportal",
       "useCase": "Finn fram til selvstendige verktøy for klokke, nedtelling, opptelling og tidtaking.",

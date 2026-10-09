@@ -62,6 +62,47 @@ test('catalog fields are complete and slugs are unique, stable route segments', 
   }
 });
 
+test('Soundscape assessment and illustrative route are isolated, synthetic, and local-only', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'soundscape');
+  const html = read('vibe/soundscape/index.html');
+  const script = read('vibe/soundscape/app.js');
+  const styles = read('vibe/soundscape/style.css');
+  const docs = read('vibe/soundscape/README.md');
+
+  assert.ok(app, 'Soundscape remains in the broad candidate catalog');
+  assert.equal(catalog.apps.filter((entry) => entry.slug === 'soundscape').length, 1);
+  for (const field of ['status', 'source', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'routeState']) {
+    assert.equal(typeof app[field], 'string', `Soundscape records ${field}`);
+    assert.ok(app[field].trim(), `Soundscape ${field} is not empty`);
+  }
+  assert.match(app.source, /v0\.8\.0/);
+  assert.match(app.purpose, /SSoT/);
+  assert.match(app.simplifications, /oppdiktede.*livevær.*mappinger/i);
+  assert.match(app.rightsUncertainty, /uavklart/i);
+  assert.match(app.routeState, /31 katalogruter/);
+  assert.match(docs, /autonom offentlig vær-til-generativ-lyd-installasjon/);
+  assert.match(docs, /verken liveverdier/);
+  assert.match(docs, /rettighetene er uavklart|rettigheter.*uavklart/i);
+  assert.match(html, /href="\/vibe\/soundscape\/"/);
+  assert.match(html, /href="\/vibe\/"/);
+  assert.match(html, /id="temperature"[^>]*type="range"/);
+  assert.match(html, /id="wind"[^>]*type="range"/);
+  assert.match(html, /syntetiske eksempelverdier/i);
+  assert.match(html, /temperaturen styrer tonehøyden/i);
+  assert.match(html, /vindverdien endrer bare indikatoren.*påvirker ikke lyden/i);
+  assert.match(html, /Vindindikator · visuell effekt, påvirker ikke lyden/);
+  assert.match(docs, /vind justerer bare en visuell indikator og påvirker ikke lyden/i);
+  assert.match(html, /<label for="temperature"/);
+  assert.match(html, /<label for="wind"/);
+  assert.match(html, /<button id="toggle"[^>]*type="button"/);
+  assert.match(html, /role="status" aria-live="polite"/);
+  assert.match(script, /window\.AudioContext/);
+  assert.match(script, /audioContext\.suspend\(\)/);
+  assert.doesNotMatch(`${html}\n${script}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|credentials\s*:)/i);
+  assert.doesNotMatch(`${html}\n${script}`, /https?:\/\//i);
+  assert.match(styles, /:focus-visible|prefers-reduced-motion/);
+});
+
 test('Ticker candidate assessment documents source uncertainty and its existing isolated route', () => {
   const app = catalog.apps.find((entry) => entry.slug === 'ticker');
   const html = read('vibe/ticker/index.html');

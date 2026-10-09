@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Utforsk hvordan oppdiktede værverdier kan bli til et lokalt lydbilde.">
+  <meta name="theme-color" content="#9e2638">
+  <link rel="icon" href="/vibe/soundscape/icon.svg" type="image/svg+xml">
+  <title>Soundscape – vær som lyd · Vibe</title>
+  <link rel="canonical" href="/vibe/soundscape/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/soundscape/style.css">
+  <script src="/vibe/soundscape/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
+  <main id="main" class="page-shell">
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">Lydskisse · syntetiske eksempelverdier</p>
+      <h1 id="title">Været får <span>en tone.</span></h1>
+      <p class="intro-copy">Temperaturen styrer tonehøyden i den lokale lyden. Vindverdien endrer bare indikatoren under – den påvirker ikke lyden. Begge eksempelverdiene er oppdiktet og endres bare her i fanen.</p>
+    </section>
+    <aside class="notice" aria-label="Datamerking"><strong>Demo, ikke målinger</strong><span>Ingen værstasjon eller værtjeneste er koblet til.</span></aside>
+    <section class="weather-grid" aria-label="Syntetiske værverdier">
+      <article class="weather-card"><span>Temperatur</span><strong><output id="temp-value" for="temperature">14</output> °C</strong><label for="temperature">Juster temperatur</label><input id="temperature" type="range" min="-5" max="30" value="14"><small>Kunstig eksempelverdi</small></article>
+      <article class="weather-card"><span>Vind</span><strong><output id="wind-value" for="wind">6</output> m/s</strong><label for="wind">Juster vindstyrke</label><input id="wind" type="range" min="0" max="20" value="6"><small>Kunstig eksempelverdi</small></article>
+    </section>
+    <section class="sound-panel" aria-labelledby="sound-title">
+      <div class="sound-copy"><p class="eyebrow">Nettleserlyd</p><h2 id="sound-title">Lytt til skissen</h2><p id="status" role="status" aria-live="polite">Lyden er av. Start når du er klar.</p></div>
+      <div class="sound-controls"><button id="toggle" class="primary-button" type="button">Start lyd</button><label for="volume">Volum</label><input id="volume" type="range" min="0" max="30" value="12"><output id="volume-value" for="volume">12 %</output></div>
+      <p class="meter-label">Vindindikator · visuell effekt, påvirker ikke lyden</p>
+      <div class="meter" aria-hidden="true"><span id="tone-indicator"></span></div>
+      <p class="privacy-note">Lyden lages lokalt med Web Audio etter at du trykker Start. Ingen lyd eller innstillinger lagres eller sendes.</p>
+    </section>
+    <p class="disclaimer">Dette er en forenklet, original konseptdemo. Den er ikke en værmelding eller kopi av kildeappen.</p>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En liten lydskisse med oppdiktede verdier.</span></footer>
+</body>
+</html>
