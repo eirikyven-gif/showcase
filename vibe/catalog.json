@@ -114,6 +114,11 @@
       "risk": "Kildetypen kan inneholde studentdata, personopplysninger, interne emnetekster og lokal historikk. Ingen slikt materiale eller kildehemmeligheter er kopiert.",
       "scope": "Statisk HTML/CSS på /vibe/emnebeskrivelser-editor/. Ingen editor, PIN/auth, skjema, JavaScript, lagring, historikk, API, nettverk eller eksterne ressurser.",
       "source": "eirikyven-gif/fagskolen-emnebeskrivelser public main and docs, inspected 2026-10-08; no source edits.",
+      "sourceStack": "Offline, selvstendig HTML/CSS/JavaScript i app/emneside.html og app/emneside_pin_redigering.html; ingen tredjepartsavhengigheter funnet. Kilden beskriver enkeltfilredigering og eksport.",
+      "sourceTests": "Ingen testmappe, package.json eller testscript funnet i kilderoten. AGENT.md angir manuelle funksjonskontroller for editor, visning, eksport og versjonsfooter; disse ble ikke kjørt i kilde-repoet.",
+      "sourceApiAuthStoragePrivacy": "Ingen API/server/database eller eksterne kall funnet; appen er ment offline. PIN-variantens tilgangslås er kun klientbasert og ikke fullverdig auth. Begge varianter bruker localStorage for innhold/palett og lokal snapshot-historikk. Ingen kildeverdier for PIN/hash/salt er kopiert. Showcase-ruten bruker ingen lagring eller input.",
+      "rightsUncertainty": "Ingen lisensfil funnet i inspisert kilderot. Opphavsrett/gjenbruk av kildeimplementasjon og innhold er uavklart. Mulig appfamilieversjon i apps-fagskolen er ikke avklart; showcase-siden er original og bruker ikke kildekode, tekst eller data.",
+      "routeState": "En unik eksisterende /vibe/emnebeskrivelser-editor/-rute beholdes; metadata- og vurderingstillegg oppretter ingen rute eller endrer runtime. Slug kolliderer ikke med /vibe/laringssti-fagskolen/.",
       "separation": "Mulig duplicate family under apps-fagskolen er ikke verifisert; denne ruten er en original syntetisk konseptside, ikke en port av noen variant."
     },
     {
