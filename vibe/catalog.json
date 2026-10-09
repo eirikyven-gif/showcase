@@ -140,10 +140,19 @@
       "category": "Sport og arrangement",
       "audience": ["Løpsarrangører", "Deltakere", "Publikum", "OBS-ansvarlige"],
       "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Kilden er et scaffold, ikke et ferdig produkt. Race Result-integrasjon, runtime, faktisk deploy, datakontrakt og lisensdekning for hele appen er uavklart.",
+      "purpose": "Illustrere en løpsoversikt med rundetider, fremdrift og stilling uten live løps- eller deltakerdata.",
       "demoValue": "Illustrerer hvordan rundetider, fremdrift og en resultatliste kan samles i en lesbar løpsoversikt.",
+      "simplifications": "Fire fiktive kallenavn, oppdiktede tider og et statisk diagram. Ingen løpskontroll, deltakervalg, liveoppdatering, API, embed eller OBS-integrasjon.",
       "simplifications": "Fast oversikt med syntetiske data og et statisk diagram. Ingen liveoppdatering, API, OBS-integrasjon, innlesing eller eksport.",
       "risk": "Kildens faktiske kjøremiljø, Race Result API-kontrakt, datafelter og rettigheter er ikke verifisert. Ingen kilde-, test- eller live-data er brukt; verdier og navn i demoen er oppdiktet.",
-      "scope": "Statisk HTML/CSS under /vibe/backyard-stats/. Ingen JavaScript, API-kall, eksterne tjenester, autentisering, lagring, input, personopplysninger eller hemmeligheter."
+      "scope": "Statisk HTML/CSS under /vibe/backyard-stats/. Ingen JavaScript, API-kall, eksterne tjenester, autentisering, lagring, input, personopplysninger eller hemmeligheter.",
+      "source": "eirikyven-gif/Backyard, offentlig main commit 321612ee397b7a5f1651fbb429af8b2b1be4ad77, lest skrivebeskyttet 2026-10-09; kilde-repo urørt.",
+      "sourceStack": "Repoet er foreløpig styringsstruktur og scaffold: tre tomme HTML-visninger, dokumentasjon og en tynn PHP WordPress-wrapper. README beskriver planlagt standalone HTML/CSS/JS med Race Result-datakilde; faktisk polling/appmotor er ikke implementert eller verifisert.",
+      "sourceTests": "tests/README.md beskriver dokument-, mockdata-, integrasjons- og miljøtestnivåer; tests/ inneholder kun README og tom fixtures-markør. Ingen testkode, package.json eller testscript funnet.",
+      "sourceApiAuthStoragePrivacy": "Race Result er dokumentert som tiltenkt primær datakilde med polling maks én gang per minutt; API-kontrakt, endepunkt, credentials og runtime er ikke fastslått. Ingen API-kall, auth, persistent storage eller eksterne ressurser funnet i eksisterende app-shells. Live løpsdata kan inneholde navn, tider og deltakerstatus; ingen slike data er brukt i showcase.",
+      "rightsUncertainty": "Ingen lisensfil funnet i repo-roten. WordPress-wrapperens header erklærer GPL-2.0-or-later, men lisensdekning for hele appen, UI-fasiten og fremtidig data er uavklart. Showcase-demonstrasjonen er original; kildekode, UI-fasit, Race Result-data og aktiva er ikke kopiert.",
+      "routeState": "En unik eksisterende /vibe/backyard-stats/-rute beholdes. Denne vurderingen oppdaterer kun metadata, README og test; ingen ny rute eller runtime-kobling."
     },
     {
       "slug": "wp-l-ringssti",
