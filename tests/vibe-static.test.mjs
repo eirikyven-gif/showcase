@@ -398,6 +398,14 @@ test('Gruppegenerator candidate is documented and its demo stays synthetic and l
   assert.match(script, /addEventListener\('click'/);
   assert.match(script, /addEventListener\('change'/);
   assert.match(css, /:focus-visible/);
+  assert.match(css, /--red:\s*#a9283c/i);
+  assert.match(css, /--red-dark:\s*#791b2b/i);
+  assert.match(css, /--rose:\s*#f8e8e9/i);
+  assert.match(css, /--paper:\s*#fffaf7/i);
+  assert.match(css, /--line:\s*#eadbdd/i);
+  assert.match(css, /outline:3px solid var\(--focus\)/i);
+  assert.match(css, /background:var\(--red\)/i, 'primary action uses the hub red token');
+  assert.doesNotMatch(css, /--green|--mint|#176b53|#e6f2eb|#105640/i, 'route does not use the former green palette');
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /min-width:\s*320px/);
   assert.match(docs, /Notion-sporingsrad.*ikke verifisert/);
