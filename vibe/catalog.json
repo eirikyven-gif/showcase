@@ -629,6 +629,30 @@
       "risk": "Kilden har server-side publisering, Google-integrasjon, passordbeskyttet administrasjon og privat konfigurasjon. Runtime-status, produksjonsinnhold, rettigheter og faktisk tilgangspraksis er ikke verifisert. Fiktive demo-slides kan forveksles med undervisningsinnhold; dette er synlig merket som ikke godkjent materiale.",
       "scope": "Selvstendig statisk /vibe/presentasjon/-rute: lokalt innebygd HTML/CSS/JS, tre fiktive slides, knapper og venstre/høyre piltast. Ingen kildefiler eller media, eksterne ressurser/kall, PHP, API, auth, cookies, browser/serverlagring, telemetry, opplasting, persondata eller hemmeligheter.",
       "routeState": "Ny katalogoppføring og /vibe/presentasjon/ på baseline main ce6571b8bc469a5e202542b3e35f3fdc4e617a30 (VERSION 0.34.0, 36 eksisterende katalogoppføringer etter Fagquizer-merge). Denne endringen gir 37 oppføringer totalt. Ingen tidligere presentasjonsslug eller rute på baselinen."
+    },
+    {
+      "slug": "progresjonsplan",
+      "name": "Progresjonsplan · læringssti",
+      "useCase": "Utforsk en fiktiv læringssti med korte moduler, kunnskapssjekk og progresjon i nettleserøkten.",
+      "category": "Utdanning og læringsgrensesnitt",
+      "audience": [
+        "Undervisere",
+        "Studenter",
+        "Personer som utforsker læringsdesign"
+      ],
+      "status": "Beholdt i bred førstegangsrunde; original, forenklet konseptdemo. Ingen kuratering eller utsiling er gjort.",
+      "source": "eirikyven-gif/WP-l-ringssti, offentlig main commit b358faabd862355ae7e666a9953d8a708b983786, lest 2026-10-09; kildefiler kun lest. Gjennomgått pluginarkiv wp-learningsti-mvp_v0.5.6.zip SHA-256 bd0411bb9087440a211969bc0d358dae87725bf98fb546dd224fa26f85327d16.",
+      "sourceStack": "Kilden er en WordPress/PHP-plugin med JavaScript- og CSS-aktiva. Showcase-demoen er statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Ingen testmappe eller testkommando ble funnet i repoets rotoversikt. Kildetester ble ikke kjørt; pluginruntime ble ikke satt opp.",
+      "sourceApiAuthStoragePrivacy": "Gjennomgått pluginarkiv har WordPress-rolle-/nonce-kontroller og AJAX-handlere. Masterloggen beskriver lokal lagring av quizforsøk, caseutkast og UI-/posisjonsstatus, samt WordPress-lagret admininnhold; sentral auth og WP↔Sheet-sync er framtidsplaner. Faktisk drift og datapraksis er ikke uavhengig kontrollert. Showcase har ingen auth/API/lagring.",
+      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte rotfiler. Kode-, design- og innholdsrettigheter er uavklart; demoen kopierer ikke kildeinnhold eller aktiva.",
+      "purpose": "Kildens README beskriver en Gutenberg-plugin for organisering av læringsinnhold i moduler, innholdselementer, quiz og caseoppgaver.",
+      "demoValue": "Viser moduloversikt, stegvis innhold, en flervalgsoppgave med tilbakemelding og fullføring i en sideøkt.",
+      "simplifications": "Originalt, generisk eksempeltema og tekst. Ingen editor, roller, opplasting, fritekst, KI, poenghistorikk, reelle kurs eller faglig validering.",
+      "risk": "Demoen er en UI-skisse, ikke kursmateriell eller vurdering. Kildens operative datapraksis, integrasjoner og gjenbruksrettigheter er ikke avklart.",
+      "scope": "Statisk HTML/CSS/JS på /vibe/progresjonsplan/. Oppdiktet innhold; progresjon finnes bare i JavaScript-minne i aktiv sideøkt. Ingen nettverk, auth, server, API, nettleserlagring, skjema, telemetry, PII eller secrets.",
+      "routeState": "Ny isolert rute på baseline showcase main ec138417c00220de18d5ab838b3e2950eab2a3d6, v0.36.1 med 38 katalogoppføringer.",
+      "sourceUncertainty": "Issue #2 viser til låste Notion-krav som ikke var tilgjengelige i checkouten. Vurderingen bygger på offentlig README, masterlogg og pluginarkiv; faktisk produksjonsbruk, komplett kravgrunnlag og gjenbruksrettigheter er ikke verifisert."
     }
   ]
 }
