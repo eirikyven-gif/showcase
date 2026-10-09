@@ -131,6 +131,14 @@
       "demoValue": "Viser hvordan en enkel ukevisning kan gjøre tilgjengelighet lett å lese.",
       "simplifications": "Fast visning med syntetiske tider. Ingen valg, booking eller bekreftelse.",
       "risk": "Kildebeskrivelser, funksjoner og implementasjon er uverifisert. Booking kan berøre personopplysninger og kalenderstatus; ingen slike data eller funksjoner finnes her.",
+      "purpose": "Illustrere en kalenderoversikt uten å opprette reservasjoner.",
+      "sourceUncertainty": "Kilderepo WP-Reservering inneholder en reell WordPress-bookingplugin v0.1.5. Faktisk produksjonsbruk og dataretensjon er ikke verifisert.",
+      "source": "eirikyven-gif/Wp-Reservering, offentlig main commit 387180a0768f0bcc5c8a7c0d0d7ccd32817e8f6e (lest 2026-10-09); repo kun lest.",
+      "sourceStack": "WordPress/PHP-plugin med JavaScript-widget, Tailwind CSS og egen database-tabell. package.json 0.1.5 inneholder Tailwind build/dev-scripts.",
+      "sourceTests": "Ingen testkode eller testmappe funnet. package.json har build/dev, men ikke testscript; SSoT/WORKFLOW beskriver separat manuell QA.",
+      "sourceApiAuthStoragePrivacy": "Bookingdata med kunde navn, telefon, e-post og merknad lagres i WordPress database; tilgjengelighet/settings lagres i options. Admin bruker WordPress-roller/capabilities og nonce. Magisk kanselleringstoken lagres som SHA-256-hash. E-postbekreftelser sendes via wp_mail. Ingen nettleserlagring i showcase-demo.",
+      "rightsUncertainty": "Pluginens readme.txt deklarerer GPL-2.0-or-later. Ingen kildekode, UI, merkevare, data eller tekster er kopiert til showcase.",
+      "routeState": "En unik eksisterende /vibe/reservering/-rute beholdes; katalogvurdering og test endrer ikke runtime.",
       "scope": "Statisk HTML/CSS/JS under /vibe/reservering/. Ingen database, API, innlogging, kundeopplysninger, skjema, e-post, tokenlenker, lagring eller eksterne kall."
     },
     {

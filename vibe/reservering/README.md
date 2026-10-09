@@ -14,7 +14,7 @@
 
 ## Kildegjennomgang og usikkerhet
 
-WP-Reservering-kilden er angitt som `Wp-Reservering/wp-reservering`, men kilderepositoriets dokumenter var ikke tilgjengelige i arbeidsområdet for denne gjennomgangen. Funksjoner, implementasjon, datamodell og kildebeskrivelser er derfor uverifisert; dokumentasjonskonflikter er ikke forsøkt avgjort. Demoen er et selvstendig, fiktivt kalenderkonsept og hevder ikke å representere eller være kompatibel med kilden.
+Kandidatkilden `eirikyven-gif/Wp-Reservering` ble lest skrivebeskyttet ved offentlig main commit `387180a0768f0bcc5c8a7c0d0d7ccd32817e8f6e` (2026-10-09). Pluginens readme.txt oppgir v0.1.5 og implementerte bookingfunksjoner. WordPress/PHP-pluginen bruker en egen database-tabell for reservasjoner og options for tilgjengelighet/innstillinger; adminfunksjoner bruker capabilities og nonce. Booking behandler navn, telefon, e-post, merknad, kanselleringstoken og e-postvarsling. Ingen produksjonsmiljø, faktiske kundedata eller retention er undersøkt. Ingen testkode/testmappe ble funnet; package.json har kun build/dev. Pluginens readme erklærer GPL-2.0-or-later. Ingen kildefiler, UI, merkevare eller data er kopiert. Demoen er et selvstendig fiktivt kalenderkonsept og hevder ikke å representere eller være kompatibel med bookingpluginen.
 
 ## Personvern og sikkerhetsgrenser
 
