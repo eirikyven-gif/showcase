@@ -2,8 +2,8 @@
 
 | Felt | Vurdering |
 |---|---|
-| Use case | Explore a static view of fictional lap times, race progress, and standings. |
-| Category | Sport and events. |
+| Use case | Utforsk en statisk visning av oppdiktede rundetider, fremdrift og stilling. |
+| Category | Sport og arrangement. |
 | Audience | Løpsarrangører, deltakere, publikum og OBS-/skjermvisningsansvarlige. |
 | Slug | `backyard-stats` · `/vibe/backyard-stats/` |
 | Status | Beholdt i bred førstegangsvurdering; original, statisk visualiseringsprototype laget. Ingen kuratering eller utsiling. |
@@ -14,8 +14,8 @@
 
 ## Kildegjennomgang og usikkerhet
 
-Kandidatens kilde ble inspisert skrivebeskyttet. Kilden ser ut til å bestå av HTML/JavaScript og en WordPress-wrapper for løpsstatistikk, OBS og innbygging. Dette er bare grunnlag; faktisk kjøremiljø, Race Result API-tilgang, API-kontrakt og datamodell er ikke bekreftet. Ingen API-er, testadresser eller operative tjenester ble besøkt. Prototypen er laget fra grunnen av og påstår ikke å vise live data eller å være kompatibel med Race Result.
+Kandidatkilden `eirikyven-gif/Backyard` ble lest skrivebeskyttet ved offentlig main commit `321612ee397b7a5f1651fbb429af8b2b1be4ad77` (2026-10-09). Repoet sier uttrykkelig at det foreløpig er grunnlag/styringsstruktur, ikke et ferdig produkt. De faktiske appfilene er tre tomme HTML-shells for skjerm, embed og OBS, en PHP WordPress-wrapper og arkitektur-/kravdokumenter. Race Result er planlagt datakilde med polling maks én gang per minutt; API-kontrakt, endepunkt, autentisering og appmotor er ikke implementert eller verifisert. Ingen API eller operative tjenester ble besøkt. Kilde-repoet er urørt.
 
 ## Kontroll og begrensninger
 
-Chromium coordinator QA: direct route and refresh worked at 390px and 1440px; the page had no horizontal overflow, JavaScript errors, off-site requests, or browser storage. Keyboard focus reaches the skip link and hub-return link; keyboard activation returns to the hub. The visual chart has an accessible text alternative. API/runtime and rights are still unverified; this is a static display-only demo. Denne leveransen løser Issue #2 delvis: den bidrar med én vurdert konseptdemo til den brede førstegangsrunden, uten å kuratere bort kandidaten.
+Chromium coordinator QA: direct route and refresh worked at 390px and 1440px; the page had no horizontal overflow, JavaScript errors, off-site requests, or browser storage. Keyboard focus reaches the skip link and hub-return link; keyboard activation returns to the hub. The visual chart has an accessible text alternative. Kildens fremtidige API/runtime og lisensdekning utover WordPress-wrapperen er uavklart; dette er en original, statisk visningsdemo. Denne leveransen løser Issue #2 delvis: den bidrar med én vurdert konseptdemo til den brede førstegangsrunden, uten å kuratere bort kandidaten.
