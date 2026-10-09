@@ -72,6 +72,7 @@ function renderStep(message = '') {
   kicker.textContent = `${module.title} · steg ${activeStep + 1} av ${module.steps.length}`;
   const heading = document.createElement('h2');
   heading.textContent = step.title;
+  heading.tabIndex = -1;
   const copy = document.createElement('p');
   copy.textContent = step.text;
   player.append(kicker, heading, copy);
@@ -126,11 +127,12 @@ function renderStep(message = '') {
   back.className = 'secondary-button';
   back.textContent = 'Til moduloversikten';
   back.addEventListener('click', () => {
+    const returnModuleIndex = activeModule;
     player.hidden = true;
     overview.hidden = false;
     activeModule = null;
     renderOverview();
-    overview.querySelector('button')?.focus();
+    overview.querySelectorAll('button')[returnModuleIndex]?.focus();
   });
   actions.append(back);
   if (activeStep < module.steps.length - 1) {
@@ -156,7 +158,7 @@ function renderStep(message = '') {
     actions.append(finish);
   }
   player.append(actions);
-  feedback?.focus();
+  (feedback ?? heading).focus();
 }
 
 renderOverview();

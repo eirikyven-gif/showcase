@@ -44,10 +44,13 @@ test('Progresjonsplan has responsive layout and visible keyboard focus', () => {
   assert.match(html, /aria-live="polite"/);
 });
 
-test('answer feedback receives focus after the answer controls are replaced', () => {
+test('step transitions, answer feedback, and return keep keyboard focus in context', () => {
   const js = read('vibe/progresjonsplan/app.js');
+  assert.match(js, /heading\.tabIndex = -1/);
+  assert.match(js, /\(feedback \?\? heading\)\.focus\(\)/);
+  assert.match(js, /const returnModuleIndex = activeModule[\s\S]*?overview\.querySelectorAll\('button'\)\[returnModuleIndex\]\?\.focus\(\)/);
   assert.match(js, /feedback\.setAttribute\('role', 'status'\);\s*feedback\.setAttribute\('tabindex', '-1'\);/);
-  assert.match(js, /player\.append\(actions\);\s*feedback\?\.focus\(\);/);
+  assert.match(js, /player\.append\(actions\);\s*\(feedback \?\? heading\)\.focus\(\);/);
 });
 
 test('completing a module restores focus to that module’s button, including out-of-order completion', () => {
