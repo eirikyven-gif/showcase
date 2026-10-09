@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a9283c">
+  <title>Presentasjonsvisning · Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innhold</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – tilbake til oversikten">Vibe<span> / visning</span></a>
+    <a class="header-note" href="/vibe/">Tilbake til oversikten</a>
+  </header>
+  <main id="innhold" class="page-shell">
+    <section class="intro" aria-labelledby="sidetittel">
+      <p class="eyebrow">Presentasjonsvisning · eksempel</p>
+      <h1 id="sidetittel">En liten <span>værstasjon.</span></h1>
+      <p class="intro-copy">Et oppdiktet lysbildesett om hvordan en nabolagsgruppe kan følge med på været. Bruk knappene eller piltastene for å bla.</p>
+    </section>
+    <section class="presentation" aria-label="Lysbilder">
+      <div class="slide" id="slide" role="group" aria-roledescription="lysbilde" aria-live="polite" aria-atomic="true" aria-labelledby="slide-title">
+        <p class="slide-kicker" id="slide-kicker">01 · Se etter mønstre</p>
+        <h2 id="slide-title">Været forteller en historie</h2>
+        <p class="slide-copy" id="slide-copy">En enkelt måling er et øyeblikksbilde. Flere målinger over tid gjør det lettere å se hva som forandrer seg.</p>
+        <div class="visual" id="visual" aria-hidden="true">
+          <span class="sun"></span><span class="cloud cloud-one"></span><span class="cloud cloud-two"></span>
+          <span class="rain rain-one"></span><span class="rain rain-two"></span><span class="rain rain-three"></span>
+          <span class="visual-caption">Mål · noter · sammenlign</span>
+        </div>
+      </div>
+      <div class="controls" aria-label="Lysbildekontroller">
+        <button type="button" id="previous" aria-label="Forrige lysbilde">Forrige</button>
+        <p class="counter" id="counter" aria-live="polite">Lysbilde 1 av 3</p>
+        <button type="button" id="next" aria-label="Neste lysbilde">Neste</button>
+      </div>
+      <p class="keyboard-hint">Tastatur: bruk venstre og høyre piltast.</p>
+    </section>
+    <p class="synthetic-note">Dette er en selvstendig, fiktiv demonstrasjon. Lysbildene er ikke godkjent undervisningsinnhold og er ikke hentet fra kildens presentasjoner.</p>
+  </main>
+  <footer class="site-footer"><span>Presentasjonsvisning · Vibe</span><a href="/vibe/">Til oversikten</a></footer>
+</body>
+</html>
