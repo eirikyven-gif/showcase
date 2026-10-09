@@ -276,6 +276,29 @@
       "separation": "Ruten eksisterte allerede én gang i showcase main; denne endringen dokumenterer og kontrollerer den, uten duplikatkode."
     },
     {
+      "slug": "ukelonn",
+      "name": "Ukelønn",
+      "useCase": "Utforsk en fiktiv ukeoversikt med oppgaver og illustrative beløp for voksne familiemedlemmer.",
+      "category": "Familieøkonomi og oppgaveoversikt",
+      "audience": [
+        "Voksne familiemedlemmer",
+        "Personer som utforsker oppgaveoversikter"
+      ],
+      "status": "Beholdt i bred førstegangsrunde; original statisk demo laget. Kildeversjon 0.17.0 er ikke live QA-verifisert. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Kilde-README oppgir versjon 0.17.0, men sier at denne versjonen ikke er deployet eller live QA-verifisert. Lisens/gjenbrukstillatelse ble ikke funnet i inspiserte kildefiler; faktisk produksjonsstatus og bruk er uavklart.",
+      "purpose": "Illustrere en oversikt over avtalte gjøremål, status og ukentlig beløpsgrunnlag.",
+      "demoValue": "Gjør oppgaver, fremdrift og illustrative summer synlige i en responsiv statisk oversikt.",
+      "simplifications": "To generiske voksne, en fiktiv uke og syntetiske oppgaver/beløp. Ingen redigering, registrering, godkjenning, bilder, periodevalg eller oppgjør.",
+      "risk": "Kilden kan behandle brukeridentiteter, PIN/passord-hasher, sesjoner, oppgave- og betalingshistorikk og vedlegg/bilder. Ingen slike data eller kildematerialer er kopiert. Demoen etterspør ikke opplysninger om barn eller andre virkelige personer.",
+      "scope": "Original statisk HTML/CSS på /vibe/ukelonn/. Ingen input, konto, auth, API, server, nettverkskall, cookies, lagring, opplasting, PII eller betaling.",
+      "source": "eirikyven-gif/diverse-apper/apps/ukelonn, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-08); version.json oppgir 0.17.0. Kilde read-only.",
+      "sourceStack": "Kilde: HTML/CSS/vanilla JavaScript, same-origin PHP/JSON API-er og privat filbasert JSON-lagring ifølge kildearkitektur.",
+      "sourceTests": "Kilde-README dokumenterer Node UI-kontrakter, PHP-sesjonskontrakt og manuell deploysmoke; kildeversjonen er oppgitt som ikke deployet/live QA-verifisert. Kildetestene ble ikke kjørt for showcase.",
+      "sourceApiAuthStoragePrivacy": "Kilden dokumenterer auth, oppgave-, registrerings-, forslag-, utbetalings-, historikk- og vedleggs-API-er, separate admin-/brukerinnlogginger, PHP-sesjonscookies og privat JSON-lagring. Detaljer og usikkerhet er ført i rutens README.",
+      "rightsUncertainty": "Kilde-rettigheter og tillatelse til gjenbruk er ikke bekreftet. Demoen er selvstendig og gjenbruker ingen kildekode, UI eller innhold.",
+      "routeState": "Ny separat rute; skilt fra den eksisterende månedsoversikten inntekter-kostnader."
+    },
+    {
       "slug": "ticker",
       "name": "Ticker",
       "useCase": "Vis en kort, rullende tekst og juster farten eller sett den på pause.",
