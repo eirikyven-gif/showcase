@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En trygg eksempelvisning av tilfeldig gruppefordeling med oppdiktede deltakere.">
+  <title>Gruppegenerator · eksempel</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <nav aria-label="Brødsmule"><a href="/vibe/">← Til appoversikten</a></nav>
+    <header class="intro">
+      <p class="eyebrow">EKSEMPEL · ALT INNHOLD ER OPPDIKTET</p>
+      <h1>Gruppegenerator</h1>
+      <p>Fordel et fast eksempelutvalg i tilfeldige grupper. Denne demonstrasjonen inneholder ingen navnefelt.</p>
+    </header>
+    <section class="workspace" aria-labelledby="controls-title">
+      <div class="controls">
+        <div>
+          <h2 id="controls-title">Lag grupper</h2>
+          <p class="hint">Eksempelutvalget har åtte oppdiktede deltakere. Velg hvor mange grupper du vil lage.</p>
+          <label for="group-count">Antall grupper</label>
+          <select id="group-count">
+            <option value="2">2 grupper</option>
+            <option value="3" selected>3 grupper</option>
+            <option value="4">4 grupper</option>
+          </select>
+          <div class="actions">
+            <button id="generate" type="button">Bland grupper</button>
+            <button id="reset" class="secondary" type="button">Nullstill eksempel</button>
+          </div>
+          <p id="status" class="status" role="status" aria-live="polite">Eksempelgruppene er klare.</p>
+        </div>
+        <aside class="privacy-note" aria-label="Personvern"><span aria-hidden="true">✳</span><p><strong>Kun oppdiktede data</strong><br>Fordelingen skjer midlertidig i denne fanen. Ingenting sendes eller lagres.</p></aside>
+      </div>
+      <div class="results-head"><div><p class="eyebrow">FORDELING I EKSEMPELET</p><h2 id="result-title">Dine grupper</h2></div><p id="summary" class="summary">3 grupper · 8 deltakere</p></div>
+      <div id="groups" class="groups" aria-live="polite" aria-labelledby="result-title"></div>
+    </section>
+    <footer><p>Demonstrasjon med syntetiske etiketter. Ikke bruk virkelige navn eller personopplysninger her.</p></footer>
+  </main>
+</body>
+</html>

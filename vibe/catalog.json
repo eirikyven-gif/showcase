@@ -457,6 +457,30 @@
     "scope": "Statisk route /vibe/vurderingsarbeid-fagskolen/. Ingen autentisering, personfelt, studentarbeid, scoring, API, backend, lagring, CDN, secrets eller eksterne forespørsler.",
     "source": "Oppgitt apps-fagskolen/apps/vurderingsarbeid; GitHub metadataoppslag returnerte 404 2026-10-08. Ingen kildefiler lest.",
     "separation": "Mulig overlapp med separat app-vurderingsarbeid ifølge internt inventar; forholdet er uavklart. Kandidaten beholdes separat i bred gjennomgang."
-  }
+  },
+    {
+      "slug": "gruppegenerator",
+      "name": "Gruppegenerator · syntetisk eksempel",
+      "useCase": "Se hvordan et fast, oppdiktet deltakerutvalg kan fordeles tilfeldig i grupper.",
+      "category": "Utdanning",
+      "audience": [
+        "Undervisere",
+        "Fasilitatorer",
+        "Personer som utforsker gruppefordeling"
+      ],
+      "status": "Beholdt i bred førstegangsrunde; original, forenklet statisk demo. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Offentlig apps-fagskolen main commit 65082291abf9892f81e82bb258a0f0134c51cec7 lest 2026-10-09. Kandidatens Notion-sporingsrad er oppgitt, men ikke verifisert. Faktisk produksjonsbruk er ukjent.",
+      "purpose": "Kilden beskriver en offline nettleserapp for tilfeldig fordeling av innlimte studentnavn, med ny fordeling, manuell/drag-and-drop flytting og regnearknedlasting.",
+      "demoValue": "En liten interaktiv fordeling med åtte syntetiske etiketter gjør hovedideen konkret uten å be om personopplysninger.",
+      "simplifications": "Fast utvalg Deltaker A–H; velg 2–4 grupper, bland på nytt eller nullstill. Ingen fritekst, student-/klasselister, ekte skole- eller kursinnhold, flytting av enkeltpersoner eller eksport.",
+      "source": "eirikyven-gif/apps-fagskolen, apps/gruppegenerator, offentlig main commit 65082291abf9892f81e82bb258a0f0134c51cec7 (lest 2026-10-09); kilde urørt.",
+      "sourceStack": "Kildemappen har README og én selvstendig HTML-fil med innebygd CSS og JavaScript; ingen synlig rammeverk eller tredjepartsbibliotek.",
+      "sourceTests": "Ingen testfiler eller testinstruksjoner i den gjennomgåtte appmappen. Teststatus utenfor mappen er ukjent.",
+      "sourceApiAuthStoragePrivacy": "Ingen API, auth eller serverbehandling er synlig eller omtalt i appmappen. Kilde-README sier offline behandling og ingen permanent lagring; koden aksepterer innlimte navn og tilbyr lokal regnearknedlasting. Organisatorisk bruk og videre håndtering er ikke verifisert.",
+      "rightsUncertainty": "Lisens eller tillatelse til gjenbruk er ikke dokumentert i appmappen. Showcase-demoen er skrevet selvstendig og kopierer ikke kildekode, tekst eller særpreget visuell utforming.",
+      "risk": "Virkelige studentnavn kan være personopplysninger. Demoen samler eller lagrer ingen identiteter. Tilfeldig fordeling garanterer ikke pedagogisk rettferdighet eller andre fordelingskrav.",
+      "scope": "Statisk HTML/CSS/JS på /vibe/gruppegenerator/. Kun syntetiske faste etiketter, behandling i minnet og lokal tilfeldig blanding. Ingen fritekst, konto, analytics, nettverkskall, API, backend, persistent lagring, opplasting eller eksport.",
+      "routeState": "Ny, isolert direkterute /vibe/gruppegenerator/ med hub-retur; én katalograd. Ingen deploy eller live-host QA."
+    }
   ]
 }

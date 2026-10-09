@@ -376,3 +376,32 @@ test('form submission guard must target that exact form and prevent its default 
   assert.equal(formHasSubmitGuard(form, `const form = document.getElementById('countdown-form'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
   assert.equal(formHasSubmitGuard('id="form.one"', `const form = document.getElementById('form.one'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
 });
+
+test('Gruppegenerator candidate is documented and its demo stays synthetic and local', () => {
+  const app = catalog.apps.find((entry) => entry.slug === 'gruppegenerator');
+  const html = read('vibe/gruppegenerator/index.html');
+  const script = read('vibe/gruppegenerator/app.js');
+  const css = read('vibe/gruppegenerator/style.css');
+  const docs = read('vibe/gruppegenerator/README.md');
+
+  assert.ok(app, 'candidate remains in the broad first-round catalog');
+  for (const field of ['status', 'source', 'sourceUncertainty', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'routeState']) {
+    assert.equal(typeof app[field], 'string', `${field} is documented`);
+    assert.ok(app[field].trim(), `${field} is not empty`);
+  }
+  assert.match(app.status, /Beholdt i bred førstegangsrunde/);
+  assert.match(html, /href="\/vibe\/"/);
+  assert.match(html, /<label[^>]+for="group-count"/);
+  assert.match(html, /id="status"[^>]+role="status"/);
+  assert.match(html, /oppdiktede/i);
+  assert.match(script, /Deltaker A.*Deltaker B/s);
+  assert.match(script, /addEventListener\('click'/);
+  assert.match(script, /addEventListener\('change'/);
+  assert.match(css, /:focus-visible/);
+  assert.match(css, /prefers-reduced-motion/);
+  assert.match(css, /min-width:\s*320px/);
+  assert.match(docs, /Notion-sporingsrad.*ikke verifisert/);
+  assert.match(docs, /Ingen deploy/);
+  assert.doesNotMatch(html + script, /<textarea\b|<input\b|studentnavn|Ola Nordmann|Kari Nordmann/i);
+  assert.doesNotMatch(html + script, /\b(?:fetch|XMLHttpRequest|localStorage|sessionStorage|indexedDB|document\.cookie)\b|https?:\/\//i);
+});
