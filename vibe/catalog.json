@@ -547,7 +547,7 @@
       "simplifications": "Assessment-only side. Ingen vaktplan, sjekkliste, roller, hendelser, prioritering, varsler, statuser eller handlinger. Ingen produktprototype eller interaksjon.",
       "risk": "Kilden berører identitet, tilgang, arrangement, kommunikasjon, hendelser og potensielt sikkerhetskritisk informasjon. Betydning, produksjonsbruk og faktiske data er ikke revidert; en etterligning kan gi feil forventninger til operative arbeidsflyter.",
       "scope": "Statisk HTML/CSS under /vibe/arrangementsvakt/. Ingen JavaScript, skjema, auth/PIN/sesjon, API, nettverkskall, browser/serverlagring, opplasting, push, private endepunkter eller person-/arrangementsdata.",
-      "routeState": "Sluggen manglet i showcase main 54ad87501861a70a057a1bff3fe96ea6114a53c7 med 33 katalogoppføringer; ny isolert vurderingsrute."
+      "routeState": "Sluggen manglet i showcase main bfb6d7e0756fefc01b70c7e5c653a8f4781b600b med 34 katalogoppføringer; ny isolert vurderingsrute."
     }
   ]
 }

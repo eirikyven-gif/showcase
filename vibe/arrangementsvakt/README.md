@@ -11,7 +11,7 @@
 - **API, auth, lagring og personvern:** Kilden implementerer PIN-/sesjonsbasert tilgang, rollefiltrering og PHP-API. README beskriver persistent JSON-lagring, bruker-/teamdata, hendelses- og meldingshistorikk, vedlegg, eksport og push-abonnementer. Faktisk produksjonskonfigurasjon, datainnhold, tilgang, retention, driftsmiljø og personvernpraksis er ikke uavhengig revidert.
 - **Rettigheter:** Ingen lisens eller uttrykkelig gjenbrukstillatelse ble funnet i gjennomgåtte appfiler. Kode-, design- og innholdsrettigheter er uavklart. Showcase-siden er skrevet selvstendig og kopierer ikke kildekode, grafikk eller reelle driftsdata.
 - **Kategori og målgruppe:** Arrangement og koordinering; arrangører og personer som vurderer verktøy for frivillig innsats. Dette følger produktbeskrivelsen, ikke bekreftet faktisk brukerbase.
-- **Slug/rute:** `arrangementsvakt` · `/vibe/arrangementsvakt/`. Sluggen manglet på showcase `main` `54ad87501861a70a057a1bff3fe96ea6114a53c7` (33 katalogoppføringer); ny, isolert rute.
+- **Slug/rute:** `arrangementsvakt` · `/vibe/arrangementsvakt/`. Sluggen manglet på showcase `main` `bfb6d7e0756fefc01b70c7e5c653a8f4781b600b` (34 katalogoppføringer etter PR #52); ny, isolert rute.
 
 ## Demo-vurdering
 
