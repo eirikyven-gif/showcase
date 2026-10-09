@@ -1,0 +1,36 @@
+:root { --av-ink: #2c181c; --av-muted: #654d52; --av-red: #791b2b; }
+body { min-width: 320px; }
+.back-link { color: var(--muted); font-weight: 650; text-underline-offset: 4px; }
+.intro { padding: clamp(48px, 7vw, 78px) 0 30px; }
+.intro .eyebrow { color: var(--red-dark); }
+.intro h1 { color: var(--av-ink); font-size: clamp(2.7rem, 7vw, 5rem); }
+.intro-copy { max-width: 720px; color: var(--av-muted); line-height: 1.65; }
+.fiction-banner { display: grid; gap: 5px; margin: 0 0 24px; padding: 17px 20px; border: 1px solid #9e2638; border-left-width: 6px; border-radius: 8px; background: #fff3f3; color: #49141d; line-height: 1.55; }
+.fiction-banner strong { font-size: 1rem; }
+.assessment-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.assessment-card, .source-note { border: 1px solid #e1d2d5; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px #53101a0a; }
+.assessment-card { min-height: 200px; padding: 22px; }
+.card-kicker { margin: 0 0 13px; color: var(--av-red); font-size: .74rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.assessment-card h2, .source-note h2 { margin: 0 0 10px; color: var(--av-ink); font-size: 1.2rem; letter-spacing: -.02em; }
+.assessment-card p:last-child, .source-note li { color: var(--av-muted); line-height: 1.62; }
+.source-note { margin: 20px 0 18px; padding: 24px clamp(18px, 4vw, 34px); }
+.source-note ul { display: grid; gap: 9px; margin: 14px 0 0; padding-left: 1.2rem; }
+.source-note code { overflow-wrap: anywhere; color: #49141d; }
+.assessment-footnote { max-width: 760px; margin: 20px auto 70px; color: var(--av-muted); font-size: .88rem; line-height: 1.6; text-align: center; }
+.site-footer { gap: 16px; }
+.footer-brand { color: var(--av-muted); text-underline-offset: 4px; }
+:focus-visible { outline: 3px solid #183eaa; outline-offset: 4px; }
+@media (max-width: 760px) {
+  .site-header { min-height: 64px; padding-inline: 18px; }
+  .back-link { font-size: .82rem; }
+  .page-shell { width: calc(100% - 32px); }
+  .intro { padding: 44px 0 25px; }
+  .intro h1 { overflow-wrap: anywhere; font-size: clamp(2rem, 10vw, 3.7rem); }
+  .intro-copy { font-size: .96rem; }
+  .assessment-grid { grid-template-columns: 1fr; gap: 12px; }
+  .assessment-card { min-height: 0; padding: 19px; }
+  .source-note { margin-top: 14px; padding: 20px 18px; }
+  .assessment-footnote { margin-bottom: 48px; }
+  .site-footer { flex-wrap: wrap; padding-inline: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
