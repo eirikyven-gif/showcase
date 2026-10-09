@@ -416,7 +416,20 @@
       "audience": [
         "Arrangører",
         "Lag og grupper"
-      ]
+      ],
+      "status": "Beholdt i bred førstegangsrunde; eksisterende original, syntetisk demo beholdes. Ingen kuratering eller utsiling er gjort.",
+      "sourceUncertainty": "Kildepakke v0.6.13 oppgir README v0.6.10 og status PR-review/QA; faktisk deploy, aktiv bruk og oppdatert QA er ikke uavhengig verifisert. Låst Notion-SSoT v1.0 beskriver flerdugnadsarkitektur, offentlige påmeldings-/oversiktssider og admin/superadmin-roller.",
+      "purpose": "Kilden organiserer dugnader, oppgaver/vaktposter, tidsrom, bemanningsbehov, påmeldte personer og tildelinger, med konfliktkontroll, admin og offentlig påmelding/oversikt.",
+      "demoValue": "Besøkende kan flytte fire fiktive deltakeretiketter mellom tre syntetiske vakter, se statusen endres og nullstille eksempelplanen.",
+      "simplifications": "Kun tre generiske vakter og etikettene Deltaker A–D. Ingen ekte arrangement, navn, kontaktdata, påmelding, roller, konfliktkontroll, import/eksport, varsler, SMS, server eller lagring.",
+      "risk": "Kilden håndterer navn, e-post, telefon, påmeldinger, tilgjengelighet, vaktildelinger og administrative roller. Slike data kan røpe kontaktinformasjon og personers oppholdssted/tidsplan; kildearkitekturen gir også tilgang på tvers via superadmin. Ingen slike data eller tjenester finnes i showcase-ruten.",
+      "scope": "Kun full kandidatvurdering, dokumentasjon og regresjonstest for eksisterende /vibe/dugnadsplanlegging/-rute. Ingen runtime-endring eller ny rute.",
+      "source": "eirikyven-gif/diverse-apper/apps/dugnadsplanlegging, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-09; kilde kun lest). Gjennomgått README, ROADMAP, package.json, entrypoints, frontendmoduler, PHP API/auth/storage og SMS-bridge.",
+      "sourceStack": "Kilden har Node.js lokal dev-server, HTML/CSS/JavaScript og PHP API-er med JSON-filbasert serverlagring. package.json v0.6.13; README sier v0.6.10. Showcase-ruten er statisk HTML/CSS/JS.",
+      "sourceTests": "package.json tilbyr start og syntax-check, men ingen test-script eller tests/-mappe ble funnet. README dokumenterer PHP-syntakskontroller og manuelle rutesmoke-steg; kildetester og produksjonssmoke ble ikke kjørt.",
+      "sourceApiAuthStoragePrivacy": "README beskriver offentlig signup-API som samler navn, e-post og telefon, PHP-session/cookie-basert admin og superadmin, admin-/dugnadsavgrensede API-er for data, påmelding, dugnader og eksport, og privat JSON-runtime-fil. Åpen oversikt skal aldri vise e-post/telefon; admin kan se kontaktdata. Kilden har også SMS-bridge. Showcase har ingen inputfelter for persondata, login, API, nettverk, cookies, persistent storage eller SMS.",
+      "rightsUncertainty": "Ingen LICENSE-fil eller uttrykkelig gjenbrukstillatelse ble funnet i gjennomgåtte kildestier. Kode, design, merkevare, data og innholdsrettigheter er uavklart. Showcase-demoen er selvstendig og gjenbruker ikke kildekode, merkevare eller kildedata.",
+      "routeState": "Eksisterende unik /vibe/dugnadsplanlegging/-rute og katalogslug beholdes. Bare vurderingsmetadata, README og regresjonstest kompletteres; ingen ruteduplisering."
     },
     {
       "slug": "vibe-coding",
