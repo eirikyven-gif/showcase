@@ -98,6 +98,12 @@
       "simplifications": "Fast syntetisk brett; ingen trekking, PDF, utskrift, generering eller vinnerlogikk.",
       "sourceUncertainty": "eirikyven-gif/diverse-apper Bingo lest på main 0900ffe 2026-10-08; kildens README oppgir v0.1.0/v0.1.1. Lisens og produksjonsbruk ikke uavhengig bekreftet. Se rutens README.",
       "risk": "Kilden beskriver serverlagring, adminauth, mottaker-/leveringsmodell, betalingsinnstillinger, opplastinger og triggersecret. Demoen bruker kun syntetisk innhold.",
+      "source": "eirikyven-gif/diverse-apper/apps/bingo, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-08); kilde-repo kun lest.",
+      "sourceStack": "Kilden inneholder PHP API/admin, HTML/CSS/JS-flater, Node.js node:test-tester, Google Apps Script-uketrigger og SSB Statistikkbanken som genereringskilde. README oppgir v0.1.0/v0.1.1; produksjonsdeploy er ikke kontrollert.",
+      "sourceTests": "Kildens README dokumenterer npm test og npm run lint. De ble ikke kjørt i kilde-repoet; denne PR-en verifiserer bare showcase-regresjonstester.",
+      "sourceApiAuthStoragePrivacy": "Kilden har offentlig PHP nedlasting/API, admin- og genereringsendepunkter, SSB tabell 10467, Google Apps Script-trigger og deployworkflow. Admin bruker passord/hash credentials, PHP-session og CSRF. JSON-state, privat konfigurasjon, PDF/aktiva lagres server-side; admin kan laste opp logo/QR; trigger bruker hemmelig token. API-er ble ikke kalt og ingen kildedata/secrets er kopiert.",
+      "rightsUncertainty": "Ingen lisens-/rettighetsavklaring funnet i gjennomgåtte Bingo-filer. Kildekode, maler, grafikk, logoer, tekst og virkelige data er ikke tatt med i demoen.",
+      "routeState": "Unik statisk /vibe/bingo/-rute og catalog-slug beholdes; demoen er original og lokal, uten kildetjenesteintegrasjon.",
       "scope": "Kun lokal statisk interaksjon under /vibe/bingo/. Ingen auth, API, cron, opplasting, PII, persistent lagring eller eksterne kall."
     },
     {
