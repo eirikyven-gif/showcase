@@ -1,0 +1,11 @@
+:root { --red: #a9283c; --red-dark: #791b2b; --rose: #f8e8e9; }
+.intro { padding-bottom: 54px; }
+.catalog { padding-top: 42px; }
+.app-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); }
+.app-card { min-height: 185px; }
+.app-card h3 a { text-decoration: none; }
+.app-card h3 a:hover { color: var(--red-dark); text-decoration: underline; text-underline-offset: 4px; }
+.synthetic-note { margin: 26px 0 0; padding: 16px 18px; border-left: 4px solid var(--red); background: var(--rose); color: #54202a; line-height: 1.55; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
