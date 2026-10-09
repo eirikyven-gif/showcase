@@ -572,6 +572,27 @@
       "risk": "Kilden berører identitet, tilgang, arrangement, kommunikasjon, hendelser og potensielt sikkerhetskritisk informasjon. Betydning, produksjonsbruk og faktiske data er ikke revidert; en etterligning kan gi feil forventninger til operative arbeidsflyter.",
       "scope": "Statisk HTML/CSS under /vibe/arrangementsvakt/. Ingen JavaScript, skjema, auth/PIN/sesjon, API, nettverkskall, browser/serverlagring, opplasting, push, private endepunkter eller person-/arrangementsdata.",
       "routeState": "Sluggen manglet i showcase main bfb6d7e0756fefc01b70c7e5c653a8f4781b600b med 34 katalogoppføringer; ny isolert vurderingsrute."
+    },
+
+    {
+      "slug": "presentasjon",
+      "name": "Presentasjonsvisning · fiktivt eksempel",
+      "useCase": "Bla gjennom et kort, oppdiktet lysbildesett med knappene eller piltastene.",
+      "category": "Presentasjon og visning",
+      "audience": ["Undervisere", "Studenter", "Personer som utforsker presentasjonsvisning"],
+      "status": "Beholdt i bred kandidatgjennomgang; original statisk presentasjonsdemo. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Kildens offentlige main og tilhørende Notion-styring er gjennomgått 2026-10-09. README dokumenterer Apps Script-eksport til versjonerte PNG-sett, PHP-visninger, privat kontrollflate og publisering. Faktisk produksjonsstatus, aktivt innhold og samsvar mellom siste deploy og main er ikke uavhengig bekreftet.",
+      "source": "eirikyven-gif/apps-fagskolen/apps/presentasjon, offentlig main lest 2026-10-09; kun lest, ingen kildefiler endret. Tracker: Notion Presentasjonsvisning-kandidat. Kilde-README og appens styring/SSoT er gjennomgått.",
+      "sourceStack": "Apps Script/Google Slides API eksporterer visninger; PHP serverflater håndterer PNG-manifest, versjonerte sett, private innstillinger, kontroll/login og sync-webhook. GitHub Actions deployer PHP-appen. Showcase-ruten bruker kun statisk HTML, CSS og nettleser-JavaScript.",
+      "sourceTests": "Ni kildetestfiler: JS timing og bingo-preview, PHP kontrollsettings, kontrollflate, image manifest, manifestkilde, view separation, private config builder og signert sync webhook. README oppgir ikke én samlet testkommando; testene er identifisert, ikke kjørt i denne kandidatvurderingen.",
+      "sourceApiAuthStoragePrivacy": "Kilden bruker Google Slides API/Apps Script og signert webhook for PNG-publisering til PHP-server. Versjonerte bildefiler og manifest ligger server-side; private konfigurasjonsverdier, passordbeskyttet kontroll/login og egne redigeringslenker beskrives i README. Kildens faktiske produksjonsdata, tilgang og retention er ikke verifisert. Demoen bruker ingen kilde-API, konto, identifikator, studentdata, serverlagring eller nettverkskall.",
+      "rightsUncertainty": "Gjennomgåtte appfiler dokumenterer ikke lisens eller eksplisitt gjenbrukstillatelse for kildekode, design eller presentasjonsinnhold. Ingen kildebilder, lysbildetekster, navn eller visuelle oppsett er kopiert; demoen er skrevet og tegnet selvstendig.",
+      "purpose": "Kildens styringsdokument beskriver separate offentlige student- og lærervisninger av undervisningspresentasjoner, med privat kontrollpanel og synkroniserte lysbildesett.",
+      "demoValue": "Gjør den enkle brukeropplevelsen i en lysbildefremviser konkret med tre selvstendig skrevne, generiske slides og tastatur-/knappnavigasjon.",
+      "simplifications": "Tre fiktive lysbilder om en oppdiktet nabolagsværstasjon. Ingen kildeinnhold, private bildesett, elever, lærere, fag, vurderinger, ekte presentasjoner eller godkjent undervisningsmateriale. Ingen automatisk fremdrift, synk, eksport, fullskjerm eller innholdsredigering.",
+      "risk": "Kilden har server-side publisering, Google-integrasjon, passordbeskyttet administrasjon og privat konfigurasjon. Runtime-status, produksjonsinnhold, rettigheter og faktisk tilgangspraksis er ikke verifisert. Fiktive demo-slides kan forveksles med undervisningsinnhold; dette er synlig merket som ikke godkjent materiale.",
+      "scope": "Selvstendig statisk /vibe/presentasjon/-rute: lokalt innebygd HTML/CSS/JS, tre fiktive slides, knapper og venstre/høyre piltast. Ingen kildefiler eller media, eksterne ressurser/kall, PHP, API, auth, cookies, browser/serverlagring, telemetry, opplasting, persondata eller hemmeligheter.",
+      "routeState": "Ny katalogoppføring og /vibe/presentasjon/ på baseline main 4a70da69210fd4586e1fcf455fa871d8e05e85d9 (VERSION 0.33.0, 35 eksisterende katalogruter). Ingen tidligere presentasjonsslug eller rute på baselinen."
     }
   ]
 }
