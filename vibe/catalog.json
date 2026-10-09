@@ -592,7 +592,7 @@
       "simplifications": "Tre fiktive lysbilder om en oppdiktet nabolagsværstasjon. Ingen kildeinnhold, private bildesett, elever, lærere, fag, vurderinger, ekte presentasjoner eller godkjent undervisningsmateriale. Ingen automatisk fremdrift, synk, eksport, fullskjerm eller innholdsredigering.",
       "risk": "Kilden har server-side publisering, Google-integrasjon, passordbeskyttet administrasjon og privat konfigurasjon. Runtime-status, produksjonsinnhold, rettigheter og faktisk tilgangspraksis er ikke verifisert. Fiktive demo-slides kan forveksles med undervisningsinnhold; dette er synlig merket som ikke godkjent materiale.",
       "scope": "Selvstendig statisk /vibe/presentasjon/-rute: lokalt innebygd HTML/CSS/JS, tre fiktive slides, knapper og venstre/høyre piltast. Ingen kildefiler eller media, eksterne ressurser/kall, PHP, API, auth, cookies, browser/serverlagring, telemetry, opplasting, persondata eller hemmeligheter.",
-      "routeState": "Ny katalogoppføring og /vibe/presentasjon/ på baseline main 4a70da69210fd4586e1fcf455fa871d8e05e85d9 (VERSION 0.33.0, 35 eksisterende katalogruter). Ingen tidligere presentasjonsslug eller rute på baselinen."
+      "routeState": "Ny katalogoppføring og /vibe/presentasjon/ på baseline main ce6571b8bc469a5e202542b3e35f3fdc4e617a30 (VERSION 0.34.0, 36 eksisterende katalogoppføringer etter Fagquizer-merge). Denne endringen gir 37 oppføringer totalt. Ingen tidligere presentasjonsslug eller rute på baselinen."
     }
   ]
 }

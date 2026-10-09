@@ -28,8 +28,10 @@
 .site-footer { display: flex; justify-content: space-between; gap: 16px; max-width: 1160px; margin: 40px auto 0; padding: 20px 24px; border-top: 1px solid var(--line); color: #605a58; font-size: .9rem; }
 @media (max-width: 520px) {
   .slide { min-height: 420px; border-radius: 18px; }
-  .visual-caption { margin-left: 0; align-self: end; padding-bottom: 2px; }
-  .cloud-two { display: none; }
+  .visual { justify-content: space-between; gap: 12px; }
+  .cloud, .rain { display: none; }
+  .sun { flex: 0 0 58px; width: 58px; height: 58px; }
+  .visual-caption { max-width: 155px; margin-left: 0; align-self: end; padding-bottom: 2px; text-align: right; }
   .controls { gap: 8px; }
   .controls button { min-width: 0; padding-inline: 15px; }
   .site-footer { margin-top: 30px; }
