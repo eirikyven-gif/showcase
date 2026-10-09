@@ -38,7 +38,20 @@ test('Progresjonsplan has responsive layout and visible keyboard focus', () => {
   const html = read('vibe/progresjonsplan/index.html');
   assert.match(css, /@media\s*\(max-width:\s*600px\)/);
   assert.match(css, /:focus-visible/);
+  assert.match(css, /\.feedback:focus-visible/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(html, /class="skip-link"/);
   assert.match(html, /aria-live="polite"/);
+});
+
+test('answer feedback receives focus after the answer controls are replaced', () => {
+  const js = read('vibe/progresjonsplan/app.js');
+  assert.match(js, /feedback\.setAttribute\('role', 'status'\);\s*feedback\.setAttribute\('tabindex', '-1'\);/);
+  assert.match(js, /player\.append\(actions\);\s*feedback\?\.focus\(\);/);
+});
+
+test('completing a module restores focus to that module’s button, including out-of-order completion', () => {
+  const js = read('vibe/progresjonsplan/app.js');
+  assert.match(js, /const completedIndex = activeModule;\s*completed\.add\(completedIndex\);[\s\S]*?renderOverview\(\);\s*overview\.querySelectorAll\('button'\)\[completedIndex\]\?\.focus\(\);/);
+  assert.doesNotMatch(js, /indexForFocus|completed\.size\s*-\s*1/);
 });

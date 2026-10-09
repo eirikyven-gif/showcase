@@ -75,6 +75,7 @@ function renderStep(message = '') {
   const copy = document.createElement('p');
   copy.textContent = step.text;
   player.append(kicker, heading, copy);
+  let feedback = null;
 
   if (step.options) {
     const group = document.createElement('fieldset');
@@ -110,9 +111,10 @@ function renderStep(message = '') {
     }
   }
   if (message) {
-    const feedback = document.createElement('p');
+    feedback = document.createElement('p');
     feedback.className = 'feedback';
     feedback.setAttribute('role', 'status');
+    feedback.setAttribute('tabindex', '-1');
     feedback.textContent = message;
     player.append(feedback);
   }
@@ -143,18 +145,18 @@ function renderStep(message = '') {
     finish.type = 'button';
     finish.textContent = 'Fullfør modul';
     finish.addEventListener('click', () => {
-      completed.add(activeModule);
+      const completedIndex = activeModule;
+      completed.add(completedIndex);
       player.hidden = true;
       overview.hidden = false;
       activeModule = null;
       renderOverview();
-      overview.querySelectorAll('button')[indexForFocus()]?.focus();
+      overview.querySelectorAll('button')[completedIndex]?.focus();
     });
     actions.append(finish);
   }
   player.append(actions);
+  feedback?.focus();
 }
-
-function indexForFocus() { return Math.min(completed.size - 1, modules.length - 1); }
 
 renderOverview();

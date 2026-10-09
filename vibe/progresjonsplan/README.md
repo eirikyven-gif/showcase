@@ -24,7 +24,7 @@
 ## QA og issue-status
 
 - Ruten bruker semantiske overskrifter, skip-lenke, native radioknapper, statusregion, synlig fokus, store knapper og mobiltilpasning.
-- Testene sjekker metadata, direkte rute, syntetisk innhold, fravær av nettverk/persistens/auth og responsiv-/fokusregler. `node --check vibe/progresjonsplan/app.js`, `node --test tests/*.test.mjs` (42/42) og `git diff --check` bestod.
-- Headless Chromium på 390px: modulstart, ubesvart/feil/riktig svar og fullføring verifisert; ingen horisontal overflow, JavaScript-feil eller eksterne forespørsler. Tastatur/fokus og semantikk er inspisert i markup/CSS; ingen uavhengig WCAG-audit er utført.
+- Testene sjekker metadata, direkte rute, syntetisk innhold, fravær av nettverk/persistens/auth og responsiv-/fokusregler. `node --check vibe/progresjonsplan/app.js`, `node --test tests/*.test.mjs` (45/45) og `git diff --check` bestod.
+- Headless Chromium på 390px: tastaturbasert svarflyt fokuserer statusmeldingen og går videre til handlingene. Fullføring i ulik rekkefølge fokuserer riktig modulknapp. Ingen horisontal overflow, JavaScript-feil eller eksterne forespørsler; uavhengig WCAG-audit er ikke utført.
 - Kilderepoet er kun lest. Ingen uavhengig review, deploy eller merge er utført.
 - Dette er delvis fremdrift på issue #2, ikke fullføring av issue-et.
