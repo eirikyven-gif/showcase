@@ -1,6 +1,26 @@
 {
   "apps": [
     {
+      "slug": "tidteller",
+      "name": "Tidtellerportal",
+      "useCase": "Finn fram til selvstendige verktøy for klokke, nedtelling, opptelling og tidtaking.",
+      "category": "Tid",
+      "audience": ["Alle som vil finne et enkelt tidsverktøy"],
+      "status": "Beholdt i bred førstegangsrunde; original statisk portaloversikt. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Offentlig diverse-apper main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 gjennomgått 2026-10-09. Kildens index.html viser v1.10.1, mens README.md oppgir v1.12.0; manifest/VERSION-fil finnes ikke i appmappen. README oppgir aktiv status, men faktisk produksjonsdeploy er ikke kontrollert.",
+      "source": "eirikyven-gif/diverse-apper/apps/tidteller, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-09); kilderepoet er kun lest.",
+      "sourceStack": "Portalens index.html er statisk HTML og lenker til søskenmapper; den bruker delt apps/_shared/ui.css og ui.js. Appmappen har også PHP-endepunkter for opptellingsvalg, e-postnedtelling, bakgrunnsopplasting og bildegjengivelse. Det finnes ingen buildmanifest i appmappen.",
+      "sourceTests": "Ingen package.json, testmappe eller testkommando finnes i apps/tidteller. README og ROADMAP dokumenterer portal/underappstatus, ikke kjørte testresultater. Kildetester er ikke kjørt.",
+      "sourceApiAuthStoragePrivacy": "Portal-HTML laster lokal delt CSS/JS og lenker til syv underapper; i portalfilen er ingen API-kall, autentisering, input eller lagring synlig. Tilstøtende PHP-filer håndterer lagrede opptellingsvalg, bildeopplasting og dynamisk e-postgrafikk. Lagringsendepunktets adminnøkkel er valgfri; uten konfigurert nøkkel er lagring/sletting åpen for alle med sidetilgang. Full dataflyt, tilgang, retention og produksjonsbruk er ikke uavhengig revidert. Showcase-ruten utelater alle PHP-funksjoner og bruker kun lenker til verifiserte interne Vibe-ruter.",
+      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte appfiler. Kode, tekst, design og aktiva gjenbrukes ikke; showcase-siden er skrevet selvstendig.",
+      "purpose": "En portal som samler innganger til syv selvstendige tidtellerverktøy.",
+      "demoValue": "Gir en enkel inngang til allerede tilgjengelige klokke-, nedtellings-, opptellings- og stoppeklokkeruter i Vibe.",
+      "simplifications": "Original oversikt med verifiserte interne showcase-lenker. Ingen kildetekst, grafikk, PHP, opplasting, delbar e-postgrafikk eller konfigurering. Flere av de lenkede verktøyene overlapper i tidsfunksjon, og brukeren velger selv riktig rute.",
+      "risk": "Kildeappen har PHP-endepunkter som håndterer lagring og opplasting, men datapraksis og drift er ikke verifisert. Showcase-ruten er kun statisk og inneholder ingen input, data eller endepunkt. Lenker leder til separate lokale eksempler; Tidtellerportalen er en oversikt, ikke én samlet timer.",
+      "scope": "Original statisk HTML/CSS på /vibe/tidteller/. Lenker kun til eksisterende /vibe/nedtelling/, /vibe/nedtelling-epost/, /vibe/klokke/, /vibe/stoppeklokke/, /vibe/timer/, /vibe/ticker/ og /vibe/opptelling/. Ingen JavaScript, eksterne destinasjoner, API, auth, PHP, input, lagring, telemetry, PII eller secrets.",
+      "routeState": "Ny katalogrute på baseline main 68a4396c7455ddeef8824eb0a65f41acf351c988, som hadde 31 ruter. Tidteller er en portal til separate demos; stoppeklokke, timer, nedtelling og opptelling forblir selvstendige kandidater uten duplikatimplementasjon."
+    },
+    {
       "slug": "hegra-cup-live",
       "name": "Hegra Cup Live · vurdering",
       "useCase": "Les en kildevurdering av en cup-/turneringsapp der dokumentasjonen skiller mellom legacy, planlagt målarkitektur og manglende runtime.",
