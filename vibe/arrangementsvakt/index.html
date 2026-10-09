@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kildebasert førstegangsvurdering av Arrangementsvakt-kandidaten.">
+  <meta name="theme-color" content="#9e2638">
+  <title>Arrangementsvakt · kandidatvurdering — Vibe</title>
+  <link rel="canonical" href="/vibe/arrangementsvakt/">
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/arrangementsvakt/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#assessment">Hopp til vurderingen</a>
+  <header class="site-header">
+    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
+    <a class="back-link" href="/vibe/">← Alle verktøy</a>
+  </header>
+  <main id="assessment" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Kandidatvurdering · arrangement</p>
+      <h1 id="page-title">Arrangementsvakt</h1>
+      <p class="intro-copy">Kildens README beskriver en mobilvennlig plattform for koordinering av arrangement, dugnad og hendelser. Denne siden vurderer kandidaten; den er ikke en operativ demo.</p>
+    </section>
+
+    <aside class="fiction-banner" aria-label="Viktig informasjon">
+      <strong>Kun vurdering – ikke til operativ bruk.</strong>
+      <span>Alt innhold, alle roller og eventuelle eksempler her er fiktive. Siden viser ingen reelle arrangementer, personer, vakter eller hendelser.</span>
+    </aside>
+
+    <section class="assessment-grid" aria-label="Kilde og avgrensning">
+      <article class="assessment-card">
+        <p class="card-kicker">Kildebeskrevet formål</p>
+        <h2>Samle koordinering</h2>
+        <p>README omtaler roller for ledelse og medlemmer, arrangement, team, hendelser, kommentarer, meldinger og eksport. Beskrivelsen sier også at løsningen har PIN-innlogging og mobiltilpasset grensesnitt.</p>
+      </article>
+      <article class="assessment-card">
+        <p class="card-kicker">Teknisk overflate</p>
+        <h2>Server og persondata</h2>
+        <p>Appmappen inneholder PHP-endepunkter for blant annet innlogging, brukere, hendelser, meldinger, opplasting og push, samt JSON-lagringskode og klientfiler. Faktisk drift og databehandling er ikke revidert her.</p>
+      </article>
+      <article class="assessment-card">
+        <p class="card-kicker">Trygg avgrensning</p>
+        <h2>Ingen operativ simulering</h2>
+        <p>Vaktplaner, rollehandlinger, hendelsesprioritet og varsling kan påvirke sikkerhet og personvern. Betydningen og gjeldende styringsgrunnlag er ikke tilstrekkelig avklart for å gjenskape slike arbeidsflyter.</p>
+      </article>
+    </section>
+
+    <section class="source-note" aria-labelledby="scope-title">
+      <h2 id="scope-title">Hva denne vurderingen bygger på</h2>
+      <ul>
+        <li>Kildens <code>apps/arrangementsvakt/README.md</code> oppgir versjon <code>v0.14.1-issue-412-compact-prioritized-home</code>; versjonen er dokumentert i README, ikke bekreftet som aktiv produksjonsversjon.</li>
+        <li>Appmappen inneholder 28 Node-smoketester. README viser kommandoer for et utvalg av testene; ingen kildetester ble kjørt i denne vurderingen.</li>
+        <li>SSoT-mappen inneholder flere versjoner, utkast og filer merket for opprydding. Governance-siden har plassholdere; ett entydig, appspesifikt låst styringsgrunnlag er derfor ikke fastslått.</li>
+        <li>Ingen lisens eller gjenbrukstillatelse ble funnet i de gjennomgåtte appfilene. Kode-, design- og innholdsrettigheter er uavklart.</li>
+      </ul>
+    </section>
+
+    <p class="assessment-footnote">Bred førstegangsrunde: beholdt som kandidat. Dette er ikke en kurateringsavgjørelse, sikkerhetsrevisjon eller bekreftelse på produksjonsstatus.</p>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Statisk, kildebasert vurdering</span></footer>
+</body>
+</html>
