@@ -17,7 +17,7 @@ test('Presentasjonsvisning has one complete assessment and a direct route', () =
   assert.match(read('vibe/assets/hub.js'), /\/vibe\/\$\{encodeURIComponent\(app\.slug\)\}\//, 'the hub builds a direct link for every catalog slug');
   assert.match(read('vibe/presentasjon/index.html'), /href="\/vibe\/assets\/hub\.css"/);
   assert.match(read('vibe/presentasjon/index.html'), /src="app\.js"/);
-  assert.equal(read('VERSION').trim(), '0.37.4');
+  assert.equal(read('VERSION').trim(), '0.37.5');
   assert.equal(catalog.apps.length, 39, 'the catalog includes Progresjonsplan after Ukelønn');
 });
 
