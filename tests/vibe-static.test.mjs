@@ -21,7 +21,7 @@ function formHasSubmitGuard(formAttributes, pageScripts) {
   if (!formId) return false;
   const escapedId = formId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const selectorPattern = new RegExp(
-    `(?:const|let|var)\\s+(\\w+)\\s*=\\s*document\\.(?:querySelector\\(\\s*['"]#${escapedId}['"]\\s*\\)|getElementById\\(\\s*['"]${escapedId}['"]\\s*\\))`,
+    `(?:const|let|var)\\s+(\\w+)\\s*=\\s*(?:document\\.(?:querySelector\\(\\s*['"]#${escapedId}['"]\\s*\\)|getElementById\\(\\s*['"]${escapedId}['"]\\s*\\))|\\$\\(\\s*['"]${escapedId}['"]\\s*\\))`,
   );
   const formVariable = pageScripts.match(selectorPattern)?.[1];
   if (!formVariable) {
@@ -31,7 +31,11 @@ function formHasSubmitGuard(formAttributes, pageScripts) {
   const submitPattern = new RegExp(
     `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*(\\w+)\\s*\\)\\s*=>\\s*(?:\\{\\s*)?\\1\\.preventDefault\\(\\)`,
   );
-  return submitPattern.test(pageScripts);
+  if (submitPattern.test(pageScripts)) return true;
+  const handlerName = pageScripts.match(new RegExp(`${formVariable}\\.addEventListener\\(\\s*['\"]submit['\"]\\s*,\\s*(\\w+)`))?.[1];
+  if (!handlerName) return false;
+  const handlerPattern = new RegExp(`(?:const|let|var)\\s+${handlerName}\\s*=\\s*function\\s*\\(\\s*(\\w+)\\s*\\)\\s*\\{[\\s\\S]*?\\1\\.preventDefault\\(\\)`);
+  return handlerPattern.test(pageScripts);
 }
 
 test('hub assets and catalog exist', () => {
@@ -471,7 +475,7 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
           : path.posix.join(path.posix.dirname(path.relative(vibeRoot, file)), src);
         const scriptPath = path.join(vibeRoot, relativePath.split('?')[0]);
         return statSync(scriptPath).isFile() ? readFileSync(scriptPath, 'utf8') : '';
-      }).join('\n');
+      }).join('\n') + [...html.matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map((scriptMatch) => scriptMatch[1]).join('\n');
       if (path.relative(vibeRoot, file).startsWith(`arrangementsvakt${path.sep}`)) {
         assert.match(pageScripts, /preventDefault\(\)/, `${file} registers local submit handling`);
         assert.match(pageScripts, /demoApi/, `${file} routes actions to local simulation`);
