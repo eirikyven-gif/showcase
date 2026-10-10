@@ -218,19 +218,27 @@
     },
     {
       "slug": "ns3424-lab",
-      "name": "NS3424 læringslab",
-      "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
-      "category": "Utdanning",
+      "name": "NS3424 Læringslaboratorium · illustrativ demo",
+      "useCase": "Utforsk kapitler, begreper, eksempler, risikomatrise, seks graderingsoppgaver og en ti-spørsmåls kunnskapstest fra kildens læringsskisse.",
+      "category": "Utdanning og læringsgrensesnitt",
       "audience": [
         "Studenter",
         "Undervisere",
-        "Nybegynnere innen byggforvaltning"
+        "Personer som utforsker bygningsanalyse"
       ],
-      "status": "demo",
-      "demoValue": "Viser hvordan korte scenarioer og umiddelbar tilbakemelding kan støtte læring.",
-      "simplifications": "Originalt minieksempel med generiske scenarioer; dekker ikke eller gjengir NS 3424.",
-      "risk": "Kan mistolkes som faglig veiledning eller standardinnhold; tydelig forbehold er vist i demoen.",
-      "scope": "Kun statisk nettleserdemo med oppdiktede eksempler, uten vurdering av faktiske bygg."
+      "status": "Delvis løst issue #2; oppdatert til tro, statisk kildekopi med tydelig avgrensning. Faglig kontroll og gjenbruksrettigheter uavklart.",
+      "source": "eirikyven-gif/ns3424, offentlig main commit 6938f28097d428d1af4c55d701ebb58bad9ff8a7, kontrollert 2026-10-10; kildefiler kun lest.",
+      "sourceStack": "Kilden er én selvstendig HTML-fil med innebygd CSS og JavaScript; README inneholder kun repo-navnet. Showcase-kopien er én statisk HTML-fil.",
+      "sourceTests": "Kilderepoet har ingen testfiler, testkommando eller byggoppsett. Kildetester ble ikke kjørt. Showcase-validering: node --test tests/ns3424-lab.test.mjs og localhost HTTP- og nettleserkontroll.",
+      "sourceApiAuthStoragePrivacy": "Gjennomgått HTML har ingen autentisering, kontoer, API-/nettverkskall, serverlagring, nettleserlagring, cookies, PII eller hemmeligheter. Eksempelobjekter er presentert som bygg, men opphav/fiktivitet kan ikke uavhengig dokumenteres. Showcase-versjonen har ingen nettverkskall, auth, server, persistens, inputfelter, PII eller secrets; svar lever bare i JavaScript-minnet og nullstilles med «Nullstill hele demoen».",
+      "rightsUncertainty": "Ingen lisens eller gjenbrukstillatelse finnes i gjennomgått README eller kildecommit. Kopien bevarer kildeappens struktur, tekster, eksempler og oppgaver etter oppdraget; rett til offentlig gjenbruk er ikke avklart.",
+      "purpose": "Kildens HTML presenterer en læringsplattform om NS3424, med innføring, tilstandsgrader, analysenivåer, konsekvensgrader, risikomatrise, prosess, praktisk øvelse og quiz.",
+      "demoValue": "Bevarer kildeappens åtte navigasjonspunkter, undervisningstekster, akkordioner, TG/KG- og risikovisninger, seks øvelsesscenarioer med umiddelbar respons og ti spørsmål med resultat/progresjon.",
+      "simplifications": "Enkeltfil og klientbasert visning beholdt. Ingen auth, API eller lagring ble funnet eller etterlignet. Lagt til synlig faglig avgrensning og full reset. Alt svar-/åpningstilstand lever bare i aktiv sideøkt.",
+      "risk": "Kildeinnholdet fremsetter standardspesifikke og delvis sikkerhetsrelevante påstander. Innholdets samsvar med gjeldende standard og faglige riktighet er ikke kontrollert; ikke bruk demoen til reelle vurderinger. Kildens gjenbruksrettigheter er uavklart.",
+      "scope": "Statisk /vibe/ns3424-lab/ med illustrative øvelsesforhold; scenarienes syntetiske status kan ikke verifiseres fra kilden. Ingen cookies, localStorage, API, fetch, server, auth, PII, secrets eller tredjeparts runtime. Full reset nullstiller quiz, øvelser, akkordioner og navigasjon.",
+      "routeState": "Eksisterende /vibe/ns3424-lab/ beholdes; erstatter tidligere generisk demo. Baseline showcase main e54dc69c748c61c070ee5a588bef019a2db5eed6, VERSION 0.46.0 med 39 oppføringer. Foreslått VERSION 0.47.0. Ikke deployet.",
+      "sourceUncertainty": "Kilde-README er kun «ns3424»; eneste kildecommit legger til index.html. Ingen standardtekst/lisens/referansekilder, test, designbrief eller driftsdokumentasjon er inkludert. Ingen uavhengig faglig validering, nettverksdrift, gjenbruksrett eller om scenariodetaljer er syntetiske kunne bekreftes. Issue #2 lenker også til låste Notion-kravdokumenter; disse var ikke tilgjengelige i showcase-checkouten og er ikke uavhengig kontrollert."
     },
     {
       "slug": "ns3424-arkivdemo",

@@ -1,25 +1,26 @@
-# NS3424 læringslab (demo)
+# NS3424 Læringslaboratorium (illustrativ demo)
 
-| Felt | Vurdering |
-|---|---|
-| Use case | Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov. |
-| Category | Utdanning |
-| Audience | Studenter, undervisere og nybegynnere innen byggforvaltning. |
-| Status | Demo; beholdes i bred første runde. |
-| Slug | `ns3424-lab` |
-| Demo value | Viser hvordan korte scenarioer og umiddelbar tilbakemelding kan støtte læring. |
-| Simplifications | Originalt minieksempel med generiske scenarioer; dekker ikke eller gjengir NS 3424. |
-| Risk | Kan mistolkes som faglig veiledning eller standardinnhold; demoen er merket som uoffisiell og illustrativ. |
-| Scope | Kun statisk nettleserdemo med oppdiktede eksempler, uten vurdering av faktiske bygg. |
+Isolert showcase-rute: `/vibe/ns3424-lab/`.
 
 ## Kildegjennomgang
 
-Kandidatens offentlige `main` ble lest skrivebeskyttet. Inngangspunktet er én HTML-fil med CSS og JavaScript, navigasjon, fagtekst, scenarioøvelse og kunnskapstest. Ingen backend, autentisering, API-kall eller nettleserlagring ble funnet i denne filen. Innholdsrettigheter er ikke avklart. Denne demoen er skrevet fra grunnen av og gjenbruker ikke kandidatens spørsmål, forklaringer eller eksempler.
+Kilden `eirikyven-gif/ns3424` ble lest skrivebeskyttet på `main`, commit `6938f28097d428d1af4c55d701ebb58bad9ff8a7` (2026-02-07). Repoet inneholder én `index.html` på 1 337 linjer og en README med bare repo-navnet. HTML-filen er selvstendig med innebygd CSS og JavaScript. Den har åtte navigasjonsdeler: introduksjon, tilstandsgrader, analysenivåer, konsekvensgrader, risikomatrise, prosess, praktisk øvelse og kunnskapstest. Øvelsen har seks scenarioer med umiddelbar tilbakemelding; quizen har ti spørsmål, poeng, progresjon og nullstilling. Akkordioner kan åpnes og lukkes.
 
-## Personvern og drift
+Ingen byggoppsett, testoppsett, eksterne script/stiler, API-/nettverkskall, autentisering, cookies, nettleserlagring, serverpersistens, identifiserende personopplysninger eller hemmeligheter ble funnet i gjennomgåtte kildefiler. Kildens bunntekst sier «Basert på NS3424:2012». De faglige påstandene og forholdet til gjeldende standard er ikke uavhengig kontrollert. Scenarioene framstår som eksempler, men kildedokumentasjonen bekrefter ikke at detaljene er oppdiktet.
 
-Demoen bruker bare statiske HTML-, CSS- og JavaScript-filer og oppdiktede scenarioer. Den har ingen API, autentisering, serverlagring, personopplysninger, hemmeligheter, eksterne runtime-forespørsler eller persistens. Svar og poengsum finnes bare i sidens aktive minne og nullstilles ved lasting.
+## Kopi og sikkerhet
 
-## Faglig avgrensning
+Ruten bevarer kildens deler, undervisningstekster, eksempler, scenarioer, graderingsfeedback, quizspørsmål, poengberegning, progresjon og navigasjon. Den har en tydelig avgrensning om at innholdet er illustrativt og ubekreftet, og ikke skal brukes ved faktiske bygg-, sikkerhets- eller vedlikeholdsbeslutninger. Kildens oppgitte 2012-grunnlag er merket som ubekreftet. «Nullstill hele demoen» nullstiller øvelsessvar, quizsvar og resultater, åpne akkordioner og navigasjon.
 
-Dette er en uoffisiell læringsskisse. Den gjengir ikke NS 3424 og skal ikke brukes til å vurdere faktiske bygg, fastsette tilstandsgrader eller erstatte standarden eller kvalifisert faglig vurdering.
+Eksemplene er kun illustrative i denne kopien; de er ikke verifisert som syntetiske kildedata. All samhandlingstilstand finnes i JavaScript-minnet mens siden er åpen og slettes også ved omlasting. `localStorage` brukes ikke, siden kilden ikke lagrer tilstand. Ruten har ingen API, nettverkskall, autentisering, serverlagring, skjemafelter, cookies, PII, hemmeligheter eller tredjeparts runtime.
+
+## Usikkerhet
+
+- Ingen lisens eller uttrykkelig gjenbrukstillatelse ble funnet. Ruten gjengir kildeinnhold etter oppdraget; rett til offentlig gjenbruk er uavklart.
+- Kilden viser ikke til en autoritativ standardtekst eller kilder. Faglig riktighet, aktualitet og sikkerhetsmessige følger er ikke vurdert av fagperson.
+- Kilden har ingen tester eller dokumenterte akseptansekriterier; produksjonsdrift er ikke kontrollert. Issue #2 viser til låste Notion-krav som ikke er tilgjengelige i showcase-checkouten og derfor ikke er kontrollert uavhengig.
+- Eksempelbyggene er ikke bekreftet som syntetiske. Demoen vurderer ikke faktiske eiendommer.
+
+## Validering
+
+`node --test tests/ns3424-lab.test.mjs` kontrollerer metadata, bevart innhold og funksjonskroker, full nullstilling, rute og fravær av nettverkskall, lagring og auth. Lokal HTTP- og Chromium-kontroll verifiserer direktelasting, navigasjon, quiz, øvelse, nullstilling, oppdatering av siden, mobilbredde, konsollfeil og eksterne forespørsler. Kildetester finnes ikke. Deploystatus: ikke deployet.
