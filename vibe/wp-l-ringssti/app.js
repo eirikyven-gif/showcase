@@ -4,14 +4,14 @@
     title: 'Læringssti · planlegg en parsell',
     modules: [
       { id: 'm01', title: 'Start med rammene', subtitle: 'Planlegging før planting', locked: false, elements: [
-        { type: 'richText', title: 'Situasjonen', text: 'Du skal planlegge en liten parsell på **12 ruter**. Målet er å få plass til flere vekster uten å overskride rammen.' },
-        { type: 'factBox', title: 'Plassbehov', rows: [{ icon: '✿', label: 'Bladgrønt', text: '1 rute per plante' }, { icon: '❋', label: 'Urter', text: '2 ruter per plante' }, { icon: '✿', label: 'Store blomster', text: '3 ruter per plante' }] },
-        { type: 'accordion', title: 'Planleggingstips', items: [{ title: 'Summer før du tegner', text: 'Regn ut hver gruppes plassbehov og legg tallene sammen før du plasserer dem.' }, { title: 'Hold rammen synlig', text: 'Sammenlign summen med de 12 rutene. Hvis den er større, juster planen.' }] },
+        { type: 'richText', title: 'Situasjonen', text: 'Du skal planlegge en liten parsell på **12 ruter**. Målet er å få plass til flere vekster uten å overskride rammen.', attachments: [] },
+        { type: 'factBox', title: 'Plassbehov', body: 'Tre syntetiske planteeksempler viser hvordan plassbehovet varierer. Summer arealet før du tegner.', links: [{ label: 'Se planleggingstips', href: '#tips' }], attachments: [1] },
+        { type: 'accordion', title: 'Planleggingstips', variant: 'process', items: [{ title: 'Summer før du tegner', text: 'Regn ut hver gruppes plassbehov og legg tallene sammen før du plasserer dem.', attachments: [] }, { title: 'Hold rammen synlig', text: 'Sammenlign summen med de 12 rutene. Hvis den er større, juster planen.', attachments: [2] }] },
         { type: 'quiz', title: 'Sjekk forståelsen', question: 'Du vil tegne fire urter og to store blomster. Hva bør du sjekke først?', options: ['Tegn plantene tilfeldig og håp de passer.', 'Regn ut samlet plassbehov og sammenlign med 12 ruter.', 'Legg til flere planter før du tegner.'], correct: [1], multi: false, feedbackCorrect: 'Riktig. 4 × 2 + 2 × 3 = 14 ruter, altså mer enn rammen på 12.', feedbackWrong: 'Ikke helt. Regn ut plassen for hver plantetype og summer først.' },
-        { type: 'case', title: 'Lag et forslag', text: 'Sett sammen et forslag som holder seg innenfor 12 ruter. Beskriv hvordan du fordelte plassen.', deliverables: ['En enkel fordeling av rutene', 'En kort begrunnelse'] }
+        { type: 'case', title: 'Lag et forslag', text: 'Sett sammen et forslag som holder seg innenfor 12 ruter. Beskriv hvordan du fordelte plassen.', deliverables: ['En enkel fordeling av rutene', 'En kort begrunnelse'], attachments: [1] }
       ] },
       { id: 'm02', title: 'Fra skisse til arbeidsplan', subtitle: 'Prioriter rekkefølgen', locked: true, elements: [
-        { type: 'hierarchy', title: 'Arbeidsplan', levels: [{ label: 'Først', items: ['Mål opp rammen', 'Skriv ned plassbehov'] }, { label: 'Deretter', items: ['Tegn plasseringen', 'Kontroller summen'] }] },
+        { type: 'hierarchy', title: 'Arbeidsplan', levels: [{ label: 'Først', items: [{ label: 'Mål opp rammen', body: 'Bruk et syntetisk rutenett.', attachments: [] }, { label: 'Skriv ned plassbehov', body: 'Noter plassen per veksttype.', attachments: [] }] }, { label: 'Deretter', items: [{ label: 'Tegn plasseringen', body: 'Lag en enkel skisse.', attachments: [] }, { label: 'Kontroller summen', body: 'Sammenlign med rammens kapasitet.', attachments: [] }] }] },
         { type: 'timeline', title: 'En enkel rekkefølge', mode: 'all', filterTags: [] }
       ] }
     ],
@@ -19,34 +19,32 @@
     media: [{ id: 1, title: 'Ruteplan · eksempelillustrasjon', icon: '▦', linked: true }, { id: 2, title: 'Plantekort · syntetisk eksempel', icon: '✿', linked: true }, { id: 3, title: 'Tidslinje · eksempelgrafikk', icon: '◷', linked: false }],
     activeModule: 0, step: 0, overview: true, completed: [], draft: '', quizChoice: [], feedback: '', feedbackState: '', tab: 'modules'
   });
-  const storageKey = 'vibe-wp-l-ringssti-demo-v1';
-  function loadState() {
-    try {
-      const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
-      if (stored && Array.isArray(stored.modules) && Array.isArray(stored.timeline) && Array.isArray(stored.media) && Array.isArray(stored.completed)) {
-        return { ...seed(), ...stored };
-      }
-    } catch {}
-    return seed();
-  }
-  let state = loadState();
-  function persistState() {
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(state));
-    } catch {
-      const status = document.querySelector('#storage-status');
-      if (status) status.textContent = 'Nettleseren kunne ikke lagre lokalt. Demoen virker til fanen lukkes.';
-    }
-  }
+  let state = seed();
   const pathRoot = document.querySelector('#learning-path');
   const editorRoot = document.querySelector('#editor-panel');
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-  const markdown = (value) => esc(value).split('\n').map((line) => line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')).join('<br>');
+  const inlineMarkdown = (line) => esc(line).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\[([^\]]+)\]\((#[A-Za-z0-9_-]+)\)/g, '<a href="$2">$1</a>');
+  const markdown = (value) => {
+    const out = []; let list = [];
+    const flush = () => { if (list.length) { out.push(`<ul>${list.map(item => `<li>${inlineMarkdown(item)}</li>`).join('')}</ul>`); list = []; } };
+    for (const raw of String(value ?? '').split(/\r?\n/)) {
+      const line = raw.trim();
+      const heading = line.match(/^(#{1,4})\s+(.+)$/);
+      const item = line.match(/^[-*]\s+(.+)$/);
+      if (!line) { flush(); continue; }
+      if (heading) { flush(); const level = Math.min(heading[1].length, 4); out.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`); }
+      else if (item) list.push(item[1]);
+      else { flush(); out.push(`<p>${inlineMarkdown(line)}</p>`); }
+    }
+    flush(); return out.join('');
+  };
   const currentModule = () => state.modules[state.activeModule];
   const currentElements = () => currentModule()?.elements || [];
   const humanType = (type) => ({ factBox: 'Faktaboks', accordion: 'Accordion', hierarchy: 'Hirarki', timeline: 'Tidslinje', richText: 'Tekst', quiz: 'Quiz', case: 'Caseoppgave' })[type] || type;
   const resetStepState = () => { state.step = 0; state.quizChoice = []; state.feedback = ''; state.feedbackState = ''; state.draft = ''; };
   const focusStep = () => document.querySelector('[data-step-heading]')?.focus();
+  const mediaMarkup = (ids = []) => ids.map(id => state.media.find(item => item.id === id)).filter(Boolean).map(item => `<span class="attachment-chip"><span aria-hidden="true">${esc(item.icon)}</span> ${esc(item.title)}</span>`).join('');
+  const attachmentPicker = (path, ids = []) => `<fieldset class="attachment-picker"><legend>Media (valgfri)</legend>${state.media.map(item => `<label><input type="checkbox" data-attachment="${path}" data-media-id="${item.id}" ${ids.includes(item.id) ? 'checked' : ''}> ${esc(item.title)}</label>`).join('')}</fieldset>`;
 
   function moduleCard(module, index) {
     const done = state.completed.includes(index);
@@ -69,15 +67,15 @@
   function renderStep(el, mod) {
     const base = `<p class="step-type">${esc(humanType(el.type))} · ${esc(mod.id)}</p><h3 class="step-title" tabindex="-1" data-step-heading>${esc(el.title || humanType(el.type))}</h3>`;
     if (el.type === 'richText') return `${base}<div class="step-copy">${markdown(el.text)}</div>`;
-    if (el.type === 'factBox') return `${base}<p class="step-copy">Informasjon samlet i en faktaboks.</p><div class="fact-grid">${el.rows.map(row => `<div class="fact-row"><span class="fact-icon" aria-hidden="true">${esc(row.icon)}</span><span class="fact-label">${esc(row.label)}</span><span class="fact-text">${esc(row.text)}</span></div>`).join('')}</div>`;
-    if (el.type === 'accordion') return `${base}<div class="accordion-list">${el.items.map(item => `<details><summary>${esc(item.title)}</summary><p>${esc(item.text)}</p></details>`).join('')}</div>`;
-    if (el.type === 'hierarchy') return `${base}${el.levels.map(level => `<div class="hierarchy"><h4>${esc(level.label)}</h4><ul>${level.items.map(item => `<li>${esc(item)}</li>`).join('')}</ul></div>`).join('')}`;
+    if (el.type === 'factBox') return `${base}<div class="step-copy">${markdown(el.body)}</div>${el.links.length ? `<ul class="fact-links">${el.links.map(link => `<li><a href="${/^#[A-Za-z0-9_-]+$/.test(link.href) ? esc(link.href) : '#tips'}">${esc(link.label)}</a></li>`).join('')}</ul>` : ''}<div class="attachments">${mediaMarkup(el.attachments)}</div>`;
+    if (el.type === 'accordion') return `${base}<div class="accordion-list" data-variant="${esc(el.variant)}" id="tips">${el.items.map(item => `<details><summary>${esc(item.title)}</summary><div class="step-copy">${markdown(item.text)}</div><div class="attachments">${mediaMarkup(item.attachments)}</div></details>`).join('')}</div>`;
+    if (el.type === 'hierarchy') return `${base}${el.levels.map(level => `<div class="hierarchy"><h4>${esc(level.label)}</h4><ul>${level.items.map(item => `<li><strong>${esc(item.label)}</strong><div class="step-copy">${markdown(item.body)}</div><div class="attachments">${mediaMarkup(item.attachments)}</div></li>`).join('')}</ul></div>`).join('')}`;
     if (el.type === 'timeline') { const events = el.mode === 'filter' ? state.timeline.filter(event => event.tags.some(tag => (el.filterTags || []).includes(tag))) : state.timeline; return `${base}<ol class="timeline-list">${events.map(event => `<li><span class="timeline-date">${esc(event.date)}</span><br><strong>${esc(event.label)}</strong><div class="step-copy">${markdown(event.description)}</div></li>`).join('') || '<li>Ingen tidslinjehendelser matcher filteret.</li>'}</ol>`; }
     if (el.type === 'quiz') {
       const inputType = el.multi ? 'checkbox' : 'radio';
       return `${base}<p class="step-copy">${esc(el.question)}</p><fieldset><legend class="visually-hidden">Svaralternativer</legend><div class="quiz-options">${el.options.map((option, index) => `<label class="quiz-option"><input type="${inputType}" name="quiz" value="${index}" ${state.quizChoice.includes(index) ? 'checked' : ''}><span>${esc(option)}</span></label>`).join('')}</div></fieldset><div class="button-row"><button type="button" class="button primary" data-action="check-quiz">Sjekk svar</button><button type="button" class="button" data-action="ai-quiz" ${!state.completed.includes(state.activeModule + ':' + state.step) ? 'disabled' : ''}>Dypdykk (KI)</button></div><p class="quiz-feedback ${state.feedbackState}" tabindex="-1" role="status" aria-live="polite">${esc(state.feedback)}</p>`;
     }
-    if (el.type === 'case') return `${base}<p class="step-copy">${esc(el.text)}</p><p><strong>Leveranse</strong></p><ul>${el.deliverables.map(item => `<li>${esc(item)}</li>`).join('')}</ul><label class="field" for="case-draft">Ditt utkast<textarea id="case-draft" class="case-textarea" placeholder="Skriv et kort utkast …">${esc(state.draft)}</textarea></label><div class="case-actions"><button type="button" class="button primary" data-action="save-draft">Lagre utkast midlertidig</button><button type="button" class="button" data-action="clear-draft">Slett utkast</button><button type="button" class="button" data-action="ai-case">KI-sensor</button><span class="save-status" role="status" aria-live="polite" id="draft-status"></span></div><p class="sample-label">Utkast finnes bare i minnet til denne fanen. Det sendes ikke inn og forsvinner ved oppdatering.</p>`;
+    if (el.type === 'case') return `${base}<div class="step-copy">${markdown(el.text)}</div><p><strong>Leveranse</strong></p><ul>${el.deliverables.map(item => `<li>${esc(item)}</li>`).join('')}</ul><div class="attachments">${mediaMarkup(el.attachments)}</div><label class="field" for="case-draft">Ditt utkast<textarea id="case-draft" class="case-textarea" placeholder="Skriv et kort utkast …">${esc(state.draft)}</textarea></label><div class="case-actions"><button type="button" class="button primary" data-action="save-draft">Lagre utkast midlertidig</button><button type="button" class="button" data-action="clear-draft">Slett utkast</button><button type="button" class="button" data-action="ai-case">KI-sensor</button><span class="save-status" role="status" aria-live="polite" id="draft-status"></span></div><p class="sample-label">Utkast finnes bare i minnet til denne fanen. Det sendes ikke inn og forsvinner ved oppdatering.</p>`;
     return `${base}<p>Dette elementet har ingen eksempelinnhold ennå.</p>`;
   }
 
@@ -88,13 +86,13 @@
   const pathFor = (mi, ei, key) => `modules.${mi}.elements.${ei}.${key}`;
   function renderElementFields(el, mi, ei) {
     const p = (key) => pathFor(mi, ei, key);
-    if (el.type === 'richText') return field('Tekst (syntetisk eksempel)', el.text, p('text'), true, true);
-    if (el.type === 'factBox') return `<div class="field wide"><span>Faktarader</span>${el.rows.map((row, ri) => `<div class="element-fields">${field('Ikon', row.icon, `${p('rows')}.${ri}.icon`)}${field('Etikett', row.label, `${p('rows')}.${ri}.label`)}${field('Tekst', row.text, `${p('rows')}.${ri}.text`, true)}<button class="button danger" type="button" data-action="remove-nested" data-mi="${mi}" data-ei="${ei}" data-key="rows" data-index="${ri}">Fjern rad</button></div>`).join('')}<button class="button" type="button" data-action="add-row" data-mi="${mi}" data-ei="${ei}">Legg til rad</button></div>`;
-    if (el.type === 'accordion') return `<div class="field wide"><span>Punkter</span>${el.items.map((item, ri) => `<div class="element-fields">${field('Tittel', item.title, `${p('items')}.${ri}.title`)}${field('Tekst', item.text, `${p('items')}.${ri}.text`, true, true)}<button class="button danger" type="button" data-action="remove-nested" data-mi="${mi}" data-ei="${ei}" data-key="items" data-index="${ri}">Fjern punkt</button></div>`).join('')}<button class="button" type="button" data-action="add-item" data-mi="${mi}" data-ei="${ei}">Legg til punkt</button></div>`;
-    if (el.type === 'hierarchy') return `<div class="field wide"><span>Nivåer</span>${el.levels.map((level, ri) => `<div class="element-fields">${field('Nivå', level.label, `${p('levels')}.${ri}.label`)}${field('Punkter (ett per linje)', level.items.join('\n'), `${p('levels')}.${ri}.items`, true, true)}<button class="button danger" type="button" data-action="remove-nested" data-mi="${mi}" data-ei="${ei}" data-key="levels" data-index="${ri}">Fjern nivå</button></div>`).join('')}<button class="button" type="button" data-action="add-level" data-mi="${mi}" data-ei="${ei}">Legg til nivå</button></div>`;
+    if (el.type === 'richText') return `${field('Tekst (Markdown)', el.text, p('text'), true, true)}${attachmentPicker(p('attachments'), el.attachments)}`;
+    if (el.type === 'factBox') return `${field('Tekst (Markdown)', el.body, p('body'), true, true)}<div class="field wide"><span>Lenker (interne demoankere)</span>${el.links.map((link, ri) => `<div class="element-fields">${field('Lenketekst', link.label, `${p('links')}.${ri}.label`)}${field('Anker (for eksempel #tips)', link.href, `${p('links')}.${ri}.href`)}<button class="button danger" type="button" data-action="remove-nested" data-mi="${mi}" data-ei="${ei}" data-key="links" data-index="${ri}">Fjern lenke</button></div>`).join('')}<button class="button" type="button" data-action="add-link" data-mi="${mi}" data-ei="${ei}">Legg til lenke</button></div>${attachmentPicker(p('attachments'), el.attachments)}`;
+    if (el.type === 'accordion') return `<label class="field">Variant<select data-bind="${p('variant')}"><option value="process" ${el.variant === 'process' ? 'selected' : ''}>process</option><option value="law" ${el.variant === 'law' ? 'selected' : ''}>law</option></select></label><div class="field wide"><span>Punkter</span>${el.items.map((item, ri) => `<div class="element-fields">${field('Tittel', item.title, `${p('items')}.${ri}.title`)}${field('Tekst (Markdown)', item.text, `${p('items')}.${ri}.text`, true, true)}${attachmentPicker(`${p('items')}.${ri}.attachments`, item.attachments)}<button class="button danger" type="button" data-action="remove-nested" data-mi="${mi}" data-ei="${ei}" data-key="items" data-index="${ri}">Fjern punkt</button></div>`).join('')}<button class="button" type="button" data-action="add-item" data-mi="${mi}" data-ei="${ei}">Legg til punkt</button></div>`;
+    if (el.type === 'hierarchy') return `<div class="field wide"><span>Nivåer</span>${el.levels.map((level, ri) => `<div class="module-edit-card">${field('Nivåetikett', level.label, `${p('levels')}.${ri}.label`)}${level.items.map((item, ii) => `<div class="element-fields">${field('Itemetikett', item.label, `${p('levels')}.${ri}.items.${ii}.label`)}${field('Forklaring (Markdown)', item.body, `${p('levels')}.${ri}.items.${ii}.body`, true, true)}${attachmentPicker(`${p('levels')}.${ri}.items.${ii}.attachments`, item.attachments)}<button class="button danger" type="button" data-action="remove-hierarchy-item" data-mi="${mi}" data-ei="${ei}" data-li="${ri}" data-ii="${ii}">Fjern item</button></div>`).join('')}<div class="button-row"><button class="button" type="button" data-action="add-hierarchy-item" data-mi="${mi}" data-ei="${ei}" data-li="${ri}">Legg til item</button><button class="button danger" type="button" data-action="remove-nested" data-mi="${mi}" data-ei="${ei}" data-key="levels" data-index="${ri}">Fjern nivå</button></div></div>`).join('')}<button class="button" type="button" data-action="add-level" data-mi="${mi}" data-ei="${ei}">Legg til nivå</button></div>`;
     if (el.type === 'timeline') return `<label class="field">Vis hendelser<select data-bind="${p('mode')}"><option value="all" ${el.mode !== 'filter' ? 'selected' : ''}>Alle hendelser</option><option value="filter" ${el.mode === 'filter' ? 'selected' : ''}>Filtrer på tagger</option></select></label>${el.mode === 'filter' ? field('Tagger (kommaseparert)', (el.filterTags || []).join(', '), p('filterTags'), true) : ''}`;
     if (el.type === 'quiz') return `${field('Spørsmål', el.question, p('question'), true, true)}${el.options.map((option, oi) => `<div>${field(`Alternativ ${oi + 1}`, option, `${p('options')}.${oi}`)}<label class="field inline"><input type="checkbox" data-correct="${mi}.${ei}.${oi}" ${el.correct.includes(oi) ? 'checked' : ''}> Riktig svar</label><button type="button" class="button danger" data-action="remove-option" data-mi="${mi}" data-ei="${ei}" data-index="${oi}">Fjern alternativ</button></div>`).join('')}<button type="button" class="button" data-action="add-option" data-mi="${mi}" data-ei="${ei}">Legg til svaralternativ</button><label class="field inline"><input type="checkbox" data-bind="${p('multi')}" ${el.multi ? 'checked' : ''}> Tillat flere riktige svar</label>${field('Tilbakemelding ved riktig svar', el.feedbackCorrect, p('feedbackCorrect'), true, true)}${field('Tilbakemelding ved feil svar', el.feedbackWrong, p('feedbackWrong'), true, true)}`;
-    if (el.type === 'case') return `${field('Oppgavetekst', el.text, p('text'), true, true)}${field('Leveransekrav (ett per linje)', el.deliverables.join('\n'), `${p('deliverables')}`, true, true)}`;
+    if (el.type === 'case') return `${field('Oppgavetekst (Markdown)', el.text, p('text'), true, true)}${field('Leveransekrav (ett per linje)', el.deliverables.join('\n'), `${p('deliverables')}`, true, true)}${attachmentPicker(p('attachments'), el.attachments)}`;
     return '';
   }
   function renderEditor() {
@@ -103,7 +101,7 @@
     if (state.tab === 'modules') {
       editorRoot.innerHTML = `<div class="callout">Endringene simulerer adminredigering. Bruk pilknappene til å endre rekkefølge. Ingen «Lagre»-knapp sender data til en server.</div><div class="section-label">Læringsmoduler</div>${state.modules.length ? state.modules.map((m, mi) => `<section class="module-edit-card"><div class="module-edit-head"><h3>Modul ${mi + 1} · ${esc(m.id)}</h3><div class="edit-controls"><button class="icon-button" type="button" aria-label="Flytt modul opp" data-action="move-module" data-mi="${mi}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt modul ned" data-action="move-module" data-mi="${mi}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-module" data-mi="${mi}">Slett</button></div></div><div class="module-fields">${field('Modultittel', m.title, `modules.${mi}.title`)}${field('Undertittel', m.subtitle, `modules.${mi}.subtitle`)}<label class="field inline"><input type="checkbox" data-bind="modules.${mi}.locked" ${m.locked ? 'checked' : ''}> Låst modul</label></div><div class="section-label">Del 1-elementer</div>${m.elements.map((el, ei) => `<article class="element-edit-card"><div class="element-edit-head"><h4>${esc(humanType(el.type))} · ${esc(el.title || `Element ${ei + 1}`)}</h4><div class="edit-controls"><button class="icon-button" type="button" aria-label="Flytt element opp" data-action="move-element" data-mi="${mi}" data-ei="${ei}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt element ned" data-action="move-element" data-mi="${mi}" data-ei="${ei}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-element" data-mi="${mi}" data-ei="${ei}">Slett</button></div></div><div class="element-fields">${field('Elementtittel', el.title, pathFor(mi, ei, 'title'), true)}${renderElementFields(el, mi, ei)}</div></article>`).join('')}<div class="button-row"><label class="field">Nytt element<select data-add-type="${mi}"><option value="">Velg type</option><option value="factBox">Faktaboks</option><option value="accordion">Accordion</option><option value="hierarchy">Hirarki</option><option value="timeline">Tidslinje</option><option value="richText">Tekst (markdown)</option><option value="quiz">Quiz</option><option value="case">Caseoppgave</option></select></label><button class="button" type="button" data-action="add-module-element" data-mi="${mi}">Legg til element</button></div></section>`).join('') : '<div class="empty-state">Ingen moduler ennå.</div>'}<button class="button primary" type="button" data-action="add-module">+ Legg til modul</button>`;
     } else if (state.tab === 'timeline') {
-      editorRoot.innerHTML = `<div class="callout">Global tidslinje kan gjenbrukes av tidslinje-elementer i modulene. Tagger er syntetiske og lokale.</div><div class="section-label">Hendelser</div>${state.timeline.map((event, i) => `<article class="timeline-edit-card"><div class="element-fields">${field('Dato / steg', event.date, `timeline.${i}.date`)}${field('Tittel', event.label, `timeline.${i}.label`)}${field('Beskrivelse', event.description, `timeline.${i}.description`, true, true)}${field('Tagger (kommaseparert)', event.tags.join(', '), `timeline.${i}.tags`, true)}</div><button class="button danger" type="button" data-action="remove-event" data-index="${i}">Slett hendelse</button></article>`).join('')}<button class="button primary" type="button" data-action="add-event">+ Legg til hendelse</button>`;
+      editorRoot.innerHTML = `<div class="callout">Global tidslinje kan gjenbrukes av tidslinje-elementer i modulene. Tagger er syntetiske og lokale.</div><div class="section-label">Hendelser</div>${state.timeline.map((event, i) => `<article class="timeline-edit-card"><div class="element-fields">${field('Dato / steg', event.date, `timeline.${i}.date`)}${field('Tittel', event.label, `timeline.${i}.label`)}${field('Beskrivelse', event.description, `timeline.${i}.description`, true, true)}${field('Tagger (kommaseparert)', event.tags.join(', '), `timeline.${i}.tags`, true)}</div><div class="edit-controls"><button class="icon-button" type="button" aria-label="Flytt hendelse opp" data-action="move-event" data-index="${i}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt hendelse ned" data-action="move-event" data-index="${i}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-event" data-index="${i}">Slett hendelse</button></div></article>`).join('')}<button class="button primary" type="button" data-action="add-event">+ Legg til hendelse</button>`;
     } else {
       editorRoot.innerHTML = `<div class="callout">Sti-media er illustrert med syntetiske eksempler. WordPress-mediebibliotek og attachment-ID-er er ikke koblet til.</div><div class="section-label">Knytt media til læringsstien</div><div class="media-list">${state.media.map((item, i) => `<article class="media-card"><div class="media-art" aria-hidden="true">${esc(item.icon)}</div><strong>${esc(item.title)}</strong><label><input type="checkbox" data-media="${i}" ${item.linked ? 'checked' : ''}> Inkludert i sti-media</label></article>`).join('')}</div>`;
     }
@@ -117,7 +115,7 @@
     obj[Number.isInteger(Number(key)) && key !== '' ? Number(key) : key] = value;
   }
   function blankElement(type) {
-    const defaults = { factBox: { title: 'Ny faktaboks', rows: [{ icon: '•', label: 'Etikett', text: 'Syntetisk eksempel' }] }, accordion: { title: 'Nytt accordion', items: [{ title: 'Nytt punkt', text: 'Syntetisk eksempeltekst.' }] }, hierarchy: { title: 'Nytt hirarki', levels: [{ label: 'Nivå 1', items: ['Nytt punkt'] }] }, timeline: { title: 'Tidslinje', mode: 'all', filterTags: [] }, richText: { title: 'Tekst', text: 'Skriv eksempeltekst.' }, quiz: { title: 'Quiz', question: 'Skriv spørsmål.', options: ['Alternativ 1', 'Alternativ 2'], correct: [0], multi: false, feedbackCorrect: 'Riktig!', feedbackWrong: 'Prøv igjen.' }, case: { title: 'Caseoppgave', text: 'Skriv oppgavetekst.', deliverables: ['Leveranse'] } };
+    const defaults = { factBox: { title: 'Ny faktaboks', body: 'Skriv tekst.', links: [], attachments: [] }, accordion: { title: 'Nytt accordion', variant: 'process', items: [{ title: 'Nytt punkt', text: 'Syntetisk eksempeltekst.', attachments: [] }] }, hierarchy: { title: 'Nytt hirarki', levels: [{ label: 'Nivå 1', items: [{ label: 'Nytt punkt', body: '', attachments: [] }] }] }, timeline: { title: 'Tidslinje', mode: 'all', filterTags: [] }, richText: { title: 'Tekst', text: 'Skriv eksempeltekst.', attachments: [] }, quiz: { title: 'Quiz', question: 'Skriv spørsmål.', options: ['Alternativ 1', 'Alternativ 2'], correct: [0], multi: false, feedbackCorrect: 'Riktig!', feedbackWrong: 'Prøv igjen.' }, case: { title: 'Caseoppgave', text: 'Skriv oppgavetekst.', deliverables: ['Leveranse'], attachments: [] } };
     return { type, ...defaults[type] };
   }
   function move(array, from, direction) { const to = from + direction; if (to < 0 || to >= array.length) return; [array[from], array[to]] = [array[to], array[from]]; }
@@ -126,10 +124,12 @@
   }
 
   document.addEventListener('click', (event) => {
+    const demoAnchor = event.target.closest('a[href="#tips"]');
+    if (demoAnchor) { event.preventDefault(); const targetStep = currentElements().findIndex(element => element.type === 'accordion'); if (targetStep >= 0) { state.step = targetStep; renderPath(); focusStep(); } return; }
     const target = event.target.closest('[data-action]'); if (!target) return;
-    if (target.dataset.action === 'reset-demo') { localStorage.removeItem(storageKey); location.reload(); return; }
     const action = target.dataset.action, mi = Number(target.dataset.mi), ei = Number(target.dataset.ei), ix = Number(target.dataset.index);
-    if (action === 'open-module') { state.activeModule = ix; state.overview = false; resetStepState(); renderPath(); focusStep(); }
+    if (action === 'save-demo') { document.querySelector('#save-note').textContent = 'Endringene er aktive i denne fanen. Oppdatering starter dem på nytt.'; }
+    else if (action === 'open-module') { state.activeModule = ix; state.overview = false; resetStepState(); renderPath(); focusStep(); }
     else if (action === 'previous') { state.step = Math.max(0, state.step - 1); state.quizChoice = []; state.feedback = ''; renderPath(); focusStep(); }
     else if (action === 'next') { state.step++; state.quizChoice = []; state.feedback = ''; state.feedbackState = ''; renderPath(); focusStep(); }
     else if (action === 'finish-module') { if (!state.completed.includes(state.activeModule)) state.completed.push(state.activeModule); state.step = currentElements().length; renderPath(); }
@@ -141,7 +141,7 @@
       else if (selected.length === quiz.correct.length && selected.every(value => quiz.correct.includes(value))) { state.feedback = quiz.feedbackCorrect; state.feedbackState = 'good'; const key = state.activeModule + ':' + state.step; if (!state.completed.includes(key)) state.completed.push(key); }
       else { state.feedback = quiz.feedbackWrong; state.feedbackState = 'bad'; }
       renderPath(); document.querySelector('.quiz-feedback')?.focus();
-    } else if (action === 'save-draft') { state.draft = document.querySelector('#case-draft').value; document.querySelector('#draft-status').textContent = 'Utkast lagret lokalt i denne nettleseren.'; }
+    } else if (action === 'save-draft') { state.draft = document.querySelector('#case-draft').value; document.querySelector('#draft-status').textContent = 'Utkast lagret midlertidig i denne fanen.'; }
     else if (action === 'clear-draft') { state.draft = ''; renderPath(); document.querySelector('#case-draft').focus(); }
     else if (action === 'ai-quiz') openDialog('Dypdykk (KI)', 'Denne kildeknappen er en stub uten tilkoblet backend. I demoen sendes ingen svar videre.');
     else if (action === 'ai-case') openDialog('KI-sensor', 'Dette er en kilde-stub som ikke er koblet til backend. Utkastet vurderes ikke og forlater ikke nettleserfanen.');
@@ -154,17 +154,19 @@
     else if (action === 'add-option') { state.modules[mi].elements[ei].options.push(`Alternativ ${state.modules[mi].elements[ei].options.length + 1}`); renderEditor(); }
     else if (action === 'remove-option') { const quiz = state.modules[mi].elements[ei]; quiz.options.splice(ix, 1); quiz.correct = quiz.correct.filter(value => value !== ix).map(value => value > ix ? value - 1 : value); renderEditor(); }
     else if (action === 'remove-nested') { state.modules[mi].elements[ei][target.dataset.key].splice(ix, 1); renderEditor(); }
+    else if (action === 'add-link') { state.modules[mi].elements[ei].links.push({ label: 'Se mer', href: '#tips' }); renderEditor(); }
+    else if (action === 'add-hierarchy-item') { state.modules[mi].elements[ei].levels[Number(target.dataset.li)].items.push({ label: 'Nytt item', body: '', attachments: [] }); renderEditor(); }
+    else if (action === 'remove-hierarchy-item') { state.modules[mi].elements[ei].levels[Number(target.dataset.li)].items.splice(Number(target.dataset.ii), 1); renderEditor(); }
     else if (action === 'add-row') { state.modules[mi].elements[ei].rows.push({ icon: '•', label: 'Ny etikett', text: 'Syntetisk tekst' }); renderEditor(); }
     else if (action === 'add-item') { state.modules[mi].elements[ei].items.push({ title: 'Nytt punkt', text: 'Syntetisk tekst' }); renderEditor(); }
     else if (action === 'add-level') { state.modules[mi].elements[ei].levels.push({ label: `Nivå ${state.modules[mi].elements[ei].levels.length + 1}`, items: ['Nytt punkt'] }); renderEditor(); }
     else if (action === 'add-event') { state.timeline.push({ date: 'Nytt steg', label: 'Ny hendelse', description: 'Syntetisk eksempel.', tags: [] }); renderEditor(); }
+    else if (action === 'move-event') { move(state.timeline, ix, Number(target.dataset.dir)); renderEditor(); }
     else if (action === 'remove-event') { state.timeline.splice(ix, 1); renderEditor(); }
-    persistState();
   });
   document.addEventListener('input', (event) => {
-    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.type === 'checkbox' ? event.target.checked : event.target.value); persistState(); }
-    if (event.target.matches('#case-draft')) { state.draft = event.target.value; persistState(); }
-    if (event.target.matches('input[name="quiz"]')) { const value = Number(event.target.value); if (event.target.type === 'radio') state.quizChoice = [value]; else if (event.target.checked) state.quizChoice.push(value); else state.quizChoice = state.quizChoice.filter(item => item !== value); persistState(); }
+    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.type === 'checkbox' ? event.target.checked : event.target.value); }
+    if (event.target.matches('input[name="quiz"]')) { const value = Number(event.target.value); if (event.target.type === 'radio') state.quizChoice = [value]; else if (event.target.checked) state.quizChoice.push(value); else state.quizChoice = state.quizChoice.filter(item => item !== value); }
   });
   document.addEventListener('change', (event) => {
     if (event.target.matches('[data-add-type]')) event.target.dataset.selectedType = event.target.value;
@@ -172,7 +174,16 @@
     if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.value); }
     if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.value); }
     if (event.target.matches('[data-media]')) state.media[Number(event.target.dataset.media)].linked = event.target.checked;
-    if (event.target.matches('[data-correct], [data-media], [data-bind]')) persistState();
+    if (event.target.matches('[data-attachment]')) {
+      const parts = event.target.dataset.attachment.split('.'); let list = state;
+      for (const part of parts) list = list[Number.isInteger(Number(part)) && part !== '' ? Number(part) : part];
+      const id = Number(event.target.dataset.mediaId);
+      list = Array.isArray(list) ? list : [];
+      const next = event.target.checked ? [...new Set([...list, id])] : list.filter(item => item !== id);
+      const parentPath = parts.slice(0, -1); let parent = state;
+      for (const part of parentPath) parent = parent[Number.isInteger(Number(part)) && part !== '' ? Number(part) : part];
+      parent[parts.at(-1)] = next;
+    }
   });
   document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => {
     const edit = button.dataset.view === 'edit'; document.querySelectorAll('[data-view]').forEach(item => { item.classList.toggle('is-active', item === button); item.setAttribute('aria-pressed', item === button ? 'true' : 'false'); });

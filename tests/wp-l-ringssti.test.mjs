@@ -25,23 +25,22 @@ test('demo preserves the source player and editor feature families with syntheti
   for (const action of ['previous', 'next', 'finish-module', 'check-quiz', 'save-draft', 'clear-draft', 'ai-quiz', 'ai-case', 'add-module', 'move-element', 'remove-module', 'add-event', 'add-option']) assert.match(js, new RegExp(`'${action}'`));
   assert.match(js, /Syntetisk læringssti/);
   assert.match(js, /locked: true/);
+  assert.match(js, /Tekst \(Markdown\)/);
+  assert.match(js, /internal demoankere|interne demoankere/i);
+  assert.match(js, /data-attachment/);
+  assert.doesNotMatch(js, /el\.rows\.map/);
+  assert.match(js, /data-variant/);
+  assert.match(js, /markdown = \(value\)/);
   assert.match(docs, /motstrid|sprik/i);
   assert.match(docs, /syntetiske/i);
 });
 
-test('demo persistence is local-only, resettable, and has no network or cookies', () => {
-  assert.match(js, /let state = loadState\(\)/);
-  assert.match(js, /localStorage\.getItem\(storageKey\)/);
-  assert.match(js, /localStorage\.setItem\(storageKey/);
-  assert.match(js, /localStorage\.removeItem\(storageKey\)/);
-  assert.match(html, /data-action="reset-demo"/);
-  assert.match(js, /action === 'reset-demo'/);
-  assert.match(html, /Alt innhold og all fremdrift lagres bare lokalt/);
-  assert.doesNotMatch(`${html}\n${js}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie|navigator\.sendBeacon)\b/i);
+test('all transient demo actions stay in memory without requests, cookies, or browser persistence', () => {
+  assert.match(js, /let state = seed\(\)/);
+  assert.doesNotMatch(`${html}\n${js}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|navigator\.sendBeacon)\b/i);
   assert.doesNotMatch(`${html}\n${js}`, /https?:\/\//i);
   assert.match(js, /document\.addEventListener\('click'/);
-  assert.match(docs, /Nullstill demo/);
-  assert.match(docs, /localStorage/);
+  assert.match(docs, /Oppdatering nullstiller alt/);
 });
 
 test('interactive controls have visible keyboard focus and the layout adapts to mobile', () => {
