@@ -1,31 +1,27 @@
-# Emneoversikt — konsept
+# Emnebeskrivelser-editor · showcase-kopi
 
-Original, statisk konseptside for en fagskoleemneside. Innholdet er oppdiktet og skrivebeskyttet.
+Rute: `/vibe/emnebeskrivelser-editor/`
+Kilde: `eirikyven-gif/fagskolen-emnebeskrivelser`, commit `d5bc306bc9f017354bd487ff8608b0659196e4dd`, fil `app/emneside.html` (PIN-fri variant). Kilden er kun lest.
 
-| Felt | Vurdering |
-|---|---|
-| Slug | `emnebeskrivelser-editor` |
-| Use case | Se en samlet eksempeloversikt over et emne, fra metadata og læringsutbytte til plan, arbeid, pensum og vurdering. |
-| Kategori | Utdanning |
-| Målgruppe | Undervisere, studieplanleggere og personer som utforsker emnepresentasjon. |
-| Status | Kandidaten beholdes i bred førstegangsvurdering. Originalt konsept; ingen kuratering eller utsiling. |
-| Konseptverdi | Viser struktur og informasjonsprioritering uten å utgi seg for å være en fungerende editor. |
-| Syntetisk innhold | Fiktivt emne «Bærekraftig materialbruk», kode BYG-204, metadata, læringsutbytte, melding, fire planrader, to arbeidskrav, tre ressursoppføringer og vurderingsformat. Ingen virkelige kurs, studenter, ansatte eller institusjoner. |
-| Full kandidatstruktur | Kildedokumentasjonen beskriver emnenavn, kort beskrivelse, emnekode, semester, emneansvarlig og sist oppdatert; nyheter; generell informasjon; fremdriftsplan med uke, tema, undervisning/aktivitet, pensum, oppgave/fristsignal og status; oppgaver; pensum; arbeidskrav; eksamen; ekstra seksjoner; footer og versjonsinformasjon. Kildens utvidbare komponenter omfatter toppbilde med alt-tekst/bildetekst, tabeller, lenker/ressurser, kontakt, FAQ, vurderingskriterier, veiledning, datoer, læringsutbytte, begreper, prosjekt og praksis. Konseptet viser representative generiske felt, ikke alle komponentene. |
-| Risiko | Emnesider kan inneholde studentaktivitet, personopplysninger, kontaktdata, interne fagtekster eller upublisert materiale. Ingen slikt innhold eller kildetekst er kopiert. |
-| Forenklinger | Ingen editor, skjema, fritekst, endringer, PIN, tilgangskontroll, studentvisning, lagring, lokal historikk, import/eksport, opplasting eller eksterne ressurser. |
-| Teknisk omfang | Lokale HTML- og CSS-filer. Ingen JavaScript, nettverkskall, API, cookies, nettleserlagring, kontoer, server eller tredjepartsbiblioteker. |
+## Hva som er kopiert
 
-## Kildeinventar og usikkerhet
+Demoen følger den fungerende emneside-editoren: rik tekstredigering og seksjonshandlinger, nyheter, generell informasjon, fremdriftsplan, oppgaver, pensum, arbeidskrav og eksamen; seksjons- og innholdsmaler; lokale bilder og toppbilder; tabeller; paletter; innholdsfortegnelse; ressursoversikt; søk; kontroll- og tilgjengelighetsrapporter; flytting, duplisering, sletting og angre; lokal versjonshistorikk; studentforhåndsvisning; utskrift; og redigerbar/skrivebeskyttet HTML-eksport. Kildens innholdsstruktur og arbeidsflyt er beholdt. Vibe har lagt til rød toppstripe og tydelig demo-/lagringsinformasjon.
 
-Kandidatkilden er `eirikyven-gif/fagskolen-emnebeskrivelser`, under `app/`. Offentlig `main` ved commit `d5bc306bc9f017354bd487ff8608b0659196e4dd` og dokumentasjon ble lest 2026-10-09; kilderepoet er ikke endret. README-en skiller mellom en variant uten PIN-lås og en PIN-variant. Dokumentasjonen beskriver offline, enkeltfilbasert redigering og eksport. PIN-dokumentasjonen sier at frontend/offline-PIN ikke gir fullverdig sikkerhet. PIN-varianten sammenligner en lokalt avledet PBKDF2-verdi i nettleseren og låser opp editorgrensesnittet; det er ikke servervalidert identitet eller tilgangskontroll. Varianten laster også en separat PIN-konfigurasjonsfil fra samme mappe. Kodeinventaret viser lokal nettleserlagring av redigert side/palett og en separat lokal snapshot-historikk. PIN-konfigurasjonen ble kontrollert, men ingen PIN-verdi, hash, salt eller annen kildehemmelighet er gjengitt eller gjenbrukt.
+Kildegrunnlaget inneholder en generell emnemal, ikke en ferdig fagspesifikk emneside. Derfor bruker demoen malens generiske struktur, eksempelrader og plassholdertekst; fagansvarlig er endret til «Syntetisk fagansvarlig». All grunntekst omtales som syntetisk. Ingen virkelige kurs, studenter, ansatte, institusjoner, kontaktdata eller private API-data er med.
 
-Det er rapportert en mulig tilsvarende appfamilieversjon under `apps-fagskolen`; forholdet er ikke verifisert. Aktiv versjon, faktisk distribusjons-/lagringsbruk og rettighetsstatus for innhold er uavklart. Ingen kildeinnhold, kode, skjermbilder, stiler, emneeksempler eller persondata er overført. Ingen lisensfil ble funnet i den inspiserte kilderoten. Eventuell senere kildebruk krever derfor egen avklaring av rettigheter, duplisering og innholdsrisiko.
+## Forenklinger og personvern
 
-## Personvern og drift
+- PIN-varianten og `edit-pin-config.js` er utelatt. Kildeappen sier selv at PIN-låsen kun er en frontend-lås, ikke reell tilgangskontroll.
+- Ingen kontoer, server, database, API, cookies eller telemetri. Redigering, lokale snapshots og palett lagres i `localStorage` på samme måte som kildearbeidsflyten. Eksport oppretter en nedlastbar HTML-fil lokalt.
+- Appens synlighets- og planleggingskontroller styrer bare den lokale forhåndsvisningen; ingenting publiseres.
+- Eksterne bilde-URL-er er deaktivert for å hindre nettverksforespørsler. Bilder kan velges fra enheten og bygges inn i HTML som data-URL.
+- Banneret forklarer lokal lagring. «Nullstill lokalt lagret innhold» fjerner innhold, palett og snapshot-historikk for denne demoen og laster siden på nytt.
+- Redigeringsfelt kan brukes til å skrive inn egne data. Demoen minner om syntetisk innhold og lokal lagring; brukeren bør unngå å legge inn personopplysninger.
 
-Siden viser bare forhåndsskrevet, syntetisk innhold. Ingen interaktive felt eller mekanisme for å lagre, sende, laste opp eller hente data. Nettleseren laster kun rutens egne HTML- og CSS-filer.
+## Kilde og usikkerhet
 
-## QA for showcase-ruten
+Kildens `AGENT.md`, `README.md`, `docs/ssot.md`, `docs/pin-redigering.md` og begge HTML-varianter ble lest. Kilde-SSoT angir v1.8.0, mens den PIN-frie HTML-footer oppgir v1.8.4; demoen dokumenterer kildefilens faktiske footer. Kilderoten har ingen testpakke eller package.json. Den oppgir ingen lisensfil eller særskilt gjenbrukstillatelse; rettighetene til kildekode, utforming og originalt innhold er uavklart. Showcase bruker den eksisterende generiske emnemalen etter uttrykkelig oppdrag. Kilderepoet er ikke endret.
 
-`node --test tests/*.test.mjs` består i showcase-repoet. Kilde-repoet har ingen egen testmappe, package.json eller testscript; dets AGENT.md beskriver manuelle funksjonskontroller som ikke ble kjørt her. Chromium ble kjørt ved 320, 390, 768 og 1440 px uten dokument-overflow; fremdriftstabellen har egen horisontal rulling. Tastatursjekk nådde synlig hopp-lenke og navngitt hjemlenke først. Landemerker, én H1, norske sidemål, tabelloverskrifter og null skjema-/input-/knappelementer ble kontrollert. Browseren lastet kun rutens HTML og lokale CSS; ingen konsollfeil eller eksterne forespørsler. Dette er en manuell nettlesersjekk, ikke en full WCAG-revisjon med skjermleser.
+## Tester og QA
+
+Showcase-testene kjøres med `node --test tests/*.test.mjs`. Rute og ressurslenker kontrolleres av `vibe-static.test.mjs`. Appspesifikke tester verifiserer kildeversjon, katalogmetadata, alle sentrale arbeidsflyter, syntetisk innhold, localStorage-nøkler og nullstilling, fravær av reelle autentiserings-/nettverksmekanismer og Vibe-/hubruter. Manuelle nettleserkontroller for mobilbredde, tastatur/fokus, dialoger, forhåndsvisning, redigering, eksport og nettverksaktivitet dokumenteres i PR etter gjennomføring.
