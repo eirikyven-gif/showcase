@@ -437,24 +437,24 @@
     {
       "slug": "nedtelling-epost",
       "name": "Nedtelling e-post",
-      "useCase": "Forhåndsvis en lokal nedtellingsgrafikk for en e-postsignatur.",
+      "useCase": "Opprett en nedtelling til e-postsignatur, velg GIF eller PNG, og kopier bildeadressen eller HTML-koden.",
       "category": "Kommunikasjon",
       "audience": [
-        "Personer som vil vise en nedtelling i en e-postsignatur"
+        "Personer som vil vise en nedtelling i e-postsignaturen"
       ],
-      "status": "Beholdt i bred førstegangsvurdering; eksisterende rute gjennomgått og dokumentert. Ingen kuratering eller utsiling.",
-      "source": "eirikyven-gif/diverse-apper, apps/nedtelling-epost/, public main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (checked 2026-10-08); source README identifies v1.3.0.",
-      "sourceUncertainty": "Source README documents manual test points but no results or automated app tests. The source depends on shared UI files and PHP endpoints. Deployment and reuse rights are unverified; see route README.",
-      "purpose": "Forhåndsvise en nedtelling som kan brukes som bilde i en e-postsignatur.",
-      "demoValue": "En lokal canvas gjør signaturideen synlig uten å opprette en konto eller sende data.",
-      "simplifications": "Selvstendig illustrasjon med syntetiske valg og lokal dato/tid. Ingen lagring, delbar bildeadresse, GIF/PNG-eksport eller signaturkode.",
-      "risk": "Den opprinnelige appen lagrer konfigurasjon via PHP og lager delbare bilde-URL-er. Slike dataflyter er fjernet. Dato/tid kan likevel beskrive en hendelse, så demoen bruker ingen fritekst eller identitetsfelt.",
-      "scope": "Statisk /vibe/nedtelling-epost/-rute med responsiv HTML/CSS og lokal JavaScript-canvas. Ingen auth, PII, hemmeligheter, API, eksterne forespørsler, backend, nettleserlagring eller persistens.",
-      "sourceStack": "Kilden er HTML med innebygd JavaScript, delt CSS/JS fra apps/_shared/, og PHP-endepunkter i apps/tidteller/ for lagring og bildegjengivelse. Demoen bruker statisk HTML/CSS/JavaScript og nettleserens canvas.",
-      "sourceTests": "Kildens README oppgir manuelle punkter for oppretting, kopiering av bilde-URL/HTML og kontroll av parametre. Ingen automatiserte tester eller testresultater er dokumentert.",
-      "sourceApiAuthStoragePrivacy": "Kildens innsendingskode kaller counter-presets.php med POST for å lagre telleroppsett, og bygger bilde-URL mot PHP-renderer. App-README dokumenterer PHP-lagring/rendering. Innlogging, cookies og videre serverretensjon er ikke verifisert i avgrenset lesing.",
-      "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse er bekreftet. Demoen kopierer ikke kildekode, designaktiva eller kildetekst.",
-      "routeState": "Eksisterende rute på main; den er gjennomgått og dokumentert uten duplisering."
+      "status": "Beholdt i bred førstegangsrunde; tro kopi av appens opprettings- og signaturflyt. Ingen kuratering eller utsiling.",
+      "source": "eirikyven-gif/diverse-apper/apps/nedtelling-epost, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530; kilde-README oppgir v1.3.0. Kilderepoet er kun lest.",
+      "sourceUncertainty": "Kildens README dokumenterer manuelle testpunkter, men ingen automatiserte appspesifikke tester eller testresultater. Ingen appspesifikk governance/SSoT er dokumentert i appmappen. Faktisk produksjonsbruk, oppbevaring og delingspraksis er ikke verifisert.",
+      "purpose": "Opprett en nedtelling direkte til bruk i en e-postsignatur, uten den vanlige nedtellingsportalen.",
+      "demoValue": "Bevarer feltene for navn, tittel, dato, tid og bildeformat, genererer nedtellingsbilde, kort bildeadresse og signatur-HTML, og lar brukeren kopiere resultatene.",
+      "simplifications": "PHP-endepunkter og offentlig kortkode er erstattet med lokal lagring og data-URL. GIF/PNG genereres i nettleseren. Den lokale bildeadressen virker ikke offentlig eller på andre enheter; utsendelse av e-post er ikke del av kildeappen eller demoen.",
+      "risk": "Kilden lagrer konfigurasjon sentralt i JSON og renderer bilde via PHP; serverens retensjon og tilgang er ikke gjennomgått utover den avgrensede kontrakten. E-postsignaturkode kan inneholde hendelsesdetaljer. Demoen begrenser navn og tittel til brukerens lokale nettleser og sender ingen data.",
+      "scope": "Isolert statisk rute på /vibe/nedtelling-epost/. Lokal GIF/PNG-bildegenerering, kopiering av bilde-dataadresse og HTML, localStorage for telleroppsett og en ett-klikks full nullstilling. Ingen auth, PHP, serverlagring, API, eksterne forespørsler, analytics eller private data.",
+      "sourceStack": "Kilde: HTML med innebygd JavaScript, delt apps/_shared/ui.css og ui.js; POST til apps/tidteller/counter-presets.php og bildevisning gjennom apps/tidteller/i/index.php samt email-countdown.php. Demo: statisk HTML/CSS/JavaScript, Canvas og lokal GIF-koding.",
+      "sourceTests": "README beskriver manuell oppretting, kopiering av bilde-URL og signatur-HTML samt fravær av adminCheck/diagnoseparametre. Ingen tester eller automatisert testkommando finnes i appmappen; kildekodetester er ikke kjørt.",
+      "sourceApiAuthStoragePrivacy": "Oppretting sender {action: save, name, config:{mode,title,date,time}} via POST. Backend lagrer i apps/tidteller/data/counters.json og returnerer ok/id/publicCode. Bildeendepunktet bruker publicCode og gif/png-type; renderer standard signature-størrelse 420x90. Kilde-HTML viser ingen innlogging, men counter-presets-endepunktet har valgfri servernøkkel og tillater lagring uten konfigurert nøkkel. Kildens videre tilgang/retensjon er ikke revidert. Demoen bruker localStorage og data-URL kun lokalt.",
+      "rightsUncertainty": "Ingen lisensfil eller eksplisitt gjenbrukstillatelse ble funnet i appmappen. Kildekode og aktiva er ikke kopiert; den selvstendige demoen etterligner de brukerrettede funksjonene og innholdsfeltene.",
+      "routeState": "Eksisterende katalogslug og direkterute beholdt; den tidligere konseptskissen er erstattet med en funksjonell lokal kopi."
     },
     {
       "slug": "workshop-timer",
