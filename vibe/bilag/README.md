@@ -1,20 +1,24 @@
-# Bilag
+# Bilagssortering
 
-## Første vurdering
+## Kilde og samsvar
 
-- **Bruksområde:** Få oversikt over bilag i gårdsadministrasjon og støtte sortering og oppfølging.
-- **Kategori:** Gårdsadministrasjon og dokumentflyt.
-- **Målgruppe:** Gårdsbrukere, regnskapsmedarbeidere og andre som organiserer gårdsdokumentasjon.
-- **Kildestatus:** Intern inventarbeskrivelse peker på normalisering og flytting av dokumenter. Kilderepoet `apps-fornes-gard/apps/bilag` var ikke tilgjengelig i arbeidsområdet, så kildekode, databehandling og integrasjoner kunne ikke verifiseres direkte.
-- **Slug/rute:** `bilag` · `/vibe/bilag/`.
-- **Status:** Beholdt i bred førstegangsvurdering; ingen kuratering eller utsiling.
-- **Demoverdi:** En enkel kø med oppdiktede bilagsnavn viser hvordan kategori, dato og status kan støtte oversikt og sortering.
-- **Forenklinger:** Original statisk skisse med tre fiktive rader. Handlingen oppdaterer kun synlig status og mappetekst i sidens DOM. Ingen dokumentinnhold, filbehandling, faktisk flytting eller normalisering.
-- **Risiko:** Den beskrevne løsningen kan berøre økonomiske dokumenter og personopplysninger. Kildens faktiske risiko, tilgangskontroller, integrasjoner og lagring er ukjent fordi kilden ikke var tilgjengelig. Demoen inneholder ingen virkelige data eller dokumenter og har ingen autentisering, lagring eller nettverksintegrasjon.
-- **Omfang:** Én isolert, statisk rute, katalogoppføring og denne vurderingen. Kun syntetiske filnavn, datoer, kategorier og statusverdier. Ingen opplasting/nedlasting, Drive eller webhook, eksterne kall, konto, PII, hemmeligheter, serverlagring eller nettleserlagring.
+Dette er en interaktiv, statisk showcase-kopi av den aktive Google Apps Script-appen i `eirikyven-gif/forsikring-bilag`, undersøkt på `main` commit `f32f92ed00d1286e25e9cc7a0454ba1ad8c579eb` (2026-08-17). Den aktive appen ligger i `app/bilagsregister.gs` og `app/bilagsregister-core.gs`; repoets `README.md`, `app/README.md` og `docs/bilagssortering.md` beskriver arbeidsflyten. Kun aktiv kode ble brukt som referanse; `arkiv/` er historisk og ble ikke kopiert. Kilde-repoet er kun lest.
 
-## Atferd og QA
+Demoen gjengir hovedflyten: start/fortsett en kø i batcher, idempotent behandling av eksempler, klassifisering til Løsøre og Drift, radvis menneskelig X-vurdering, manuell flytting mellom fanene med konfliktbevaring, append-only kjøringslogg, stopp/gjenopptak og bekreftet full nullstilling som bevarer loggen. Kategori, varetekst, begrunnelser, status og syntetiske resultatlinjer er eksplisitt oppdiktet og illustrerer kildekontraktene; de er ikke kopiert fra virkelige bilag eller produsert av en KI-modell. Demoen utfører ikke OCR, Gemini-analyse, fakturavalidering, SHA-/fakturadublettkontroll eller faktisk Google-tjenestekall.
 
-Trykk «Sorter eksempel» for å endre den fiktive radens status. Endringen eksisterer bare i DOM og forsvinner ved reload. Ingen fil blir åpnet eller flyttet.
+## Sikkerhetsgrense
 
-Kontroller: `node --test tests/*.test.mjs`; `node --check vibe/bilag/app.js`; `git diff --check`; HTTP-direkterute og lokal nettleserkontroll av mobilvisning, tastaturfokus, statusmelding og nettverksforespørsler. PR-en delvis løser Issue #2. Ikke publisert; deploy må validere `/vibe/bilag/` sammen med alle eksisterende katalogruter.
+- Ingen kildefiler kjøres eller distribueres. Bare statisk HTML, CSS og JavaScript i `/vibe/bilag/`.
+- Ingen Drive-, Sheets-, Apps Script-, Gemini- eller andre API-kall, nettverksforespørsler, filopplasting, nedlasting eller dokumentlesing.
+- Kilde-ID-er, fil-ID-er, API-nøkler, leverandørdata og andre kildehemmeligheter er utelatt. Alle personer, leverandører, bilag, datoer, varelinjer og beløp er syntetiske.
+- Demoen bruker ingen innlogging, cookies eller serverlagring. Nettleserlagring under `vibe.bilag.demo.v1` beholder bare køstatus, syntetiske rader og demologg for gjenopptak. «Nullstill demo» krever bekreftelse, starter eksempeldata på nytt og bevarer loggen, tilsvarende kildeflyten. Fjern nøkkelen med nettleserens nettstedslagring om ønskelig.
+- X-feltene starter tomme. Appen tar aldri stilling til eierskap, lagerstatus, tilstedeværelse eller skadeomfang; markeringene er brukerens demonstrasjon.
+- Nullstilling beskrives og simuleres kun på syntetisk nettlesertilstand. Ingen regneark, filer eller kildedata kan påvirkes.
+
+## Kildefunksjoner og begrensninger
+
+Kildens operative kontroller omfatter verifisering/migrering av regnearkoppsett, rekursiv Drive-lesing, støttet filvalidering, SHA-256 og fakturadublettkontroll, Gemini-uttrekk og dokumentbevisvalidering, kategoristyrt fanemål, pending-write/gjenopptak, teknisk sikkerhetsstopp, manuelle Rad-ID-flyttinger, kjøringslogg, stopp og bekreftet full-nullstilling. Demoflaten bevarer de brukerrettede arbeidsflytene ovenfor, men erstatter alle produksjonsintegrasjoner og algoritmiske kontroller med fast, lokalt syntetisk eksempelinnhold. Dermed er den funksjonell som arbeidsflytdemo, ikke som regnskapsverktøy eller dokumentbehandler.
+
+## QA
+
+Showcase-kontroller: `node --test tests/bilag-source-faithful.test.mjs`, `node --check vibe/bilag/app.js`, `git diff --check`, og repoets CI-validering av katalog/ruter. Kildens `node --test tests/*.test.js` kan kontrollere kildekode med mocks, men tester ikke showcase-porten eller Google Apps Script-produksjonsressurser. Ingen kildeintegrasjon eller produksjonsdeploy inngår.

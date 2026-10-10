@@ -20,7 +20,7 @@ test('emnebeskrivelser editor replaces concept placeholder with source-backed ap
   assert.match(html, /Syntetisk demonstrasjon/);
   assert.match(html, /Syntetisk fagansvarlig/);
   assert.match(html, /href="\.\.\/"/);
-  assert.equal(read('VERSION').trim(), '0.52.0');
+  assert.equal(read('VERSION').trim(), '0.53.0');
 });
 
 test('the core source workflows remain present in the isolated route', () => {
