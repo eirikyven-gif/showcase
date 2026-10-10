@@ -838,6 +838,27 @@
       "risk": "Kilde-detaljsiden kan vise ansvarlig, verdi og låntaker-/utlånsopplysninger. Demoen har kun syntetiske verdier og viser tydelig demo-merke. Statusendring i rolle-simulatoren kan misforstås som lagret; grensesnittet sier at den kun gjelder sideøkten. Ingen reell lagerdrift bør baseres på demoen.",
       "scope": "Isolert `/vibe/lagerstyring-hell-ultra/`-rute. Showcase-rutene `#/item/{id}` og `#/list/{id}` erstatter WordPress magic-linkmønstrene; dette er ikke tokens. Ingen kilde-PII/media/secrets, auth, cookies, nettleserlagring, backend, private services eller nettverkskall.",
       "routeState": "Ny route på showcase main b5e117c (VERSION 0.56.0); foreslått versjon 0.57.0. Issue #2 delvis løst. Ikke merget eller deployet; WordPress portal-side-slug forblir administratorstyrt og uspesifisert."
+    },
+    {
+      "slug": "hul-lagerstyring",
+      "name": "HUL Lagerstyring · lokal demo",
+      "useCase": "Utforsk et lagerarbeidsområde med varer, lister, bestillinger, utlån og masterdata.",
+      "category": "Lagerstyring",
+      "audience": [
+        "Personer som utforsker lagerarbeidsflyter",
+        "Utviklere og produkteiere"
+      ],
+      "status": "Kildebasert browserdemo med mockbackend og syntetiske eksempeldata; Issue #2 delvis løst.",
+      "demoValue": "Prøv den faktiske frontendarbeidsflaten: søk, detalj, redigering, lister, utlån, import/eksport og administrasjon mot lokal mock.",
+      "simplifications": "GAS, Google Sheets, ekte backend, autentisering og eksterne API-er er tatt bort. Showcase bruker kildens mockbackend og seedverdier.",
+      "risk": "Mockdata og brukerens egne inndata lagres i localStorage til de nullstilles. Ikke oppgi personopplysninger. Styling er avhengig av Tailwind CDN. Kilde-/gjenbruksrettigheter og produksjonsparitet er ikke verifisert.",
+      "scope": "Kopi av app/frontend på /vibe/hul-lagerstyring/; runtime låst til mockBackend=true og authMode=none; CSP connect-src none; HUL mockdata lagres i localStorage og visningstilstand i sessionStorage, forklart i synlig varsel og slettbar med reset.",
+      "source": "eirikyven-gif/hul-lager-html-gas, offentlig main commit fdda6419dbe8c8891eb9d27f9f6e56ec3151a602 (undersøkt 2026-10-10). Ingen kildefiler endret.",
+      "sourceStack": "Kilden har HTML, Tailwind CDN, browser JavaScript, Google Apps Script og Google Sheets. Showcase beholder HTML/browser JS og mockbackend.",
+      "sourceTests": "Kilde CI/tester kjøres ikke som del av showcase-workflowen. Showcase valideres med node --test tests/*.test.mjs og deployworkflowens katalog-/ressurskontroller.",
+      "sourceApiAuthStoragePrivacy": "Kildens app har auth/API-klient og GAS/Sheets-integrasjon. Showcase konfigurerer authMode none, bruker kun mockBackend som interceptorer interne fetch til hul-mock.local, og CSP connect-src none blokkerer nettverkstilgang. Mockdatabase i localStorage nøkkel HUL_MOCK_DB_v1 og HUL-visningstilstand i sessionStorage nullstilles med synlig knapp. Ingen produksjonsdata/secrets/API-adresser følger med.",
+      "routeState": "Ny isolert /vibe/hul-lagerstyring/-rute på showcase main 425c075 (VERSION 0.57.0); foreslått 0.58.0. Issue #2 delvis løst. Ikke merget eller deployet.",
+      "rightsUncertainty": "Ingen lisens eller særskilt gjenbrukstillatelse er verifisert i kildens gjennomgåtte filer. Videre offentlig gjenbruk av kildekode, UI og innhold krever rettighetsavklaring."
     }
   ]
 }

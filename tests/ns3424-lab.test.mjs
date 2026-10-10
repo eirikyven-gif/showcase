@@ -13,7 +13,7 @@ test('isolated route and catalog document source, route, scope, and uncertaintie
   const catalog = JSON.parse(read('vibe/catalog.json'));
   const app = catalog.apps.find(item => item.slug === 'ns3424-lab');
   assert.ok(app);
-  assert.equal(catalog.apps.length, 40);
+  assert.equal(catalog.apps.length, 41);
   for (const field of ['status', 'source', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'routeState', 'sourceUncertainty']) {
     assert.equal(typeof app[field], 'string', `${field} is documented`);
     assert.ok(app[field].trim());

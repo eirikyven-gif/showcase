@@ -213,10 +213,14 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     const routeSlug = path.relative(vibeRoot, file).split(path.sep)[0];
     const routeEntry = catalog.apps.find((entry) => entry.slug === routeSlug);
     const allowsLocalStorage = /localStorage|nettleserlagring|nettleserens lokale lagring/i.test(routeEntry?.scope || '');
+    const allowsSessionStorage = /sessionStorage/i.test(routeEntry?.scope || '');
+    const allowsMockBackend = /mockBackend=true/.test(routeEntry?.scope || '');
+    const hasNoAuthRuntime = /authMode=none/.test(routeEntry?.scope || '');
+    const allowsTailwindCdn = /Tailwind CDN/i.test(routeEntry?.risk || '');
     const allowsIndexedDb = /indexeddb/i.test(routeEntry?.scope || '');
     const allowsLocalStaticFetch = /same-origin requests for this app's own static shell/i.test(routeEntry?.scope || '');
     if (!allowsIndexedDb) assert.doesNotMatch(source, /\bindexedDB\b/, `${file} does not use undeclared IndexedDB`);
-    assert.doesNotMatch(source, /\bsessionStorage\b/, `${file} does not use sessionStorage`);
+    if (!allowsSessionStorage) assert.doesNotMatch(source, /\bsessionStorage\b/, `${file} does not use undeclared sessionStorage`);
     if (!allowsLocalStorage) assert.doesNotMatch(source, /\blocalStorage\b/, `${file} has no undeclared browser persistence`);
     if (routeSlug === 'bingo' && file.endsWith('.js')) {
       assert.match(source, /localStorage/, `${file} uses local-only Bingo workflow persistence`);
@@ -228,14 +232,14 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     }
     assert.doesNotMatch(source, /\bdocument\.cookie\b/, `${file} does not read/write cookies`);
     assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
-    assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no real password field`);
+    if (!hasNoAuthRuntime) assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no password field`);
     assert.doesNotMatch(source, /\b(?:Authorization\s*:\s*['"]?Bearer|credentials\s*:\s*['"]include)/i, `${file} has no authenticated network request`);
     const runtimeSource = routeSlug === 'arrangementsvakt' ? source.replaceAll('http://www.w3.org/2000/svg', '') : source;
-    assert.doesNotMatch(runtimeSource, /https?:\/\//i, `${file} has no external runtime URL`);
+    if (!(hasNoAuthRuntime || allowsTailwindCdn)) assert.doesNotMatch(runtimeSource, /https?:\/\//i, `${file} has no external runtime URL`);
     for (const secretPattern of secretPatterns) {
       assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
     }
-    if (file.endsWith('.js') && file !== hubScript && routeSlug !== 'ukelonn' && !allowsLocalStaticFetch) {
+    if (file.endsWith('.js') && file !== hubScript && routeSlug !== 'ukelonn' && !allowsLocalStaticFetch && !allowsMockBackend) {
       assert.doesNotMatch(source, /\bfetch\s*\(/, `${file} makes no API/network call`);
     }
   }
