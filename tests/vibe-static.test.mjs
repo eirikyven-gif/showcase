@@ -234,7 +234,8 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
     if (!hasNoAuthRuntime) assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no password field`);
     assert.doesNotMatch(source, /\b(?:Authorization\s*:\s*['"]?Bearer|credentials\s*:\s*['"]include)/i, `${file} has no authenticated network request`);
-    const runtimeSource = routeSlug === 'arrangementsvakt' ? source.replaceAll('http://www.w3.org/2000/svg', '') : source;
+    const runtimeSource = routeSlug === 'arrangementsvakt' ? source.replaceAll('http://www.w3.org/2000/svg', '')
+      : routeSlug === 'ukelonn' ? source.replace(/(?:xmlns(?::[\w-]+)?|Type)="https?:\/\/[^"]+"/g, '') : source;
     if (!(hasNoAuthRuntime || allowsTailwindCdn) && !file.endsWith('vurderingsarbeid-fagskolen/assets/xlsx.full.min.js')) {
       assert.doesNotMatch(runtimeSource, /https?:\/\//i, `${file} has no external runtime URL`);
     }

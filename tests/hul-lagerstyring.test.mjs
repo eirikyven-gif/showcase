@@ -75,7 +75,7 @@ test('catalog points to the route and source provenance', () => {
   const app = catalog.apps.find((candidate) => candidate.slug === 'hul-lagerstyring');
   const version = readFileSync('VERSION', 'utf8').trim();
   assert.ok(app);
-  assert.equal(version, '0.60.1');
+  assert.equal(version, '0.60.2');
   assert.match(app.source, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);
   assert.match(app.scope, /connect-src none/);
   assert.match(app.routeState, /VERSION 0\.60\.0\); bumped to 0\.60\.1/);

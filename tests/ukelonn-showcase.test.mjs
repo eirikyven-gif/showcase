@@ -17,7 +17,8 @@ test('app pages and assets are present as direct static routes', () => {
   for (const script of ['demo-api.js', 'shell.js', 'ukelonn.js', 'overview.js', 'history.js', 'admin-dashboard.js', 'tasks-admin.js', 'auth.js', 'suggestions.js', 'suggestions-admin.js', 'periods-admin.js', 'payments-admin.js', 'payout-claims-admin.js', 'admin-registrations.js', 'user-history-admin.js']) {
     assert.ok(existsSync(path.join(app, 'assets', script)), `${script} exists`);
   }
-  assert.equal(readFileSync(path.join(app, 'assets/ukelonn-gjoremal-mal.xlsx')).subarray(0, 2).toString(), 'PK');
+  assert.ok(existsSync(path.join(app, 'assets/tasks-excel.js')));
+  assert.ok(existsSync(path.join(app, 'assets/synthetic-attachment.svg')));
 });
 
 test('demo has synthetic personas, explicit local storage/reset, no auth fields, PHP or external service references', () => {
@@ -31,6 +32,9 @@ test('demo has synthetic personas, explicit local storage/reset, no auth fields,
   assert.match(scripts, /Nullstill alle demoendringer/);
   assert.match(scripts, /window\.fetch\s*=\s*async/);
   assert.match(scripts, /throw new TypeError\('Ukelønn-demoen tillater bare lokale simuleringer/);
-  assert.doesNotMatch(`${html}\n${scripts}`, /document\.cookie|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon|https?:\/\//i);
+  assert.doesNotMatch(`${html}\n${scripts}`, /document\.cookie|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon/i);
+  assert.doesNotMatch(html, /(?:href|src)=["']https?:\/\//i, 'pages do not load external resources');
+  const scriptWithoutXmlNamespaces = scripts.replace(/(?:xmlns(?::[\w-]+)?|Type)="https?:\/\/[^"]+"/g, '');
+  assert.doesNotMatch(scriptWithoutXmlNamespaces, /https?:\/\//i, 'scripts do not call external endpoints');
   assert.equal(existsSync(path.join(app, 'api')), false, 'no source API/server code is copied');
 });
