@@ -1,26 +1,34 @@
-# Plantekasse på papir
+# WP Læringssti · Vibe-demo
 
-En original, forenklet og statisk læringssti laget som en bred kandidat til Vibe-utstillingen. Kandidaten beholdes uten kuratering eller utsiling.
+En statisk, funksjonell demonstrasjon av WordPress-pluginen WP Læringssti v0.5.6 på `/vibe/wp-l-ringssti/`. Den gjenskaper læringsstiens elevflyt og hovedområdene i redigeringsflaten med syntetiske eksempeldata. Den kjører uten WordPress.
 
-## Katalogmetadata
+## Kilde og vurderingsgrunnlag
 
-- **Navn:** Plantekasse på papir — WP-l-ringssti-konsept
-- **Slug / rute:** `wp-l-ringssti` — `/vibe/wp-l-ringssti/`
-- **Status:** Beholdt i bred kandidatgjennomgang; original konseptdemo laget. Ingen kuratering eller utsiling.
-- **Kilde:** Offentlig repo `eirikyven-gif/WP-l-ringssti`, standardgren `main`; undersøkt 2026-10-08. Repoet inneholder README og `wp-learningsti-mvp_v0.5.6.zip`.
-- **Kildeversjon og usikkerhet:** ZIP-navn og pluginheader angir v0.5.6. ZIP-ens README omtaler adminredigering og sier at backend-sync og quiz/case/KI ikke finnes i denne versjonen. Pluginfila inneholder samtidig en server-side quiz/AJAX-rute. Den tidligere repooversikten beskriver bredere v0.4.x–0.5.x-status, planlagt WordPress-autentisering og Google Sheet-sync samt servervalidert quiz. Dokumentasjonen spriker om funksjonsstatus; dette er en kandidatvurdering, ikke en verifisering av en kjørende installasjon eller av nåværende funksjonsomfang.
-- **Formål:** Vise en kort læringsflyt med en fiktiv modul, en enkel forklaring og et kontrollspørsmål.
-- **Kategori:** Utdanning
-- **Målgruppe:** Undervisere, studenter og personer som utforsker statiske læringsgrensesnitt
-- **Demoverdi:** Gjør læringsstiens modulstruktur og umiddelbare quiztilbakemelding konkret uten å kreve en LMS-installasjon.
-- **Forenklinger:** Én oppdiktet modul om å planlegge en plantekasse; ett flervalgs spørsmål. Alt innhold er skrevet fra grunnen av. Demoen etterligner ikke pluginens adminredigering, WordPress-blokker, mediebibliotek, roller eller backend.
-- **Risiko:** Kildeproduktet er knyttet til læring og kan berøre sensitive student- og aktivitetsdata. Kildens faktiske utrulling, databruk, tester og deploystatus er ikke verifisert. Demoen inneholder ingen personopplysninger og samler ikke inn studentaktivitet. Planteeksemplet er syntetisk og er ikke faglig dyrkingsveiledning.
-- **Omfang:** Selvstendig HTML, CSS og JavaScript. Ingen WordPress/PHP, autentisering, Sheet-sync, API, backend, servervalidert quiz, studentaktivitet, persondata, lagring, hemmeligheter eller eksterne forespørsler. Quizvalget og tilbakemeldingen finnes kun midlertidig i fanen og forsvinner ved oppdatering.
+- Kilde: [`eirikyven-gif/WP-l-ringssti`](https://github.com/eirikyven-gif/WP-l-ringssti), offentlig `main`, undersøkt 2026-10-10. Repoet inneholder `wp-learningsti-mvp_v0.5.6.zip`; filene i arkivet ble lest, ikke endret.
+- Arkivets pluginheader oppgir v0.5.6. Kilderepoet har ingen lisensfil. Showcase-koden er derfor skrevet selvstendig ut fra kildeappens observerbare funksjoner og bruker ikke PHP-, JS- eller CSS-kildefiler fra pluginarkivet.
+- Arkivets `README.txt` sier at quiz og case ikke finnes i v0.5.6, mens PHP- og frontend-JS-koden inneholder quizvalidering, caseoppgave og KI-stubber. Masterloggen `Import` beskriver også v0.5.6-playerflyt. Demoen følger den implementerte pluginoppførselen; kildebeskrivelsenes sprik er fortsatt en usikkerhet.
+- Det finnes ingen kurskonfigurasjon eller faktiske kursinnhold i repoet. Parsellinnholdet her er syntetisk, og viser strukturen framfor å fremstille seg som et originalt kurs.
 
-## Avgrensning mot andre apper
+## Funksjoner som er bevart
 
-Denne kandidaten gjelder WordPress-pluginrepoet `WP-l-ringssti`. Den er ikke WP-laringssti v0.9-webappen og skal ikke bruke den appens funksjoner, innhold eller versjon som beskrivelse av pluginen. Den er også en selvstendig kandidat ved siden av den eksisterende Vibe-demoen `laringssti-fagskolen`; læringsinnhold, kode og medier er ikke kopiert fra den demoen eller kilderepoet.
+- Moduloversikt med status, låst modul og modulvis gjennomføring.
+- Ett innholdselement om gangen med Forrige/Neste, fremdrift, fullføring og retur til oversikten. Neste på quiz blir tilgjengelig etter riktig svar.
+- Faktaboksrader, accordion, hirarki, globale tidslinjeelementer og tekst.
+- Quiz med radio-/flervalg, tilbakemelding ved rett/feil, og Dypdykk (KI)-stub etter riktig svar.
+- Caseoppgavetekst, leveransekrav, lokalt lagret utkast med lagre/slette og KI-sensor-stub.
+- Redigeringsområder for moduler/elementer, global tidslinje og sti-media; modul-/elementrekkefølge, quizvalg/riktige svar, innholdsredigering og lokale redigeringshandlinger.
 
-## Lokal forhåndsvisning
+## Bevisste demoavgrensninger
 
-Start HTTP-serveren fra repoets rot med `python3 -m http.server 8000`, og åpne `http://localhost:8000/vibe/wp-l-ringssti/`.
+- Alle navn, moduler, tekst, tidslinjer og medier er tydelig syntetiske. Ingen personopplysninger eller privat tjenestedata brukes.
+- Redigeringsvalg, læringsfremdrift og caseutkast lagres i nettleserens `localStorage`, som en lokal simulering av kildefunksjonene. Data sendes ikke til en server. «Nullstill demo» sletter den lokale demoen og går tilbake til syntetiske eksempeldata.
+- Quiz vurderes lokalt i nettleseren. Riktig svar er dermed synlig i kildefilene og har ingen sikkerhets- eller vurderingsverdi.
+- «Dypdykk (KI)» og «KI-sensor» åpner forklarende dialoger, men kaller ikke en KI-tjeneste. Sti-media er illustrasjoner, ikke WordPress-attachments.
+- WordPress/Gutenberg-blokk, posttype, roller og capability-kontroller, serverlagring, AJAX, servervalidert fasit, mediebibliotek og eventuell produksjonsintegrasjon er ikke med.
+- Demoen gir en forhåndsdefinert rollefølelse via låst modul, uten innlogging eller tilgangskontroll.
+
+## Kjør og kontroller lokalt
+
+Fra Showcase-roten: `python3 -m http.server 8000`, og åpne `http://localhost:8000/vibe/wp-l-ringssti/`.
+
+Kjør fokustestene fra Showcase-roten med `node --test tests/wp-l-ringssti.test.mjs`.

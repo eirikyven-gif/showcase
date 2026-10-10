@@ -52,7 +52,9 @@
       "name": "Tidtellerportal",
       "useCase": "Finn fram til selvstendige verktøy for klokke, nedtelling, opptelling og tidtaking.",
       "category": "Tid",
-      "audience": ["Alle som vil finne et enkelt tidsverktøy"],
+      "audience": [
+        "Alle som vil finne et enkelt tidsverktøy"
+      ],
       "status": "Beholdt i bred førstegangsrunde; original statisk portaloversikt. Ingen kuratering eller utsiling.",
       "sourceUncertainty": "Offentlig diverse-apper main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 gjennomgått 2026-10-09. Kildens index.html viser v1.10.1, mens README.md oppgir v1.12.0; manifest/VERSION-fil finnes ikke i appmappen. README oppgir aktiv status, men faktisk produksjonsdeploy er ikke kontrollert.",
       "source": "eirikyven-gif/diverse-apper/apps/tidteller, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-09); kilderepoet er kun lest.",
@@ -72,7 +74,11 @@
       "name": "Hegra Cup Live · vurdering",
       "useCase": "Les en kildevurdering av en cup-/turneringsapp der dokumentasjonen skiller mellom legacy, planlagt målarkitektur og manglende runtime.",
       "category": "Sport og arrangement",
-      "audience": ["Turneringsarrangører", "Utviklere", "Personer som vurderer appkandidater"],
+      "audience": [
+        "Turneringsarrangører",
+        "Utviklere",
+        "Personer som vurderer appkandidater"
+      ],
       "status": "Beholdt i bred førstegangsrunde; vurderingsside uten appdemo. Dette er ikke en beslutning om å kuratere eller forkaste kandidaten.",
       "source": "eirikyven-gif/diverse-apper/apps/hegra-cup-live, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-08); ingen kildefiler endret.",
       "sourceStack": "Appmappen inneholder README, tre markdown-dokumenter og en selvstendig statisk UI-fasitfil. README sier eksplisitt at det foreløpig bare finnes dokumentasjon og en statisk referanse; ingen implementert runtime-stack kan fastslås. Dokumentene omtaler legacy Google Apps Script + Google Sheets og foreslår HTML/CSS/JS med PHP eller tilsvarende API og MariaDB/MySQL eller tilsvarende database som målarkitektur.",
@@ -91,7 +97,11 @@
       "name": "Bingo · eksempelbrett",
       "useCase": "Prøv å markere tall på et syntetisk bingobrett og nullstill runden.",
       "category": "Spill og arrangement",
-      "audience": ["Bingodeltakere", "Arrangører", "Personer som utforsker enkle spill"],
+      "audience": [
+        "Bingodeltakere",
+        "Arrangører",
+        "Personer som utforsker enkle spill"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; original statisk demo. Kilderettigheter og faktisk produksjonsbruk er uavklart.",
       "purpose": "Illustrere deltakervisningen for en enkel bingorunde.",
       "demoValue": "Besøkende kan markere et eksempelbrett og nullstille det.",
@@ -111,7 +121,11 @@
       "name": "Emneoversikt – konsept",
       "useCase": "Se et oppdiktet emne samlet i en lesbar oversikt med plan, læringsutbytte, arbeidskrav og pensum.",
       "category": "Utdanning",
-      "audience": ["Undervisere", "Studieplanleggere", "Personer som utforsker emnesider"],
+      "audience": [
+        "Undervisere",
+        "Studieplanleggere",
+        "Personer som utforsker emnesider"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; original statisk konseptside laget. Ingen kuratering eller utsiling.",
       "sourceUncertainty": "Kilden har en mulig duplicate familieversjon under apps-fagskolen; versjonsforhold, faktisk bruk og innholdsrettigheter er ikke verifisert. Se rutens README.",
       "purpose": "Illustrere informasjonsstruktur for en emneside uten redigeringsfunksjon.",
@@ -132,7 +146,11 @@
       "name": "Ledige tider",
       "useCase": "Utforsk en statisk kalenderoversikt med oppdiktede ledige og opptatte tider.",
       "category": "Planlegging",
-      "audience": ["Små virksomheter", "Tjenesteytere", "Kalenderinteresserte"],
+      "audience": [
+        "Små virksomheter",
+        "Tjenesteytere",
+        "Kalenderinteresserte"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Kildestatus er uverifisert.",
       "demoValue": "Viser hvordan en enkel ukevisning kan gjøre tilgjengelighet lett å lese.",
       "simplifications": "Fast visning med syntetiske tider. Ingen valg, booking eller bekreftelse.",
@@ -152,12 +170,16 @@
       "name": "Backyard løpsoversikt",
       "useCase": "Utforsk en statisk visualisering av oppdiktede rundetider, fremdrift og stilling i et Backyard-løp.",
       "category": "Sport og arrangement",
-      "audience": ["Løpsarrangører", "Deltakere", "Publikum", "OBS-ansvarlige"],
+      "audience": [
+        "Løpsarrangører",
+        "Deltakere",
+        "Publikum",
+        "OBS-ansvarlige"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; original konseptdemo laget. Ingen kuratering eller utsiling.",
       "sourceUncertainty": "Kilden er et scaffold, ikke et ferdig produkt. Race Result-integrasjon, runtime, faktisk deploy, datakontrakt og lisensdekning for hele appen er uavklart.",
       "purpose": "Illustrere en løpsoversikt med rundetider, fremdrift og stilling uten live løps- eller deltakerdata.",
       "demoValue": "Illustrerer hvordan rundetider, fremdrift og en resultatliste kan samles i en lesbar løpsoversikt.",
-      "simplifications": "Fire fiktive kallenavn, oppdiktede tider og et statisk diagram. Ingen løpskontroll, deltakervalg, liveoppdatering, API, embed eller OBS-integrasjon.",
       "simplifications": "Fast oversikt med syntetiske data og et statisk diagram. Ingen liveoppdatering, API, OBS-integrasjon, innlesing eller eksport.",
       "risk": "Kildens faktiske kjøremiljø, Race Result API-kontrakt, datafelter og rettigheter er ikke verifisert. Ingen kilde-, test- eller live-data er brukt; verdier og navn i demoen er oppdiktet.",
       "scope": "Statisk HTML/CSS under /vibe/backyard-stats/. Ingen JavaScript, API-kall, eksterne tjenester, autentisering, lagring, input, personopplysninger eller hemmeligheter.",
@@ -170,30 +192,39 @@
     },
     {
       "slug": "wp-l-ringssti",
-      "name": "Plantekasse på papir",
-      "useCase": "Prøv en kort, oppdiktet læringsmodul med forklaring og kontrollspørsmål.",
-      "category": "Utdanning",
+      "name": "WP Læringssti · modulbygger og elevflyt",
+      "useCase": "Bygg en modulbasert læringssti med innholdselementer, og prøv den steg for steg som deltaker.",
+      "category": "Utdanning og læringsverktøy",
       "audience": [
         "Undervisere",
         "Studenter",
-        "Personer som utforsker læringsgrensesnitt"
+        "Personer som lager modulbasert læringsinnhold"
       ],
-      "status": "Beholdt i bred kandidatgjennomgang; original konseptdemo laget. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Offentlig repo WP-l-ringssti: main viser README og ZIP v0.5.6. ZIP-dokumentasjon og pluginfil spriker om quizstatus; tidligere inventar beskriver bredere v0.4.x–0.5.x-status, planlagt WordPress-autentisering og Google Sheet-sync, samt servervalidert quiz. Test- og deploystatus er ikke bekreftet. Se README.",
-      "purpose": "Illustrere en liten læringsflyt med modultekst og quiztilbakemelding.",
-      "demoValue": "Gjør en læringssti med modulstruktur og umiddelbar tilbakemelding konkret i en selvstendig statisk demo.",
-      "simplifications": "Én original, fiktiv modul om å planlegge en plantekasse og ett flervalgs spørsmål. Ingen pluginredigering, WordPress-blokker eller kildeinnhold.",
-      "risk": "Kildeproduktet kan berøre student- og aktivitetsdata; faktisk utrulling og databruk er ikke verifisert, og kildedokumentasjonen spriker. Demoen bruker syntetisk innhold og samler ikke inn studentaktivitet eller persondata.",
-      "scope": "Selvstendig HTML/CSS/JS på /vibe/wp-l-ringssti/. Ingen WordPress/PHP, autentisering, Sheet-sync, API, backend, servervalidert quiz, aktivitetssporing, personlig data, lagring, hemmeligheter eller eksterne forespørsler. Valg finnes kun midlertidig i fanen.",
-      "source": "eirikyven-gif/WP-l-ringssti, offentlig main og ZIP wp-learningsti-mvp_v0.5.6.zip (lest 2026-10-08); versjons- og funksjonsusikkerhet dokumentert i rutens README.",
-      "separation": "WordPress-plugin-kandidaten WP-l-ringssti er separat fra WP-laringssti v0.9-webappen og fra Vibe-demoen laringssti-fagskolen."
+      "status": "Tro funksjonskopi av observerbar v0.5.6-oppførsel; statisk Showcase-demo med syntetiske data. Én app per isolert PR. Issue #2 delvis løst.",
+      "sourceUncertainty": "Kildearkivets README.txt sier at quiz/case ikke finnes i v0.5.6, men PHP og frontend-JavaScript implementerer quiz, case og KI-stubber. Import-masterloggen beskriver modulvis playerflyt ved v0.5.6. Funksjonsgrunnlag følger faktisk arkivkode; spriket er bevart som usikkerhet.",
+      "purpose": "WordPress/Gutenberg-plugin for redigering av læringsstier med moduler, innholdselementer, global tidslinje og tilknyttet media; arkivets frontend har modulvis playerflyt, quiz, case og KI-stubber.",
+      "demoValue": "Lar besøkende gjennomføre en modul og prøve hovedområdene i editoren: moduler, elementtyper, tidslinje og sti-media.",
+      "simplifications": "WordPress-administrasjon og frontend er samlet som lokale visninger. Eksempelstien er syntetisk. Redigering, modulstatus, quizfremdrift og caseutkast lagres kun i nettleseren; «Nullstill demo» sletter all lokal demoaktivitet. Media er illustrasjoner; KI-knapper forklarer at tjenesten ikke er tilkoblet.",
+      "risk": "Kilden er WordPress-plugin med autentiserte adminoperasjoner, serverlagring og AJAX. Quizfasit flyttes til klienten i demoen, derfor quiz ikke sikker vurdering. Kildens ZIP-README og implementasjon spriker om quiz/case. Ingen kursdata eller personopplysninger finnes i Showcase-kopien.",
+      "scope": "Selvstendig statisk HTML/CSS/JavaScript på /vibe/wp-l-ringssti/. Ingen eksterne forespørsler, WordPress/PHP, autentisering, cookies, serverlagring, API, persondata eller secrets. Demoens localStorage inneholder kun syntetiske brukerendringer og fremdrift, og kan slettes med «Nullstill demo».",
+      "source": "eirikyven-gif/WP-l-ringssti, offentlig main, fil wp-learningsti-mvp_v0.5.6.zip; komplett arkiv lest 2026-10-10. Source repo er ikke endret.",
+      "separation": "Denne ruta modellerer WordPress-pluginen WP-l-ringssti fra arkivet v0.5.6. Den er ikke WP-laringssti v0.9-webappen eller den separate showcase-ruta laringssti-fagskolen.",
+      "sourceStack": "WordPress/PHP-plugin med Gutenberg-blokk, JavaScript-admin/editor og statisk frontend-CSS/JS; admin- og quizhandlinger bruker WordPress AJAX.",
+      "sourceTests": "Kilde-ZIP inneholder ingen testfiler eller testoppsett. Showcase har fokusert node:test for rute, funksjonsdekning, personvernflater, responsivitet og katalogmetadata.",
+      "sourceApiAuthStoragePrivacy": "Pluginen registrerer autentisert WP-admin AJAX for lesing/lagring av konfigurasjon og medietagging; quizkontroll bruker AJAX. Admin krever WordPress capabilities og nonce. Pluginen lagrer konfigurasjon server-side og media i WP attachment-meta. Caseutkast og elevfremdrift lagres lokalt i nettleseren. Showcase simulerer adminredigering lokalt, fjerner serverfunksjoner og bruker localStorage for demoens utkast/fremdrift; «Nullstill demo» sletter all lokal data. Ingen nettverkskall fra Showcase-ruten.",
+      "rightsUncertainty": "Kilderepoet har ingen lisensfil eller lisensmetadata i gjennomgått innhold. Demoens kode og syntetiske eksempeltekst er skrevet selvstendig; ingen ZIP-kildekode eller mediefiler er kopiert.",
+      "routeState": "Eksisterende unik rute på showcase main 9a2bfb629b39498507458dfa0500961fd55d76db. Denne PR-en erstatter konseptplaceholder med funksjonell statisk kopi; katalogruten beholdes."
     },
     {
       "slug": "ns3424-lab",
       "name": "NS3424 læringslab",
       "useCase": "Utforsk en kort, syntetisk læringsøvelse om systematisk vurdering og prioritering av vedlikeholdsbehov.",
       "category": "Utdanning",
-      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
+      "audience": [
+        "Studenter",
+        "Undervisere",
+        "Nybegynnere innen byggforvaltning"
+      ],
       "status": "demo",
       "demoValue": "Viser hvordan korte scenarioer og umiddelbar tilbakemelding kan støtte læring.",
       "simplifications": "Originalt minieksempel med generiske scenarioer; dekker ikke eller gjengir NS 3424.",
@@ -205,7 +236,11 @@
       "name": "Byggobservasjoner – arkivkandidat",
       "useCase": "Øv på å skille observerbare forhold fra antakelser i to oppdiktede bygningsscener.",
       "category": "Utdanning",
-      "audience": ["Studenter", "Undervisere", "Nybegynnere innen byggforvaltning"],
+      "audience": [
+        "Studenter",
+        "Undervisere",
+        "Nybegynnere innen byggforvaltning"
+      ],
       "status": "Kandidat fra arkivert ns3456-app beholdt i bred førstegangsvurdering. Arkivert kilde og rettigheter er ikke verifisert. Ruten er en ny, generisk øvelse, ikke kildeimplementasjonen.",
       "demoValue": "En faktasorteringsøvelse med tilbakemelding, som skiller seg fra ns3424-labs enkeltscenario og prioriteringsspørsmål. Overlappet i tema og målgruppe er betydelig.",
       "simplifications": "To korte, fiktive scener og forhåndsskrevne observasjoner. Ingen standardmetode, tilstandsgrader, faglig poengsetting eller vurdering av faktiske bygg.",
@@ -217,7 +252,11 @@
       "name": "Analog Synthesizer",
       "useCase": "Spill syntetiske toner og utforsk grunnleggende synthlyd i nettleseren.",
       "category": "Musikk",
-      "audience": ["Musikere", "Lydinteresserte", "Nybegynnere innen synthesizere"],
+      "audience": [
+        "Musikere",
+        "Lydinteresserte",
+        "Nybegynnere innen synthesizere"
+      ],
       "status": "Beholdt i bred førstegangsvurdering. Kandidaten er en aktivt vedlikeholdt kildewebapp ifølge README, men faktisk produksjonsstatus er ikke uavhengig verifisert. Ingen kurateringsbeslutning er tatt.",
       "sourceUncertainty": "Kilde eirikyven-gif/diverse-apper/apps/analog-synthesizer lest skrivebeskyttet på main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (2026-10-09); README/version.json oppgir 0.15.1. Kildens konsoliderte SSoT v0.2 er LÅST og omfatter senere låste presiseringer til v0.15.0; appens oversiktsside har eldre motstridende DRAFT-status. README beskriver release-QA, men fysisk iPhone/iPad/desktop-MIDI-kontroll står fortsatt åpen, og faktisk produksjonsdeploy er ikke bekreftet.",
       "purpose": "Kilden er et personlig, iPad-først webinstrument for å spille og forme lyd med oscillatorer, moduler, sequencer, mikrofon, samples, MIDI, opptak, prosjekter og offline-PWA. Showcase-ruten demonstrerer kun grunnleggende tonehøyde, filter, volum og klang med syntetisk oscillatorlyd.",
@@ -297,7 +336,7 @@
       "risk": "Lav for demoen. Bakgrunnsfaner kan forsinke oppdatering, og den generiske timeren må ikke forveksles med verifisert kildeutrulling.",
       "scope": "Responsiv statisk HTML/CSS/JS på /vibe/timer/. Kun minnetilstand i fanen. Ingen konto, API, backend, lagring, persondata, hemmeligheter eller eksterne kall."
     },
-        {
+    {
       "slug": "inntekter-kostnader",
       "name": "Inntekter og kostnader",
       "useCase": "Utforsk en månedsoversikt med inntekter, kostnader og faste eksempelposter.",
@@ -518,7 +557,12 @@
       "name": "Bilag v5 · batchstatus",
       "useCase": "Se et syntetisk statusbilde av separate PDF-batch- og ZIP-importløp for bilagsflyt.",
       "category": "Gårdsadministrasjon og dokumentflyt",
-      "audience": ["Gårdsbrukere", "Regnskapsmedarbeidere", "Dokumentansvarlige", "Utviklere som vurderer batchflyt"],
+      "audience": [
+        "Gårdsbrukere",
+        "Regnskapsmedarbeidere",
+        "Dokumentansvarlige",
+        "Utviklere som vurderer batchflyt"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
       "demoValue": "Gjør forskjellen mellom PDF-behandling og separat ZIP-import synlig gjennom køstatus og oppdiktede hendelseslinjer.",
       "simplifications": "Kun fast eksempelstatus i to batchkort og en fiktiv logg. Ingen jobbkjøring, tidsstyring, ZIP-/PDF-tolkning, mappeoperasjoner, forsøk eller ekte revisjonslogg.",
@@ -546,7 +590,11 @@
       "name": "Kornfølgeseddel",
       "useCase": "Se og skriv ut en syntetisk følgeseddel for en oppdiktet kornlevering.",
       "category": "Gårdsdrift og dokumentflyt",
-      "audience": ["Gårdsbrukere", "Transportører", "Mottak"],
+      "audience": [
+        "Gårdsbrukere",
+        "Transportører",
+        "Mottak"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; selvstendig statisk konseptdemo beholdes. Ingen kuratering eller utsiling er gjort.",
       "sourceUncertainty": "Kildens SSOT.md er merket LÅST og beskriver utfyllbar statisk blankett med utskrift, men faktisk produksjonsdeploy, bruk og datahåndtering er ikke uavhengig verifisert. SSoT peker på en ekstern 2026-form og Dropbox-kilde; gjenbrukstillatelse og rettigheter er uavklart.",
       "purpose": "Kildens form lar gårdsbruker fylle ut og skrive ut en følgeseddel for kornlevering.",
@@ -582,34 +630,38 @@
       "name": "Vinterlagring Fornes",
       "useCase": "Se et enkelt, fiktivt eksempel på status for én enhet i vinterlagring.",
       "category": "Gårdsadministrasjon og lagerstyring",
-      "audience": ["Lageransvarlige", "Gårdsbrukere", "Personer som utforsker vinterlagring"],
+      "audience": [
+        "Lageransvarlige",
+        "Gårdsbrukere",
+        "Personer som utforsker vinterlagring"
+      ],
       "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
       "demoValue": "Viser hvordan lagringsstatus, plass og et enkelt miljøsignal kan samles i en oversikt for én oppdiktet enhet.",
       "simplifications": "Én abstrakt enhet med én fast status: lagret. Ingen navn, kjennemerke, kundeprofil, bevegelser, flere plasser, administrasjon eller redigering.",
       "risk": "Kildeappen er beskrevet som en innloggingspreget kunde-/adminflyt med e-post, PHP-session og database, og behandler kundeopplysninger. Kildeproduksjon og kildetest er ikke besøkt. Mulig overlapp med produktfamilien Lagerkart Vinter er uavklart; demoene har ulikt, selvstendig omfang. Demoen bruker kun syntetisk innhold og er ikke egnet for operativ lagerstyring.",
       "scope": "Selvstendig, responsiv /vibe/vinterlagring-fornes/-rute. Kun statisk HTML, CSS og JavaScript; én skrivebeskyttet eksempeltilstand. Ingen skjema for personopplysninger, e-post, database, session, autentisering, API, ekstern ressurs eller lagring."
     },
-  {
-    "slug": "vurderingsarbeid-fagskolen",
-    "name": "Kriterieverksted",
-    "useCase": "Planlegg synlige vurderingskriterier fra et oppdiktet kompetansemål og en oppgave.",
-    "category": "Utdanning",
-    "audience": [
-      "Faglærere",
-      "Vurderingsteam",
-      "Studieplanleggere ved fagskole"
-    ],
-    "status": "Beholdt som kandidat i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
-    "sourceUncertainty": "Oppgitt repo apps-fagskolen/apps ga 404 ved metadataoppslag 2026-10-08; kilden er ikke åpnet. Internt inventar beskriver migrasjonspakke med uklar entrypoint; funksjon, stack, tester, utrulling og dataflyt er ukjent.",
-    "purpose": "Støtte fagpersoners planlegging av observerbare vurderingskriterier.",
-    "demoValue": "Ett syntetisk kompetansemål, en oppgave, tre kriterieutkast og en planleggingssjekkliste gjør kriteriearbeidet konkret.",
-    "simplifications": "Originalt fiktivt tema om trygg overlevering. Ingen kildekode, kildeinnhold, elevsvar, poeng eller karakterer.",
-    "dependencies": "Kun statisk HTML/CSS/JS og lokalt hub-stilark; ingen tredjepartsavhengigheter.",
-    "risk": "Kandidaten kan omfatte sensitive vurderings- og studentdata; faktisk databehandling er ukjent. Demoen bruker ikke persondata eller elevresultater. Overlapp med separat app-vurderingsarbeid er rapportert, ikke verifisert.",
-    "scope": "Statisk route /vibe/vurderingsarbeid-fagskolen/. Ingen autentisering, personfelt, studentarbeid, scoring, API, backend, lagring, CDN, secrets eller eksterne forespørsler.",
-    "source": "Oppgitt apps-fagskolen/apps/vurderingsarbeid; GitHub metadataoppslag returnerte 404 2026-10-08. Ingen kildefiler lest.",
-    "separation": "Mulig overlapp med separat app-vurderingsarbeid ifølge internt inventar; forholdet er uavklart. Kandidaten beholdes separat i bred gjennomgang."
-  },
+    {
+      "slug": "vurderingsarbeid-fagskolen",
+      "name": "Kriterieverksted",
+      "useCase": "Planlegg synlige vurderingskriterier fra et oppdiktet kompetansemål og en oppgave.",
+      "category": "Utdanning",
+      "audience": [
+        "Faglærere",
+        "Vurderingsteam",
+        "Studieplanleggere ved fagskole"
+      ],
+      "status": "Beholdt som kandidat i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Oppgitt repo apps-fagskolen/apps ga 404 ved metadataoppslag 2026-10-08; kilden er ikke åpnet. Internt inventar beskriver migrasjonspakke med uklar entrypoint; funksjon, stack, tester, utrulling og dataflyt er ukjent.",
+      "purpose": "Støtte fagpersoners planlegging av observerbare vurderingskriterier.",
+      "demoValue": "Ett syntetisk kompetansemål, en oppgave, tre kriterieutkast og en planleggingssjekkliste gjør kriteriearbeidet konkret.",
+      "simplifications": "Originalt fiktivt tema om trygg overlevering. Ingen kildekode, kildeinnhold, elevsvar, poeng eller karakterer.",
+      "dependencies": "Kun statisk HTML/CSS/JS og lokalt hub-stilark; ingen tredjepartsavhengigheter.",
+      "risk": "Kandidaten kan omfatte sensitive vurderings- og studentdata; faktisk databehandling er ukjent. Demoen bruker ikke persondata eller elevresultater. Overlapp med separat app-vurderingsarbeid er rapportert, ikke verifisert.",
+      "scope": "Statisk route /vibe/vurderingsarbeid-fagskolen/. Ingen autentisering, personfelt, studentarbeid, scoring, API, backend, lagring, CDN, secrets eller eksterne forespørsler.",
+      "source": "Oppgitt apps-fagskolen/apps/vurderingsarbeid; GitHub metadataoppslag returnerte 404 2026-10-08. Ingen kildefiler lest.",
+      "separation": "Mulig overlapp med separat app-vurderingsarbeid ifølge internt inventar; forholdet er uavklart. Kandidaten beholdes separat i bred gjennomgang."
+    },
     {
       "slug": "gruppegenerator",
       "name": "Gruppegenerator · syntetisk eksempel",
@@ -658,13 +710,16 @@
       "scope": "Statisk HTML/CSS under /vibe/arrangementsvakt/. Ingen JavaScript, skjema, auth/PIN/sesjon, API, nettverkskall, browser/serverlagring, opplasting, push, private endepunkter eller person-/arrangementsdata.",
       "routeState": "Sluggen manglet i showcase main bfb6d7e0756fefc01b70c7e5c653a8f4781b600b med 34 katalogoppføringer; ny isolert vurderingsrute."
     },
-
     {
       "slug": "presentasjon",
       "name": "Presentasjonsvisning · fiktivt eksempel",
       "useCase": "Bla gjennom et kort, oppdiktet lysbildesett med knappene eller piltastene.",
       "category": "Presentasjon og visning",
-      "audience": ["Undervisere", "Studenter", "Personer som utforsker presentasjonsvisning"],
+      "audience": [
+        "Undervisere",
+        "Studenter",
+        "Personer som utforsker presentasjonsvisning"
+      ],
       "status": "Beholdt i bred kandidatgjennomgang; original statisk presentasjonsdemo. Ingen kuratering eller utsiling.",
       "sourceUncertainty": "Kildens offentlige main og tilhørende Notion-styring er gjennomgått 2026-10-09. README dokumenterer Apps Script-eksport til versjonerte PNG-sett, PHP-visninger, privat kontrollflate og publisering. Faktisk produksjonsstatus, aktivt innhold og samsvar mellom siste deploy og main er ikke uavhengig bekreftet.",
       "source": "eirikyven-gif/apps-fagskolen/apps/presentasjon, offentlig main lest 2026-10-09; kun lest, ingen kildefiler endret. Tracker: Notion Presentasjonsvisning-kandidat. Kilde-README og appens styring/SSoT er gjennomgått.",

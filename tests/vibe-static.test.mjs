@@ -186,7 +186,7 @@ test('hub provides labeled search, focus visibility, and a small-screen layout',
   assert.match(css, /prefers-reduced-motion/);
 });
 
-test('catalog and demo runtime have no browser persistence, login fields, recognizable secrets, or external runtime URL', () => {
+test('catalog documents any local persistence, and demo runtime has no auth, secrets, or external runtime URL', () => {
   // Catalog prose can name technologies while documenting an assessed source;
   // scan executable assets here and validate catalog metadata separately.
   const runtimeFiles = filesUnder(vibeRoot).filter((file) => /\.(?:html|js|css)$/i.test(file));
@@ -199,7 +199,11 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
 
   for (const file of runtimeFiles) {
     const source = readFileSync(file, 'utf8');
-    assert.doesNotMatch(source, /\b(?:localStorage|sessionStorage|indexedDB)\b/, `${file} has no browser persistence`);
+    const routeSlug = path.relative(vibeRoot, file).split(path.sep)[0];
+    const routeEntry = catalog.apps.find((entry) => entry.slug === routeSlug);
+    const allowsLocalStorage = /localStorage|nettleserlagring|nettleserens lokale lagring/i.test(routeEntry?.scope || '');
+    assert.doesNotMatch(source, /\b(?:sessionStorage|indexedDB)\b/, `${file} does not use unreviewed browser storage`);
+    if (!allowsLocalStorage) assert.doesNotMatch(source, /\blocalStorage\b/, `${file} has no undeclared browser persistence`);
     assert.doesNotMatch(source, /\bdocument\.cookie\b/, `${file} does not read/write cookies`);
     assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
     assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no real password field`);

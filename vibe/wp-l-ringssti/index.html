@@ -3,67 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En oppdiktet, statisk læringssti om å planlegge en liten plantekasse.">
-  <meta name="theme-color" content="#244b3d">
-  <title>Plantekasse på papir — Vibe</title>
+  <meta name="description" content="En statisk, syntetisk demonstrasjon av WP Læringssti v0.5.6.">
+  <meta name="theme-color" content="#8f252b">
+  <title>WP Læringssti · Vibe</title>
   <link rel="canonical" href="/vibe/wp-l-ringssti/">
   <link rel="stylesheet" href="/vibe/wp-l-ringssti/style.css">
   <script src="/vibe/wp-l-ringssti/app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Hopp til innhold</a>
-  <header class="topbar">
-    <a class="wordmark" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
-    <a class="back-link" href="/vibe/">← Alle verktøy</a>
-  </header>
-
-  <main id="main" class="layout">
-    <aside class="path-panel" aria-labelledby="path-title">
-      <p class="eyebrow">Oppdiktet minikurs</p>
-      <h1 id="path-title">Plantekasse<br>på papir</h1>
-      <p class="path-intro">En kort øvelse i å planlegge med enkle begrensninger.</p>
-      <div class="course-facts"><span>1 modul</span><span>4 minutter</span></div>
-      <h2 class="outline-heading">I denne modulen</h2>
-      <ol class="outline">
-        <li><span class="outline-number" aria-hidden="true">01</span><span>Les situasjonen</span></li>
-        <li><span class="outline-number" aria-hidden="true">02</span><span>Velg et prinsipp</span></li>
-        <li><span class="outline-number" aria-hidden="true">03</span><span>Sjekk forståelsen</span></li>
-      </ol>
-      <p class="fiction-note">Fiktivt eksempel · ingen faktiske planter eller kursdata</p>
-    </aside>
-
-    <div class="lesson-column">
-      <section class="lesson-card" aria-labelledby="lesson-title">
-        <p class="eyebrow lesson-kicker">Modul 1 <span aria-hidden="true">/</span> Planlegg før du bygger</p>
-        <h2 id="lesson-title">Start med rammene</h2>
-        <p class="lead">Du skal tegne en liten plantekasse på papir. Den har plass til <strong>12 ruter</strong>, og hver plante trenger et bestemt antall ruter.</p>
-        <div class="example-grid" aria-label="Oppdiktede planteeksempler">
-          <article class="plant-card"><span class="plant-icon" aria-hidden="true">✿</span><h3>Bladgrønt</h3><p>1 rute per plante</p></article>
-          <article class="plant-card"><span class="plant-icon" aria-hidden="true">❋</span><h3>Urter</h3><p>2 ruter per plante</p></article>
-          <article class="plant-card"><span class="plant-icon" aria-hidden="true">✿</span><h3>Store blomster</h3><p>3 ruter per plante</p></article>
-        </div>
-        <div class="takeaway"><span class="takeaway-mark" aria-hidden="true">→</span><p><strong>Planleggingstips</strong><br>Summer først plassen hver plante trenger. Da ser du om skissen får plass innenfor rammen.</p></div>
-      </section>
-
-      <section class="quiz-card" aria-labelledby="quiz-title">
-        <div class="quiz-heading"><span class="step-tag">Prøv selv</span><span class="question-count">Ett spørsmål</span></div>
-        <h2 id="quiz-title">Hva er et godt første steg?</h2>
-        <p>Du vil tegne fire urter og to store blomster. Hva bør du sjekke først?</p>
-        <form id="quiz-form">
-          <fieldset>
-            <legend class="visually-hidden">Velg det beste første steget</legend>
-            <label class="answer"><input type="radio" name="answer" value="a"><span class="answer-letter" aria-hidden="true">A</span><span>Tegn plantene tilfeldig og håp de passer.</span></label>
-            <label class="answer"><input type="radio" name="answer" value="b"><span class="answer-letter" aria-hidden="true">B</span><span>Regn ut samlet plassbehov og sammenlign med 12 ruter.</span></label>
-            <label class="answer"><input type="radio" name="answer" value="c"><span class="answer-letter" aria-hidden="true">C</span><span>Legg til flere planter før du tegner.</span></label>
-          </fieldset>
-          <button class="submit-button" type="submit">Sjekk svaret <span aria-hidden="true">→</span></button>
-        </form>
-        <p id="feedback" class="feedback" role="status" aria-live="polite">Velg et svar når du er klar.</p>
-        <button id="reset" class="reset-button" type="button">Prøv på nytt</button>
-      </section>
-      <p class="privacy-note">Demoen lagrer ikke svar eller fremdrift. Valget behandles bare midlertidig i denne nettleserfanen.</p>
-    </div>
+  <header class="topbar"><a class="wordmark" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><div class="top-actions"><span class="demo-label">Syntetisk demo · v0.5.6</span><button class="mode-button" type="button" data-action="reset-demo">Nullstill demo</button><a href="/vibe/">← Alle verktøy</a></div></header>
+  <main id="main" class="shell">
+    <header class="page-heading"><div><p class="eyebrow">WordPress-plugin · læringsverktøy</p><h1>WP Læringssti</h1><p class="intro">Bygg en modulbasert læringssti, og følg den som en elev. Innholdet er syntetisk. Endringer lagres bare lokalt i denne nettleseren.</p></div><div class="mode-switch" role="group" aria-label="Visning"><button type="button" class="mode-button is-active" data-view="learn" aria-pressed="true">Gjennomfør</button><button type="button" class="mode-button" data-view="edit" aria-pressed="false">Rediger</button></div></header>
+    <div class="notice" role="note"><strong>Demomodus:</strong> Alt innhold og all fremdrift lagres bare lokalt i denne nettleseren. Ingenting sendes til en server. Bruk «Nullstill demo» for å slette alt lokalt og starte fra eksempeldata.</div>
+    <p id="storage-status" class="visually-hidden" role="status" aria-live="polite"></p>
+    <section id="learn-view" class="view" aria-labelledby="learn-title"><h2 id="learn-title" class="visually-hidden">Gjennomfør læringssti</h2><div id="learning-path" aria-live="polite"></div></section>
+    <section id="edit-view" class="view" aria-labelledby="edit-title" hidden><div class="editor-heading"><div><p class="eyebrow">Læringssti-editor · simulert</p><h2 id="edit-title">Rediger eksempelsti</h2><p>Prøv modulstruktur, innholdselementer, global tidslinje og sti-media.</p></div><span class="status-pill">Lagres lokalt</span></div><div class="editor-tabs" role="tablist" aria-label="Redigeringsområder"><button class="editor-tab is-active" id="tab-modules" type="button" role="tab" aria-selected="true" aria-controls="editor-panel" data-tab="modules">Moduler</button><button class="editor-tab" id="tab-timeline" type="button" role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="timeline">Tidslinje</button><button class="editor-tab" id="tab-media" type="button" role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="media">Sti-media</button></div><div id="editor-panel" class="editor-panel" role="tabpanel" aria-labelledby="tab-modules"></div></section>
   </main>
-  <footer class="footer"><a href="/vibe/">Tilbake til Vibe</a><span>Et syntetisk undervisningseksempel</span></footer>
+  <dialog id="demo-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><button id="dialog-close" class="dialog-close" type="button" aria-label="Lukk dialog">×</button><p class="eyebrow">Demofunksjon</p><h2 id="dialog-title"></h2><p id="dialog-copy"></p><button id="dialog-ok" class="button primary" type="button">Forstått</button></div></dialog>
+  <footer class="footer"><a href="/vibe/">Tilbake til Vibe</a><span>WP Læringssti · statisk funksjonskopi</span></footer>
 </body>
 </html>
