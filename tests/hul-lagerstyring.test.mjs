@@ -9,20 +9,25 @@ const runtime = readFileSync(`${route}runtime-config.js`, 'utf8');
 const backend = readFileSync(`${route}mock-backend.js`, 'utf8');
 const readme = readFileSync(`${route}README.md`, 'utf8');
 const css = readFileSync(`${route}style.css`, 'utf8');
+const controls = readFileSync(`${route}demo-controls.js`, 'utf8');
 
 test('source-faithful HUL route is mock-only, disclosed, and resettable', () => {
   assert.match(runtime, /mockBackend:\s*true/);
   assert.match(runtime, /authMode:\s*'none'/);
   assert.match(html, /connect-src 'none'/);
-  assert.match(html, /script-src 'self' 'unsafe-inline'/);
-  assert.match(html, /style-src 'self' 'unsafe-inline'/);
+  assert.match(html, /script-src 'self'(?:;|\s)/);
+  assert.match(html, /style-src 'self'(?:;|\s)/);
+  for (const [, attrs, body] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    assert.match(attrs, /\bsrc=/i);
+    assert.equal(body.trim(), '');
+  }
   assert.match(html, /img-src 'self' data: blob:/);
   assert.match(html, /media-src 'self' data: blob:/);
   assert.match(html, /font-src 'self' data:/);
   assert.match(html, /Klargjører lokal demovisning/);
   assert.doesNotMatch(html, /Klargjører innlogging og sesjon/);
   assert.match(html, /Nullstill demo/);
-  assert.match(html, /HUL_MOCK_DB_v1/);
+  assert.match(controls, /HUL_MOCK_DB_v1/);
   assert.match(html, /localStorage/);
   assert.match(backend, /localStorage\.removeItem\(STORAGE_KEY\)/);
   assert.match(readme, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);
@@ -56,6 +61,13 @@ test('HUL route has no off-origin script, style, image, font, media, or network 
   assert.match(backend, /window\.fetch = function hulMockFetch/);
   assert.match(backend, /if \(!shouldIntercept\(url\)\)/);
   assert.match(html, /connect-src 'none'/);
+  assert.match(html, /mock-backend\.js/);
+  assert.match(html, /demo-controls\.js/);
+  assert.match(controls, /Nullstill demo|demo-reset/);
+  for (const source of [html, runtime, backend, controls, readFileSync(`${route}app.js`, 'utf8')]) {
+    assert.doesNotMatch(source, /https?:\/\/(?!schemas\.openxmlformats\.org\/)|wss?:\/\//i, 'route runtime contains no external URL/API endpoint');
+    assert.doesNotMatch(source, /\b(?:XMLHttpRequest|WebSocket|EventSource|sendBeacon|importScripts)\b/, 'route runtime uses no alternate network API');
+  }
 });
 
 test('catalog points to the route and source provenance', () => {
@@ -63,7 +75,8 @@ test('catalog points to the route and source provenance', () => {
   const app = catalog.apps.find((candidate) => candidate.slug === 'hul-lagerstyring');
   const version = readFileSync('VERSION', 'utf8').trim();
   assert.ok(app);
-  assert.equal(version, '0.60.0');
+  assert.equal(version, '0.60.1');
   assert.match(app.source, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);
   assert.match(app.scope, /connect-src none/);
+  assert.match(app.routeState, /VERSION 0\.60\.0\); bumped to 0\.60\.1/);
 });

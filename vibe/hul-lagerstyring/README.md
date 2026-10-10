@@ -12,7 +12,7 @@ Showcasen beholder kildeinnhold og browserfunksjoner på `/vibe/hul-lagerstyring
 - Mockdatabasen lagres varig i `localStorage` under `HUL_MOCK_DB_v1`. Appens visningstilstand kan bruke `sessionStorage`. Synlig varsel forklarer dette, og **Nullstill demo** ber om bekreftelse, sletter mockdatabasen og HUL-prefiksnøkler fra localStorage/sessionStorage, og laster eksempeldata på nytt. Nettleserens vanlige lagringsverktøy kan også brukes til å fjerne data.
 - Kildens utility-styling er bygget på forhånd til lokal `style.css` med Tailwind CSS 3.4.17. `tailwind.config.cjs` og `tailwind.input.css` dokumenterer den repeterbare byggingen; nettleseren laster ingen CSS-runtime eller andre eksterne ressurser.
 - For å regenerere CSS fra repo-roten: `npm exec --yes --package=tailwindcss@3.4.17 -- tailwindcss -i vibe/hul-lagerstyring/tailwind.input.css -o vibe/hul-lagerstyring/style.css --config vibe/hul-lagerstyring/tailwind.config.cjs --minify`.
-- CSP begrenser script, stil, bilder, medier og skrifttyper til samme origin, inline-kode der appen trenger det, samt lokale `data:`/`blob:`-vedlegg. `connect-src 'none'` blokkerer alle nettverkstilkoblinger. Mockbackendens `mock://hul-mock.local` er en lokal interceptor-nøkkel, ikke en nettverksadresse.
+- CSP begrenser script og stil til samme origin uten inline-kode; bilder, medier og skrifttyper er lokale, med `data:`/`blob:` for vedlegg. `connect-src 'none'` blokkerer alle nettverkstilkoblinger. Mockbackendens `mock://hul-mock.local` er en lokal interceptor-nøkkel, ikke en nettverksadresse.
 
 ## Kildeinventar og avgrensning
 

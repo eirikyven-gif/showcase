@@ -13,7 +13,7 @@ test('catalog and route identify the archived app and its status', () => {
   const catalog = JSON.parse(read('vibe/catalog.json'));
   const app = catalog.apps.find(item => item.slug === 'ns3424-arkivdemo');
   assert.ok(app);
-  assert.equal(read('VERSION').trim(), '0.60.0');
+  assert.equal(read('VERSION').trim(), '0.60.1');
   assert.match(app.source, /eirikyven-gif\/ns3456/);
   assert.match(app.source, /5c58678269fb2c24d83af8afedeb65c8878732ff/);
   assert.match(app.status, /arkivert app-fdvu-ns3424/);
