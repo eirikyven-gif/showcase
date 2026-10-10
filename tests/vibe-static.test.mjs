@@ -26,7 +26,7 @@ function formHasSubmitGuard(formAttributes, pageScripts) {
   const formVariable = pageScripts.match(selectorPattern)?.[1];
   if (!formVariable) return false;
   const submitPattern = new RegExp(
-    `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*\\w+\\s*\\)\\s*=>\\s*\\w+\\.preventDefault\\(\\)`,
+    `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*(\\w+)\\s*\\)\\s*=>\\s*(?:\\{\\s*)?\\1\\.preventDefault\\(\\)`,
   );
   return submitPattern.test(pageScripts);
 }
