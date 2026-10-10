@@ -1,21 +1,21 @@
 # Vurderingsarbeid · fagskole
 
-Funksjonell lokal showcase-kopi på `/vibe/vurderingsarbeid-fagskolen/`, basert på `eirikyven-gif/app-vurderingsarbeid` commit `73cb9eded2f6517e3ebfbed45bdaf8e70395dac3`.
+Kildebasert lokal kopi på `/vibe/vurderingsarbeid-fagskolen/` fra `eirikyven-gif/app-vurderingsarbeid` commit `73cb9eded2f6517e3ebfbed45bdaf8e70395dac3`. Kildekoden er ikke endret. Direkte sammenligning og dekning står i [PARITY.md](PARITY.md).
 
 ## Arbeidsflyt
 
-Importer og eksporter rubrikk/datasett som Excel, gi rubrikksvar med kriterievekting og indikatorer, følg student- og kullprogresjon, filtrer oversikten, flytt studenter mellom kull og nullstill vurderinger. Ved første åpning vises fiktiv rubrikk, oppgave og de syntetiske «Eksempelstudent A/B». Excel-mal og vurderingsutdrag kan også lastes ned lokalt.
+Kopien beholder importkontroll, Excel-mal og datasettimport/-eksport, svarsett og vektet rubrikkscore, K0/formelle krav, elev- og kulloversikt, progresjonsfiltre, individuell vurderingsnullstilling, elevflytting, tekstlig oppsummering, fremovermelding underveis, sluttvurderingsutkast, redigering, kopiering av promptgrunnlag og eksplisitt godkjenning av slutttekst. Standardelevene og vurderingsdataene er syntetiske. Rubrikk, svarsett og eksempeloppgavetekst beholder kildeappens arbeidsmal; student-ID/-navn/-klasse er erstattet med tydelige syntetiske etiketter.
+
+KI-panelet er en **lokal simulering**, ikke KI: genereringsknappene lager et deterministisk struktureringsutkast fra aktiv vurdering og kaller ingen modell. Kildeappens eksterne provider, API-nøkkel, tilkoblingstest og nettverksgenerering er tatt ut. Promptgrunnlaget vises før brukeren velger å kopiere det. Lokal styringstekst lagres på enheten.
 
 ## Lokal data og personvern
 
-Excel-filer leses og skrives i nettleseren. Vurderingsendringer lagres i nettleserens `localStorage` på denne enheten; de sendes ikke til en server. Ikke importer ekte studentopplysninger. «Nullstill demo» fjerner demoens lagrede data. Eldre leverandørnøkkelposter fra tidligere versjoner av denne ruten fjernes ved innlasting.
+Excel-filer og vurderingsdata behandles i nettleseren. Endringer lagres i `localStorage` på enheten og sendes ikke til en server. Ikke importer ekte studentopplysninger. Kopiert prompt kan inneholde oppgavetekst, svar og stikkord; eventuell deling etter kopiering styres av brukeren. «Nullstill demo» fjerner lokale arbeidsdata. XLSX-biblioteket er bundlet lokalt, uten CDN.
 
-Ikke portert: KI-generering/manuell KI-promptflyt, provider-endepunkter og nøkkelinnstillinger, autentisering, serverfunksjoner og ekstern synkronisering. KI/API-nøkler er tatt helt ut. XLSX-biblioteket er bundlet lokalt i `assets/`; ingen CDN eller annen ekstern runtime-ressurs brukes.
+## Kilde og status
 
-## QA og deploy
+Kildebevis, browser-QA og full deklarasjonsoversikt for 141 kildefunksjoner står i [PARITY.md](PARITY.md) og [FUNCTION-COVERAGE.json](FUNCTION-COVERAGE.json). Den kildegenererte Excel-malen med syntetiske elevverdier ligger i `tests/fixtures/vurderingsarbeid-source-template-synthetic.xlsx`; kildedatafila er ikke endret. Showcase-baseline er `origin/main` `38518a5466b8a3f9098d916c0f9190c696ffb0d9`, `VERSION 0.60.1`; denne endringen foreslår `0.61.0`. Issue #2 er delvis løst: prompt-/godkjenningsarbeidsflytene er bevart, men ekstern KI-generering, provider-innstillinger og nøkler er fjernet av personvern- og nettverksgrunner. Lisens/gjenbrukstillatelse er ikke funnet i gjennomgått kildemateriale og må avklares. Draft PR; ikke merget eller deployet.
 
-Kjør `node --test tests/vurderingsarbeid-source-faithful.test.mjs` og `node --test tests/*.test.mjs` (105 tester bestod). Chromium/Playwright QA ved 1365px og 375px bekreftet at eksempelrubrikk og to syntetiske elever åpnes, A har 5/5 svar, studentoversikten filtrerer søk og viser progresjon, individuell vurderingsnullstilling og oppretting/flytting til kull virker, datasetteksport kan importeres igjen, og Nullstill demo går tilbake til tom tilstand. Mobilvisning har ikke horisontal overflow. Konsollfeil: 0; nettverksforespørsler: side og lokal XLSX-fil, ingen eksterne forespørsler. QA omfatter ikke full WCAG-gjennomgang eller manuell validering av alle mulige Excel-varianter. Endringen løser Issue #2 delvis. Isolert PR; ingen merge eller deploy.
+## QA
 
-## Kilde og usikkerhet
-
-Tasken startet på showcase v0.56.0; PR-grenen ble rebased på dagens main v0.58.0. SemVer-bumpen er v0.59.0. Kilde-README, `app/vurderingsverktoy.html`, SSoT v0.1.17 og KI-datagrunnlagsnotatet ble lest ved oppgitt SHA. Ingen kildetestkommando ble identifisert. Lisens eller eksplisitt gjenbrukstillatelse ble ikke funnet i gjennomgått appmateriale; rettighetsstatus er uavklart.
+`node --test tests/*.test.mjs`: 110/110 tester bestod. Playwright/Chromium-QA på 1365px kontrollerte de to syntetiske elevene, per-elev underveisutkast, promptvisning uten elevnavn/ID, fullstendig vurdering, redigering/godkjenning og at ikke-godkjent sluttutkast holdes utenfor eksport. Mobil/desktop bredder 320, 375, 390, 768, 1024 og 1365px hadde ingen horisontal overflow. Lokal styringstekst overlevde reload; Nullstilling fjernet lokal arbeidsøkt. Ingen off-origin requests eller JS/runtime-feil. Én nettleserstandardforespørsel etter `/favicon.ico` ga 404 på den lokale testserveren; ruten bruker ingen favicon i denne isolerte servertesten. Testene dekker representative arbeidsflyter, ikke alle Excel-varianter eller full WCAG-/skjermleser-/enhetstest.
