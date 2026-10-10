@@ -3,42 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En trygg eksempelvisning av tilfeldig gruppefordeling med oppdiktede deltakere.">
-  <title>Gruppegenerator · eksempel</title>
+  <meta name="description" content="Fordel syntetiske deltakere i grupper med Gruppegenerator-demoen.">
+  <title>Gruppegenerator · Vibe</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
-  <main class="shell">
-    <nav aria-label="Brødsmule"><a href="/vibe/">← Til appoversikten</a></nav>
-    <header class="intro">
-      <p class="eyebrow">EKSEMPEL · ALT INNHOLD ER OPPDIKTET</p>
-      <h1>Gruppegenerator</h1>
-      <p>Fordel et fast eksempelutvalg i tilfeldige grupper. Denne demonstrasjonen inneholder ingen navnefelt.</p>
-    </header>
-    <section class="workspace" aria-labelledby="controls-title">
-      <div class="controls">
-        <div>
-          <h2 id="controls-title">Lag grupper</h2>
-          <p class="hint">Eksempelutvalget har åtte oppdiktede deltakere. Velg hvor mange grupper du vil lage.</p>
-          <label for="group-count">Antall grupper</label>
-          <select id="group-count">
-            <option value="2">2 grupper</option>
-            <option value="3" selected>3 grupper</option>
-            <option value="4">4 grupper</option>
-          </select>
-          <div class="actions">
-            <button id="generate" type="button">Bland grupper</button>
-            <button id="reset" class="secondary" type="button">Nullstill eksempel</button>
-          </div>
-          <p id="status" class="status" role="status" aria-live="polite">Eksempelgruppene er klare.</p>
-        </div>
-        <aside class="privacy-note" aria-label="Personvern"><span aria-hidden="true">✳</span><p><strong>Kun oppdiktede data</strong><br>Fordelingen skjer midlertidig i denne fanen. Ingenting sendes eller lagres.</p></aside>
-      </div>
-      <div class="results-head"><div><p class="eyebrow">FORDELING I EKSEMPELET</p><h2 id="result-title">Dine grupper</h2></div><p id="summary" class="summary">3 grupper · 8 deltakere</p></div>
-      <div id="groups" class="groups" aria-live="polite" aria-labelledby="result-title"></div>
-    </section>
-    <footer><p>Demonstrasjon med syntetiske etiketter. Ikke bruk virkelige navn eller personopplysninger her.</p></footer>
-  </main>
+<main class="shell">
+  <nav aria-label="Brødsmule"><a href="/vibe/">← Til appoversikten</a></nav>
+  <header class="intro">
+    <p class="eyebrow">VIBE · LOKAL DEMONSTRASJON</p>
+    <h1>Gruppegenerator</h1>
+    <p>Lim inn en liste, velg hvordan gruppene skal fordeles, juster resultatet og last ned et regneark.</p>
+  </header>
+  <aside class="privacy-note" aria-label="Personvern og demoavgrensning">
+    <span aria-hidden="true">✳</span><p><strong>Kun lokal behandling</strong><br>Startlisten er syntetisk. Teksten behandles bare i denne fanen og sendes ikke noe sted. Ingen innlogging eller lagring brukes. Bruk ikke virkelige navn eller andre personopplysninger.</p>
+  </aside>
+  <section class="workspace" aria-labelledby="input-heading">
+    <h2 id="input-heading">1. Deltakerliste</h2>
+    <p class="hint">Lim inn navn fra tekst, Word eller Excel, ett per linje. Tomme linjer og ekstra mellomrom fjernes.</p>
+    <label for="names">Navn · syntetiske eksempeldata</label>
+    <textarea id="names" spellcheck="false" aria-describedby="input-help">Deltaker A
+Deltaker B
+Deltaker C
+Deltaker D
+Deltaker E
+Deltaker F
+Deltaker G
+Deltaker H</textarea>
+    <p id="input-help" class="field-help">Eksempelet er oppdiktet. Innholdet forsvinner når du nullstiller eller lukker fanen.</p>
+    <div class="controls">
+      <div class="control"><label for="method">Fordelingsmetode</label><select id="method"><option value="">Velg metode</option><option value="groups">Antall grupper</option><option value="size">Deltakere per gruppe</option></select></div>
+      <div class="control"><label for="amount">Antall</label><input id="amount" type="number" min="1" step="1" inputmode="numeric" disabled></div>
+    </div>
+    <div id="preview" class="preview" aria-live="polite">Forhåndsvisning: velg fordelingsmetode og antall.</div>
+    <div class="actions"><button id="generate" type="button">Generer grupper</button><button id="again" class="secondary" type="button" disabled>Generer på nytt</button><button id="export" class="secondary" type="button" disabled>Last ned Excel</button><button id="reset" class="secondary" type="button">Nullstill</button></div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </section>
+  <section class="workspace" aria-labelledby="result-heading">
+    <div class="results-head"><div><p class="eyebrow">LOKALT RESULTAT</p><h2 id="result-heading">2. Grupper</h2></div><p id="summary" class="summary">Ingen grupper er generert ennå.</p></div>
+    <div id="move-controls" class="move-controls" hidden>
+      <div class="field"><label for="selected-student">Valgt deltaker</label><select id="selected-student"></select></div>
+      <div class="field"><label for="target-group">Flytt til</label><select id="target-group"></select></div>
+      <button id="move-selected" type="button">Flytt deltaker</button>
+      <p class="move-help">Velg en deltaker her eller i gruppelisten, og velg målet. Du kan også dra deltakere mellom grupper.</p>
+    </div>
+    <div id="groups" class="groups" aria-live="polite" aria-labelledby="result-heading"><p class="empty">Resultatet vises her.</p></div>
+  </section>
+  <footer><p>Demoen er en statisk showcase-kopi av arbeidsflyten. Den lagrer ikke navn eller grupper.</p></footer>
+</main>
 </body>
 </html>
