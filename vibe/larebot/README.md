@@ -1,32 +1,29 @@
 # Lærebot
 
-Første brede vurdering av Lærebot. Kandidaten er beholdt for vurdering; ingen kuratering eller utsiling er gjort.
+Local showcase simulator for the learner and content-admin surfaces of Lærebot. The canonical route is /vibe/larebot/.
 
-## Katalogmetadata
+## Source and scope
 
-- **Navn:** Lærebot
-- **Bruksområde:** Utforsk en kort, forhåndsskrevet læringsforklaring om et naturfaglig tema.
-- **Kategori:** Utdanning
-- **Målgruppe:** Elever, undervisere og andre som vil se et eksempel på læringsstøtte.
-- **Status:** Kildeinngangspunkt bekreftet; original, statisk Vibe-demo opprettet. Bred førstegangsvurdering, ikke kuratert.
-- **Foreslått slug:** `larebot`
-- **Demoens verdi:** Viser hvordan et ferdig eksempelspørsmål kan kobles til en kort forklaring uten å be brukeren skrive inn tekst.
-- **Nødvendige forenklinger:** Én oppdiktet læringsenhet og tre faste spørsmål/svar; ingen modellgenerering, valg av fag, PIN, rolle, admin eller kildekobling.
-- **Omfang:** Én temaside, tre forhåndsdefinerte valg, tilhørende eksempelrespons og nullstilling.
+- Source: eirikyven-gif/diverse-apper/apps/larebot, inspected at exact main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530.
+- Source files reviewed: README.md, index.html, assets/larebot.js, assets/larebot.css, admin/index.html, assets/admin.js, the API directory listing and app test listing. The source repository was read only.
+- Source app uses PIN/admin-password authentication, PHP APIs, server-side private JSON storage, and optional OpenAI/Gemini API keys.
+- This page preserves its role switch, subject/topic selection, free-text question flow, conversation replies with source references, and local content/bot configuration surface. Its seed topic and resource are synthetic water-cycle teaching material.
 
-## Kildeinngangspunkt og vurdering
+## Safety boundaries
 
-Kildeinngangspunktet er `apps/larebot/index.html` i `eirikyven-gif/diverse-apper`. Den kilde-HTML-en viser PIN-innlogging, fag-/temavalg og fritekstspørsmål, og laster appens stil og skript fra `assets/`. Kildens README beskriver serverbasert PIN-/sesjonshåndtering, privat JSON-kildelagring og mulige OpenAI/Gemini-integrasjoner. Kilderepoet ble kun lest.
+- There is no login, PIN, account creation, student roster, real role enforcement, PHP, server persistence, network request, model invocation, or external service.
+- User and PIN management were removed because they would collect identity data and imply authentication. Subject/topic are fixed to the single synthetic example.
+- Questions and replies exist only in page memory and are never transmitted or persisted. The page warns visitors not to enter identifying information.
+- The editor's synthetic resource, bot label, and provider/model display values persist in localStorage under vibe.larebot.demo.v1, because the source admin surface edits persistent content. Provider labels are display-only and make no API call. A visible reset button removes this one key.
+- The existing three water-cycle example questions and their prewritten answers remain available as starter prompts. The source's private curriculum, user records, secrets, API code, and runtime data were not copied.
+- The original source UI/content/design license or reuse permission was not found; rights remain unverified. The water-cycle lesson and sample responses in this showcase are original synthetic copy.
 
-Demoens undervisningstekst, spørsmål og svar er skrevet på nytt og handler om vannets kretsløp. Kildekode, pensumtekst, elevopplysninger, navn, medier, API-konfigurasjon og tjenesteintegrasjoner er ikke kopiert. Rettighetsstatus for kildeproduktets innhold er ikke vurdert eller nødvendig for denne selvstendige demoen; konseptuell inspirasjon er avgrenset til en pedagogisk forklaringsflate. Ingen tredjepartstekst eller -kode brukes.
+## Checks
 
-## Forenklinger og risiko
+Run the app-specific static contract check with node --test tests/larebot.test.mjs; CI runs the complete suite with node --test tests/*.test.mjs.
 
-- Ingen innlogging, PIN, kontoer, elevroller, admin, fritekstfelt, AI eller API.
-- Ingen serverkomponenter, serverlagring, nettverkskall, tredjepartskilder, informasjonskapsler eller nettleserlagring.
-- Valg viser en fast lokal tekst og finnes bare i sidens minne; oppdatering/nullstilling fjerner visningen.
-- Kildeproduktets bruk med ungdomsskoleelever medfører forhøyet personvern- og mindreårigrisiko dersom kontoer, spørsmål, svar, fremdrift eller kildedata behandles. Demoen identifiserer ingen bruker og samler ikke inn elevdata. Innholdet er generisk, syntetisk og ufarlig, men offentlig bruk av læringsmateriell for mindreårige bør fortsatt vurderes i den senere kurateringsrunden.
+Manual QA: select Elevvisning, choose Naturfag → Vannets kretsløp, submit a typed and a starter question, check the local response and source label; switch to Adminvisning, edit and save the synthetic resource, return to the learner view, then reset and verify defaults return. Check keyboard focus and a narrow viewport.
 
-## QA
+## Risks and rollout
 
-Kanonisk direkterute: `/vibe/larebot/`. Siden har tydelige overskrifter, navngitte knapper, synlig tastaturfokus, hoppelenke, live-region for svar, mobilstil og redusert bevegelse. Knappevalg og nullstilling bruker kun nettleserminne. Ingen skjemadata kan sendes.
+This is an educational UI demonstration for general audiences, not verified teaching content or an assessment tool. Visitors could still type personal data despite the notice; text stays on the device and is discarded when the page closes. Browser storage may be unavailable or cleared by browser settings. No merge or deployment is part of this PR.
