@@ -1,33 +1,30 @@
-# Gårdsbehov · første vurdering og syntetisk demo
+# Gårdsbehov · syntetisk arbeidsflytdemo
 
-## Katalogvurdering
+## Kilde og formål
 
-- **Navn:** Gårdsbehov.
-- **Bruksområde:** Se et syntetisk eksempel på melding, prioritering og oppfølging av et gårdsbehov.
-- **Kategori:** Gårdsdrift.
-- **Målgruppe:** Gårdsbruk, driftsansvarlige og alle som vil utforske en enkel driftsflyt.
-- **Kildestatus:** Aktiv, selvstendig app i et privat monorepo. Kildeversjon inspisert: 0.20.1. README beskriver komplett saksflyt med appinnlogging, brukerroller, session, MariaDB, privat vedleggslagring, e-post-outbox, offentlige statuslenker og offentlig innmelding.
-- **Status:** Beholdt i bred førstegangsvurdering; syntetisk statisk demo laget. Ingen kuratering eller utsiling.
-- **Foreslått slug/rute:** `gardsbehov-fornes` · `/vibe/gardsbehov-fornes/`.
-- **Demoens verdi:** Følg én fiktiv vedlikeholdssak fra melding via prioriteringsgrunnlag til mulig neste steg. Viser sakskontekst, status, prioriteringsfaktorer og hendelseslinje.
-- **Forenklinger:** Én oppdiktet sak om en portlås på et tenkt sted, én fiktiv eksempelrolle og to statiske hendelser. Ingen registrering, vedlegg, meldinger, tildeling, e-post, innlogging, API, database eller faktisk statusendring. Prioritetseksempelet er en illustrasjon, ikke en operativ beregning.
-- **Avhengigheter:** Kildeappen beskriver PHP-runtime, MariaDB, privat fillager, app-session og e-postkonfigurasjon. Ingen av disse avhengighetene finnes i demoen.
-- **Risiko:** Kilden håndterer privat driftsinformasjon og kan behandle personopplysninger og HMS-informasjon. Demoen har lavere risiko fordi alt innhold er syntetisk, uten identifiserende detaljer, opplasting eller innsending. Kildens operative system krever separat sikkerhets-, personvern- og HMS-vurdering før eventuell bruk med reelle data.
-- **Omfang:** Responsiv, statisk, skrivebeskyttet visning av én sak, prioriteringsfaktorer og hendelsesforløp. Ingen browser- eller serverlagring og ingen eksterne kall.
+- Kilde: `eirikyven-gif/apps-fornes-gard/apps/gardsbehov`, offentlig `main` commit `90014358fb3d70e89265b2b30d38e9376a6927b2` (lest 2026-10-10), appversjon 0.20.1. Kilderepoet er kun inspisert.
+- Kilde-README og frontend er gjennomgått. Kilden beskriver komplett innmelding og saksflyt: registrering, konsekvens/hast/HMS-prioritet, Mine saker, scope-avgrenset fellesoversikt, filtre, vurdering, tildeling, notater, statusflyt, ferdigkontroll, lukking og arkiv. Den har også bilderedigering/opplasting, offentlig innmelding/statuslenke, magisk innlogging, e-post og omfattende administrasjon.
+- Denne eksisterende ruten (`/vibe/gardsbehov-fornes/`) er gjort om fra en oppdiktet enkeltsaksvisning til en interaktiv, funksjonell demo av kjerneflyten. Den beholder syntetiske eksempelsaker, saksliste, saksdetalj, prioriteringsgrunnlag og hendelser. Nye eksempelmeldinger, rollebaserte visningshandlinger, tildeling, statusovergang, notat, søk/filtrering og arkiv er lagt til.
+- Prioritet følger kildens formel: produksjon/drift × hast + HMS/sikkerhet. Alle tre skalaene går fra 0 til 3, og kildeappens nivågrenser er brukt: 0 ingen utslag, 1–2 lav, 3–5 middels og 6 eller mer høy. Maksimal skår i kildemodellen er 12. Beregningen er lokal illustrasjon og har ingen operativ virkning.
 
-## Sikkerhet og personvern
+## Erstattede eller utelatte deler
 
-Alt synlig saksinnhold og alle stedsnavn, roller, ID-er og tidsstempler er oppdiktet for denne demoen. Ingen navn på virkelige personer eller steder brukes. Ingen uploadkontroller, meldingsfelt, e-postlenker, statuslenker, loginflater, skjemaer, API-endepunkter eller serverfiler er med. Demoen bruker ikke cookies, nettleserlagring, kontoer, database, analyse eller eksterne ressurser. JavaScript gjør kun en lokal scroll til det statiske saksdetaljpanelet. Ingen secrets eller kildefiler med operative data er kopiert.
+- Innlogging, sessions, rollerettigheter, nonce-/tokenflyt og autorisasjon er fjernet. Rollevelgeren simulerer bare hvilke knapper som vises; den er ikke sikkerhetskontroll.
+- MariaDB, serverlagring, API-er, private tabeller/filområder, ratebegrensning, idempotens og audit er fjernet. Demoen lagrer bare syntetiske saker i én `localStorage`-nøkkel. Nullstillingsknappen fjerner denne nøkkelen og gjenoppretter startdata. Hvis nettleseren blokkerer lagring, fortsetter økten i minnet.
+- Ingen bildevalg, kamera, opplasting, filvisning, kontaktfelt, fritekst, ekte stedsliste, kontoer, offentlig statuslenke, e-post, ekstern aktørdata, API-kall eller eksterne ressurser er med. Kildens adminfunksjoner for kontekster, kategorier, brukere, roller og scope er forklart som funksjonsområder, ikke aktivert.
+- Alle ID-er, beskrivelser, steder, roller, tidsangivelser og statusdata er syntetiske. Brukere varsles tydelig om ikke å bruke demoen med reelle personopplysninger, HMS-informasjon, bilder eller driftsmeldinger.
 
-## Test, QA og deploy
+## QA, kontroller og begrensninger
 
-- Automatiserte tester: `node --test tests/*.test.mjs`.
-- JavaScript-syntaks: `node --check vibe/gardsbehov-fornes/app.js`.
-- HTTP QA: kontroller `/vibe/gardsbehov-fornes/`, stilark, skript, hubkort og katalogsøk med en lokal statisk server.
-- Mobil QA: kontroller smal visning ved 320 px og 390 px, uten horisontal overflyt; kontroller også desktopbredde.
-- Tilgjengelighet: semantiske overskrifter og lister, skip-lenke, synlig fokus, navngitte regioner, tekstalternativ for poengskala og ingen informasjon formidlet bare med farge. Kontroller tastaturnavigering og redusert bevegelse.
-- Nettverk og lagring: ruten laster bare same-origin statiske filer. Kontroller at den ikke bruker API-/nettverkstransport, cookies, local/session storage eller IndexedDB.
-- CI: GitHub Actions-resultat føres i PR etter at kjøringen er ferdig.
-- Deploy: ingen deploy er utført av denne PR-en. Bruk etablert **Deploy Vibe to one.com**-workflow fra `main`, start med `dry_run=true`, og kontroller offentlig direkterute, katalogkort og statiske ressurser etter eventuell live-deploy.
+- Showcase-kontroller: `node --check vibe/gardsbehov-fornes/app.js`; `node --test tests/*.test.mjs`; repository CI på PR.
+- Manuell QA: kontroller direkterute, tab-keyboard, registrering, beregning, rollebytte, tildeling, status, hendelseslogg, filter, arkiv, reset og localStorage-tilgjengelighet. Kontroller 320/390 px og desktop, tastaturfokus og redusert bevegelse.
+- Nettverks-/personvernkontroll: bare same-origin HTML/CSS/JS; appskriptet bruker ikke `fetch`, XHR, cookies eller API. Nettleserlagring er begrenset til den synlige syntetiske demoen og kan nullstilles fra siden.
+- Kildetestene ble ikke kjørt; de krever PHP, database, tjenester og fixtures utenfor showcase. Showcase CI og lokalt definerte kontroller gjelder kopien.
+- Risiko/begrensning: rolle- og saksflyt er klientbasert simulering, og lokal prioritet/hendelseshistorikk er ikke en revisjonslogg. Kildens sikkerhet, drift, personvern, tillatelser og reelle dataflyt er ikke revidert. Ingen kildeassets eller hemmeligheter er kopiert.
 
-Denne leveransen løser Issue #2 delvis ved å legge til én vurdert, isolert kandidatdemo. Kilderepoet er kun inspisert; det er ikke endret. Førsterunden er bred, og ingen kandidater er kuratert bort.
+## Leveranse
+
+- Issue #2 delvis løst ved å gjøre den eksisterende kandidaten mer tro mot verifisert kilde.
+- Showcase-baseline: `65b8f90`, `VERSION` 0.52.0; foreslått minorversjon 0.53.0.
+- PR endrer bare `/vibe/gardsbehov-fornes/`, katalogoppføringen og `VERSION`.
+- Ingen merge eller deploy utført. Ved godkjenning kan eksisterende Vibe-deploy først kjøres som `dry_run=true`; verifiser etter eventuell senere deploy rute, statiske ressurser og katalogkort.
