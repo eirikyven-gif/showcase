@@ -17,7 +17,7 @@ test('assessment route cites exact source commit and replaces prior concept meta
   assert.match(entry.status, /Issue #2 delvis løst/);
   assert.match(entry.scope, /XLSX import/);
   assert.match(entry.sourceApiAuthStoragePrivacy, /localStorage/);
-  assert.equal(read('VERSION').trim(), '0.60.1');
+  assert.equal(read('VERSION').trim(), '0.60.2');
   assert.match(read('vibe/vurderingsarbeid-fagskolen/README.md'), new RegExp(sha));
 });
 

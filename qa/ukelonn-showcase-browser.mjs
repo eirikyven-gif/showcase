@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync, createReadStream } from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import test, { after, before } from 'node:test';
 
@@ -17,6 +18,7 @@ const routes = [
 ];
 let server, browser, base;
 const requests = [];
+const externalRequests = [];
 
 before(async () => {
   server = createServer((request, response) => {
@@ -46,13 +48,17 @@ test('app pages and assets are present as direct static routes', () => {
   for (const script of ['demo-api.js', 'shell.js', 'ukelonn.js', 'overview.js', 'history.js', 'admin-dashboard.js', 'tasks-admin.js', 'auth.js', 'suggestions.js', 'suggestions-admin.js', 'periods-admin.js', 'payments-admin.js', 'payout-claims-admin.js', 'admin-registrations.js', 'user-history-admin.js']) {
     assert.ok(existsSync(path.join(app, 'assets', script)), `${script} exists`);
   }
-  assert.equal(readFileSync(path.join(app, 'assets/ukelonn-gjoremal-mal.xlsx')).subarray(0, 2).toString(), 'PK');
+  assert.ok(existsSync(path.join(app, 'assets/tasks-excel.js')));
+  assert.ok(existsSync(path.join(app, 'assets/synthetic-attachment.svg')));
 });
 
 test('every app route opens directly and refreshes without browser errors or server API calls', async () => {
   requests.length = 0;
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
+  page.on('request', request => {
+    if (new URL(request.url()).origin !== new URL(base).origin) externalRequests.push(request.url());
+  });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   for (const route of routes) {
@@ -68,6 +74,11 @@ test('every app route opens directly and refreshes without browser errors or ser
     assert.ok(['hidden', 'clip'].includes(layout.bodyOverflow), `page overflow is clipped on ${route || '/'}: ${JSON.stringify(layout)}`);
     assert.deepEqual(layout.outsideTables, [], `mobile content outside deliberate table scroll wrappers: ${JSON.stringify(layout)}`);
     assert.ok(layout.tableOverflows.every(value => ['auto', 'scroll'].includes(value)), `wide tables have internal scroll areas on ${route}: ${JSON.stringify(layout)}`);
+    const unnamedControls = await page.evaluate(() => [...document.querySelectorAll('input:not([type="hidden"]),select,textarea,button')]
+      .filter(element => element.getClientRects().length)
+      .filter(element => !(element.getAttribute('aria-label') || element.getAttribute('aria-labelledby') || element.labels?.length || element.innerText?.trim() || element.title))
+      .map(element => `${element.tagName}.${String(element.className || '')}`));
+    assert.deepEqual(unnamedControls, [], `visible form controls have accessible names on ${route || '/'}: ${JSON.stringify(unnamedControls)}`);
     assert.equal((await page.reload()).status(), 200, `refresh responds successfully: ${route || '/'}`);
   }
   await page.goto(base + 'registrer/');
@@ -80,6 +91,7 @@ test('every app route opens directly and refreshes without browser errors or ser
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('aria-label')), 'Åpne meny');
   assert.deepEqual(errors, []);
   assert.equal(requests.some(url => url.includes('/api/')), false);
+  assert.deepEqual(externalRequests, [], 'the browser makes no off-origin requests');
   await context.close();
 });
 
@@ -94,7 +106,9 @@ test('demo has synthetic personas, explicit local storage/reset, no auth fields,
   assert.match(scripts, /Nullstill alle demoendringer/);
   assert.match(scripts, /window\.fetch\s*=\s*async/);
   assert.match(scripts, /throw new TypeError\('Ukelønn-demoen tillater bare lokale simuleringer/);
-  assert.doesNotMatch(`${html}\n${scripts}`, /document\.cookie|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon|https?:\/\//i);
+  assert.doesNotMatch(`${html}\n${scripts}`, /document\.cookie|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon/i);
+  assert.doesNotMatch(html, /(?:href|src)=[\"']https?:\/\//i);
+  assert.doesNotMatch(scripts.replace(/(?:xmlns(?::[\w-]+)?|Type)=\"https?:\/\/[^\"]+\"/g, ''), /https?:\/\//i);
   assert.equal(existsSync(path.join(app, 'api')), false, 'no source API/server code is copied');
 });
 
@@ -102,6 +116,9 @@ test('user and admin workflows persist locally, reset fully, expose hub route, a
   requests.length = 0;
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
+  page.on('request', request => {
+    if (new URL(request.url()).origin !== new URL(base).origin) externalRequests.push(request.url());
+  });
   const pageErrors = [];
   page.on('pageerror', error => pageErrors.push(error.message));
   await page.goto(base + 'admin/gjoremal/');
@@ -123,13 +140,84 @@ test('user and admin workflows persist locally, reset fully, expose hub route, a
   await taskDialog.getByLabel('Navn').fill('Syntetisk oppgave justert');
   await taskDialog.getByRole('button', { name: 'Lagre endringer' }).click();
   await page.getByRole('row', { name: /Syntetisk oppgave justert/ }).waitFor();
+  const downloadPromise = page.waitForEvent('download');
+  await page.locator('[data-task-excel-export]').click();
+  const exported = await downloadPromise;
+  assert.equal(exported.suggestedFilename(), 'ukelonn-gjoremal.xlsx');
+  const exportedSheet = execFileSync('unzip', ['-p', await exported.path(), 'xl/worksheets/sheet1.xml'], { encoding: 'utf8' });
+  for (const value of ['Navn', 'Betaling (kr)', 'Aktiv', 'Bilde kreves', 'Rydde rom', 'Vaske vinduer']) assert.ok(exportedSheet.includes(value), `Excel export includes ${value}`);
   await page.locator('#task-excel-file').setInputFiles(path.join(repo, 'tests/fixtures/ukelonn-import-synthetic.xlsx'));
   await page.getByRole('button', { name: 'Importer Excel-fil' }).click();
   await page.getByRole('row', { name: /Syntetisk testoppgave/ }).waitFor();
+  await page.getByRole('row', { name: /Syntetisk inaktiv oppgave/ }).waitFor();
+  assert.equal(await page.getByRole('row', { name: /Syntetisk oppgave justert/ }).count(), 0, 'Excel import replaces the register');
+  const importedTasks = await page.evaluate(() => JSON.parse(localStorage.getItem('ukelonn-showcase-demo-v1')).tasks);
+  assert.equal(importedTasks.length, 2);
+  assert.equal(importedTasks.find(task => task.name === 'Syntetisk inaktiv oppgave').active, false);
+  assert.equal(importedTasks.find(task => task.name === 'Syntetisk inaktiv oppgave').requires_image, true);
   await page.reload();
-  await page.getByRole('row', { name: /Syntetisk oppgave justert/ }).waitFor();
+  await page.getByRole('row', { name: /Syntetisk testoppgave/ }).waitFor();
   await page.getByRole('button', { name: 'Nullstill alle demoendringer' }).click();
   await page.getByRole('row', { name: /Rydde rom/ }).waitFor();
+  await page.goto(base + 'registrer/');
+  await page.getByRole('checkbox', { name: /Vanne planter/ }).check();
+  await page.locator('[data-attachment-input="task-garden"]').setInputFiles({ name: 'syntetisk.png', mimeType: 'image/png', buffer: Buffer.from('syntetisk bildeinnhold') });
+  await page.getByRole('button', { name: 'Send inn registrering' }).click();
+  const syntheticPreview = page.getByRole('link', { name: 'Åpne syntetisk bildevedlegg 1' });
+  await syntheticPreview.waitFor();
+  const storedAfterAttachment = await page.evaluate(() => localStorage.getItem('ukelonn-showcase-demo-v1'));
+  assert.doesNotMatch(storedAfterAttachment, /syntetisk\.png|syntetisk bildeinnhold/);
+  const [previewPage] = await Promise.all([context.waitForEvent('page'), syntheticPreview.click()]);
+  await previewPage.waitForLoadState();
+  assert.match(await previewPage.locator('svg title').textContent(), /Syntetisk bildevedlegg/);
+  await previewPage.close();
+  await page.goto(base + 'admin/registreringer/');
+  await page.getByRole('link', { name: 'Åpne syntetisk bildevedlegg 1' }).waitFor();
+  await page.goto(base + 'registrer/');
+  await page.getByRole('button', { name: 'Foreslå et gjøremål' }).click();
+  await page.getByLabel('Hva har du gjort?').fill('Syntetisk sortering');
+  await page.getByLabel('Foreslått betaling (kr)').fill('8.5');
+  await page.getByRole('button', { name: 'Send forslag' }).click();
+  await page.getByText('Forslaget er sendt til behandling.').waitFor();
+  await page.goto(base + 'admin/forslag/');
+  await page.getByRole('row', { name: /Syntetisk sortering/ }).waitFor();
+  await page.getByRole('button', { name: 'Godkjenn' }).last().click();
+  const suggestionState = await page.evaluate(() => JSON.parse(localStorage.getItem('ukelonn-showcase-demo-v1')));
+  assert.equal(suggestionState.suggestions.find(item => item.description === 'Syntetisk sortering').status, 'approved');
+  await page.goto(base + 'min-oversikt/');
+  const smsPreview = page.getByRole('button', { name: 'Vis syntetisk SMS-utkast' });
+  await smsPreview.waitFor();
+  await smsPreview.click();
+  await page.getByText(/Simulering: ingen melding sendes\./).waitFor();
+  assert.equal(await page.locator('a[href^="sms:"]').count(), 0);
+  await page.getByRole('button', { name: 'Be om utbetaling' }).click();
+  await page.getByText('Utbetalingskravet er sendt til behandling.').waitFor();
+  await page.goto(base + 'admin/utbetalinger/');
+  const approveActions = page.locator('[data-claim-action="approve"]');
+  assert.equal(await approveActions.count(), 2);
+  await approveActions.last().click();
+  const paymentState = await page.evaluate(() => JSON.parse(localStorage.getItem('ukelonn-showcase-demo-v1')));
+  assert.ok(paymentState.claims.some(claim => claim.status === 'paid'));
+  const settledIds = paymentState.payments.flatMap(payment => payment.registration_ids);
+  assert.equal(new Set(settledIds).size, settledIds.length, 'a registration is never paid twice');
+  await page.goto(base + 'admin/perioder/');
+  await page.locator('#starts_at').fill('2027-01-01T20:00');
+  await page.locator('#ends_at').fill('2027-01-08T20:00');
+  await page.getByRole('button', { name: 'Lagre periode' }).click();
+  await page.locator('[data-periods] table tbody tr').waitFor();
+  assert.match(await page.locator('[data-periods]').innerText(), /2027/);
+  await page.goto(base + 'admin/brukere/');
+  await page.locator('#new-user-name').fill('Syntetisk bruker');
+  await page.getByRole('button', { name: 'Opprett bruker' }).click();
+  const syntheticUser = page.getByRole('row', { name: /Syntetisk bruker/ });
+  await syntheticUser.waitFor();
+  await syntheticUser.getByRole('button', { name: 'Rediger Syntetisk bruker' }).click();
+  await page.getByRole('dialog', { name: 'Rediger bruker' }).locator('[data-edit-user-name]').fill('Syntetisk bruker redigert');
+  await page.getByRole('dialog', { name: 'Rediger bruker' }).getByRole('button', { name: 'Lagre endringer' }).click();
+  const editedUser = page.getByRole('row', { name: /Syntetisk bruker redigert/ });
+  await editedUser.waitFor();
+  await editedUser.getByRole('link', { name: 'Åpne gjøremålshistorikk for Syntetisk bruker redigert' }).click();
+  await page.getByRole('heading', { name: 'Syntetisk bruker redigert' }).waitFor();
   await page.goto(base + 'registrer/');
   await page.getByRole('checkbox', { name: /Rydde kjøkken/ }).check();
   await page.getByRole('button', { name: 'Send inn registrering' }).click();
@@ -148,6 +236,7 @@ test('user and admin workflows persist locally, reset fully, expose hub route, a
   assert.ok(await page.locator(':focus-visible').count());
   assert.deepEqual(pageErrors, []);
   assert.equal(requests.some(url => url.includes('/api/')), false, 'API simulations never reached the HTTP server');
+  assert.deepEqual(externalRequests, [], 'no data or app request left the local origin');
   const stored = await page.evaluate(() => Object.keys(localStorage));
   assert.deepEqual(stored, ['ukelonn-showcase-demo-v1']);
   await context.close();
