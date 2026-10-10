@@ -2,29 +2,29 @@
   "apps": [
     {
       "slug": "fagquizer",
-      "name": "Fagquizer · liten regelquiz",
-      "useCase": "Utforsk en kort, original flervalgsinteraksjon bygget rundt en oppdiktet regel.",
+      "name": "Fagquizer · fag, tema og aktiviteter",
+      "useCase": "Utforsk naturfag og samfunnsfag gjennom flervalgsquizer, flashcards, ordquiz og åpne svar.",
       "category": "Utdanning og læringsgrensesnitt",
       "audience": [
         "Personer som utforsker quizgrensesnitt",
         "Undervisere",
         "Studenter"
       ],
-      "status": "Beholdt i bred førstegangsrunde; original, forenklet konseptdemo. Ingen kuratering eller utsiling er gjort.",
-      "source": "eirikyven-gif/diverse-apper/apps/quiz, offentlig main lest 2026-10-09; kilderepoet er kun lest. README blob SHA ff2a1468361afb4993838afe4a44aa9269ec2658. Full commit SHA er ikke fastslått.",
-      "sourceStack": "Kilde-README beskriver PHP 8.1+, HTML/CSS/JavaScript, PHP API-er og privat serverlagring. Showcase-ruten er statisk HTML/CSS/JavaScript.",
-      "sourceTests": "Kilde-README oppgir PHP-tester, Python-kjørere og valgfrie Playwright/Chromium-tester for KI-vurdering, ordquiz og utlogging. Kildetestene ble ikke kjørt; kommandoene og kravene ble ikke kjørt/validert i dette arbeidet.",
-      "sourceApiAuthStoragePrivacy": "Kilde-README beskriver PIN-basert elevinnlogging, separat admin/CSRF, private serverlagrede forsøk, API-er og server-side OpenAI/Gemini-vurdering. Den dokumenterer at svartekst ikke lagres i historikken. Locked v0.5 sier testapp uten reelle brukere/elevdata og forbyr reelle personopplysninger og ekte elevsvar; faktisk drift er ikke uavhengig verifisert. Showcase bruker ingen auth, API, leverandør eller lagring.",
-      "rightsUncertainty": "Ingen lisens eller gjenbrukstillatelse ble funnet i gjennomgåtte kildematerialer. Kode-, design- og innholdsrettigheter er uavklart. Showcase-ruten er original uten kopiert kildeinnhold eller aktiva.",
-      "purpose": "Kilde-README beskriver fag- og temabaserte quizer, flashcards, elevinnlogging, separat admin og private forsøksdata; åpne svar kan vurderes av KI.",
-      "demoValue": "Viser ett spørsmål med native svarvalg, lokal tilbakemelding og omstart, styrt av en synlig oppdiktet regel.",
-      "simplifications": "Ett originalt, fiktivt regelspørsmål med fast svar. Ingen fagplan, kildequiz, flashcards, fritekst, elevforsøk, konto, poenghistorikk eller vurderingsmodell.",
-      "risk": "Kilden håndterer elev-/adminautentisering, forsøksdata og eksterne KI-leverandører. Kildens faktiske drift er ikke revidert. Demoen er ikke offisielt kursmateriell, validert undervisning eller vurdering.",
-      "scope": "Statisk HTML/CSS/JS på /vibe/fagquizer/. Ett lokalt svar i minnet. Ingen nettverk, API, auth, browser/serverlagring, telemetry, upload, PII eller secrets.",
-      "routeState": "Ny unik rute på baseline showcase main 4a70da69210fd4586e1fcf455fa871d8e05e85d9, versjon 0.33.0 med 35 katalogruter; Fagquizer bringer tallet til 36. Slug og rute /vibe/fagquizer/ var fraværende.",
-      "sourceUncertainty": "Governance v0.3 omhandler åpen KI-vurdering, v0.2 adminstatistikk; låst v0.5 overstyrer v0.3/v0.4 om testmiljø og sier kun syntetisk data. Kilde-README lenker videre til v0.6. Dokumentsettene er versjonsmessig usynkroniserte; faktisk deploy/drift er ikke verifisert."
+      "status": "Kandidat beholdt etter bred vurdering; tro kopi med statiske aktiviteter og syntetiske, lokalt simulerte konto- og adminflyter.",
+      "source": "eirikyven-gif/diverse-apper/apps/quiz, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530. Kilde kun lest; dette showcase-kopiarbeidet endrer ikke kilderepoet.",
+      "sourceStack": "Kilde-README beskriver PHP 8.1+, HTML/CSS/JavaScript, PHP API-er og privat serverlagring. Kopien bruker statisk HTML/CSS/JavaScript og JSON-fixtures.",
+      "sourceTests": "Kilde-README oppgir PHP HTTP/enhetstester og Python/Playwright-kjørere for autentisering, lagring, vurdering og UI. Kildetestene er lest, ikke kjørt; denne PR-en kjører showcase-testene.",
+      "sourceApiAuthStoragePrivacy": "Kilden har PIN-basert elevinnlogging, separat admin/CSRF, forsøks-API-er, privat serverlagring og serverbasert OpenAI/Gemini-vurdering. Låst v0.5 forbyr reelle brukere/personopplysninger/elevsvar i testappen; v0.6 opprettholder dette. Kopien har ingen autentisering, API, serverlagring eller KI-leverandør. Rolle, quizprogresjon og flashcardtilstand kan lagres i nettleserens localStorage; rå svartekst lagres ikke. Hele demodata kan nullstilles.",
+      "rightsUncertainty": "Ingen lisens eller særskilt gjenbrukstillatelse ble funnet i gjennomgått kilde-README, instrukser eller SSoT. Denne kopien gjengir appens undervisningstekster og aktivitetsinnhold etter uttrykkelig oppdrag; opphavsrett og offentlig gjenbrukstillatelse er uavklart.",
+      "purpose": "Kilden gir elevene fag → tema → quiz, flashcards, ordquiz og åpne svar; separat admin håndterer testbrukere og aggregerte quizforsøk.",
+      "demoValue": "Gjenskaper de to fagene og deres tema-/aktivitetsnavigasjon, 30 flervalgsspørsmål, 16 flashcards, 15 ordquizspørsmål, 15 åpne svar, quizprogresjon/forklaringer, lokal fremdrift og en syntetisk adminoversikt.",
+      "simplifications": "PIN/passordinnlogging byttes mot forhåndsdefinert demo-elev/admin-rolle. Serverlagret forsøk erstattes av lokalt lagret syntetisk fremdrift. KI-vurdering erstattes av tydelig merket lokal heuristikk/fast respons; private fasiter og kriterier fra admin er ikke eksponert. Adminoversikten bruker faste, syntetiske summer og tilbyr ikke reell konto-/innholdsadministrasjon.",
+      "risk": "Utdanningsinnholdet er kopiert fra kildeappen. Ingen gjenbrukslisens eller særskilt tillatelse er verifisert. Lokal heuristikk er ikke faglig vurdering; demodata er ikke virkelige elever. Kildeappens produksjonsdrift er ikke revidert.",
+      "scope": "Statisk /vibe/fagquizer/ rute med lokale fixtures. localStorage lagrer syntetisk rolle, quizoversikter, gjenværende øktstatus uten rå svartekst og flashcardtilstand; synlig knapp nullstiller appens nøkkel. Ingen serverlagring, cookies, auth, API, ekstern KI, telemetry, hemmeligheter, identifiserende personopplysninger eller live/private data.",
+      "routeState": "Eksisterende /vibe/fagquizer/ beholdt. Baseline main 9a2bfb629b39498507458dfa0500961fd55d76db. Ruten fortsetter katalogkontrakten uten slugendring.",
+      "sourceUncertainty": "Låst v0.5 overstyrer v0.3/v0.4 for testappformålet; v0.6 viderefører forbudet mot ekte bruker/elevdata og krever KI-vurdert ordquiz i originalen. Kilde-README/runtime ble lest; faktisk drift er ikke kontrollert."
     },
-        {
+    {
       "slug": "soundscape",
       "name": "Soundscape · vær som lyd",
       "useCase": "Utforsk hvordan syntetiske vær-, luft- og solsignaler former et kontinuerlig lokalt lydbilde; prøv scenarioer og parameterkoblinger.",
