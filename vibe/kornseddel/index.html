@@ -1,35 +1,81 @@
 <!doctype html>
-<html lang="nb">
+<html lang="no">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En utskriftsvennlig, syntetisk kornfølgeseddel for en oppdiktet levering.">
-  <title>Kornfølgeseddel — Vibe</title>
-  <link rel="stylesheet" href="/vibe/assets/hub.css">
-  <link rel="stylesheet" href="/vibe/kornseddel/style.css">
-  <script src="/vibe/kornseddel/app.js" defer></script>
+  <meta name="theme-color" content="#087943">
+  <title>Kornseddel 2026 | Fornes Gård</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Hopp til innhold</a>
-  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
-  <main id="main" class="page-shell">
-    <section class="intro" aria-labelledby="title">
-      <p class="eyebrow">Kornfølgeseddel · konseptskisse</p>
-      <h1 id="title">En enkel <span>kornlevering.</span></h1>
-      <p class="lead">En ryddig, utskriftsvennlig oversikt over hva en fiktiv levering kan inneholde.</p>
-      <aside class="notice" role="note"><strong>Kun oppdiktede eksempeldata.</strong> Dette er ikke en gyldig følgeseddel. Ikke skriv inn eller bruk virkelige gårds-, person-, kontakt- eller leveringsopplysninger.</aside>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Fornes Gård, kornseddel"><span class="brand-mark" aria-hidden="true">FG</span><span>Fornes Gård</span></a>
+    <button class="print-button" id="print" type="button"><span aria-hidden="true">▣</span> Skriv ut</button>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <h1 id="page-title">Leveringsseddel – korn</h1>
+      <p>Fyll ut én gang. Opplysningene kommer på alle tre utskriftskopiene.</p>
+      <p class="ksl-note"><strong>Syntetisk demonstrasjon:</strong> Ikke bruk ekte person-, gårds- eller leveringsopplysninger. Skjemadata beholdes bare i denne åpne fanen og slettes når fanen lukkes.</p>
+      <p class="ksl-note"><strong>Matkorn:</strong> Kvalitetssystemet KSL må være etablert og i orden. Hvis ikke, trekkes 10 øre per kilo.</p>
     </section>
-    <section class="paper" aria-labelledby="slip-title">
-      <div class="paper-heading"><div><p class="eyebrow">Eksempeldokument · ikke gyldig</p><h2 id="slip-title">Kornfølgeseddel</h2></div><div class="stamp" aria-label="Syntetisk eksempel">EKSEMPEL</div></div>
-      <p class="paper-intro">Kun til illustrasjon av en enkel papirflyt. Alle navn, datoer, partier og mengder under er oppdiktet.</p>
-      <dl class="details"><div><dt>Avsender</dt><dd>Eksempelgård</dd></div><div><dt>Mottak</dt><dd>Prøvemottak</dd></div><div><dt>Leveringsdato</dt><dd>14. september 2026</dd></div><div><dt>Eksempelreferanse</dt><dd>PRØVE-026</dd></div></dl>
-      <div class="table-wrap"><table><caption>Oppdiktet varelinje</caption><thead><tr><th scope="col">Vare</th><th scope="col">Parti</th><th scope="col">Mengde</th><th scope="col">Enhet</th></tr></thead><tbody><tr><td>Fôrbygg · eksempel</td><td>DEMO-01</td><td>1 250</td><td>kg</td></tr></tbody></table></div>
-      <div class="signatures" aria-label="Felt for signatur på utskrevet eksempel"><div><span aria-hidden="true"></span><p>Avsender · eksempel</p></div><div><span aria-hidden="true"></span><p>Mottak · eksempel</p></div></div>
-      <p class="paper-footnote">Eksempelmengde og varebeskrivelse er ikke knyttet til en faktisk leveranse.</p>
-    </section>
-    <div class="actions"><button type="button" id="print-button">Skriv ut eksempel</button><p id="print-status" role="status" aria-live="polite">Utskrift åpner nettleserens vanlige utskriftsdialog.</p></div>
-    <p class="disclaimer">Dette er en statisk skisse. Den registrerer, beregner, sender eller lagrer ingen leveringsopplysninger.</p>
+    <form class="slip" id="slip-form" autocomplete="on">
+      <fieldset class="section">
+        <legend>Leverandør</legend>
+        <div class="personal-grid">
+          <label class="text-field">Navn<input name="name" value="Eksempelperson" autocomplete="name"></label>
+          <label class="text-field">Adresse<input name="address" value="Eksempelvei 1" autocomplete="street-address"></label>
+          <label class="text-field">Postnr.<input name="postal" value="0000" inputmode="numeric" autocomplete="postal-code"></label>
+          <label class="text-field">Poststed<input name="city" value="Eksempelby" autocomplete="address-level2"></label>
+          <label class="text-field">Telefon<input name="phone" value="000 00 000" autocomplete="tel"></label>
+          <label class="text-field">Produsentnr.<input name="producer" value="0000000000" inputmode="numeric"></label>
+        </div>
+      </fieldset>
+      <fieldset class="section">
+        <legend>Kornslag <span class="legend-note">Velg ett</span></legend>
+        <div class="crop-grid">
+          <div class="crop-item crop-wheat">
+            <label class="crop-choice"><input type="radio" name="crop" value="wheat"><span>Hvete</span></label>
+            <label class="text-field">Sort<input name="wheat-sort" aria-label="Hvete, sort"></label>
+            <label class="text-field">Forhåndsprøvenr.<input name="wheat-sample" aria-label="Hvete, forhåndsprøvenummer"></label>
+          </div>
+          <div class="crop-item crop-rye">
+            <label class="crop-choice"><input type="radio" name="crop" value="rye"><span>Rug</span></label>
+            <label class="text-field">Sort<input name="rye-sort" aria-label="Rug, sort"></label>
+            <label class="text-field">Forhåndsprøvenr.<input name="rye-sample" aria-label="Rug, forhåndsprøvenummer"></label>
+          </div>
+          <div class="crop-item"><label class="crop-choice"><input type="radio" name="crop" value="barley"><span>Bygg</span></label><label class="text-field">Sort<input name="barley-sort" aria-label="Bygg, sort"></label></div>
+          <div class="crop-item"><label class="crop-choice"><input type="radio" name="crop" value="oats"><span>Havre</span></label><label class="text-field">Sort<input name="oats-sort" aria-label="Havre, sort"></label></div>
+          <div class="crop-item"><label class="crop-choice"><input type="radio" name="crop" value="triticale"><span>Rughvete</span></label><label class="text-field">Sort<input name="triticale-sort" aria-label="Rughvete, sort"></label></div>
+          <div class="crop-item"><label class="crop-choice"><input type="radio" name="crop" value="oilseed"><span>Oljefrø</span></label><label class="text-field">Sort<input name="oilseed-sort" aria-label="Oljefrø, sort"></label></div>
+          <div class="crop-item"><label class="crop-choice"><input type="radio" name="crop" value="peas"><span>Erter</span></label><label class="text-field">Sort<input name="peas-sort" aria-label="Erter, sort"></label></div>
+          <div class="crop-item"><label class="crop-choice"><input type="radio" name="crop" value="beans"><span>Åkerbønner</span></label><label class="text-field">Sort<input name="beans-sort" aria-label="Åkerbønner, sort"></label></div>
+        </div>
+      </fieldset>
+      <fieldset class="section">
+        <legend>Levering</legend>
+        <div class="delivery-grid">
+          <label class="check-option"><input type="checkbox" name="storage"><span>Leielagring er avtalt</span></label>
+          <label class="text-field">Lastetid (minutter)<input name="load-time" inputmode="numeric"></label>
+          <label class="text-field">Bilnr.<input name="vehicle"></label>
+          <label class="text-field">Containernr.<input name="container-number"></label>
+          <label class="text-field">Dato<input name="date" type="date"></label>
+          <label class="text-field signature-field">Underskrift<input name="signature" aria-label="Underskrift"></label>
+        </div>
+      </fieldset>
+      <fieldset class="section">
+        <legend>Kontroll</legend>
+        <div class="radio-grid">
+          <fieldset class="question"><legend>Transportutstyr er rengjort før transport</legend><label class="radio-option"><input type="radio" name="clean" value="Ja"><span>Ja</span></label><label class="radio-option"><input type="radio" name="clean" value="Nei"><span>Nei</span></label></fieldset>
+          <fieldset class="question"><legend>Glyfosat er brukt i moden åker</legend><label class="radio-option"><input type="radio" name="glyphosate" value="Ja"><span>Ja</span></label><label class="radio-option"><input type="radio" name="glyphosate" value="Nei"><span>Nei</span></label></fieldset>
+          <fieldset class="question"><legend>Mat-analyse?</legend><label class="radio-option"><input type="radio" name="analysis-one" value="Ja"><span>Ja</span></label><label class="radio-option"><input type="radio" name="analysis-one" value="Nei"><span>Nei</span></label></fieldset>
+          <fieldset class="question"><legend>Mat-analyse?</legend><label class="radio-option"><input type="radio" name="analysis-two" value="Ja"><span>Ja</span></label><label class="radio-option"><input type="radio" name="analysis-two" value="Nei"><span>Nei</span></label></fieldset>
+        </div>
+      </fieldset>
+      <p class="declaration">Undertegnede bekrefter at kornet som leveres er dyrket i Norge og er i henhold til leveransevilkår for levering og salg av korn til Felleskjøpet beskrevet i Kornguiden.</p>
+    </form>
+    <div class="print-sheet" id="print-sheet" aria-hidden="true"></div>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Statisk skisse med syntetiske eksempeldata</span></footer>
+  <script src="./app.js"></script>
 </body>
 </html>
