@@ -1,36 +1,32 @@
-# Dugnadsplanlegging – første vurdering og demoomfang
+# Dugnadsplanlegging – trygg showcase-kopi
 
-- **Bruksområde:** skissere bemanning av oppgaver over tidsrom.
-- **Kategori:** Planlegging.
-- **Målgruppe:** arrangører, lag og grupper som fordeler dugnadsvakter.
-- **Status:** kandidat beholdt i bred første vurderingsrunde; ikke kuratert.
-- **Foreslått slug:** `dugnadsplanlegging`.
-- **Demoens verdi:** viser skift, tidsrom og tildelt deltaker og lar brukeren endre tildelingen.
-- **Kildens flyt:** kildedokumentasjonen beskriver en vaktplanmatrise med oppgaver, tidsrom, bemanningsbehov og tildelinger, import/eksport og konfliktkontroll. Den har også offentlig påmelding, administratorflater og rollebaserte funksjoner.
-- **Forenklinger:** selvstendig statisk skiftliste med generiske skiftnavn og syntetiske etiketter «Deltaker A–D». Ingen kildekode, arrangement, deltaker, kontaktdata, logo, API eller serverflyt er kopiert. Ingen registrering, innsending, autentisering, roller, import/eksport, varsling, ekstern tjeneste eller lagring finnes. Valg ligger kun i minnet fram til siden lastes på nytt.
-- **Risiko:** dugnadsplaner kan avsløre personers oppholdssted og tilgjengelighet; kilden håndterer navn og kontaktinformasjon. Demoens oppdiktede etiketter og generiske tider gir ikke slike opplysninger. Ingen reell påmelding er mulig.
-- **Omfang:** én selvstendig rute `/vibe/dugnadsplanlegging/`, én katalogoppføring, lokal HTML/CSS/JavaScript og vurderingsdokumentasjon. Kilderepoet er kun inspisert.
+**Issue #2: delvis løst.** Direkterute: `/vibe/dugnadsplanlegging/`.
 
-## Kontroller
+## Kilde og funksjoner
 
-- Syntetiske data: alle deltakere og skift er generiske.
-- Innlogging, personopplysninger, secrets, serverlagring og eksterne API-/asset-kall: ikke med.
-- Demoaktivitet: kun DOM og JavaScript-tilstand i minnet; nullstillingsknappen gjenoppretter eksempelplanen.
-- Tastatur og responsivitet: skjemafelt har synlige etiketter og fokusmarkering; smal layout legger hvert skift i egen vertikal rad.
+Kilden er `eirikyven-gif/diverse-apper/apps/dugnadsplanlegging`, commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`, versjon `package.json` v0.6.13 (README oppgir v0.6.10). Kilderepoet er kun lest. Gjennomgått: governance og roadmap, offentlige/admin entrypoints, alle klientmoduler, API/auth/session, lagring, SMS-bridge, deploynotater og testkommando.
 
+Kopien viderefører kildeproduktets synlige arbeidsflyter og norsk produkttekst:
 
-## Kildegjennomgang og usikkerhet
+- Vaktmatrise med dag-/statusfilter, detaljvisning og mobil kortliste.
+- Oppretting, redigering og sletting av personer/grupper, vakter og tidsfestede bemanningstildelinger; konfliktsjekk.
+- Oppslag, oppgavesøk, bemanningsoversikt, manglende telefonliste og import/eksport av JSON.
+- SMS-maler, mottakervalg, forhåndsvisning og tørrtest.
+- Offentlig påmeldingsvalg og oversikt uten kontaktvisning.
+- Lokal dugnadsoppretting/redigering og simulert admin-/superadminrolle.
 
-Kilde-repoet ble lest uten endringer ved offentlig main commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`. Gjennomgått: `README.md`, `ROADMAP.md`, `package.json`, HTML-entrypoints, nettlesermoduler, PHP-endepunkter for auth/session/data/signup/export/dugnader, `api/data/.htaccess` og SMS-bridge. `package.json` oppgir v0.6.13, mens README oppgir v0.6.10 og sier PR-review/QA. Faktisk deploy og produksjonsbruk er ukjent. Låst Notion-SSoT v1.0 fastsetter flerdugnadsmodell og at åpen oversikt ikke skal vise e-post eller telefon.
+## Trygghetsgrenser
 
-## Stack, tester, API, auth og lagring
+Ingen PHP, autentisering, PIN/passord, session/cookie, serverlagring, API, analytics, tredjepartsressurser eller nettverkskall. SMS-bro og rolleautorisasjon er simulert; det genererte SMS-området inneholder kun inert forhåndsvisning og sender ikke. Påmelding bruker bare syntetiske deltakeretiketter og trenger ingen kontaktfelt. Adminens kildefelter er beholdt for trohet, men bruk bare oppdiktede verdier.
 
-Kilden bruker HTML/CSS/JavaScript, Node.js utviklingsserver og PHP-API-er. API-flyten dekker signup, login/session/logout, dugnader, data og eksport. Offentlig påmelding tar navn, e-post og telefon; admin og superadmin bruker sesjonsbasert tilgang. Runtime-data lagres i privat JSON-fil utenfor offentlig lesbar dataflate, og SMS-bridge er dokumentert. Kildens `package.json` har `start` og `check`, men ingen testscript eller `tests/`-mappe ble funnet. README beskriver PHP-lints og manuelle URL-smoketester; disse er ikke kjørt her.
+Vaktplaner og endringer lagres i `localStorage`, separat for hver syntetiske dugnad. Varsel vises over appen. **Nullstill** fjerner alle appens lagringsnøkler og gjenoppretter eksempeldata. JSON import/eksport går kun mellom brukerens egen enhet og lokalt valgt fil. Seed-data inneholder generiske deltakeretiketter og testnummeret `+47 00000000`; ingen ekte personopplysninger eller secrets er lagt inn.
 
-## Demoens avgrensning
+Offentlig oversikt viser oppgaver og syntetiske deltakeretiketter, men aldri telefoner, e-post eller private notater. `localStorage` kan fortsatt inneholde det en besøkende selv skriver; demoen advarer derfor mot ekte data.
 
-Showcase-ruten har kun tre oppdiktede vakter, fire generiske deltakeretiketter og en knapp for å nullstille. Valg lever i minnet i aktiv sideøkt. Det finnes ingen navn-/kontaktfelt, signup, login/roller, API, server, cookies, nettverksforespørsler, lokal lagring eller SMS. Ingen kildekode, logo, arrangement eller persondata er kopiert. Lisens og gjenbrukstillatelse for kilden ble ikke funnet; kildekode-/designrettigheter er uavklart.
+## Kildebegrensninger og usikkerhet
 
-## QA og status
+Kilden har ingen `tests/`-mappe eller testscript. `package.json` tilbyr syntakskontroll; README beskriver manuelle rutesmoke- og PHP-lintsteg. Kildeversjon/dokumentasjon avviker (0.6.13 mot 0.6.10), og produksjonsdeploy ble ikke kontrollert. Ingen lisensfil ble funnet; Eirik ba uttrykkelig om en tro kopi her. Ekstern redistribusjonsrett er ikke avklart.
 
-Denne endringen kompletterer vurdering, metadata og regresjonsdekning for den eksisterende `/vibe/dugnadsplanlegging/`-ruten. Direkterute, hubretur, syntetiske valg, statusmelding, nullstilling, mobilvisning og fravær av nettverk/persistens kontrolleres. Ingen deploy utført; Issue #2 forblir åpen.
+## QA
+
+Repoets node-test-suite, syntakskontroll, direktelasting/refresh, lokale ruter og lenker, tastatur, mobilbredder, personvern-/nettverkskall og lokal reset kontrolleres for PR-en. Ingen deploy er utført; ruten publiseres først etter merge og deployflyt.

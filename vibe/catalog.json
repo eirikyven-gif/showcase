@@ -479,25 +479,25 @@
     {
       "slug": "dugnadsplanlegging",
       "name": "Dugnadsplanlegging",
-      "useCase": "Prøv å fordele oppdiktede deltakere på skift i en enkel eksempelplan.",
+      "useCase": "Planlegg oppgaver og tidsrom, fordel bemanning, ta imot syntetiske påmeldinger og vis en offentlig vaktoversikt.",
       "category": "Planlegging",
       "audience": [
         "Arrangører",
         "Lag og grupper"
       ],
-      "status": "Beholdt i bred førstegangsrunde; eksisterende original, syntetisk demo beholdes. Ingen kuratering eller utsiling er gjort.",
+      "status": "Beholdt i bred førstegangsrunde; tro, trygg showcase-kopi etablert med lokale simuleringer. Ingen kuratering eller utsiling er gjort.",
       "sourceUncertainty": "Kildepakke v0.6.13 oppgir README v0.6.10 og status PR-review/QA; faktisk deploy, aktiv bruk og oppdatert QA er ikke uavhengig verifisert. Låst Notion-SSoT v1.0 beskriver flerdugnadsarkitektur, offentlige påmeldings-/oversiktssider og admin/superadmin-roller.",
       "purpose": "Kilden organiserer dugnader, oppgaver/vaktposter, tidsrom, bemanningsbehov, påmeldte personer og tildelinger, med konfliktkontroll, admin og offentlig påmelding/oversikt.",
-      "demoValue": "Besøkende kan flytte fire fiktive deltakeretiketter mellom tre syntetiske vakter, se statusen endres og nullstille eksempelplanen.",
-      "simplifications": "Kun tre generiske vakter og etikettene Deltaker A–D. Ingen ekte arrangement, navn, kontaktdata, påmelding, roller, konfliktkontroll, import/eksport, varsler, SMS, server eller lagring.",
-      "risk": "Kilden håndterer navn, e-post, telefon, påmeldinger, tilgjengelighet, vaktildelinger og administrative roller. Slike data kan røpe kontaktinformasjon og personers oppholdssted/tidsplan; kildearkitekturen gir også tilgang på tvers via superadmin. Ingen slike data eller tjenester finnes i showcase-ruten.",
-      "scope": "Kun full kandidatvurdering, dokumentasjon og regresjonstest for eksisterende /vibe/dugnadsplanlegging/-rute. Ingen runtime-endring eller ny rute.",
-      "source": "eirikyven-gif/diverse-apper/apps/dugnadsplanlegging, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-09; kilde kun lest). Gjennomgått README, ROADMAP, package.json, entrypoints, frontendmoduler, PHP API/auth/storage og SMS-bridge.",
+      "demoValue": "Samme sentrale arbeidsflyt som kilden: adminmatrise, vakter, personer/grupper, tidsfestede tildelinger, konfliktkontroll, søk, import/eksport, SMS-forhåndsvisning, åpne påmeldingsvalg, offentlig bemanningsoversikt og dugnadsadministrasjon.",
+      "simplifications": "Kildens HTML/CSS/JS-funksjoner er overført til en statisk rute. Server-PHP, innlogging, sessions/cookies, serverdata, private API-er og ekte SMS-bro er fjernet. Roller, dugnader, SMS og åpne påmeldinger er syntetiske simuleringer. Seed-data er generiske; eksempeltelefon er +47 00000000. Lokal lagring brukes som i kildeflyten, i separate dugnadsnøkler med synlig varsel og full nullstilling. Ikke bruk ekte personopplysninger.",
+      "risk": "Kildeproduktet håndterer identitet, e-post, telefon, tilgjengelighet og oppmøtetider. Slike data kan avsløre kontaktinformasjon og bevegelsesmønstre. Showcase-kopien har ingen ekte konto eller nettverkstjeneste, men nettleserens lokale lagring varer mellom besøk til den nullstilles; bruk derfor bare syntetiske data.",
+      "scope": "Én statisk rute /vibe/dugnadsplanlegging/ med kildefidel admin, lokal flerdugnadsvelger/-editor, syntetisk åpen påmelding og offentlig oversikt. HTML/CSS/JS, localStorage på enheten, import/eksport som brukerinitiert lokal fil og nullstillingskontroll. Ingen server/API, eksterne forespørsler, cookies, konto, ekte SMS eller innebygde PII/secrets.",
+      "source": "eirikyven-gif/diverse-apper/apps/dugnadsplanlegging, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-10; kilde kun lest). Gjennomgått README, ROADMAP, package.json, alle app-HTML-entrypoints, klientmoduler, PHP API/auth/storage, ruteflyt, SMS bridge og deploy/data-notater.",
       "sourceStack": "Kilden har Node.js lokal dev-server, HTML/CSS/JavaScript og PHP API-er med JSON-filbasert serverlagring. package.json v0.6.13; README sier v0.6.10. Showcase-ruten er statisk HTML/CSS/JS.",
-      "sourceTests": "package.json tilbyr start og syntax-check, men ingen test-script eller tests/-mappe ble funnet. README dokumenterer PHP-syntakskontroller og manuelle rutesmoke-steg; kildetester og produksjonssmoke ble ikke kjørt.",
-      "sourceApiAuthStoragePrivacy": "README beskriver offentlig signup-API som samler navn, e-post og telefon, PHP-session/cookie-basert admin og superadmin, admin-/dugnadsavgrensede API-er for data, påmelding, dugnader og eksport, og privat JSON-runtime-fil. Åpen oversikt skal aldri vise e-post/telefon; admin kan se kontaktdata. Kilden har også SMS-bridge. Showcase har ingen inputfelter for persondata, login, API, nettverk, cookies, persistent storage eller SMS.",
-      "rightsUncertainty": "Ingen LICENSE-fil eller uttrykkelig gjenbrukstillatelse ble funnet i gjennomgåtte kildestier. Kode, design, merkevare, data og innholdsrettigheter er uavklart. Showcase-demoen er selvstendig og gjenbruker ikke kildekode, merkevare eller kildedata.",
-      "routeState": "Eksisterende unik /vibe/dugnadsplanlegging/-rute og katalogslug beholdes. Bare vurderingsmetadata, README og regresjonstest kompletteres; ingen ruteduplisering."
+      "sourceTests": "Kildens package.json v0.6.13 definerer Node --check for server og JS-filer. Ingen tests/-mappe eller automatiserte funksjonstester er oppgitt. README beskriver PHP-syntaks og manuelle rutekontroller, ikke kjørt her. Showcase-kopien verifiseres med repoets suite og nettleser-QA.",
+      "sourceApiAuthStoragePrivacy": "Kilden har offentlig signup-, dugnads- og oversiktsflyt, sesjonsbasert admin/superadmin og PHP-API for innlogging, data, eksport, signup og eventer; data persisteres server-side i privat JSON-runtimefil. Klienten støtter også localStorage-cache/import/eksport og AppleScript SMS-bridge. Åpen oversikt skal skjule kontaktdata. Kopien bruker ingen konto, server, cookies, nettverkskall eller SMS. Alle demoendringer er bare lokalt i nettleseren; reset fjerner demoens lagringsnøkler.",
+      "rightsUncertainty": "Kildemappen har ingen LICENSE-fil eller uttrykkelig gjenbrukstillatelse. Brukeren ba uttrykkelig om en tro kopi i showcase; kildekoden og brukerrettede tekster er derfor tatt inn i dette private/public showcase-prosjektet. Lisensstatus må avklares særskilt før redistribusjon utenfor prosjektet.",
+      "routeState": "Eksisterende unik mappe og slug /vibe/dugnadsplanlegging/ er beholdt og erstatter tidligere placeholder; én katalogoppføring og én direkte statisk rute."
     },
     {
       "slug": "vibe-coding",
