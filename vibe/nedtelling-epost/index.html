@@ -2,32 +2,37 @@
 <html lang="nb">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Se en lokal, syntetisk nedtellingsgrafikk slik den kan se ut i en e-postsignatur.">
-  <meta name="theme-color" content="#9e2638"><title>Nedtelling e-post — Vibe</title>
+  <meta name="description" content="Lag en nedtelling for e-postsignaturen og kopier bildeadressen eller HTML-koden.">
+  <meta name="theme-color" content="#9e2638"><title>Nedtelling for e-post — Vibe</title>
   <link rel="canonical" href="/vibe/nedtelling-epost/"><link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/nedtelling-epost/style.css"><script src="/vibe/nedtelling-epost/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#signature-maker">Hopp til forhåndsvisningen</a>
+  <a class="skip-link" href="#main">Hopp til innholdet</a>
   <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
-  <main id="signature-maker" class="page-shell">
-    <section class="intro" aria-labelledby="page-title"><p class="eyebrow">Et lite blikk framover</p><h1 id="page-title">Nedtelling for <span>e-post.</span></h1><p class="intro-copy">Velg en dato og se hvordan en nedtelling kan passe i en signatur. Forhåndsvisningen tegnes lokalt i nettleseren.</p></section>
+  <main id="main" class="page-shell">
+    <section class="intro" aria-labelledby="page-title"><p class="eyebrow">Tidteller · e-postsignatur</p><h1 id="page-title">Nedtelling for <span>e-post.</span></h1><p class="intro-copy">Opprett en nedtelling, velg bildeformat og kopier bildeadressen eller HTML-koden til signaturen.</p></section>
+    <aside class="local-notice" aria-label="Om denne demoen"><strong>Isolert demo</strong><span>Oppsett og bilder lagres bare i denne nettleseren. Det sendes ingenting til en server. Bildeadressen virker lokalt; den publiseres ikke på internett.</span><button id="reset-all" type="button" class="reset-button">Nullstill demoen</button></aside>
     <div class="workbench">
-      <form id="countdown-form" class="controls" autocomplete="off">
-        <div class="section-title"><span class="step">01</span><div><h2>Velg anledning</h2><p>Bruk eksempelinnhold eller prøv en dato.</p></div></div>
-        <label for="event-title">Overskrift</label><select id="event-title" name="event-title"><option>Sommeren nærmer seg</option><option>Neste feriedag</option><option>Et nytt kapittel</option></select>
-        <label for="event-date">Dato</label><input id="event-date" name="event-date" type="date" value="2027-06-21" aria-describedby="sample-note">
-        <label for="event-time">Klokkeslett</label><input id="event-time" name="event-time" type="time" value="12:00">
-        <button class="reset-button" id="reset-preview" type="button">Tilbakestill eksempel</button>
-        <p id="sample-note" class="sample-note">Syntetisk eksempel · endringene blir i denne fanen</p>
+      <form id="builder" class="controls" autocomplete="off">
+        <div class="section-title"><span class="step">01</span><div><h2>Opprett e-postteller</h2><p>Velg navn, overskrift og tidspunkt.</p></div></div>
+        <label for="name">Navn</label><input id="name" name="name" value="Ny e-postteller" maxlength="80" required>
+        <label for="title">Tittel</label><input id="title" name="title" value="Lansering" maxlength="70" required>
+        <div class="date-time"><div><label for="date">Dato</label><input id="date" name="date" type="date" required></div><div><label for="time">Tid</label><input id="time" name="time" type="time" value="12:00" required></div></div>
+        <label for="format">Format</label><select id="format" name="format"><option value="gif">GIF – animert eksempel</option><option value="png">PNG – stillbilde</option></select>
+        <button id="build" class="primary-button" type="submit">Lagre og generer</button>
+        <p id="status" class="status" role="status" aria-live="polite">Fyll ut oppsettet og velg «Lagre og generer».</p>
+        <div class="saved-summary"><span id="saved-count">Ingen lagrede tellere</span><span>Lagrede oppsett er lokale.</span></div>
       </form>
-      <section class="preview-wrap" aria-labelledby="preview-label"><div class="preview-heading"><span class="step">02</span><h2 id="preview-label">Lokal forhåndsvisning</h2></div>
-        <div class="signature-card"><p class="signature-caption">EKSEMPEL PÅ SIGNATURBILDE</p><canvas id="countdown-canvas" width="640" height="220" role="img" aria-label="Nedtellingsgrafikk for Sommeren nærmer seg"></canvas>
-          <p id="countdown-description" class="countdown-description" aria-live="polite">Beregner eksempel.</p><p class="sample-note">Canvas-bildet finnes bare lokalt og genereres på nytt når du endrer dato.</p></div>
-        <p class="privacy-note"><span aria-hidden="true">◉</span> Ingen e-post sendes. Ingen innlogging, lagring eller eksterne forespørsler. Last siden på nytt for å nullstille.</p>
+      <section class="preview-wrap" aria-labelledby="preview-title"><div class="preview-heading"><span class="step">02</span><h2 id="preview-title">Forhåndsvisning og signaturkode</h2></div>
+        <div class="signature-card"><p class="signature-caption">EKSEMPEL PÅ SIGNATURBILDE</p><canvas id="preview" width="420" height="90" role="img" aria-label="Forhåndsvisning av e-postnedtelling"></canvas><p id="preview-description" class="countdown-description">Lagre oppsettet for å generere et bilde.</p>
+          <label for="image-url">Kort bilde-URL</label><textarea id="image-url" rows="3" readonly aria-describedby="local-url-note"></textarea><p id="local-url-note" class="field-note">Demoen bruker en lokal dataadresse i stedet for en offentlig kortlenke.</p><button id="copy-url" class="secondary-button" type="button" disabled>Kopier bilde-URL</button>
+          <label for="html-output">HTML for signatur</label><textarea id="html-output" rows="4" readonly></textarea><button id="copy-html" class="secondary-button" type="button" disabled>Kopier HTML</button>
+        </div>
+        <p class="privacy-note">Ingen innlogging eller ekstern tjeneste. Oppsettet beholdes etter refresh på denne enheten og slettes med «Nullstill demoen».</p>
       </section>
     </div>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En lokal nedtellingsskisse.</span></footer>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Nedtelling e-post · lokal demonstrasjon</span></footer>
 </body>
 </html>

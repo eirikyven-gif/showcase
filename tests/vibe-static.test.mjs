@@ -240,24 +240,37 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
   assert.doesNotMatch(reserveringScript, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie)\b|https?:\/\//i);
 });
 
-test('Nedtelling e-post is a local canvas preview with an accessible direct route', () => {
+test('Nedtelling e-post preserves signature generation in isolated local storage', () => {
   const html = read('vibe/nedtelling-epost/index.html');
   const script = read('vibe/nedtelling-epost/app.js');
+  const css = read('vibe/nedtelling-epost/style.css');
   const app = catalog.apps.find((entry) => entry.slug === 'nedtelling-epost');
   assert.ok(app, 'candidate remains in the broad catalog');
-  assert.equal(app.status, 'Beholdt i bred førstegangsvurdering; eksisterende rute gjennomgått og dokumentert. Ingen kuratering eller utsiling.');
-  for (const field of ['source', 'sourceUncertainty', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'routeState']) {
+  assert.match(app.status, /tro kopi/i);
+  for (const field of ['purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'source', 'sourceUncertainty', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'routeState']) {
     assert.ok(app[field], `assessment includes ${field}`);
   }
   assert.match(html, /href="\/vibe\/nedtelling-epost\/"/, 'route has a canonical direct URL');
   assert.match(html, /href="\/vibe\/"/g, 'route links back to the hub');
   assert.match(html, /<canvas\b[^>]*\brole="img"[^>]*\baria-label=/i, 'canvas has an accessible text alternative');
-  assert.match(html, /Syntetisk eksempel/, 'preview is marked as synthetic');
+  for (const field of ['name', 'title', 'date', 'time', 'format']) assert.match(html, new RegExp(`id="${field}"`), `${field} input is present`);
+  assert.match(html, /Lagre og generer/);
+  assert.match(html, /Kort bilde-URL/);
+  assert.match(html, /HTML for signatur/);
+  assert.match(html, /bare i denne nettleseren/);
+  assert.match(html, /Nullstill demoen/);
   assert.match(script, /getContext\(['"]2d['"]\)/, 'preview is drawn locally on canvas');
-  assert.match(script, /preventDefault\(\)/, 'form submit is explicitly blocked');
-  assert.match(script, /addEventListener\(['"]click['"]/, 'reset control is interactive');
-  assert.doesNotMatch(html + script, /\b(?:fetch|XMLHttpRequest|localStorage|sessionStorage)\b|https?:\/\//i, 'demo makes no external request and uses no browser persistence');
-  assert.doesNotMatch(html, /<input\b[^>]*type="text"|<textarea\b/i, 'demo has no free-text field');
+  assert.match(script, /preventDefault\(\)/, 'form submit does not send data to a server');
+  assert.match(script, /data:image\/gif;base64/);
+  assert.match(script, /canvas\.toDataURL\('image\/png'\)/);
+  assert.match(script, /localStorage\.setItem\(STORAGE_KEY/);
+  assert.match(script, /localStorage\.removeItem\(STORAGE_KEY\)/, 'full local reset removes the app store');
+  assert.match(script, /NETSCAPE2\.0/, 'GIF generation is animated');
+  assert.doesNotMatch(html + script, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie)\b|https?:\/\//i, 'demo makes no external request');
+  assert.match(css, /@media\s*\(max-width:\s*760px\)/);
+  assert.match(css, /:focus-visible/);
+  assert.match(css, /border:\s*1px solid #806b70/i, 'form control boundaries meet the 3:1 non-text contrast threshold');
+  assert.match(read('vibe/nedtelling-epost/README.md'), /Kilde-HTML-en har ingen separat adminflate/i);
 });
 
 test('Ukelønn is a distinct synthetic adult-only static candidate route', () => {
