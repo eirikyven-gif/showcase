@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Se et fiktivt eksempel på en læringsforklaring om vannets kretsløp.">
+  <meta name="description" content="Prøv en syntetisk læringsbot med fag, tema, fritekstspørsmål og kildehenvisninger.">
   <meta name="theme-color" content="#9e2638">
   <title>Lærebot — Vibe</title>
   <link rel="canonical" href="/vibe/larebot/">
@@ -12,42 +12,80 @@
   <script src="/vibe/larebot/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Hopp til eksempelet</a>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
   <header class="site-header">
     <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
     <a class="back-link" href="/vibe/">← Alle verktøy</a>
   </header>
   <main id="main" class="demo-shell">
-    <p class="eyebrow">Oppdiktet eksempel · ingen AI</p>
-    <h1>Utforsk <span>vannets kretsløp.</span></h1>
-    <p class="lead">Velg et ferdig spørsmål og se et eksempel på en kort læringsforklaring. Innholdet er skrevet på forhånd.</p>
+    <p class="eyebrow">Syntetisk simulator · ingen innlogging eller KI</p>
+    <h1>Lærebot<span>.</span></h1>
+    <p class="lead">Utforsk en lokal læringsflyt med fag, tema, et åpent spørsmål og kildehenvisninger. Boten bruker bare det oppdiktede eksempelmaterialet på denne siden.</p>
 
-    <section class="topic-card" aria-labelledby="topic-title">
-      <p class="card-label">Tema</p>
-      <h2 id="topic-title">Hvordan flytter vann seg i naturen?</h2>
-      <p>Vann kan skifte mellom flytende form, vanndamp og is. Solvarme og tyngdekraft driver en stadig rundreise.</p>
-      <div class="steps" aria-label="Tre deler av kretsløpet">
-        <span><b>1</b> Fordamping</span><span><b>2</b> Skydannelse</span><span><b>3</b> Nedbør</span>
+    <div class="mode-switch" role="group" aria-label="Velg visning">
+      <button type="button" class="mode-button active" data-mode="learner" aria-pressed="true">Elevvisning</button>
+      <button type="button" class="mode-button" data-mode="admin" aria-pressed="false">Adminvisning</button>
+    </div>
+    <p class="simulation-note" role="status">Rollebytte er simulert og krever ingen PIN eller konto. Ikke skriv inn navn, skole, kontaktinformasjon eller andre personopplysninger.</p>
+
+    <section id="learner" aria-labelledby="learner-title">
+      <h2 id="learner-title">Hva vil du jobbe med?</h2>
+      <div class="card">
+        <label for="subject">Fag</label>
+        <select id="subject"><option value="">Velg fag</option></select>
+        <label for="topic">Tema</label>
+        <select id="topic" disabled><option value="">Velg tema</option></select>
+        <p id="selection-message" class="message" role="status" aria-live="polite"></p>
+      </div>
+      <section id="conversation" class="card" hidden aria-labelledby="bot-name">
+        <h3 id="bot-name"></h3>
+        <p id="topic-intro"></p>
+        <div class="starter-questions" aria-label="Ferdigskrevne spørsmål">
+          <button type="button" data-starter="Hva skjer når sola varmer opp vann?">Hva skjer når sola varmer opp vann?</button>
+          <button type="button" data-starter="Hvordan blir skyer dannet?">Hvordan blir skyer dannet?</button>
+          <button type="button" data-starter="Hvordan kommer vann tilbake til bakken?">Hvordan kommer vann tilbake til bakken?</button>
+        </div>
+        <div id="replies" class="replies" aria-live="polite" aria-atomic="false"></div>
+        <form id="question-form">
+          <label for="question">Spørsmål</label>
+          <textarea id="question" name="question" rows="3" maxlength="1200" required placeholder="Skriv det du lurer på"></textarea>
+          <p class="field-note">Behandles bare i denne nettleserøkten. Ikke ta med personopplysninger.</p>
+          <button class="primary-button" type="submit">Spør</button>
+        </form>
+        <p id="chat-message" class="message" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+
+    <section id="admin" aria-labelledby="admin-title" hidden>
+      <h2 id="admin-title">Sett opp eksempelinnhold</h2>
+      <p class="admin-intro">Dette er en lokal innholdsredigerer uten innlogging. Bruk bare oppdiktet innhold. Endringer lagres på denne enheten.</p>
+      <form id="content-form" class="card">
+        <label for="resource-title">Pensumressursens tittel</label>
+        <input id="resource-title" name="title" maxlength="100" required>
+        <label for="resource-text">Godkjent eksempeltekst</label>
+        <textarea id="resource-text" name="text" rows="8" maxlength="5000" required></textarea>
+        <label for="bot-title">Aktiv bot</label>
+        <input id="bot-title" name="bot" maxlength="80" required>
+        <label for="provider">Simulert leverandør</label>
+        <select id="provider" name="provider">
+          <option value="local">Lokal, regelstyrt respons</option>
+          <option value="openai">OpenAI (kun visningsplassholder)</option>
+          <option value="gemini">Gemini (kun visningsplassholder)</option>
+        </select>
+        <label for="model">Modellnavn (visningsplassholder)</label>
+        <input id="model" name="model" maxlength="80">
+        <button class="primary-button" type="submit">Lagre eksempeloppsett</button>
+        <button class="reset-button" id="reset-demo" type="button">Nullstill alle demoinnstillinger</button>
+        <p id="admin-message" class="message" role="status" aria-live="polite"></p>
+      </form>
+      <div class="card resource-preview">
+        <p class="card-label">Aktiv, syntetisk kilde</p>
+        <p id="saved-resource"></p>
+        <p id="storage-state" class="field-note"></p>
       </div>
     </section>
 
-    <section class="question-card" aria-labelledby="question-title">
-      <h2 id="question-title">Velg et eksempelspørsmål</h2>
-      <div class="question-list" role="group" aria-label="Ferdigskrevne spørsmål">
-        <button class="question" type="button" data-question="Hva skjer når sola varmer opp vann?">Hva skjer når sola varmer opp vann?</button>
-        <button class="question" type="button" data-question="Hvordan blir skyer dannet?">Hvordan blir skyer dannet?</button>
-        <button class="question" type="button" data-question="Hvordan kommer vann tilbake til bakken?">Hvordan kommer vann tilbake til bakken?</button>
-      </div>
-      <div id="answer" class="answer" aria-live="polite" aria-atomic="true" hidden>
-        <p class="card-label">Syntetisk eksempelspørsmål</p>
-        <p id="selected-question" class="selected-question"></p>
-        <h3>Eksempelsvar</h3>
-        <p id="response"></p>
-      </div>
-      <button id="reset" class="reset-button" type="button" hidden>Nullstill eksempelet</button>
-    </section>
-
-    <p class="privacy-note">Demonstrasjonen har ikke innlogging eller fritekst. Valget og svaret vises bare i nettleserminnet og forsvinner når du oppdaterer siden. Ikke skriv inn eller del personopplysninger i demoer.</p>
+    <p class="privacy-note">Allt innhold er syntetisk. Ingen konto, PIN, nettverk, server, API eller ekte KI-leverandør brukes. Samtaler lagres ikke. Adminens eksempeloppsett lagres lokalt i nettleseren; nullstillingsknappen sletter denne demoens lagrede oppsett.</p>
   </main>
   <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Fiktivt læringseksempel</span></footer>
 </body>

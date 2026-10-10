@@ -542,14 +542,27 @@
     },
     {
       "slug": "larebot",
-      "name": "Lærebot",
-      "useCase": "Se en kort, forhåndsskrevet læringsforklaring med syntetiske eksempelspørsmål.",
-      "category": "Utdanning",
+      "name": "Lærebot · lokal læringsbot",
+      "useCase": "Utforsk fag- og temavalg, still et spørsmål til en læringsbot, og se et lokalt eksempel med kildehenvisning.",
+      "category": "Utdanning og læringsgrensesnitt",
       "audience": [
         "Elever",
         "Undervisere",
-        "Alle som vil se et eksempel på læringsstøtte"
-      ]
+        "Personer som utforsker læringsstøtte"
+      ],
+      "status": "Eksisterende kandidat oppgradert til en kildebasert, statisk simulator med syntetiske data; issue #2 delvis løst.",
+      "source": "eirikyven-gif/diverse-apper/apps/larebot, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530; README, learner/admin HTML/JS/CSS og testoversikt lest. Kilderepoet er kun lest og ikke endret.",
+      "sourceStack": "Kilden bruker HTML/CSS/JavaScript, PHP API-er, private JSON-data og runtime-integrasjoner. Showcase bruker statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Kilden har PHP-tester for datarot, pensumisolering, utestøttede svar, kildehenvisninger og PIN-hashing, samt en Node-test for deployworkflow. Kildetestene ble ikke kjørt. Showcase har en isolert statisk kontrakttest og kjører hele Node-testsuiten i CI.",
+      "sourceApiAuthStoragePrivacy": "Kilden har elev-PIN, adminpassord, sesjon/CSRF, PHP API-er, privat JSON-lagring av brukere/fag/tema/pensum/boter, og mulige OpenAI/Gemini-nøkler. Showcase fjerner auth, brukere, PIN-er, serverlagring og alle API-/KI-kall. Syntetiske spørsmål og svar finnes bare i sidehukommelsen. Kun redigert eksempelressurs/botetiketter lagres lokalt under vibe.larebot.demo.v1 med synlig opplysning og knapp for å slette nøkkelen.",
+      "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse ble funnet i kilde-README eller de gjennomgåtte appfilene; rettighetsstatus er uavklart. Ingen kildekode, private pensumdata, brukerdata, hemmeligheter eller kildens aktiva er kopiert. Eksisterende vannkretsløpstekst er syntetisk showcase-innhold.",
+      "purpose": "Kilden lar elever velge fag og tema, sende et fritekstspørsmål til en pensumavgrenset bot og se svar med kildereferanser. Adminflaten håndterer brukere, fag, tema, pensumressurser og aktive boter.",
+      "demoValue": "Viser elev-/adminvisning, fag- og temavalg, åpne og ferdigskrevne spørsmål, lokalt regelstyrt svar med kildemerking, samt redigering av syntetisk pensumtekst og botetikett.",
+      "simplifications": "Ingen PIN eller passord, ekte konto-/brukeradministrasjon, rolleautorisasjon, PHP, serverdata, kildepensum, nettverk, API, KI-modell eller hemmeligheter. Kun ett syntetisk fag og tema; leverandør- og modellvalg er tydelig merkede visningsplassholdere uten integrasjon.",
+      "risk": "Kilden er rettet mot ungdomsskoleelever og håndterer reelle kontoer, elevspørsmål og privat pensum. Demoen er ikke undervisningsmateriell eller vurdering. Besøkende kan likevel skrive personopplysninger i fritekst; grensesnittet fraråder dette, teksten sendes ikke og lagres ikke. Redigert syntetisk admininnhold vedvarer lokalt til det nullstilles eller nettleserdata slettes.",
+      "scope": "Statisk /vibe/larebot/ med to simulerte visninger, fiktivt vannkretsløp, lokalt regelstyrte eksempelresponser og kildeetiketter. Ingen auth, API, serverlagring, nettverkskall, ekte modell, PIN, brukernavn, student-/lærerdetaljer, private data eller hemmeligheter. localStorage er begrenset til redigert syntetisk ressurs- og botoppsett; synlig full nullstilling fjerner én appnøkkel.",
+      "routeState": "Eksisterende /vibe/larebot/ og katalogslug beholdt; den tidligere tre-spørsmåls skissen utvidet til kildeappens trygge elev- og adminflater. Baseline showcase main aeb16e7b3ad66f791c3c5783c27b0eae3bebaf95, VERSION 0.49.0; PR foreslår 0.50.0. Ikke merget eller publisert.",
+      "sourceUncertainty": "README dokumenterer Lærebot SSoT v0.2 LÅST og deployoppsett, men låst styringsdokument/SSoT, produksjonsinnhold og faktisk runtime ble ikke separat verifisert. Kilde-README oppgir at spørsmål sendes til OpenAI/Gemini eller får et lokalt avgrenset svar."
     },
     {
       "slug": "bilag",
