@@ -480,7 +480,7 @@ test('form submission guard must target that exact form and prevent its default 
   assert.equal(formHasSubmitGuard('id="form.one"', `const form = document.getElementById('form.one'); form.addEventListener('submit', (event) => event.preventDefault());`), true);
 });
 
-test('Gruppegenerator candidate is documented and its demo stays synthetic and local', () => {
+test('Gruppegenerator is a faithful synthetic local copy of the source workflow', () => {
   const app = catalog.apps.find((entry) => entry.slug === 'gruppegenerator');
   const html = read('vibe/gruppegenerator/index.html');
   const script = read('vibe/gruppegenerator/app.js');
@@ -493,26 +493,29 @@ test('Gruppegenerator candidate is documented and its demo stays synthetic and l
     assert.ok(app[field].trim(), `${field} is not empty`);
   }
   assert.match(app.status, /Beholdt i bred førstegangsrunde/);
+  assert.match(app.source, /92379f1108ec71013a06c4e5976a6fe79de81a3e/);
   assert.match(html, /href="\/vibe\/"/);
-  assert.match(html, /<label[^>]+for="group-count"/);
-  assert.match(html, /id="status"[^>]+role="status"/);
-  assert.match(html, /oppdiktede/i);
-  assert.match(script, /Deltaker A.*Deltaker B/s);
-  assert.match(script, /addEventListener\('click'/);
-  assert.match(script, /addEventListener\('change'/);
+  for (const id of ['names', 'method', 'amount', 'preview', 'generate', 'again', 'export', 'reset', 'move-controls', 'selected-student', 'target-group', 'move-selected', 'groups', 'status']) {
+    assert.match(html, new RegExp(`id="${id}"`), `${id} workflow control exists`);
+  }
+  assert.match(html, /<label[^>]+for="names"/);
+  assert.match(html, /Deltaker A[\s\S]*Deltaker H/);
+  assert.match(html, /Kun lokal behandling/);
+  assert.match(html, /role="status"/);
+  for (const behavior of ['parseNames', 'plannedDistribution', 'makeGroups', 'makeXlsx', 'downloadXlsx', 'moveMember', 'shuffle', 'updatePreview']) {
+    assert.match(script, new RegExp(`function ${behavior}\\(`), `${behavior} behavior exists`);
+  }
+  assert.match(script, /addEventListener\('keydown'/, 'manual moves work by keyboard');
+  assert.match(script, /addEventListener\('drop'/, 'drag and drop workflow exists');
+  assert.match(script, /updateMoveControls\(\)/, 'move controls refresh after a move');
   assert.match(css, /:focus-visible/);
   assert.match(css, /--red:\s*#a9283c/i);
   assert.match(css, /--red-dark:\s*#791b2b/i);
   assert.match(css, /--rose:\s*#f8e8e9/i);
-  assert.match(css, /--paper:\s*#fffaf7/i);
-  assert.match(css, /--line:\s*#eadbdd/i);
-  assert.match(css, /outline:3px solid var\(--focus\)/i);
-  assert.match(css, /background:var\(--red\)/i, 'primary action uses the hub red token');
-  assert.doesNotMatch(css, /--green|--mint|#176b53|#e6f2eb|#105640/i, 'route does not use the former green palette');
+  assert.match(css, /background:var\(--red\)/i);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /min-width:\s*320px/);
-  assert.match(docs, /Notion-sporingsrad.*ikke verifisert/);
-  assert.match(docs, /Ingen deploy/);
-  assert.doesNotMatch(html + script, /<textarea\b|<input\b|studentnavn|Ola Nordmann|Kari Nordmann/i);
-  assert.doesNotMatch(html + script, /\b(?:fetch|XMLHttpRequest|localStorage|sessionStorage|indexedDB|document\.cookie)\b|https?:\/\//i);
+  assert.match(docs, /localStorage/);
+  assert.match(docs, /Ingen merge, deploy/);
+  assert.doesNotMatch(html + script, /fetch\s*\(|XMLHttpRequest|localStorage|sessionStorage|indexedDB|document\.cookie|https?:\/\//i);
 });

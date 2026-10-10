@@ -142,7 +142,7 @@
       "routeState": "En unik eksisterende /vibe/emnebeskrivelser-editor/-rute beholdes; metadata- og vurderingstillegg oppretter ingen rute eller endrer runtime. Slug kolliderer ikke med /vibe/laringssti-fagskolen/.",
       "separation": "Mulig duplicate family under apps-fagskolen er ikke verifisert; denne ruten er en original syntetisk konseptside, ikke en port av noen variant."
     },
-        {
+    {
       "slug": "reservering",
       "name": "Reservering · kundebooking og admin",
       "useCase": "Velg en ledig dato og tid, registrer en syntetisk booking, og utforsk adminflyt for reservasjoner og tilgjengelighet.",
@@ -665,27 +665,27 @@
     },
     {
       "slug": "gruppegenerator",
-      "name": "Gruppegenerator · syntetisk eksempel",
-      "useCase": "Se hvordan et fast, oppdiktet deltakerutvalg kan fordeles tilfeldig i grupper.",
+      "name": "Gruppegenerator",
+      "useCase": "Lim inn en deltakerliste, fordel tilfeldig og jevnt etter gruppetall eller gruppestørrelse, flytt deltakere og last ned resultatet som Excel.",
       "category": "Utdanning",
       "audience": [
         "Undervisere",
         "Fasilitatorer",
         "Personer som utforsker gruppefordeling"
       ],
-      "status": "Beholdt i bred førstegangsrunde; original, forenklet statisk demo. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Offentlig apps-fagskolen main commit 65082291abf9892f81e82bb258a0f0134c51cec7 lest 2026-10-09. Kandidatens Notion-sporingsrad er oppgitt, men ikke verifisert. Faktisk produksjonsbruk er ukjent.",
-      "purpose": "Kilden beskriver en offline nettleserapp for tilfeldig fordeling av innlimte studentnavn, med ny fordeling, manuell/drag-and-drop flytting og regnearknedlasting.",
-      "demoValue": "En liten interaktiv fordeling med åtte syntetiske etiketter gjør hovedideen konkret uten å be om personopplysninger.",
-      "simplifications": "Fast utvalg Deltaker A–H; velg 2–4 grupper, bland på nytt eller nullstill. Ingen fritekst, student-/klasselister, ekte skole- eller kursinnhold, flytting av enkeltpersoner eller eksport.",
-      "source": "eirikyven-gif/apps-fagskolen, apps/gruppegenerator, offentlig main commit 65082291abf9892f81e82bb258a0f0134c51cec7 (lest 2026-10-09); kilde urørt.",
-      "sourceStack": "Kildemappen har README og én selvstendig HTML-fil med innebygd CSS og JavaScript; ingen synlig rammeverk eller tredjepartsbibliotek.",
-      "sourceTests": "Ingen testfiler eller testinstruksjoner i den gjennomgåtte appmappen. Teststatus utenfor mappen er ukjent.",
-      "sourceApiAuthStoragePrivacy": "Ingen API, auth eller serverbehandling er synlig eller omtalt i appmappen. Kilde-README sier offline behandling og ingen permanent lagring; koden aksepterer innlimte navn og tilbyr lokal regnearknedlasting. Organisatorisk bruk og videre håndtering er ikke verifisert.",
-      "rightsUncertainty": "Lisens eller tillatelse til gjenbruk er ikke dokumentert i appmappen. Showcase-demoen er skrevet selvstendig og kopierer ikke kildekode, tekst eller særpreget visuell utforming.",
-      "risk": "Virkelige studentnavn kan være personopplysninger. Demoen samler eller lagrer ingen identiteter. Tilfeldig fordeling garanterer ikke pedagogisk rettferdighet eller andre fordelingskrav.",
-      "scope": "Statisk HTML/CSS/JS på /vibe/gruppegenerator/. Kun syntetiske faste etiketter, behandling i minnet og lokal tilfeldig blanding. Ingen fritekst, konto, analytics, nettverkskall, API, backend, persistent lagring, opplasting eller eksport.",
-      "routeState": "Ny, isolert direkterute /vibe/gruppegenerator/ med hub-retur; én katalograd. Ingen deploy eller live-host QA."
+      "status": "Beholdt i bred førstegangsrunde; tro funksjonell showcase-kopi av kildeappen med syntetiske standarddata. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "apps-fagskolen main commit 92379f1108ec71013a06c4e5976a6fe79de81a3e lest 2026-10-10. README og låst SSoT omtaler dra-og-slipp og XLSX som senere arbeid, mens den gjennomgåtte index.html allerede implementerer begge; faktisk produksjonsdrift ble ikke kontrollert.",
+      "purpose": "Gjør det enkelt å lime inn en navneliste, generere tilfeldige studentgrupper, justere fordelingen manuelt og eksportere resultatet.",
+      "demoValue": "Bevarer navneliste og linjevis rensing, forhåndsvisning, fordeling etter antall grupper eller deltakere per gruppe, jevn tilfeldig tildeling, ny generering, dra-og-slipp og tastaturbetjent flytting, XLSX-nedlasting og nullstilling.",
+      "simplifications": "Standardlisten er tydelig syntetisk. Ingen reelle studentnavn eller eksempelpersondata følger med. Fordeling, flytting og XLSX lages lokalt i nettleseren; ingen backend, innlogging, nettverkskall eller permanent lagring.",
+      "source": "eirikyven-gif/apps-fagskolen/apps/gruppegenerator, offentlig main commit 92379f1108ec71013a06c4e5976a6fe79de81a3e; README, kildeindex.html og låst Gruppegenerator SSoT v0.1 gjennomgått 2026-10-10. Kilderepoet er skrivebeskyttet og urørt.",
+      "sourceStack": "Én offline HTML-fil med innebygd CSS og JavaScript; browser APIs for tilfeldig fordeling, drag/drop, Blob- og XLSX-nedlasting. Ingen tredjepartsbibliotek eller API synlig i appmappen.",
+      "sourceTests": "Ingen testfiler eller testinstruksjoner i appmappen. Kildens index.html ble lest; kildetester ble ikke kjørt. Showcase får isolerte funksjonstester og full repo-testkjøring.",
+      "sourceApiAuthStoragePrivacy": "Låst SSoT v0.1 krever offline drift etter innlasting og forbyr backend, innlogging og permanent lagring. Kilde-README sier offline behandling og ingen permanent lagring. Koden viser ingen API, nettverk, autentisering eller persistent lagring. Appen behandler innlimte navn lokalt og lager XLSX i nettleseren.",
+      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse ble funnet i app-README eller appmappen. Oppdraget ber om funksjonell kopi; rettighetsstatus er ellers uavklart.",
+      "risk": "Kildens primærflyt inviterer til innliming av navn som kan være personopplysninger. Showcase gjør lokal behandling tydelig og ber brukeren unngå virkelige navn, men kan ikke teknisk kjenne igjen personopplysninger skrevet inn av besøkende. Lokal XLSX kan inneholde det besøkende selv skriver inn.",
+      "scope": "Statisk /vibe/gruppegenerator/ med kildens arbeidsflyt og kun syntetisk standardutvalg. Innlimt tekst finnes kun i sidens minne. Ingen localStorage/sessionStorage, cookies, serverlagring, autentisering, API-er, eksterne forespørsler, telemetry eller private data.",
+      "routeState": "Eksisterende /vibe/gruppegenerator/ oppgradert in-place; URL og katalogkontrakt uendret. Vibe-hubens delte røde UI-skall brukes. PR refererer til issue #2 som delvis løst; ingen merge eller deploy."
     },
     {
       "slug": "arrangementsvakt",
