@@ -546,7 +546,7 @@
       "sourceTests": "Kilden oppgir Python-kontroller og Playwright/Chromium-kontroller i `tests/`; de er ikke kjørt mot kildekopien her. Showcase-kontroller og CI kjøres på isolert PR-branch.",
       "sourceApiAuthStoragePrivacy": "Kilden samler ikke inn deltakersvar. Den bruker localStorage for tema og hvilke dagflytskjema som er vist, og har eksterne dokument-/videoressurser. Showcase fjerner eksterne URL-er og embeds, og gir synlig reset for sine to lokale visningsnøkler. Ingen login/API/server.",
       "rightsUncertainty": "Kildeinnhold og visuell utforming er kopiert etter eksplisitt brukeroppdrag. Lisens for bredere redistribusjon av appinnholdet er ikke uavhengig avklart; Inter-fontens OFL-lisens følger med.",
-      "routeState": "Eksisterende `/vibe/vurderingspraksis/`-rute beholdt og konseptdemo erstattet på samme slug; én katalogoppføring og én direkte statisk rute. Issue #2 er delvis løst, PR venter review, ingen deploy. Showcase SemVer er oppdatert fra v0.49.0 til v0.50.0."
+      "routeState": "Eksisterende `/vibe/vurderingspraksis/`-rute beholdt og konseptdemo erstattet på samme slug; én katalogoppføring og én direkte statisk rute. Issue #2 er delvis løst, PR venter review, ingen deploy. Showcase SemVer er oppdatert til v0.52.0."
     },
     {
       "slug": "larebot",
