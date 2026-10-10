@@ -24,28 +24,29 @@
       "routeState": "Ny unik rute på baseline showcase main 4a70da69210fd4586e1fcf455fa871d8e05e85d9, versjon 0.33.0 med 35 katalogruter; Fagquizer bringer tallet til 36. Slug og rute /vibe/fagquizer/ var fraværende.",
       "sourceUncertainty": "Governance v0.3 omhandler åpen KI-vurdering, v0.2 adminstatistikk; låst v0.5 overstyrer v0.3/v0.4 om testmiljø og sier kun syntetisk data. Kilde-README lenker videre til v0.6. Dokumentsettene er versjonsmessig usynkroniserte; faktisk deploy/drift er ikke verifisert."
     },
-    {
+        {
       "slug": "soundscape",
       "name": "Soundscape · vær som lyd",
-      "useCase": "Utforsk hvordan syntetisk temperatur påvirker en lokalt generert tone, mens vind bare endrer en visuell indikator.",
+      "useCase": "Utforsk hvordan syntetiske vær-, luft- og solsignaler former et kontinuerlig lokalt lydbilde; prøv scenarioer og parameterkoblinger.",
       "category": "Musikk og eksperimentering",
       "audience": [
         "Lydinteresserte",
         "Musikere",
         "Personer som utforsker værvisualisering"
       ],
-      "status": "Beholdt i bred førstegangsrunde; original, forenklet konseptdemo. Ingen kuratering eller utsiling er gjort.",
+      "status": "Beholdt i bred førstegangsrunde; statisk showcase-kopi av Soundscape v0.8.0 med syntetiske data og lokal profil. Ingen kuratering eller utsiling er gjort.",
       "source": "eirikyven-gif/diverse-apper/apps/soundscape, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530; README/package.json oppgir v0.8.0. Lest 2026-10-09; kilde-repo kun lest.",
       "sourceStack": "Kilden er HTML/CSS/JavaScript-moduler med Web Audio/AudioWorklet, PWA/service worker og PHP-basert serverruntime.",
-      "sourceTests": "Kildepakka definerer node --check-basert check og node --test tests/*.test.mjs; ni testfiler finnes. Kildetestene ble ikke kjørt i denne vurderingen.",
+      "sourceTests": "Kildepakken definerer node --check-basert check og node --test tests/*.test.mjs med ni testfiler. Gjennomgåtte kontrakter dekker API/privacy, 45 signaler/43 mål, mapping/editor, MET, Netatmo, PWA, runtime-sync, lyd/bølgeform og accordions. Kildetestene ble ikke kjørt; showcase fokustester kjøres separat.",
       "sourceApiAuthStoragePrivacy": "Kildedokumentasjonen beskriver offentlig vær-/lydflate, separat admininnlogging, sentral serverruntime og historikk, Netatmo som primær sensorleverandør og MET for prognose/sol og øvrige felt. OAuth, koordinater, kildehemmeligheter og lagring håndteres server-side. Faktisk produksjonsoppsett og datapraksis er ikke uavhengig verifisert. Showcase-demoen bruker ingen slike tjenester eller data.",
       "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte appfiler. Kode-, design- og innholdsrettigheter er uavklart; demoen er original og gjenbruker ikke kildeartefakter.",
       "purpose": "Kildens låste SSoT beskriver en autonom offentlig vær-til-generativ-lyd-installasjon med eksakte liveverdier og separat autentisert admin som styrer sentral servertilstand.",
-      "demoValue": "En enkel lokal Web Audio-tone der syntetisk temperatur justerer tonehøyden. Syntetisk vind justerer bare den visuelle indikatoren; vind påvirker ikke lyden.",
-      "simplifications": "Illustrativ skisse med én oscillator. Verdiene er oppdiktede, endres lokalt og representerer ikke livevær eller kildens signal-/lydmappinger. Ingen solsyklus, øvrige sensorer, servertilstand, PWA eller admin.",
-      "risk": "Kilden har betydelig server-, autentiserings- og personvernflate. Driftsstatus og faktisk databehandling er ikke revidert. Demoen må ikke forveksles med en trofast modell av liveverdier eller kildens generative lyd.",
-      "scope": "Selvstendig statisk /vibe/soundscape/-rute med syntetiske verdier og Web Audio etter brukerhandling. Ingen API, nettverk, auth, OAuth, browser/serverlagring, opplasting, konto, persondata eller kildehemmeligheter.",
-      "routeState": "Slug og rute var fraværende i showcase main 68a4396c7455ddeef8824eb0a65f41acf351c988 med 31 katalogruter; ny isolert rute."
+      "demoValue": "Utforsk hele den offentlige vær/sol-til-lyd-flyten, seks simuleringsscenarioer, ni signalgrupper, 45 syntetiske signaler, 43 lydmål, representative mappinger, lokal lyd, tabell og profilarbeidsflate.",
+      "simplifications": "Statisk /vibe/soundscape/ med generativ Web Audio-tilnærming og syntetisk runtime. Adminens kildestatus, rolle, autosave, revisjon, snapshots, kildevalg, historikk og livekontroller er lokal simulering; Netatmo/MET/NILU-kall, OAuth, ekte auth, serverruntime, liveklienter, deploy/PWA-cache og eksakt kilde-DSP er fjernet.",
+      "risk": "Kilden håndterer adminautentisering, Netatmo OAuth, koordinater, måledata, serverrevisjoner og cache. Faktisk driftsstatus er ikke revidert. Showcase bruker bare merkede syntetiske fixtures; lokal demoprofil lagres i brukerens nettleser og kan slettes med full nullstilling.",
+      "scope": "Statisk rute med Web Audio etter eksplisitt brukerhandling. Ingen nettverkskall, API, serverlagring, auth, cookies, OAuth, persondata, secrets eller PWA-cache. Kun syntetisk signal-/målprofil lagres lokalt i localStorage; full nullstilling sletter den.",
+      "routeState": "Eksisterende /vibe/soundscape/ på showcase main 9a2bfb629b39498507458dfa0500961fd55d76db, VERSION 0.37.6 med 39 katalogoppføringer. Denne PR-en oppgraderer appkopiens funksjoner uten URL- eller slug-endring.",
+      "sourceUncertainty": "Styringsdokument og låst SSoT v0.1 med presiseringer lest i Notion; siste dokumentredigering som ble kontrollert var 2026-07-25. README og pakken oppgir v0.8.0. Produksjonsstatus etter dokumentdato, faktisk databehandling og gjenbruksrettigheter er ikke uavhengig verifisert."
     },
     {
       "slug": "tidteller",
