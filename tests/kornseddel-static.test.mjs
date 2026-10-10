@@ -19,7 +19,7 @@ test('Kornfølgeseddel has complete broad-round metadata and retains one existin
   assert.match(app.rightsUncertainty, /gjenbrukstillatelse/);
   assert.match(app.routeState, /Eksisterende \/vibe\/kornseddel\//);
   assert.match(app.routeState, /VERSION 0\.54\.0; foreslått 0\.55\.0/);
-  assert.equal(catalog.apps.length, 39);
+  assert.equal(catalog.apps.length, 40);
 });
 
 test('Kornfølgeseddel retains the editable source workflow with synthetic defaults and no persistent storage', () => {

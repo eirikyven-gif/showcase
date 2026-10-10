@@ -4,6 +4,8 @@ Vibe-utstillingen publiseres under `https://yven.me/vibe/` med den manuelle **De
 
 ## Vibe routes
 
+- [`/vibe/lagerstyring-hell-ultra/`](vibe/lagerstyring-hell-ultra/README.md) is a local inventory portal demo with synthetic data, item details, loan history and token-free shared-list routes.
+
 - [`/vibe/analog-synthesizer/`](vibe/analog-synthesizer/README.md) is a local-only copy of Analog Synthesizer v0.15.1. It retains instrument workflows while storing projects, samples and recordings in this browser.
 
 - [`/vibe/vurderingspraksis/`](vibe/vurderingspraksis/README.md) is a source-faithful, local-only workshop resource with synthetic examples.

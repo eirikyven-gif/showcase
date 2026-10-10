@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lokal demo av Hell Ultra lagerportal med syntetiske varer.">
+  <title>Hell Ultra · Lagerportal</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="demo-banner"><strong>DEMO · syntetiske data</strong><span>Kun eksempelinnhold. Endringer forsvinner når siden lastes på nytt.</span></div>
+  <header class="site-header">
+    <a class="brand" href="#/" aria-label="Hell Ultra lagerportal"><span class="brand-mark">HU</span><span><strong>Hell Ultra</strong><small>Lagerportal</small></span></a>
+    <nav aria-label="Hovedmeny"><a href="#/">Lageroversikt</a><a href="#/list/utstyrsgruppe">Delte lister</a></nav>
+    <label class="role-control">Vis som<select id="role"><option value="visitor">Besøkende</option><option value="manager">Lageransvarlig (simulert)</option></select></label>
+  </header>
+  <main id="app" tabindex="-1"></main>
+  <footer><span>Hell Ultra · Lagerstyring</span><span>Statisk showcase-demo · ingen konto eller servertilkobling</span></footer>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
