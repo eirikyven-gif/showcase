@@ -16,8 +16,8 @@ test('route shell exposes role simulation and clearly marks synthetic data', () 
   assert.match(html, /Lageransvarlig \(simulert\)/);
 });
 
-test('portal, item details and shared-list route flows are implemented', () => {
-  for (const flow of ['Lageroversikt', 'Sorter etter', 'Grupper etter', 'Kort', 'Liste', 'Aktivt utlån', 'Utlånshistorikk', 'Denne listen har utløpt', 'copyLink']) assert.ok(js.includes(flow), `missing ${flow}`);
+test('public and admin source workflows are represented', () => {
+  for (const flow of ['Lageroversikt', 'Sorter etter', 'Grupper etter', 'Kort', 'Liste', 'Aktivt utlån', 'Utlånshistorikk', 'Denne listen har utløpt', 'copyList', 'data-quick-field', 'Aktive enkeltlån (eldre registreringer)', 'addSub', 'mediaFiles', 'createExtended', 'confirmImport', 'templateXlsx', 'data-edit-loan', 'data-return-legacy']) assert.ok(js.includes(flow), `missing ${flow}`);
   assert.match(js, /#\/item\//);
   assert.match(js, /#\/list\//);
 });

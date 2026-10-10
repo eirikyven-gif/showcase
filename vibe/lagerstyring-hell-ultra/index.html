@@ -12,11 +12,12 @@
   <div class="demo-banner"><strong>DEMO · syntetiske data</strong><span>Kun eksempelinnhold. Endringer forsvinner når siden lastes på nytt.</span></div>
   <header class="site-header">
     <a class="brand" href="#/" aria-label="Hell Ultra lagerportal"><span class="brand-mark">HU</span><span><strong>Hell Ultra</strong><small>Lagerportal</small></span></a>
-    <nav aria-label="Hovedmeny"><a href="#/">Lageroversikt</a><a href="#/list/utstyrsgruppe">Delte lister</a></nav>
-    <label class="role-control">Vis som<select id="role"><option value="visitor">Besøkende</option><option value="manager">Lageransvarlig (simulert)</option></select></label>
+    <nav aria-label="Hovedmeny"><a href="#/">Lageroversikt</a><a href="#/list/utstyrsgruppe">Delte lister</a><a id="adminNav" href="#/admin/dashboard" hidden>Administrasjon</a></nav>
+    <label class="role-control">Vis som<select id="role"><option value="visitor">Besøkende</option><option value="manager">Lageransvarlig (simulert)</option><option value="admin">Administrator (simulert)</option></select></label>
   </header>
   <main id="app" tabindex="-1"></main>
   <footer><span>Hell Ultra · Lagerstyring</span><span>Statisk showcase-demo · ingen konto eller servertilkobling</span></footer>
+  <dialog id="mediaDialog" aria-label="Bilde- og dokumentvisning"><div class="media-dialog-head"><strong id="mediaDialogTitle">Forhåndsvisning</strong><button type="button" class="button" id="mediaDialogClose">Lukk</button></div><div id="mediaDialogBody"></div></dialog>
   <div id="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
