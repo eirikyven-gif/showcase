@@ -1,58 +1,1591 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En generisk øvelse i å skille observasjoner fra antakelser i oppdiktede bygningsscener.">
-  <title>Byggobservasjoner – generisk øvelse</title>
-  <link rel="stylesheet" href="/vibe/ns3424-arkivdemo/style.css">
-  <script src="/vibe/ns3424-arkivdemo/app.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lokal læringsdemo basert på det arkiverte app-fdvu-ns3424 fra eirikyven-gif/ns3456. Kun pedagogisk illustrasjon; ikke faglig veiledning.">
+<link rel="canonical" href="/vibe/ns3424-arkivdemo/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%237f3b32%22/%3E%3Ctext x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-size=%2238%22 fill=%22white%22%3E%C3%98%3C/text%3E%3C/svg%3E">
+<title>NS 3424 – læringsdemo fra arkivert app</title>
+<style>
+  :root {
+    --clr-bg: #f4f6f8;
+    --clr-surface: #ffffff;
+    --clr-primary: #1a5276;
+    --clr-primary-light: #2980b9;
+    --clr-accent: #e67e22;
+    --clr-text: #2c3e50;
+    --clr-text-light: #7f8c8d;
+    --clr-border: #dce1e6;
+    --clr-tg0: #27ae60;
+    --clr-tg1: #f1c40f;
+    --clr-tg2: #e67e22;
+    --clr-tg3: #e74c3c;
+    --clr-kg0: #27ae60;
+    --clr-kg1: #f1c40f;
+    --clr-kg2: #e67e22;
+    --clr-kg3: #e74c3c;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-lg: 0 4px 24px rgba(0,0,0,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--clr-bg);
+    color: var(--clr-text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  a { color: var(--clr-primary); }
+  button:focus-visible, a:focus-visible { outline: 3px solid #f39c12; outline-offset: 3px; }
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 200; background: #fff; padding: .75rem; }
+  .skip-link:focus { left: .5rem; }
+  .back-link { display: block; max-width: 960px; margin: .5rem auto; padding: 0 1.5rem; }
+  @media (max-width: 600px) { .back-link { padding: 0 1rem; } }
+  .safety-notice { max-width: 960px; margin: 1rem auto 0; padding: 1rem 1.25rem; border: 2px solid #b03a2e; border-radius: var(--radius); background: #fff4f2; color: #57221d; }
+  .safety-notice p { margin-top: .35rem; }
+  .reset-row { max-width: 960px; margin: .75rem auto 0; padding: 0 1.5rem; text-align: right; }
+  .reset-all { border: 0; border-radius: 6px; padding: .6rem 1rem; background: #7f3b32; color: white; cursor: pointer; font: inherit; }
+  .source-note { font-size: .82rem; }
+  @media (max-width: 600px) { .safety-notice { margin: .75rem 1rem 0; } .reset-row { padding: 0 1rem; } }
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--clr-primary) 0%, #1a6fa0 100%);
+    color: #fff;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--clr-tg0), var(--clr-tg1), var(--clr-tg2), var(--clr-tg3));
+  }
+  .header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
+  .header p { opacity: 0.85; margin-top: 0.3rem; font-size: 1rem; }
+  /* Navigation */
+  .nav {
+    background: var(--clr-surface);
+    border-bottom: 1px solid var(--clr-border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .nav button {
+    background: none;
+    border: none;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.9rem;
+    color: var(--clr-text-light);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .nav button:hover { color: var(--clr-primary); background: #f0f4f8; }
+  .nav button.active {
+    color: var(--clr-primary);
+    border-bottom-color: var(--clr-primary);
+    font-weight: 600;
+  }
+  /* Main */
+  .main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+  /* Cards */
+  .card {
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--clr-border);
+  }
+  .card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--clr-primary);
+    border-bottom: 2px solid var(--clr-border);
+    padding-bottom: 0.5rem;
+  }
+  .card h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: var(--clr-primary); }
+  .card p, .card li { margin-bottom: 0.5rem; }
+  .card ul, .card ol { padding-left: 1.5rem; }
+  /* TG badges */
+  .tg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #fff;
+  }
+  .tg-badge.tg0 { background: var(--clr-tg0); }
+  .tg-badge.tg1 { background: var(--clr-tg1); color: #333; }
+  .tg-badge.tg2 { background: var(--clr-tg2); }
+  .tg-badge.tg3 { background: var(--clr-tg3); }
+  /* TG grid */
+  .tg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .tg-card {
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    color: #fff;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+  }
+  .tg-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .tg-card.tg0 { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+  .tg-card.tg1 { background: linear-gradient(135deg, #f39c12, #f1c40f); color: #333; }
+  .tg-card.tg2 { background: linear-gradient(135deg, #d35400, #e67e22); }
+  .tg-card.tg3 { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  .tg-card .tg-num { font-size: 2rem; font-weight: 800; }
+  .tg-card .tg-label { font-size: 0.95rem; font-weight: 600; margin: 0.3rem 0; }
+  .tg-card .tg-desc { font-size: 0.82rem; opacity: 0.9; }
+  /* Levels */
+  .level-row {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+  .level-card {
+    flex: 1;
+    min-width: 220px;
+    background: var(--clr-surface);
+    border: 2px solid var(--clr-border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .level-card:hover { border-color: var(--clr-primary-light); }
+  .level-card .level-num {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--clr-primary);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .level-card h4 { margin: 0.3rem 0; color: var(--clr-primary); }
+  .level-card p { font-size: 0.85rem; color: var(--clr-text-light); }
+  /* Risk Matrix */
+  .matrix-wrapper { overflow-x: auto; margin: 1rem 0; }
+  .risk-matrix {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 480px;
+    font-size: 0.9rem;
+  }
+  .risk-matrix th, .risk-matrix td {
+    border: 1px solid var(--clr-border);
+    padding: 0.7rem;
+    text-align: center;
+    font-weight: 500;
+  }
+  .risk-matrix th {
+    background: var(--clr-primary);
+    color: #fff;
+    font-weight: 600;
+  }
+  .risk-matrix th.corner { background: #163d55; }
+  .risk-matrix .row-header {
+    background: #eaf0f6;
+    font-weight: 600;
+    color: var(--clr-primary);
+    text-align: left;
+  }
+  .risk-low { background: #d5f5e3; color: #1e7e34; }
+  .risk-med { background: #fef9e7; color: #9a7d0a; }
+  .risk-high { background: #fdedec; color: #b03a2e; }
+  .risk-crit { background: #e74c3c; color: #fff; font-weight: 700; }
+  /* Quiz */
+  .quiz-q {
+    background: #f8f9fa;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .quiz-q p { font-weight: 600; margin-bottom: 0.6rem; }
+  .quiz-q label {
+    display: block;
+    padding: 0.5rem 0.8rem;
+    margin: 0.3rem 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 0.92rem;
+  }
+  .quiz-q label:hover { background: #eaf0f6; }
+  .quiz-q input[type=radio] { margin-right: 0.5rem; }
+  .quiz-q .feedback {
+    margin-top: 0.6rem;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .quiz-q .feedback.correct { display: block; background: #d5f5e3; color: #1e7e34; }
+  .quiz-q .feedback.wrong { display: block; background: #fdedec; color: #b03a2e; }
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    background: var(--clr-primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--clr-primary-light); }
+  .btn.secondary { background: #95a5a6; }
+  .btn.secondary:hover { background: #7f8c8d; }
+  .btn.success { background: var(--clr-tg0); }
+  /* Practice */
+  .practice-component {
+    border: 2px solid var(--clr-border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    background: #fafbfc;
+  }
+  .practice-component h4 { color: var(--clr-primary); margin-bottom: 0.4rem; }
+  .worksheet { margin-top: 1rem; border: 1px solid #d7dce2; border-radius: .6rem; padding: 1rem; background: #fff; }
+  .worksheet summary { cursor: pointer; font-weight: 700; }
+  .worksheet-fields { display: grid; gap: .75rem; margin-top: .8rem; }
+  .worksheet-fields label { display: grid; gap: .35rem; font-weight: 600; }
+  .worksheet-fields textarea, .worksheet-fields select { width: 100%; font: inherit; padding: .5rem; border: 1px solid #9aa4b2; border-radius: .35rem; }
+  .worksheet-complete { border: 0; border-radius: .35rem; padding: .7rem 1rem; background: #7f3b32; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+  .worksheet-status { margin: 0; }
+  .risk-practice { margin-top: 1rem; padding: 1rem; border: 1px solid #d7dce2; border-radius: .6rem; background: #f8fafc; }
+  .risk-practice h5 { margin: 0 0 .7rem; font-size: 1rem; }
+  .risk-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .risk-fields label { display: grid; gap: .35rem; font-weight: 600; }
+  .risk-fields select { width: 100%; font: inherit; padding: .5rem; border: 1px solid #9aa4b2; border-radius: .35rem; background: white; }
+  .risk-output { margin: .65rem 0 0; font-weight: 600; }
+  @media (max-width: 600px) { .risk-fields { grid-template-columns: 1fr; } }
+  .practice-component .desc { font-size: 0.88rem; color: var(--clr-text-light); margin-bottom: 0.8rem; }
+  .practice-component .observations {
+    background: #fff3cd;
+    border-left: 4px solid var(--clr-tg1);
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.88rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .grade-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    flex-wrap: wrap;
+  }
+  .grade-btn {
+    padding: 0.4rem 1rem;
+    border: 2px solid var(--clr-border);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: all 0.15s;
+  }
+  .grade-btn:hover { border-color: var(--clr-primary-light); }
+  .grade-btn.selected { color: #fff; border-color: transparent; }
+  .grade-btn.selected.g0 { background: var(--clr-tg0); }
+  .grade-btn.selected.g1 { background: var(--clr-tg1); color: #333; }
+  .grade-btn.selected.g2 { background: var(--clr-tg2); }
+  .grade-btn.selected.g3 { background: var(--clr-tg3); }
+  .practice-feedback {
+    padding: 0.7rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    display: none;
+  }
+  .practice-feedback.show { display: block; }
+  .practice-feedback.ok { background: #d5f5e3; color: #1e7e34; }
+  .practice-feedback.nok { background: #fdedec; color: #b03a2e; }
+  /* Progress bar */
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #ecf0f1;
+    border-radius: 4px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .progress-bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+  /* Score */
+  .score-display {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--clr-primary), #1a6fa0);
+    border-radius: var(--radius);
+    color: #fff;
+    margin: 1rem 0;
+  }
+  .score-display .score-num { font-size: 3rem; font-weight: 800; }
+  .score-display .score-label { font-size: 1rem; opacity: 0.85; }
+  /* Process diagram */
+  .process-flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    justify-content: center;
+  }
+  .process-step {
+    background: var(--clr-primary);
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    min-width: 120px;
+  }
+  .process-arrow { color: var(--clr-primary); font-size: 1.3rem; font-weight: 700; }
+  /* Key term list */
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+  .term-item {
+    display: flex;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid var(--clr-primary);
+  }
+  .term-item strong { color: var(--clr-primary); white-space: nowrap; }
+  .term-item span { font-size: 0.88rem; color: var(--clr-text-light); }
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.3rem; }
+    .nav button { padding: 0.7rem 0.8rem; font-size: 0.82rem; }
+    .main { padding: 1rem; }
+    .card { padding: 1rem; }
+    .tg-grid { grid-template-columns: 1fr 1fr; }
+    .level-row { flex-direction: column; }
+    .process-flow { flex-direction: column; }
+    .process-arrow { transform: rotate(90deg); }
+  }
+  /* Accordion */
+  .accordion { margin: 1rem 0; }
+  .accordion-item { border: 1px solid var(--clr-border); border-radius: var(--radius); margin-bottom: 0.5rem; overflow: hidden; }
+  .accordion-header {
+    width: 100%;
+    background: #f8f9fa;
+    border: none;
+    padding: 0.9rem 1.2rem;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--clr-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.15s;
+  }
+  .accordion-header:hover { background: #eaf0f6; }
+  .accordion-header::after { content: '+'; font-size: 1.2rem; font-weight: 400; transition: transform 0.2s; }
+  .accordion-header.open::after { content: '−'; }
+  .accordion-body { padding: 0 1.2rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+  .accordion-body.open { max-height: 600px; padding: 1rem 1.2rem; }
+  /* Tooltip */
+  .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--clr-primary-light);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: help;
+    position: relative;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+  /* Print */
+  @media print {
+    .nav { display: none; }
+    .section { display: block !important; page-break-inside: avoid; }
+    .header { padding: 1rem; }
+    .btn { display: none; }
+  }
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--clr-text-light);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--clr-border);
+    margin-top: 2rem;
+  }
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Hopp til innhold</a>
-  <header class="masthead">
-    <a href="/vibe/">← Alle demoer</a>
-    <p class="tag">NY, GENERISK ØVELSE · ARKIVKANDIDAT</p>
-    <h1>Hva vet vi egentlig?</h1>
-    <p>Tren på å skille det som kan observeres, fra forklaringen vi ennå ikke har grunnlag for.</p>
-  </header>
-  <main id="main">
-    <aside class="notice">
-      <strong>Ikke NS 3424 eller faglig veiledning</strong>
-      <p>Dette er en original, generell skrivebordsøvelse laget rundt et arkivert appforslag. Den gjengir ikke standarder eller kildeinnhold. Ikke bruk den til å vurdere virkelige bygg.</p>
-      <p>Kildeappen er arkivert, og rettighetene til kildeinnholdet er ikke avklart. Denne siden er ikke kildeimplementasjonen. Den har tematisk overlapp med <a href="/vibe/ns3424-lab/">NS3424 læringslab</a>.</p>
-    </aside>
-    <section class="intro panel" aria-labelledby="how-title">
-      <p class="eyebrow">Slik øver du</p>
-      <h2 id="how-title">Sorter hver setning</h2>
-      <p>Velg <em>observert</em> når setningen beskriver noe en person kunne sett eller målt. Velg <em>antakelse</em> når den foreslår årsak, omfang eller konsekvens uten nok informasjon.</p>
-    </section>
-    <section class="case-grid" aria-label="Fiktive øvelsesscener">
-      <article class="panel case">
-        <p class="eyebrow">Fiktiv scene A</p>
-        <h2>Etter regnvær</h2>
-        <p>På en oppdiktet vegg er det en mørkere flekk nær vinduet. Scenen gir ingen målinger eller historikk.</p>
-        <fieldset>
-          <legend>Sorter påstandene</legend>
-          <label class="item"><span>«En mørkere flekk er synlig under vinduet.»</span><select data-answer="observation" aria-label="Sorter: En mørkere flekk er synlig under vinduet"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
-          <label class="item"><span>«Regnvann trenger inn gjennom vinduet.»</span><select data-answer="assumption" aria-label="Sorter: Regnvann trenger inn gjennom vinduet"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
-        </fieldset>
-      </article>
-      <article class="panel case">
-        <p class="eyebrow">Fiktiv scene B</p>
-        <h2>En dør som subber</h2>
-        <p>I en oppdiktet gang subber døren mot gulvet når den åpnes. Det finnes ingen opplysninger om når dette begynte.</p>
-        <fieldset>
-          <legend>Sorter påstandene</legend>
-          <label class="item"><span>«Døren berører gulvet når den åpnes.»</span><select data-answer="observation" aria-label="Sorter: Døren berører gulvet når den åpnes"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
-          <label class="item"><span>«Fundamentet har beveget seg.»</span><select data-answer="assumption" aria-label="Sorter: Fundamentet har beveget seg"><option value="">Velg kategori</option><option value="observation">Observert</option><option value="assumption">Antakelse</option></select></label>
-        </fieldset>
-      </article>
-    </section>
-    <div class="actions"><button id="check" type="button">Vis tilbakemelding</button><button id="reset" class="secondary" type="button">Nullstill</button></div>
-    <p id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1"></p>
-    <p class="footnote">Alle scener er oppdiktet. Valgene brukes bare mens siden er åpen og lagres ikke.</p>
-  </main>
-  <footer><a href="/vibe/">Tilbake til Vibe</a></footer>
+<a class="skip-link" href="#main-content">Hopp til innhold</a>
+<a class="back-link" href="/vibe/">← Alle demoer</a>
+<div class="header">
+  <h1>NS 3424 – læringsdemo</h1>
+  <p>Tilstandsanalyse av byggverk — Interaktiv læringsplattform</p>
+</div>
+
+<aside class="safety-notice" role="note" aria-label="Faglig avgrensning"><strong>Kun en illustrativ demo – ikke faglig veiledning</strong><p>Dette er en pedagogisk demonstrasjon basert på en arkivert læringsapp. Innhold, grader, risiko og eksempler er ikke kontrollert mot gjeldende standard og kan være forenklet eller feil. Dette er ikke faglig veiledning, tilstandsanalyse eller profesjonell vurdering. Ikke bruk demoen til beslutninger om virkelige bygg, sikkerhet eller vedlikehold. Bruk gjeldende standard og rådfør deg med kvalifisert fagperson.</p><p class="source-note">Kildeappen oppgir NS 3424. Showcase-innholdet er kun en illustrativ læringsøvelse, ikke en autoritativ standardtekst.</p></aside>
+<div class="reset-row"><button class="reset-all" id="reset-all" type="button">Nullstill hele demoen</button></div>
+<nav class="nav" id="nav" aria-label="Demoens kapitler">
+  <button class="active" data-section="intro" aria-current="page">Introduksjon</button>
+  <button data-section="tg">Tilstandsgrader</button>
+  <button data-section="levels">Analysenivåer</button>
+  <button data-section="kg">Konsekvensgrader</button>
+  <button data-section="risk">Risikomatrise</button>
+  <button data-section="process">Prosess</button>
+  <button data-section="practice">Praktisk øvelse</button>
+  <button data-section="quiz">Kunnskapstest</button>
+</nav>
+
+<main class="main" id="main-content" tabindex="-1">
+
+  <!-- ====== INTRODUKSJON ====== -->
+  <div class="section active" id="sec-intro">
+    <div class="card">
+      <h2>Hva er NS3424?</h2>
+      <p>NS3424 er den norske standarden for <strong>tilstandsanalyse av byggverk</strong>. Standarden gir et rammeverk for systematisk kartlegging, vurdering og dokumentasjon av tilstanden til bygninger og konstruksjoner.</p>
+      <p>Standarden brukes av byggeiere, forvaltere, rådgivende ingeniører og takstmenn for å:</p>
+      <ul>
+        <li>Kartlegge og dokumentere bygningens tekniske tilstand</li>
+        <li>Prioritere vedlikeholds- og utbedringstiltak</li>
+        <li>Gi grunnlag for langsiktige vedlikeholdsplaner</li>
+        <li>Vurdere risiko knyttet til byggets tilstand</li>
+        <li>Sikre enhetlig terminologi og metode på tvers av aktører</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Sentrale begreper</h2>
+      <div class="term-grid">
+        <div class="term-item"><strong>Tilstand</strong><span>Bygningsdelens tekniske status på et gitt tidspunkt, sammenlignet med en definert referanse</span></div>
+        <div class="term-item"><strong>Tilstandsgrad (TG)</strong><span>Tallverdi 0–3 som angir avvik fra referansenivået</span></div>
+        <div class="term-item"><strong>Konsekvensgrad (KG)</strong><span>Tallverdi 0–3 som angir konsekvens av registrert tilstand</span></div>
+        <div class="term-item"><strong>Svikt</strong><span>Tilstand som avviker negativt fra referansenivået</span></div>
+        <div class="term-item"><strong>Referansenivå</strong><span>Det nivå som bygningsdelen vurderes mot — typisk forskriftskrav eller ny tilstand</span></div>
+        <div class="term-item"><strong>Bygningsdel</strong><span>Avgrenset del av byggverket som vurderes som en enhet</span></div>
+        <div class="term-item"><strong>Analysenivå</strong><span>Detaljeringsgrad i analysen, nivå 1–3</span></div>
+        <div class="term-item"><strong>Risiko</strong><span>Forenklet demonstrasjon av KG × sannsynlighet — kun læringsøvelse</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Standardens oppbygning</h2>
+      <p>NS3424 bygger på et system med tre hovedpilarer:</p>
+      <div class="level-row">
+        <div class="level-card">
+          <div class="level-num">1</div>
+          <h4>Tilstandsgrader</h4>
+          <p>TG0–TG3: Tilstandsgrader som brukes i den illustrative læringsdelen</p>
+        </div>
+        <div class="level-card">
+          <div class="level-num">2</div>
+          <h4>Konsekvensgrader</h4>
+          <p>KG1–KG3: Konsekvensgrader som brukes i den illustrative læringsdelen</p>
+        </div>
+        <div class="level-card">
+          <div class="level-num">3</div>
+          <h4>Risikovurdering</h4>
+          <p>Kildeappens øvingsmodell kombinerer KG og sannsynlighet som en enkel prioriteringsøvelse</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== TILSTANDSGRADER ====== -->
+  <div class="section" id="sec-tg">
+    <div class="card">
+      <h2>Tilstandsgrader (TG0–TG3)</h2>
+      <p>Tilstandsgraden angir bygningsdelens tilstand sammenlignet med et definert referansenivå. Graderingen går fra TG0 (ingen avvik) til TG3 (store eller alvorlige avvik).</p>
+      <div class="tg-grid">
+        <div class="tg-card tg0">
+          <div class="tg-num">TG0</div>
+          <div class="tg-label">Ingen avvik</div>
+          <div class="tg-desc">Bygningsdelen er i samsvar med referansenivået, ingen symptomer på svikt</div>
+        </div>
+        <div class="tg-card tg1">
+          <div class="tg-num">TG1</div>
+          <div class="tg-label">Mindre avvik</div>
+          <div class="tg-desc">Bygningsdelen har mindre svakheter, normal slitasje eller aldring kan aksepteres</div>
+        </div>
+        <div class="tg-card tg2">
+          <div class="tg-num">TG2</div>
+          <div class="tg-label">Vesentlige avvik</div>
+          <div class="tg-desc">Betydelig svikt, behov for tiltak innenfor nærmere angitt tidsperiode</div>
+        </div>
+        <div class="tg-card tg3">
+          <div class="tg-num">TG3</div>
+          <div class="tg-label">Stort / alvorlig avvik</div>
+          <div class="tg-desc">Kraftig svikt eller sammenbrudd, fare for liv/helse, strakstiltak nødvendig</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Eksempler på tilstandsgradering</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">Tak og taktekking</button>
+          <div class="accordion-body">
+            <ul>
+              <li><span class="tg-badge tg0">TG0</span> Nytt eller nylig vedlikeholdt tak uten tegn til slitasje</li>
+              <li><span class="tg-badge tg1">TG1</span> Litt mose, noen takstein som har forskjøvet seg, mindre flekker i himling</li>
+              <li><span class="tg-badge tg2">TG2</span> Flere knekte eller manglende takstein, synlige fuktmerker innvendig, gammel undertekking</li>
+              <li><span class="tg-badge tg3">TG3</span> Gjennomgående lekkasjer, råte i takkonstruksjon, fare for sammenbrudd</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Fasade og yttervegger</button>
+          <div class="accordion-body">
+            <ul>
+              <li><span class="tg-badge tg0">TG0</span> Intakt kledning og overflate, ingen fuktskader eller sprekker</li>
+              <li><span class="tg-badge tg1">TG1</span> Overfladisk avflassing av maling, mindre sprekker i puss</li>
+              <li><span class="tg-badge tg2">TG2</span> Større sprekker, fukt i veggkonstruksjon, manglende isolasjon</li>
+              <li><span class="tg-badge tg3">TG3</span> Konstruktiv skade, råteskader som svekker bæreevne, akutte fuktproblemer</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Våtrom og baderom</button>
+          <div class="accordion-body">
+            <ul>
+              <li><span class="tg-badge tg0">TG0</span> Nytt våtrom med godkjent membran og forskriftsmessig utførelse</li>
+              <li><span class="tg-badge tg1">TG1</span> Noen sår i fuger, eldre men funksjonelt sluk, mindre kosmetiske skader</li>
+              <li><span class="tg-badge tg2">TG2</span> Manglende eller defekt membran, fukt bak fliser, dårlig fall til sluk</li>
+              <li><span class="tg-badge tg3">TG3</span> Aktive lekkasjer, råte i bærende konstruksjon, sopp/muggvekst som utgjør helsefare</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Elektrisk anlegg</button>
+          <div class="accordion-body">
+            <ul>
+              <li><span class="tg-badge tg0">TG0</span> Nytt anlegg, samsvarserklæring foreligger, alt forskriftsmessig</li>
+              <li><span class="tg-badge tg1">TG1</span> Eldre anlegg med noen avvik, jordfeilbryter mangler i noen kretser</li>
+              <li><span class="tg-badge tg2">TG2</span> Vesentlige mangler, skjøteledninger som fast installasjon, ulovlige koblinger</li>
+              <li><span class="tg-badge tg3">TG3</span> Brannfarlige forhold, synlig slitasje på kabler, direkte fare for kortslutning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ANALYSENIVÅER ====== -->
+  <div class="section" id="sec-levels">
+    <div class="card">
+      <h2>Tre analysenivåer</h2>
+      <p>NS3424 opererer med tre analysenivåer som angir detaljeringsgraden i tilstandsvurderingen. Hvert nivå bygger på det forrige.</p>
+      <div class="level-row">
+        <div class="level-card">
+          <div class="level-num">1</div>
+          <h4>Nivå 1 — Tilstandsregistrering</h4>
+          <p>Overordnet visuell inspeksjon. Bygningsdeler vurderes med enkle metoder uten inngrep. Gir oversiktsbilde og identifiserer behov for nærmere undersøkelser.</p>
+        </div>
+        <div class="level-card">
+          <div class="level-num">2</div>
+          <h4>Nivå 2 — Tilstandsanalyse</h4>
+          <p>Grundigere undersøkelse med målinger og eventuelt enkle inngrep. Årsaker til svikt identifiseres, og omfang kartlegges mer nøyaktig.</p>
+        </div>
+        <div class="level-card">
+          <div class="level-num">3</div>
+          <h4>Nivå 3 — Spesialundersøkelse</h4>
+          <p>Detaljert analyse med laboratorie&shy;prøver, beregninger og spesial&shy;kompetanse. Brukes for kritiske bygningsdeler eller komplekse problemstillinger.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Sammenligning av analysenivåer</h2>
+      <div class="matrix-wrapper">
+        <table class="risk-matrix">
+          <thead>
+            <tr>
+              <th>Egenskap</th>
+              <th>Nivå 1</th>
+              <th>Nivå 2</th>
+              <th>Nivå 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-header">Metode</td>
+              <td>Visuell befaring</td>
+              <td>Målinger, enkle inngrep</td>
+              <td>Lab-prøver, beregninger</td>
+            </tr>
+            <tr>
+              <td class="row-header">Kompetansekrav</td>
+              <td>Generell byggfaglig</td>
+              <td>Fagspesifikk kunnskap</td>
+              <td>Spesialistkompetanse</td>
+            </tr>
+            <tr>
+              <td class="row-header">Tidsbruk</td>
+              <td>Lav</td>
+              <td>Middels</td>
+              <td>Høy</td>
+            </tr>
+            <tr>
+              <td class="row-header">Kostnad</td>
+              <td>Lav</td>
+              <td>Middels</td>
+              <td>Høy</td>
+            </tr>
+            <tr>
+              <td class="row-header">Detaljeringsgrad</td>
+              <td>Overordnet</td>
+              <td>Detaljert</td>
+              <td>Svært detaljert</td>
+            </tr>
+            <tr>
+              <td class="row-header">Typisk bruk</td>
+              <td>Innledende kartlegging, tilstandsrapport ved boligsalg</td>
+              <td>Vedlikeholdsplanlegging, grundigere analyser</td>
+              <td>Komplekse skader, bæreevnevurderinger</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Når brukes de ulike nivåene?</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">Nivå 1 – Typiske situasjoner</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Tilstandsrapporter ved kjøp og salg av bolig</li>
+              <li>Overordnet kartlegging av bygningsmasse for eiendomsportefølje</li>
+              <li>Innledende vurdering for å avdekke behov for grundigere analyser</li>
+              <li>Årlig tilstandssjekk som del av vedlikeholdsstyring</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Nivå 2 – Typiske situasjoner</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Utarbeidelse av langsiktige vedlikeholdsplaner</li>
+              <li>Undersøkelse av konkrete skader eller problemområder</li>
+              <li>Fuktkartlegging med bruk av fuktmåler</li>
+              <li>Energivurdering med termografering</li>
+              <li>Kartlegging av miljøfarlige stoffer (forenklet)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Nivå 3 – Typiske situasjoner</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Bæreevnevurdering av konstruksjoner</li>
+              <li>Laboratorieanalyse av betong (kloridinnhold, karbonatisering)</li>
+              <li>Detaljert kartlegging av miljøfarlige stoffer (asbest, PCB, bly)</li>
+              <li>Geotekniske undersøkelser av fundamenter</li>
+              <li>Avansert energisimulering for rehabiliteringsprosjekter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== KONSEKVENSGRADER ====== -->
+  <div class="section" id="sec-kg">
+    <div class="card">
+      <h2>Konsekvensgrader (KG0–KG3)</h2>
+      <p>Konsekvensgraden beskriver hvilke konsekvenser den registrerte tilstanden kan ha. Vurderingen gjøres i fire kategorier: <strong>sikkerhet</strong>, <strong>helse/miljø</strong>, <strong>økonomi</strong> og <strong>estetikk</strong>.</p>
+      <div class="tg-grid">
+        <div class="tg-card tg0">
+          <div class="tg-num">KG0</div>
+          <div class="tg-label">Ingen konsekvens</div>
+          <div class="tg-desc">Tilstanden har ingen konsekvenser utover normal drift</div>
+        </div>
+        <div class="tg-card tg1">
+          <div class="tg-num">KG1</div>
+          <div class="tg-label">Små konsekvenser</div>
+          <div class="tg-desc">Ubetydelige konsekvenser for sikkerhet, helse eller økonomi</div>
+        </div>
+        <div class="tg-card tg2">
+          <div class="tg-num">KG2</div>
+          <div class="tg-label">Vesentlige konsekvenser</div>
+          <div class="tg-desc">Konsekvenser som påvirker funksjon, bruk eller verdi i betydelig grad</div>
+        </div>
+        <div class="tg-card tg3">
+          <div class="tg-num">KG3</div>
+          <div class="tg-label">Store konsekvenser</div>
+          <div class="tg-desc">Fare for liv og helse, store økonomiske tap eller alvorlig miljøskade</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Konsekvensvurdering etter kategori</h2>
+      <div class="matrix-wrapper">
+        <table class="risk-matrix">
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>KG1 — Små</th>
+              <th>KG2 — Vesentlige</th>
+              <th>KG3 — Store</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-header">Sikkerhet</td>
+              <td>Liten risiko for personskade</td>
+              <td>Risiko for personskade ved normal bruk</td>
+              <td>Fare for liv og helse</td>
+            </tr>
+            <tr>
+              <td class="row-header">Helse / miljø</td>
+              <td>Ubetydelig påvirkning av inneklima</td>
+              <td>Dårlig inneklima, mindre forurensning</td>
+              <td>Alvorlige helseplager, miljøforurensning</td>
+            </tr>
+            <tr>
+              <td class="row-header">Økonomi</td>
+              <td>Lave utbedringskostnader</td>
+              <td>Betydelige kostnader, verdifall</td>
+              <td>Svært store kostnader, omfattende følgeskader</td>
+            </tr>
+            <tr>
+              <td class="row-header">Estetikk</td>
+              <td>Mindre kosmetiske avvik</td>
+              <td>Tydelig visuell forringelse</td>
+              <td>Grov visuell forringelse, skjemmende</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.8rem; font-size:0.88rem; color:var(--clr-text-light);">Den høyeste konsekvensgraden blant kategoriene blir bestemmende for bygningsdelens samlede konsekvensgrad.</p>
+    </div>
+  </div>
+
+  <!-- ====== RISIKOMATRISE ====== -->
+  <div class="section" id="sec-risk">
+    <div class="card">
+      <h2>Risikomatrisen</h2>
+      <p>I kildeappens demonstrasjonsmodell kombineres konsekvensgrad (KG1–KG3) og sannsynlighet (lav–høy). Produktet brukes kun til å vise en forenklet risikoklasse: 1–2 lav, 3–4 middels, 6–9 høy. Modellen er ikke en standardberegning eller profesjonell risikovurdering.</p>
+      <div class="matrix-wrapper">
+        <table class="risk-matrix">
+          <thead><tr><th class="corner">Sannsynlighet ↓ &nbsp; KG →</th><th>KG1</th><th>KG2</th><th>KG3</th></tr></thead>
+          <tbody>
+            <tr><td class="row-header">Lav</td><td class="risk-low">Lav · 1</td><td class="risk-low">Lav · 2</td><td class="risk-med">Middels · 3</td></tr>
+            <tr><td class="row-header">Middels</td><td class="risk-low">Lav · 2</td><td class="risk-med">Middels · 4</td><td class="risk-high">Høy · 6</td></tr>
+            <tr><td class="row-header">Høy</td><td class="risk-med">Middels · 3</td><td class="risk-high">Høy · 6</td><td class="risk-high">Høy · 9</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Tiltaksprioritet basert på risiko</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">Lav risiko — Driftsmessig vedlikehold</button>
+          <div class="accordion-body">
+            <p>Ingen akutte behov. Tilstanden overvåkes gjennom normal drift og planmessig vedlikehold. Tiltak kan inngå i neste vedlikeholdsperiode.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Middels risiko — Planlagt utbedring</button>
+          <div class="accordion-body">
+            <p>Tiltak bør planlegges innenfor en definert tidsramme (typisk 1–5 år). Videre forverring kan øke risikoen. Tilstanden følges opp med jevnlige kontroller.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Høy risiko — Snarlig utbedring</button>
+          <div class="accordion-body">
+            <p>Tiltak bør iverksettes raskt (typisk innen 1 år). Det kan være nødvendig med midlertidige sikringstiltak. Grundigere undersøkelse (nivå 2/3) kan være nødvendig.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Kritisk risiko — Strakstiltak</button>
+          <div class="accordion-body">
+            <p>Umiddelbar handling påkrevd. Midlertidig sikring eller stenging kan være nødvendig. Fare for liv, helse eller store økonomiske verdier. Tiltak skal iverksettes uten ugrunnet opphold.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== PROSESS ====== -->
+  <div class="section" id="sec-process">
+    <div class="card">
+      <h2>Prosessen for tilstandsanalyse</h2>
+      <p>En tilstandsanalyse etter NS3424 følger en strukturert prosess fra oppdrag til rapportering.</p>
+      <div class="process-flow">
+        <div class="process-step">1. Oppdragsdefinisjon</div>
+        <div class="process-arrow">&#8594;</div>
+        <div class="process-step">2. Forberedelser</div>
+        <div class="process-arrow">&#8594;</div>
+        <div class="process-step">3. Befaring</div>
+        <div class="process-arrow">&#8594;</div>
+        <div class="process-step">4. Vurdering</div>
+        <div class="process-arrow">&#8594;</div>
+        <div class="process-step">5. Rapportering</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Prosesstrinnene i detalj</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">1. Oppdragsdefinisjon</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Avklare formålet med tilstandsanalysen</li>
+              <li>Definere omfang — hvilke bygningsdeler skal vurderes</li>
+              <li>Avtale analysenivå (1, 2 eller 3)</li>
+              <li>Klargjøre roller og ansvar</li>
+              <li>Sette tidsrammer og budsjett</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">2. Forberedelser</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Innhente tilgjengelig dokumentasjon (tegninger, FDV, tidligere rapporter)</li>
+              <li>Gjennomgå bygningens historikk og vedlikeholdslogg</li>
+              <li>Planlegge befaring — verktøy, tilgang, HMS</li>
+              <li>Utarbeide sjekklister basert på bygningstype og omfang</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">3. Befaring</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Visuell inspeksjon av alle bygningsdeler i omfanget</li>
+              <li>Målinger og prøvetaking (nivå 2 og 3)</li>
+              <li>Fotodokumentasjon av registrerte avvik</li>
+              <li>Samtaler med driftspersonell om kjente problemstillinger</li>
+              <li>Systematisk registrering med standardisert terminologi</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">4. Vurdering</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Sette tilstandsgrad (TG) for hver bygningsdel</li>
+              <li>Vurdere konsekvensgrad (KG) for sikkerhet, helse, økonomi, estetikk</li>
+              <li>Utarbeide en illustrativ risikosjekk basert på KG × sannsynlighet</li>
+              <li>Identifisere behov for videre undersøkelser</li>
+              <li>Prioritere anbefalte tiltak</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">5. Rapportering</button>
+          <div class="accordion-body">
+            <ul>
+              <li>Sammenstille funn i strukturert rapport</li>
+              <li>Dokumentere referansenivå, tilstandsgrader og konsekvenser</li>
+              <li>Presentere risikomatrise og tiltaksprioriteringer</li>
+              <li>Vedlegge fotodokumentasjon og eventuelle måleresultater</li>
+              <li>Angi usikkerhetsmomenter og forutsetninger</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Krav til rapportinnhold</h2>
+      <p>En rapport etter NS3424 skal som minimum inneholde:</p>
+      <ol>
+        <li><strong>Oppdragsinformasjon</strong> — oppdragsgiver, formål, omfang, analysenivå</li>
+        <li><strong>Beskrivelse av byggverket</strong> — type, alder, areal, konstruksjon</li>
+        <li><strong>Referansenivå</strong> — hva tilstanden vurderes mot</li>
+        <li><strong>Tilstandsregistreringer</strong> — funn for hver bygningsdel med TG</li>
+        <li><strong>Konsekvensvurdering</strong> — KG for relevante kategorier</li>
+        <li><strong>Risikovurdering</strong> — matrise med prioriteringer</li>
+        <li><strong>Anbefalte tiltak</strong> — konkrete forslag med prioritet</li>
+        <li><strong>Vedlegg</strong> — bilder, tegninger, måleresultater</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ====== PRAKTISK ØVELSE ====== -->
+  <div class="section" id="sec-practice">
+    <div class="card">
+      <h2>Praktisk øvelse — Tilstandsvurdering</h2>
+      <p>Vurder de fem oppdiktede casene. Velg en illustrativ TG, deretter KG og sannsynlighet for å se en enkel risikoklasse. Casebeskrivelsene er øvingsdata, ikke fasit for virkelige bygg.</p>
+      <div class="progress-bar"><div class="fill" id="practice-progress" style="width:0%"></div></div>
+      <p id="practice-score" style="text-align:center; font-weight:600; color:var(--clr-primary);"></p>
+    </div>
+
+    <aside class="safety-notice synthetic-notice" role="note"><strong>Syntetiske øvelsesdata</strong><p>Alle case-ID-er, bygningsdetaljer og observasjoner i denne øvelsen er oppdiktet for demoen. De er ikke hentet fra virkelige bygg eller rapporter.</p></aside>
+
+    <div id="practice-container">
+      <div class="practice-component" data-correct="2" data-id="p1" data-required-observations="2">
+        <h4>1. Syntetisk case SYN-01 — Baderom</h4>
+        <div class="desc">Oppdiktet boenhet med flislagt våtrom, sluk og dusjsone.</div>
+        <div class="observations">
+          <strong>Oppdiktede observasjoner:</strong> Mørk misfarging ses ved gulvlisten i dusjsonen. En fuge ved sluket er løs; målinger og konstruksjon bak overflaten inngår ikke i øvingsdataene.
+        </div>
+        <div class="grade-selector">
+          <button class="grade-btn g0" onclick="selectGrade(this,'p1',0)">TG0</button>
+          <button class="grade-btn g1" onclick="selectGrade(this,'p1',1)">TG1</button>
+          <button class="grade-btn g2" onclick="selectGrade(this,'p1',2)">TG2</button>
+          <button class="grade-btn g3" onclick="selectGrade(this,'p1',3)">TG3</button>
+        </div>
+        <div class="practice-feedback" id="fb-p1"></div>
+        <div class="risk-practice" data-risk-case="p1">
+          <h5>Konsekvens og enkel risikosjekk</h5>
+          <div class="risk-fields">
+            <label>Konsekvensgrad (KG)
+              <select data-risk-field="kg" aria-label="Case 1: velg konsekvensgrad">
+                <option value="">Velg KG</option><option value="1">KG1 · liten</option><option value="2">KG2 · middels</option><option value="3">KG3 · stor</option>
+              </select>
+            </label>
+            <label>Sannsynlighet
+              <select data-risk-field="prob" aria-label="Case 1: velg sannsynlighet">
+                <option value="">Velg sannsynlighet</option><option value="1">Lav</option><option value="2">Middels</option><option value="3">Høy</option>
+              </select>
+            </label>
+          </div>
+          <p class="risk-output" role="status" aria-live="polite">Velg KG og sannsynlighet for en illustrativ risikoklasse.</p>
+        </div>
+        <details class="worksheet">
+          <summary>Åpne casearbeidsark</summary>
+          <div class="worksheet-fields">
+            <label>Velg analysenivå
+              <select data-worksheet="level"><option value="">Velg nivå</option><option>Nivå 1 · screening</option><option>Nivå 2 · utvidet</option><option>Nivå 3 · detaljert</option></select>
+            </label>
+            <label>Observasjoner (minst 2 korte observasjoner; bruk kun oppdiktede opplysninger)
+              <textarea data-worksheet="observations" rows="3" placeholder="Hva kan observeres? Skill fakta fra tolkning."></textarea>
+            </label>
+            <label>Begrunn TG/TGIU
+              <textarea data-worksheet="tg-reason" rows="2" placeholder="Beskriv hva som støtter valget, eller hvorfor underlaget er utilstrekkelig."></textarea>
+            </label>
+            <label>Begrunn KG
+              <textarea data-worksheet="kg-reason" rows="2" placeholder="Hvilken konsekvens vurderer du i denne oppdiktede øvelsen?"></textarea>
+            </label>
+            <label>Begrunn sannsynlighet og risiko
+              <textarea data-worksheet="risk-reason" rows="2" placeholder="Forklar vurderingen med forbehold om manglende data."></textarea>
+            </label>
+            <label>Tiltak nå<textarea data-worksheet="action-now" rows="2"></textarea></label>
+            <label>Tiltak på kort sikt<textarea data-worksheet="action-short" rows="2"></textarea></label>
+            <label>Tiltak på lang sikt<textarea data-worksheet="action-long" rows="2"></textarea></label>
+            <label>Videre undersøkelser (valgfritt)<textarea data-worksheet="further" rows="2"></textarea></label>
+            <button type="button" class="worksheet-complete">Kontroller at arbeidsarket er fylt ut</button>
+            <p class="worksheet-status" role="status" aria-live="polite">Arbeidsarket finnes bare mens denne siden er åpen.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="practice-component" data-correct="2" data-id="p2" data-required-observations="3">
+        <h4>2. Syntetisk case SYN-02 — Pusset fasade</h4>
+        <div class="desc">Oppdiktet lav boligblokk med pusset ytterflate.</div>
+        <div class="observations">
+          <strong>Oppdiktede observasjoner:</strong> To korte riss ses ved vindusåpninger, og et riss fortsetter ned mot sokkelen. Ingen målinger eller historikk inngår i eksemplet.
+        </div>
+        <div class="grade-selector">
+          <button class="grade-btn g0" onclick="selectGrade(this,'p2',0)">TG0</button>
+          <button class="grade-btn g1" onclick="selectGrade(this,'p2',1)">TG1</button>
+          <button class="grade-btn g2" onclick="selectGrade(this,'p2',2)">TG2</button>
+          <button class="grade-btn g3" onclick="selectGrade(this,'p2',3)">TG3</button>
+        </div>
+        <div class="practice-feedback" id="fb-p2"></div>
+        <div class="risk-practice" data-risk-case="p2">
+          <h5>Konsekvens og enkel risikosjekk</h5>
+          <div class="risk-fields">
+            <label>Konsekvensgrad (KG)
+              <select data-risk-field="kg" aria-label="Case 2: velg konsekvensgrad">
+                <option value="">Velg KG</option><option value="1">KG1 · liten</option><option value="2">KG2 · middels</option><option value="3">KG3 · stor</option>
+              </select>
+            </label>
+            <label>Sannsynlighet
+              <select data-risk-field="prob" aria-label="Case 2: velg sannsynlighet">
+                <option value="">Velg sannsynlighet</option><option value="1">Lav</option><option value="2">Middels</option><option value="3">Høy</option>
+              </select>
+            </label>
+          </div>
+          <p class="risk-output" role="status" aria-live="polite">Velg KG og sannsynlighet for en illustrativ risikoklasse.</p>
+        </div>
+        <details class="worksheet">
+          <summary>Åpne casearbeidsark</summary>
+          <div class="worksheet-fields">
+            <label>Velg analysenivå
+              <select data-worksheet="level"><option value="">Velg nivå</option><option>Nivå 1 · screening</option><option>Nivå 2 · utvidet</option><option>Nivå 3 · detaljert</option></select>
+            </label>
+            <label>Observasjoner (minst 3 korte observasjoner; bruk kun oppdiktede opplysninger)
+              <textarea data-worksheet="observations" rows="3" placeholder="Hva kan observeres? Skill fakta fra tolkning."></textarea>
+            </label>
+            <label>Begrunn TG/TGIU
+              <textarea data-worksheet="tg-reason" rows="2" placeholder="Beskriv hva som støtter valget, eller hvorfor underlaget er utilstrekkelig."></textarea>
+            </label>
+            <label>Begrunn KG
+              <textarea data-worksheet="kg-reason" rows="2" placeholder="Hvilken konsekvens vurderer du i denne oppdiktede øvelsen?"></textarea>
+            </label>
+            <label>Begrunn sannsynlighet og risiko
+              <textarea data-worksheet="risk-reason" rows="2" placeholder="Forklar vurderingen med forbehold om manglende data."></textarea>
+            </label>
+            <label>Tiltak nå<textarea data-worksheet="action-now" rows="2"></textarea></label>
+            <label>Tiltak på kort sikt<textarea data-worksheet="action-short" rows="2"></textarea></label>
+            <label>Tiltak på lang sikt<textarea data-worksheet="action-long" rows="2"></textarea></label>
+            <label>Videre undersøkelser (valgfritt)<textarea data-worksheet="further" rows="2"></textarea></label>
+            <button type="button" class="worksheet-complete">Kontroller at arbeidsarket er fylt ut</button>
+            <p class="worksheet-status" role="status" aria-live="polite">Arbeidsarket finnes bare mens denne siden er åpen.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="practice-component" data-correct="2" data-id="p3" data-required-observations="3">
+        <h4>3. Syntetisk case SYN-03 — Ventilasjon og inneklima</h4>
+        <div class="desc">Oppdiktet arbeidslokale med flere ventilasjonssoner.</div>
+        <div class="observations">
+          <strong>Oppdiktede observasjoner:</strong> Filterdato mangler i den syntetiske driftsloggen. To rom oppleves varmere enn de andre, og brukere beskriver tung luft. Ingen målinger er vedlagt.
+        </div>
+        <div class="grade-selector">
+          <button class="grade-btn g0" onclick="selectGrade(this,'p3',0)">TG0</button>
+          <button class="grade-btn g1" onclick="selectGrade(this,'p3',1)">TG1</button>
+          <button class="grade-btn g2" onclick="selectGrade(this,'p3',2)">TG2</button>
+          <button class="grade-btn g3" onclick="selectGrade(this,'p3',3)">TG3</button>
+        </div>
+        <div class="practice-feedback" id="fb-p3"></div>
+        <div class="risk-practice" data-risk-case="p3">
+          <h5>Konsekvens og enkel risikosjekk</h5>
+          <div class="risk-fields">
+            <label>Konsekvensgrad (KG)
+              <select data-risk-field="kg" aria-label="Case 3: velg konsekvensgrad">
+                <option value="">Velg KG</option><option value="1">KG1 · liten</option><option value="2">KG2 · middels</option><option value="3">KG3 · stor</option>
+              </select>
+            </label>
+            <label>Sannsynlighet
+              <select data-risk-field="prob" aria-label="Case 3: velg sannsynlighet">
+                <option value="">Velg sannsynlighet</option><option value="1">Lav</option><option value="2">Middels</option><option value="3">Høy</option>
+              </select>
+            </label>
+          </div>
+          <p class="risk-output" role="status" aria-live="polite">Velg KG og sannsynlighet for en illustrativ risikoklasse.</p>
+        </div>
+        <details class="worksheet">
+          <summary>Åpne casearbeidsark</summary>
+          <div class="worksheet-fields">
+            <label>Velg analysenivå
+              <select data-worksheet="level"><option value="">Velg nivå</option><option>Nivå 1 · screening</option><option>Nivå 2 · utvidet</option><option>Nivå 3 · detaljert</option></select>
+            </label>
+            <label>Observasjoner (minst 3 korte observasjoner; bruk kun oppdiktede opplysninger)
+              <textarea data-worksheet="observations" rows="3" placeholder="Hva kan observeres? Skill fakta fra tolkning."></textarea>
+            </label>
+            <label>Begrunn TG/TGIU
+              <textarea data-worksheet="tg-reason" rows="2" placeholder="Beskriv hva som støtter valget, eller hvorfor underlaget er utilstrekkelig."></textarea>
+            </label>
+            <label>Begrunn KG
+              <textarea data-worksheet="kg-reason" rows="2" placeholder="Hvilken konsekvens vurderer du i denne oppdiktede øvelsen?"></textarea>
+            </label>
+            <label>Begrunn sannsynlighet og risiko
+              <textarea data-worksheet="risk-reason" rows="2" placeholder="Forklar vurderingen med forbehold om manglende data."></textarea>
+            </label>
+            <label>Tiltak nå<textarea data-worksheet="action-now" rows="2"></textarea></label>
+            <label>Tiltak på kort sikt<textarea data-worksheet="action-short" rows="2"></textarea></label>
+            <label>Tiltak på lang sikt<textarea data-worksheet="action-long" rows="2"></textarea></label>
+            <label>Videre undersøkelser (valgfritt)<textarea data-worksheet="further" rows="2"></textarea></label>
+            <button type="button" class="worksheet-complete">Kontroller at arbeidsarket er fylt ut</button>
+            <p class="worksheet-status" role="status" aria-live="polite">Arbeidsarket finnes bare mens denne siden er åpen.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="practice-component" data-correct="3" data-id="p4" data-required-observations="2">
+        <h4>4. Syntetisk case SYN-04 — Branndør og rømningsvei</h4>
+        <div class="desc">Oppdiktet korridor med branndør og markert rømningsvei.</div>
+        <div class="observations">
+          <strong>Oppdiktede observasjoner:</strong> Branndøren står åpen med en kile. En eske og en stol står i den tegnede rømningsveien. Eksemplet gir ikke informasjon om faktisk branncelle eller bruk.
+        </div>
+        <div class="grade-selector">
+          <button class="grade-btn g0" onclick="selectGrade(this,'p4',0)">TG0</button>
+          <button class="grade-btn g1" onclick="selectGrade(this,'p4',1)">TG1</button>
+          <button class="grade-btn g2" onclick="selectGrade(this,'p4',2)">TG2</button>
+          <button class="grade-btn g3" onclick="selectGrade(this,'p4',3)">TG3</button>
+        </div>
+        <div class="practice-feedback" id="fb-p4"></div>
+        <div class="risk-practice" data-risk-case="p4">
+          <h5>Konsekvens og enkel risikosjekk</h5>
+          <div class="risk-fields">
+            <label>Konsekvensgrad (KG)
+              <select data-risk-field="kg" aria-label="Case 4: velg konsekvensgrad">
+                <option value="">Velg KG</option><option value="1">KG1 · liten</option><option value="2">KG2 · middels</option><option value="3">KG3 · stor</option>
+              </select>
+            </label>
+            <label>Sannsynlighet
+              <select data-risk-field="prob" aria-label="Case 4: velg sannsynlighet">
+                <option value="">Velg sannsynlighet</option><option value="1">Lav</option><option value="2">Middels</option><option value="3">Høy</option>
+              </select>
+            </label>
+          </div>
+          <p class="risk-output" role="status" aria-live="polite">Velg KG og sannsynlighet for en illustrativ risikoklasse.</p>
+        </div>
+        <details class="worksheet">
+          <summary>Åpne casearbeidsark</summary>
+          <div class="worksheet-fields">
+            <label>Velg analysenivå
+              <select data-worksheet="level"><option value="">Velg nivå</option><option>Nivå 1 · screening</option><option>Nivå 2 · utvidet</option><option>Nivå 3 · detaljert</option></select>
+            </label>
+            <label>Observasjoner (minst 2 korte observasjoner; bruk kun oppdiktede opplysninger)
+              <textarea data-worksheet="observations" rows="3" placeholder="Hva kan observeres? Skill fakta fra tolkning."></textarea>
+            </label>
+            <label>Begrunn TG/TGIU
+              <textarea data-worksheet="tg-reason" rows="2" placeholder="Beskriv hva som støtter valget, eller hvorfor underlaget er utilstrekkelig."></textarea>
+            </label>
+            <label>Begrunn KG
+              <textarea data-worksheet="kg-reason" rows="2" placeholder="Hvilken konsekvens vurderer du i denne oppdiktede øvelsen?"></textarea>
+            </label>
+            <label>Begrunn sannsynlighet og risiko
+              <textarea data-worksheet="risk-reason" rows="2" placeholder="Forklar vurderingen med forbehold om manglende data."></textarea>
+            </label>
+            <label>Tiltak nå<textarea data-worksheet="action-now" rows="2"></textarea></label>
+            <label>Tiltak på kort sikt<textarea data-worksheet="action-short" rows="2"></textarea></label>
+            <label>Tiltak på lang sikt<textarea data-worksheet="action-long" rows="2"></textarea></label>
+            <label>Videre undersøkelser (valgfritt)<textarea data-worksheet="further" rows="2"></textarea></label>
+            <button type="button" class="worksheet-complete">Kontroller at arbeidsarket er fylt ut</button>
+            <p class="worksheet-status" role="status" aria-live="polite">Arbeidsarket finnes bare mens denne siden er åpen.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="practice-component" data-correct="3" data-id="p5" data-required-observations="4">
+        <h4>5. Syntetisk case SYN-05 — Bygg med flere funn</h4>
+        <div class="desc">Oppdiktet bygg med bolig- og arbeidsarealer; vurderingene må avgrenses per bygningsdel.</div>
+        <div class="observations">
+          <strong>Oppdiktede observasjoner:</strong> Scenen kombinerer en fuktindikasjon, et riss i overflatepuss, en rapportert varm sone og en blokkert branndør. Ingen enkelt årsak eller faktisk fare kan utledes av scenen alene.
+        </div>
+        <div class="grade-selector">
+          <button class="grade-btn g0" onclick="selectGrade(this,'p5',0)">TG0</button>
+          <button class="grade-btn g1" onclick="selectGrade(this,'p5',1)">TG1</button>
+          <button class="grade-btn g2" onclick="selectGrade(this,'p5',2)">TG2</button>
+          <button class="grade-btn g3" onclick="selectGrade(this,'p5',3)">TG3</button>
+        </div>
+        <div class="practice-feedback" id="fb-p5"></div>
+        <div class="risk-practice" data-risk-case="p5">
+          <h5>Konsekvens og enkel risikosjekk</h5>
+          <div class="risk-fields">
+            <label>Konsekvensgrad (KG)
+              <select data-risk-field="kg" aria-label="Case 5: velg konsekvensgrad">
+                <option value="">Velg KG</option><option value="1">KG1 · liten</option><option value="2">KG2 · middels</option><option value="3">KG3 · stor</option>
+              </select>
+            </label>
+            <label>Sannsynlighet
+              <select data-risk-field="prob" aria-label="Case 5: velg sannsynlighet">
+                <option value="">Velg sannsynlighet</option><option value="1">Lav</option><option value="2">Middels</option><option value="3">Høy</option>
+              </select>
+            </label>
+          </div>
+          <p class="risk-output" role="status" aria-live="polite">Velg KG og sannsynlighet for en illustrativ risikoklasse.</p>
+        </div>
+        <details class="worksheet">
+          <summary>Åpne casearbeidsark</summary>
+          <div class="worksheet-fields">
+            <label>Velg analysenivå
+              <select data-worksheet="level"><option value="">Velg nivå</option><option>Nivå 1 · screening</option><option>Nivå 2 · utvidet</option><option>Nivå 3 · detaljert</option></select>
+            </label>
+            <label>Observasjoner (minst 4 korte observasjoner; bruk kun oppdiktede opplysninger)
+              <textarea data-worksheet="observations" rows="3" placeholder="Hva kan observeres? Skill fakta fra tolkning."></textarea>
+            </label>
+            <label>Begrunn TG/TGIU
+              <textarea data-worksheet="tg-reason" rows="2" placeholder="Beskriv hva som støtter valget, eller hvorfor underlaget er utilstrekkelig."></textarea>
+            </label>
+            <label>Begrunn KG
+              <textarea data-worksheet="kg-reason" rows="2" placeholder="Hvilken konsekvens vurderer du i denne oppdiktede øvelsen?"></textarea>
+            </label>
+            <label>Begrunn sannsynlighet og risiko
+              <textarea data-worksheet="risk-reason" rows="2" placeholder="Forklar vurderingen med forbehold om manglende data."></textarea>
+            </label>
+            <label>Tiltak nå<textarea data-worksheet="action-now" rows="2"></textarea></label>
+            <label>Tiltak på kort sikt<textarea data-worksheet="action-short" rows="2"></textarea></label>
+            <label>Tiltak på lang sikt<textarea data-worksheet="action-long" rows="2"></textarea></label>
+            <label>Videre undersøkelser (valgfritt)<textarea data-worksheet="further" rows="2"></textarea></label>
+            <button type="button" class="worksheet-complete">Kontroller at arbeidsarket er fylt ut</button>
+            <p class="worksheet-status" role="status" aria-live="polite">Arbeidsarket finnes bare mens denne siden er åpen.</p>
+          </div>
+        </details>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- ====== KUNNSKAPSTEST ====== -->
+  <div class="section" id="sec-quiz">
+    <div class="card">
+      <h2>Kunnskapstest — NS3424</h2>
+      <p>Test dine kunnskaper om standarden. Velg riktig svar for hvert spørsmål.</p>
+      <div class="progress-bar"><div class="fill" id="quiz-progress" style="width:0%"></div></div>
+      <p id="quiz-score-text" style="text-align:center; font-weight:600; color:var(--clr-primary);"></p>
+    </div>
+
+    <div id="quiz-container">
+      <div class="quiz-q" data-correct="b" data-id="q1">
+        <p>1. Hva beskriver tilstandsgrad (TG) i NS3424?</p>
+        <label><input type="radio" name="q1" value="a"> Forventet gjenværende levetid for bygningsdelen</label>
+        <label><input type="radio" name="q1" value="b"> Avviket mellom faktisk tilstand og et definert referansenivå</label>
+        <label><input type="radio" name="q1" value="c"> Bygningsdelens estetiske kvalitet</label>
+        <label><input type="radio" name="q1" value="d"> Kostnaden for å utbedre skaden</label>
+        <div class="feedback" id="fb-q1"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="c" data-id="q2">
+        <p>2. Hvor mange analysenivåer opererer NS3424 med?</p>
+        <label><input type="radio" name="q2" value="a"> 2</label>
+        <label><input type="radio" name="q2" value="b"> 4</label>
+        <label><input type="radio" name="q2" value="c"> 3</label>
+        <label><input type="radio" name="q2" value="d"> 5</label>
+        <div class="feedback" id="fb-q2"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="d" data-id="q3">
+        <p>3. Hva innebærer TG3?</p>
+        <label><input type="radio" name="q3" value="a"> Normal aldring innenfor forventet levetid</label>
+        <label><input type="radio" name="q3" value="b"> Mindre avvik som kan utbedres ved neste vedlikeholdsperiode</label>
+        <label><input type="radio" name="q3" value="c"> Vesentlige avvik som krever tiltak innen rimelig tid</label>
+        <label><input type="radio" name="q3" value="d"> Stort eller alvorlig avvik — kraftig svikt, mulig fare for liv og helse</label>
+        <div class="feedback" id="fb-q3"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="b" data-id="q4">
+        <p>4. Hvilke fire kategorier vurderes konsekvensgraden etter?</p>
+        <label><input type="radio" name="q4" value="a"> Funksjon, levetid, energi, miljø</label>
+        <label><input type="radio" name="q4" value="b"> Sikkerhet, helse/miljø, økonomi, estetikk</label>
+        <label><input type="radio" name="q4" value="c"> Bæreevne, tetthet, isolasjon, utseende</label>
+        <label><input type="radio" name="q4" value="d"> Brann, fukt, lyd, energi</label>
+        <div class="feedback" id="fb-q4"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="a" data-id="q5">
+        <p>5. Hva kjennetegner analysenivå 1?</p>
+        <label><input type="radio" name="q5" value="a"> Overordnet visuell inspeksjon uten inngrep i konstruksjonen</label>
+        <label><input type="radio" name="q5" value="b"> Målinger og enkle destruktive prøver</label>
+        <label><input type="radio" name="q5" value="c"> Laboratorieanalyser og spesialistkompetanse</label>
+        <label><input type="radio" name="q5" value="d"> Kun gjennomgang av eksisterende dokumentasjon</label>
+        <div class="feedback" id="fb-q5"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="a" data-id="q6">
+        <p>6. Hva kombinerer risikoøvelsen i denne demoen?</p>
+        <label><input type="radio" name="q6" value="a"> Konsekvensgrad og sannsynlighet</label>
+        <label><input type="radio" name="q6" value="b"> Tilstandsgrad og byggets alder</label>
+        <label><input type="radio" name="q6" value="c"> Tilstandsgrad og sannsynlighet</label>
+        <label><input type="radio" name="q6" value="d"> Byggets verdi og vedlikeholdskostnad</label>
+        <div class="feedback" id="fb-q6"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="c" data-id="q7">
+        <p>7. I demoens forenklede modell: KG2 × sannsynlighet 3 gir hvilken klasse?</p>
+        <label><input type="radio" name="q7" value="a"> Lav</label>
+        <label><input type="radio" name="q7" value="b"> Middels</label>
+        <label><input type="radio" name="q7" value="c"> Høy</label>
+        <label><input type="radio" name="q7" value="d"> Kritisk</label>
+        <div class="feedback" id="fb-q7"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="b" data-id="q8">
+        <p>8. Hva er et referansenivå?</p>
+        <label><input type="radio" name="q8" value="a"> Minimumsstandarden for nybygg etter TEK17</label>
+        <label><input type="radio" name="q8" value="b"> Det definerte nivået bygningsdelen vurderes mot</label>
+        <label><input type="radio" name="q8" value="c"> Gjennomsnittstilstanden for tilsvarende bygninger</label>
+        <label><input type="radio" name="q8" value="d"> Den beste oppnåelige tilstanden for bygningsdelen</label>
+        <div class="feedback" id="fb-q8"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="a" data-id="q9">
+        <p>9. Hva er «svikt» i henhold til NS3424?</p>
+        <label><input type="radio" name="q9" value="a"> En tilstand som avviker negativt fra referansenivået</label>
+        <label><input type="radio" name="q9" value="b"> En bygningsdel som har kollapset</label>
+        <label><input type="radio" name="q9" value="c"> Manglende vedlikehold over tid</label>
+        <label><input type="radio" name="q9" value="d"> Feil i prosjektering eller utførelse</label>
+        <div class="feedback" id="fb-q9"></div>
+      </div>
+
+      <div class="quiz-q" data-correct="c" data-id="q10">
+        <p>10. Hvilken tilstandsgrad tilsvarer «normal slitasje og aldring»?</p>
+        <label><input type="radio" name="q10" value="a"> TG0</label>
+        <label><input type="radio" name="q10" value="b"> TG2</label>
+        <label><input type="radio" name="q10" value="c"> TG1</label>
+        <label><input type="radio" name="q10" value="d"> TG3</label>
+        <div class="feedback" id="fb-q10"></div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin:1.5rem 0;">
+      <button class="btn" onclick="checkQuiz()">Sjekk svar</button>
+      <button class="btn secondary" onclick="resetQuiz()" style="margin-left:0.5rem;">Nullstill</button>
+    </div>
+
+    <div class="score-display" id="quiz-result" style="display:none;">
+      <div class="score-num" id="quiz-score-num">0/10</div>
+      <div class="score-label" id="quiz-result-text">Du fikk 0 av 10 riktige</div>
+    </div>
+  </div>
+
+</main>
+
+<div class="footer">
+  Illustrativ kopi av NS 3424 – læringsdemo — Tilstandsanalyse av byggverk<br>
+  Kilde: eirikyven-gif/ns3456, app-fdvu-ns3424 v0.1.1; arkivert. Ikke bruk som faglig referanse.
+</div>
+
+<script>
+(function() {
+  // Navigation
+  const navBtns = document.querySelectorAll('.nav button');
+  const sections = document.querySelectorAll('.section');
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navBtns.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      navBtns.forEach(b => b.setAttribute('aria-current', b === btn ? 'page' : 'false'));
+      document.getElementById('sec-' + btn.dataset.section).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Accordion
+  document.querySelectorAll('.accordion-header').forEach((header, index) => {
+    const body = header.nextElementSibling;
+    body.id = 'accordion-panel-' + (index + 1);
+    header.setAttribute('aria-controls', body.id);
+    header.setAttribute('aria-expanded', 'false');
+    header.addEventListener('click', () => {
+      const body = header.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      // Close siblings in same accordion
+      header.closest('.accordion').querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+      header.closest('.accordion').querySelectorAll('.accordion-header').forEach(h => { h.classList.remove('open'); h.setAttribute('aria-expanded', 'false'); });
+      if (!isOpen) {
+        body.classList.add('open');
+        header.classList.add('open');
+        header.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
+
+// Practice exercise
+const practiceState = {};
+const practiceExplanations = {
+  p1: {
+    0: 'For strengt: scenen viser konkrete avvik.',
+    1: 'For mildt: misfarging og løs fuge bør undersøkes nærmere.',
+    2: 'Illustrativt svar: TG2 kan passe til de beskrevne avvikene. Dette er ikke en faglig konklusjon.',
+    3: 'Scenen gir ikke nok grunnlag for å konkludere med TG3.'
+  },
+  p2: {
+    0: 'For mildt: synlige riss er beskrevet.',
+    1: 'Scenen tilsier mer enn et mindre avvik i denne øvelsen.',
+    2: 'Illustrativt svar: TG2 brukes her for å drøfte riss og behov for videre undersøkelser.',
+    3: 'Scenen mangler grunnlag for å fastslå et alvorlig avvik.'
+  },
+  p3: {
+    0: 'For mildt: scenen beskriver driftsforhold som bør følges opp.',
+    1: 'Scenen gir flere tegn som bør undersøkes.',
+    2: 'Illustrativt svar: TG2 kan brukes som øvingsvalg ved merkbare driftsavvik med manglende måledata.',
+    3: 'Ikke trekk en alvorlig konklusjon uten undersøkelser.'
+  },
+  p4: {
+    0: 'For mildt: en blokkert rømningsvei og åpen branndør er alvorlige i øvelsesscenen.',
+    1: 'Scenen tilsier mer enn et mindre avvik.',
+    2: 'Scenen tilsier mer enn et vesentlig, men ikke alvorlig avvik.',
+    3: 'Illustrativt svar: TG3 prioriteres i denne øvelsen. Virkelige forhold må vurderes av fagperson.'
+  },
+  p5: {
+    0: 'Flere ulike funn gjør TG0 lite passende i øvelsen.',
+    1: 'Scenen inneholder flere funn som krever oppfølging.',
+    2: 'Et mulig øvingssvar, men helheten tilsier høyere oppfølgingsprioritet i denne scenen.',
+    3: 'Illustrativt svar: TG3 viser at et alvorlig funn kan styre oppfølgingen. Ikke bruk dette på virkelige bygg.'
+  }
+};
+
+function resetPractice() {
+  Object.keys(practiceState).forEach(key => delete practiceState[key]);
+  document.querySelectorAll('.practice-component').forEach(comp => {
+    comp.querySelectorAll('.grade-btn').forEach(button => button.classList.remove('selected'));
+    const feedback = comp.querySelector('.practice-feedback');
+    feedback.className = 'practice-feedback';
+    feedback.textContent = '';
+    comp.querySelectorAll('[data-risk-field]').forEach(select => { select.value = ''; });
+    const riskOutput = comp.querySelector('.risk-output');
+    if (riskOutput) riskOutput.textContent = 'Velg KG og sannsynlighet for en illustrativ risikoklasse.';
+  });
+  document.getElementById('practice-progress').style.width = '0%';
+  document.getElementById('practice-score').textContent = '';
+}
+
+document.querySelectorAll('.risk-practice select').forEach(select => select.addEventListener('change', event => {
+  const panel = event.currentTarget.closest('.risk-practice');
+  const kg = Number(panel.querySelector('[data-risk-field="kg"]').value);
+  const prob = Number(panel.querySelector('[data-risk-field="prob"]').value);
+  const output = panel.querySelector('.risk-output');
+  if (!kg || !prob) { output.textContent = 'Velg KG og sannsynlighet for en illustrativ risikoklasse.'; return; }
+  const score = kg * prob;
+  const level = score <= 2 ? 'Lav' : score <= 4 ? 'Middels' : 'Høy';
+  output.textContent = `Illustrativ risikoklasse: ${level} (KG × sannsynlighet = ${score}/9). Dette er en øvingsmodell, ikke en faglig konklusjon.`;
+}));
+
+document.querySelectorAll('.worksheet-complete').forEach(button => button.addEventListener('click', () => {
+  const sheet = button.closest('.worksheet');
+  const fields = Object.fromEntries(Array.from(sheet.querySelectorAll('[data-worksheet]')).map(field => [field.dataset.worksheet, field.value.trim()]));
+  const status = sheet.querySelector('.worksheet-status');
+  const required = ['level','observations','tg-reason','kg-reason','risk-reason','action-now','action-short','action-long'];
+  const missing = required.filter(key => !fields[key]);
+  const observationCount = fields.observations.split(/[.!?\n]+/).filter(item => item.trim().length >= 4).length;
+  if (missing.length || observationCount < Number(sheet.closest('.practice-component').dataset.requiredObservations)) {
+    status.textContent = 'Fyll ut analysenivå, observasjoner, begrunnelser og tiltak. Bruk flere separate observasjoner der caset ber om det.';
+    return;
+  }
+  status.textContent = 'Arbeidsarket er komplett for denne øvelsen. Vurderingene er kun pedagogiske og lagres ikke.';
+}));
+
+function selectGrade(btn, pid, grade) {
+  if (practiceState[pid] !== undefined) return; // Already answered
+  const comp = btn.closest('.practice-component');
+  const correct = parseInt(comp.dataset.correct);
+  practiceState[pid] = grade;
+
+  // Mark selected
+  comp.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  // Show feedback
+  const fb = document.getElementById('fb-' + pid);
+  const isCorrect = grade === correct;
+  fb.className = 'practice-feedback show ' + (isCorrect ? 'ok' : 'nok');
+  fb.textContent = practiceExplanations[pid][grade];
+
+  // Update progress
+  const total = document.querySelectorAll('.practice-component').length;
+  const answered = Object.keys(practiceState).length;
+  document.getElementById('practice-progress').style.width = (answered / total * 100) + '%';
+
+  const correctCount = Object.entries(practiceState).filter(([k, v]) => {
+    return v === parseInt(document.querySelector(`[data-id="${k}"]`).dataset.correct);
+  }).length;
+  document.getElementById('practice-score').textContent = correctCount + ' av ' + answered + ' riktige' + (answered === total ? ' — Øvelse fullført!' : '');
+}
+
+// Quiz
+function checkQuiz() {
+  const questions = document.querySelectorAll('.quiz-q');
+  let correct = 0;
+  const total = questions.length;
+
+  questions.forEach(q => {
+    const qId = q.dataset.id;
+    const correctAns = q.dataset.correct;
+    const selected = q.querySelector('input[name="' + qId + '"]:checked');
+    const fb = document.getElementById('fb-' + qId);
+
+    if (!selected) {
+      fb.className = 'feedback wrong';
+      fb.textContent = 'Du har ikke valgt et svar.';
+      return;
+    }
+
+    if (selected.value === correctAns) {
+      correct++;
+      fb.className = 'feedback correct';
+      fb.textContent = 'Riktig!';
+    } else {
+      fb.className = 'feedback wrong';
+      const correctLabel = q.querySelector('input[value="' + correctAns + '"]').parentElement.textContent.trim();
+      fb.textContent = 'Feil. Riktig svar: ' + correctLabel;
+    }
+  });
+
+  document.getElementById('quiz-progress').style.width = '100%';
+  document.getElementById('quiz-result').style.display = 'block';
+  document.getElementById('quiz-score-num').textContent = correct + '/' + total;
+
+  let msg;
+  const pct = correct / total;
+  if (pct === 1) msg = 'Perfekt! Du har full kontroll på NS3424.';
+  else if (pct >= 0.8) msg = 'Meget bra! Du har god forståelse av standarden.';
+  else if (pct >= 0.6) msg = 'Ganske bra, men det er rom for forbedring.';
+  else msg = 'Du bør repetere stoffet og prøve igjen.';
+
+  document.getElementById('quiz-result-text').textContent = 'Du fikk ' + correct + ' av ' + total + ' riktige — ' + msg;
+  document.getElementById('quiz-score-text').textContent = correct + ' av ' + total + ' riktige';
+
+  document.getElementById('quiz-result').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  document.querySelectorAll('.quiz-q input').forEach(i => i.checked = false);
+  document.querySelectorAll('.quiz-q .feedback').forEach(f => { f.className = 'feedback'; f.textContent = ''; });
+  document.getElementById('quiz-progress').style.width = '0%';
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-score-text').textContent = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('reset-all').addEventListener('click', () => {
+  resetPractice();
+  resetQuiz();
+  document.querySelectorAll('.worksheet [data-worksheet]').forEach(field => { field.value = ''; });
+  document.querySelectorAll('.worksheet-status').forEach(status => { status.textContent = 'Arbeidsarket finnes bare mens denne siden er åpen.'; });
+  document.querySelectorAll('.worksheet').forEach(sheet => { sheet.open = false; });
+  document.querySelectorAll('.accordion-body').forEach(body => body.classList.remove('open'));
+  document.querySelectorAll('.accordion-header').forEach(header => { header.classList.remove('open'); header.setAttribute('aria-expanded', 'false'); });
+  document.querySelectorAll('.nav button').forEach((button, index) => {
+    button.classList.toggle('active', index === 0);
+    button.setAttribute('aria-current', index === 0 ? 'page' : 'false');
+  });
+  document.querySelectorAll('.section').forEach((section, index) => section.classList.toggle('active', index === 0));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
 </body>
 </html>
