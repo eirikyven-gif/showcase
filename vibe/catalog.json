@@ -814,6 +814,30 @@
       "scope": "Statisk HTML/CSS/JS på /vibe/progresjonsplan/. Oppdiktet innhold; progresjon finnes bare i JavaScript-minne i aktiv sideøkt. Ingen nettverk, auth, server, API, nettleserlagring, skjema, telemetry, PII eller secrets.",
       "routeState": "Ny isolert rute på baseline showcase main ec138417c00220de18d5ab838b3e2950eab2a3d6, v0.36.1 med 38 katalogoppføringer.",
       "sourceUncertainty": "Issue #2 viser til låste Notion-krav som ikke var tilgjengelige i checkouten. Vurderingen bygger på offentlig README, masterlogg og pluginarkiv; faktisk produksjonsbruk, komplett kravgrunnlag og gjenbruksrettigheter er ikke verifisert."
+    },
+    {
+      "slug": "lagerstyring-hell-ultra",
+      "name": "Lagerstyring Hell Ultra",
+      "useCase": "Utforsk lageroversikt, varemetadata, lånehistorikk og delte utstyrslister.",
+      "category": "Lagerstyring og utlån",
+      "audience": [
+        "Lageransvarlige",
+        "Arrangører",
+        "Personer som utforsker lagerstyring"
+      ],
+      "status": "Funksjonell, lokal showcase-demo med syntetiske data; issue #2 delvis løst.",
+      "sourceUncertainty": "Kildens shortcodeportal ligger på en WordPress-side valgt i admin, så portalens permanente side-slug kan ikke utledes. Magic-link rewrite-ruter er entydige. Offentlig main commit inspisert; faktisk produksjonsoppsett og publiserte data ble ikke kontrollert.",
+      "purpose": "WordPress-plugin for klubbens lagervarer, metadata, offentlig portal, varedetaljer, utlånshistorikk og delte egendefinerte lister.",
+      "demoValue": "Bevarer søk, status/kategori/plassering/arrangementsfiltre, sortering, gruppering, kort-/tabellvisning, detaljvisning med aktivt utlån/historikk og delt navngitt liste.",
+      "simplifications": "Ingen vareoppretting, utlånshandlinger, opplasting, vedlegg, import/eksport eller WordPress-admin. Lageransvarlig-simulator kan endre varestatus bare i gjeldende sideøkt. Delt liste og URL-ID-er er statiske syntetiske eksempler.",
+      "source": "eirikyven-gif/lagerstyring-hell-ultra, offentlig main commit f1f13246677d15de24e84070d8dad74f2a0376ee; plugin templates/public-portal.php, public-item-detail.php, public-list.php; public/class-hul-lager-public.php; includes/class-hul-lager-magic-link.php; assets/css/public.css og assets/js/public.js lest. Kilderepoet er urørt.",
+      "sourceStack": "Kilden er en WordPress/PHP-plugin med shortcodeportal, rewrite-baserte magic-lenker, CPT/taksonomier, PHP-renderte maler og JavaScript/CSS. Showcase er statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Ingen egne automatiserte testfiler for offentlig portal ble funnet i kilde-pluginen; kilde-CI lint-er PHP. Kildens CI ble ikke kjørt. Showcase-rutetester dekker rute-/flytmarkører og fravær av eksterne kall/lagring.",
+      "sourceApiAuthStoragePrivacy": "Kilden henter publiserte varer via WordPress, bruker WP-rolle/capability-basert admin og oppbevarer vare-/utlåns-/magic-token-data på server. Demoen har ingen WP-auth, API, serverlagring eller tokens. Alle identitets- og lånefelt er oppdiktet. Rollevelgeren er ikke sikkerhetskontroll.",
+      "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse ble kontrollert. Demoen gjenskaper observerte arbeidsflyter med selvstendig markup/styling og syntetiske data; juridisk status er uavklart.",
+      "risk": "Kilde-detaljsiden kan vise ansvarlig, verdi og låntaker-/utlånsopplysninger. Demoen har kun syntetiske verdier og viser tydelig demo-merke. Statusendring i rolle-simulatoren kan misforstås som lagret; grensesnittet sier at den kun gjelder sideøkten. Ingen reell lagerdrift bør baseres på demoen.",
+      "scope": "Isolert `/vibe/lagerstyring-hell-ultra/`-rute. Showcase-rutene `#/item/{id}` og `#/list/{id}` erstatter WordPress magic-linkmønstrene; dette er ikke tokens. Ingen kilde-PII/media/secrets, auth, cookies, nettleserlagring, backend, private services eller nettverkskall.",
+      "routeState": "Ny route på showcase main b5e117c (VERSION 0.56.0); foreslått versjon 0.57.0. Issue #2 delvis løst. Ikke merget eller deployet; WordPress portal-side-slug forblir administratorstyrt og uspesifisert."
     }
   ]
 }
