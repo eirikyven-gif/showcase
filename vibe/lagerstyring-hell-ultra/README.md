@@ -1,25 +1,28 @@
 # Lagerstyring Hell Ultra
 
-Lokal, statisk demonstrasjon av Hell Ultra Lagerstyring: søk og filtrer lageroversikten, sorter eller grupper treff, bytt mellom kort og tabell, åpne en vare med utlånshistorikk og se en navngitt delt liste. Velg **Lageransvarlig (simulert)** for å endre status på en eksempellagervare i den aktive sideøkten.
+Statisk, isolert demo på `/vibe/lagerstyring-hell-ultra/`. Sammenlignet direkte mot WordPress-pluginen ved kilde SHA `f1f13246677d15de24e84070d8dad74f2a0376ee`. Den bevarer portal-, vare-, liste- og adminarbeidsflytene med syntetiske data. Endringer er kun i minnet for gjeldende sideøkt.
 
-## Rute og kilde
+## Ruteavklaring
 
-Showcase-ruten er `/vibe/lagerstyring-hell-ultra/`. Kilden er WordPress-pluginen `eirikyven-gif/lagerstyring-hell-ultra`, SHA `f1f13246677d15de24e84070d8dad74f2a0376ee`. Kildens portal vises på en WordPress-side som administratoren selv velger via `[hul_inventory_portal]`; dermed finnes ingen fast kilde-URL eller side-slug å kopiere. Kildens varepost-type bruker også `/lager-enhet/{post-slug}`; pluginen omdirigerer enkeltposten til varedetaljens magic-lenke. Detalj- og listelenkene bruker `/hul-lager/item/{32-tegns-token}` og `/hul-lager/liste/{32-tegns-token}`. Demoen mapper disse til `#/item/{syntetisk-id}` og `#/list/{lokal-liste-id}` under showcase-ruten. Dette er ruteekvivalenter for demonstrasjon, ikke WordPress-permalenker eller delbare tilgangstokens.
+Kildeportalen er shortcode `[hul_inventory_portal]` på en WordPress-side som administratoren selv velger i innstillinger. Sluggen kan derfor ikke utledes fra repoet. Kildens CPT-rute `/lager-enhet/{post-slug}` videresender til `/hul-lager/item/{32-tegns-token}`, og delte lister bruker `/hul-lager/liste/{32-tegns-token}`. Demoen mapper disse til `#/`, `#/item/{syntetisk-id}` og `#/list/{lokal-liste-id}` under showcase-ruten. Ingen authorization-token kopieres. `lagerkart-vinter` er et separat posisjonskart for vinterlagrede kjøretøy, ikke samme brukerflate.
 
-Den eksisterende `lagerkart-vinter`-demoen viser et rad-/meterkart for vinterlagrede kjøretøy. Den dekker ikke dette lagerets kategoriserte vareportal, varedetaljer eller delte lister og er ikke en duplikat.
+## Funksjoner bevart
 
-## Innhold, personvern og sikkerhet
+- Offentlig portal med navnesøk, status-/kategori-/plassering-/arrangementsfilter, sortering, gruppering, kort-/tabellvisning, antall treff og tomtilstand.
+- Varedetalj med status/tilstand, metadata, beskrivelse/notat, frontend-synlige bilde-/vedleggseksempler, PDF-lignende forhåndsvisning, lokale/globale attributter, underelementer, aktivt utlån og historikk.
+- Delte lister med tittel/beskrivelse, aktive/inaktive/utløpte/tomme tilstander, kort-/tabellvisning og varelenker.
+- Adminflater for dashboard, vareliste/filtre/quick edit/CRUD, redigering av varer/attributter/underelementer/media, taksonomier, samlelån/retur/historikk/eldre enkeltlån, låntakere, delte lister, pakker og liste fra pakke, import/eksport, innstillinger og testdata.
+- XLSX-mal og eksport med `DATA`, `FORKLARING`, `GYLDIGE_VERDIER`; lokal import med forhåndsvisning, validering, bekreftelse og avbryt.
 
-- Alle varer, kategorier, plasseringer, låntakere, datoer, ansvarlige, verdier og arrangementer er syntetiske. Ingen produksjonsdata, media eller hemmeligheter fra kilde er brukt.
-- WordPress-brukerinnlogging, roller/capabilities og nonce er fjernet. Rollevelgeren er en ren lokal UI-simulator, ikke tilgangskontroll.
-- Magic-linktoken-generering, lagring og validering er fjernet. URL-fragmentene inneholder kun lokale eksempel-ID-er.
-- Statusendringer for simulert lageransvarlig finnes kun i JavaScript-minne og nullstilles ved omlasting. Ingen cookies, localStorage/sessionStorage, server/API, tredjepartsressurser eller nettverkskall brukes.
-- Ingen opplasting, dokument-/bildevisning fra kildens private medielager, XLSX-import/eksport eller reell lånebehandling. Utlån og historikk vises som syntetisk, skrivebeskyttet eksempelinnhold.
+## Sikkerhetsgrenser og avvik
 
-## Kjør lokalt
+- ingen WP-auth, API eller server/database-persistens: WP-innlogging, capabilities/nonces, server-/databasepersistens, magic-linktoken, ekte låntaker/personopplysninger, private mediefiler, private tjenester og secrets er fjernet. Rollevalget er kun UI-simulering, ikke tilgangskontroll.
+- Forhåndslastet innhold er merket syntetisk. Lokalt valgte media/XLSX-filer blir i nettleserøkten; appen bruker ikke API, nettverkskall eller nettleserlagring. Omlasting nullstiller endringene.
+- Kildens rollebaserte kapabiliteter simuleres ikke som sikkerhet. En liste-ID i demoen er bare en eksempel-ID, ikke en adgangshemmelighet. WP-side-sluggen for shortcodeportalen er uavklart.
+- XLSX-parseren er laget for lokal filbehandling og er QA-et med demoens egen eksport; eksterne leverandør-XLSX-varianter bør fortsatt verifiseres før noen hevder full filformatkompatibilitet.
 
-Fra repo-roten: `python3 -m http.server 8000`, åpne `http://localhost:8000/vibe/lagerstyring-hell-ultra/`.
+## QA
 
-## QA og publisering
+Nettleser-ende-til-ende kontroll dekker portalfiltre/visning, detaljmedia/utlån, listetilstander, quick edit, vareeditor/underelement/media, legacy retur, låntaker/lån/retur, liste, pakke, taksonomi, innstillinger, testdata, XLSX eksport/import og mobilbredde. Statisk route/safety-test og full repo CI kjøres i PR #94. Dekningsmatrise, kildebevis og åpne avvik ligger i [`docs/lagerstyring-hell-ultra-parity.md`](../../docs/lagerstyring-hell-ultra-parity.md) og PR-beskrivelsen. Draft forblir draft til alle eventuelle parity-gap er løst og verifisert.
 
-Automatiserte route/safety checks kjøres med `node --test tests/lagerstyring-hell-ultra.test.mjs`; kjør også full CI-kommandolinje `node --test tests/*.test.mjs` og `git diff --check`. QA-status og resterende risiko føres i PR-beskrivelsen. Ruten ikke publisert; deploy krever vanlig godkjent deployflyt etter merge.
+Kjør lokalt fra repo-roten: `python3 -m http.server 8000`, åpne `http://localhost:8000/vibe/lagerstyring-hell-ultra/`.
