@@ -1,0 +1,215 @@
+body[data-issue425-active-tab="teams"],
+body[data-issue425-active-tab="members"],
+body[data-issue425-active-tab="admin"],
+body[data-issue425-active-tab="offline"] {
+  background: #f6f7f4;
+}
+
+[data-issue429-surface="team"] .overview-grid {
+  gap: 10px;
+}
+
+[data-issue429-surface="team"] .overview-grid h3,
+[data-issue429-surface="offline"] .section-heading,
+[data-issue429-surface="admin"] .section-heading {
+  margin-bottom: 6px;
+}
+
+.issue429-list,
+.issue429-admin-hub {
+  display: grid;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f1f4ef;
+  padding: 8px;
+}
+
+.issue429-admin-hub {
+  margin: 0 12px 10px;
+}
+
+.issue429-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: center;
+  width: 100%;
+  min-height: 68px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  padding: 9px 10px;
+  text-align: left;
+  box-shadow: 0 1px 0 rgba(25, 34, 28, .04);
+}
+
+button.issue429-row {
+  cursor: pointer;
+}
+
+button.issue429-row:hover {
+  border-color: rgba(32, 107, 79, .22);
+}
+
+button.issue429-row:focus-visible {
+  outline: 3px solid rgba(32, 107, 79, .28);
+  outline-offset: 2px;
+}
+
+.issue429-row-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #e3f0e9;
+  color: #206b4f;
+}
+
+.issue429-icon {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.issue429-row-main {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.issue429-row-main strong,
+.issue429-preview,
+.issue429-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.issue429-row-main strong {
+  font-size: 14px;
+  line-height: 1.18;
+}
+
+.issue429-preview {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.24;
+}
+
+.issue429-meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
+.issue429-row-side {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  max-width: 150px;
+}
+
+.issue429-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1;
+  padding: 5px 8px;
+  white-space: nowrap;
+}
+
+.issue429-chip[data-tone="ok"] {
+  border-color: rgba(32, 107, 79, .24);
+  background: #e3f0e9;
+  color: #206b4f;
+}
+
+.issue429-chip[data-tone="info"] {
+  border-color: rgba(38, 95, 159, .22);
+  background: #e5eef9;
+  color: #265f9f;
+}
+
+.issue429-chip[data-tone="warning"] {
+  border-color: rgba(173, 107, 18, .28);
+  background: #fff0d6;
+  color: #ad6b12;
+}
+
+.issue429-chip[data-tone="archived"] {
+  background: #edf0eb;
+  color: #657066;
+}
+
+.issue429-empty {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 780;
+  padding: 12px;
+}
+
+[data-issue429-surface="offline"] .issue429-list {
+  margin: 0 12px 12px;
+}
+
+[data-issue429-surface="offline"] .issue429-offline-row {
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+}
+
+[data-issue429-surface="admin"] .admin-sections {
+  gap: 10px;
+}
+
+[data-issue429-surface="admin"] .admin-section {
+  border-radius: 8px;
+}
+
+[data-issue429-surface="admin"] details > summary {
+  border-radius: 8px;
+}
+
+@media (max-width: 680px) {
+  .issue429-list,
+  .issue429-admin-hub {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    margin-inline: -12px;
+  }
+
+  .issue429-admin-hub {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .issue429-row {
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+
+  .issue429-row-side {
+    grid-column: 2;
+    justify-content: flex-start;
+    max-width: none;
+  }
+}

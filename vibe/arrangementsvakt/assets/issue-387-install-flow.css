@@ -1,0 +1,109 @@
+.install-flow-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-color: #efd083;
+  background: #fffdf5;
+}
+
+.install-flow-panel[data-install-state="installed"] {
+  border-color: #b9dec2;
+  background: var(--ok-soft);
+}
+
+.install-flow-copy {
+  min-width: 0;
+}
+
+.install-flow-copy h2,
+.install-flow-copy p {
+  margin-bottom: 0;
+}
+
+.install-flow-copy p {
+  color: #4d5d61;
+  font-weight: 780;
+}
+
+.install-flow-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.install-flow-status {
+  max-width: 22rem;
+  color: var(--warning);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.install-flow-panel[data-install-state="installed"] .install-flow-status {
+  color: var(--ok);
+}
+
+.install-guide-dialog {
+  width: min(720px, calc(100% - 18px));
+}
+
+.install-guide-body {
+  display: grid;
+  gap: 12px;
+  padding: 12px 14px 14px;
+}
+
+.install-guide-lead {
+  margin: 0;
+  color: #34464b;
+  font-weight: 820;
+}
+
+.install-guide-section {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+}
+
+.install-guide-section h3 {
+  margin: 0;
+}
+
+.install-guide-section ol {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #223236;
+  font-weight: 780;
+}
+
+@media (max-width: 760px) {
+  .install-flow-panel {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .install-flow-actions,
+  .install-flow-actions button {
+    width: 100%;
+  }
+
+  .install-flow-status {
+    max-width: 100%;
+  }
+
+  .install-guide-dialog .modal-actions,
+  .install-guide-dialog .modal-actions button {
+    width: 100%;
+  }
+}

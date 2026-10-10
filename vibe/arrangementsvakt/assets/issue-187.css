@@ -1,0 +1,117 @@
+.bottom-nav-button {
+  min-width: 0;
+  line-height: 1.05;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.bottom-nav-button .nav-label {
+  min-width: 0;
+}
+
+.message-row .row-foot {
+  white-space: nowrap;
+}
+
+.message-row[data-type="controlled"] {
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "main"
+    "meta"
+    "foot";
+  gap: 0.42rem;
+  align-items: start;
+  padding: 0.68rem 0.75rem 0.7rem 0.92rem;
+}
+
+.message-row[data-type="controlled"] .row-main {
+  gap: 0.24rem;
+}
+
+.message-row[data-type="controlled"] .row-main strong {
+  color: var(--accent-dark);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.message-row[data-type="controlled"] .row-main small {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #223236;
+  font-size: 0.92rem;
+  font-weight: 760;
+  line-height: 1.32;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+}
+
+.message-row[data-type="controlled"] .row-meta {
+  max-width: 100%;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--line);
+}
+
+.message-row[data-type="controlled"] .row-chip {
+  border-color: var(--line);
+  background: #f8fbfa;
+  color: #34464b;
+}
+
+.message-row[data-type="controlled"] .row-foot {
+  color: #47585d;
+  font-size: 0.76rem;
+  font-weight: 820;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.message-row[data-type="controlled"].is-unread {
+  background: #fffaf0;
+}
+
+.message-row[data-type="controlled"].is-unread .row-main strong {
+  color: #8a1f17;
+}
+
+@media (max-width: 640px) {
+  .workspace {
+    padding-bottom: calc(3.2rem + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav {
+    gap: 3px;
+  }
+
+  .bottom-nav-button {
+    min-height: 38px;
+    padding: 2px 3px;
+    font-size: .66rem;
+  }
+
+  .floating-incident-button {
+    max-width: calc(100vw - 28px);
+  }
+
+  .message-row[data-type="controlled"] {
+    gap: 0.38rem;
+    padding: 0.66rem 0.68rem 0.68rem 0.86rem;
+  }
+
+  .message-row[data-type="controlled"] .row-main small {
+    -webkit-line-clamp: 3;
+  }
+
+  .message-row[data-type="controlled"] .row-meta {
+    max-width: 100%;
+  }
+
+  .message-row[data-type="controlled"] .row-meta .row-chip:nth-child(n+2) {
+    display: inline-flex;
+  }
+}

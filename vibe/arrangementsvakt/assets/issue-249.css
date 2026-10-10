@@ -1,0 +1,157 @@
+/* v0.9.3-mobile-topbar-pushdiagnose-2026-06-08 */
+.topbar {
+  z-index: 30;
+  min-width: 0;
+}
+
+.topbar > *,
+.top-actions > * {
+  min-width: 0;
+}
+
+.top-actions {
+  z-index: 31;
+  max-width: 100%;
+}
+
+.top-actions .ghost-action {
+  max-width: 100%;
+  white-space: normal;
+}
+
+#pushTestButton {
+  z-index: 32;
+}
+
+.push-diagnostics-panel {
+  flex: 1 1 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.push-diagnostics-details {
+  width: 100%;
+  max-width: min(100%, 42rem);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: var(--shadow-soft);
+  color: var(--text);
+}
+
+.push-diagnostics-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 9px;
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  list-style: none;
+}
+
+.push-diagnostics-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.push-diagnostics-details summary::after {
+  content: "Vis";
+  flex: 0 0 auto;
+  min-height: 22px;
+  padding: 4px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--panel-soft);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.push-diagnostics-details[open] {
+  max-height: min(20rem, 46vh);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.push-diagnostics-details[open] summary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, .98);
+}
+
+.push-diagnostics-details[open] summary::after {
+  content: "Skjul";
+}
+
+.push-diagnostics-summary-hint {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.push-diagnostics-details > small {
+  display: block;
+  padding: 7px 9px 2px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.push-diagnostics-list {
+  padding: 7px 9px 9px;
+}
+
+.bottom-nav {
+  z-index: 50;
+}
+
+.floating-incident-button {
+  z-index: 60;
+}
+
+@media (max-width: 760px) {
+  .top-actions {
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-wrap: anywhere;
+  }
+
+  .push-action-hint {
+    max-width: 100%;
+  }
+
+  .push-diagnostics-details {
+    max-width: 100%;
+  }
+
+  .push-diagnostics-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .push-diagnostics-list dt:not(:first-child) {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .push-diagnostics-details[open] {
+    max-height: min(16rem, 38vh);
+  }
+
+  .push-diagnostics-details summary {
+    min-height: 36px;
+  }
+}

@@ -1,0 +1,215 @@
+.issue494-icon,
+.issue494-nav-icon,
+.issue494-search-icon,
+.issue494-card-icon {
+  flex: 0 0 auto;
+  width: 1.15em;
+  height: 1.15em;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.issue494-icon-label,
+.issue494-chip-label,
+.issue494-heading-label {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38em;
+}
+
+.issue494-icon-label > span,
+.issue494-chip-label > span,
+.issue494-heading-label > span,
+.issue494-nav-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.issue494-chip-label {
+  justify-content: flex-start;
+  line-height: 1;
+}
+
+.issue494-chip-label .issue494-icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.2;
+}
+
+.issue494-heading-label {
+  justify-content: flex-start;
+}
+
+.issue494-heading-label .issue494-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+  stroke-width: 2.1;
+}
+
+body[data-issue425-shell] .bottom-nav-button,
+.bottom-nav-button {
+  min-height: 44px;
+}
+
+.bottom-nav-button::before,
+.bottom-nav-button::after,
+body[data-issue425-shell] .bottom-nav-button::before,
+body[data-issue425-shell] .bottom-nav-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+.issue494-nav-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.2;
+}
+
+.issue494-nav-label {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+body[data-issue425-shell] .bottom-nav-button[aria-current="page"],
+.bottom-nav-button[aria-current="page"] {
+  box-shadow: inset 0 0 0 1px rgba(32, 107, 79, .28);
+}
+
+.issue494-search-field {
+  position: relative;
+}
+
+.issue494-search-field .issue494-search-icon {
+  position: absolute;
+  left: 12px;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  pointer-events: none;
+  stroke-width: 2.15;
+}
+
+.issue437-shell-search.issue494-search-field .issue494-search-icon {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.issue427-search.issue494-search-field .issue494-search-icon,
+.member-search.issue494-search-field .issue494-search-icon {
+  bottom: 9px;
+}
+
+.issue494-search-field input[type="search"] {
+  padding-left: 38px !important;
+}
+
+.issue437-shell-search.issue494-search-field {
+  padding-left: 38px;
+}
+
+.issue437-shell-search.issue494-search-field .issue494-search-icon {
+  left: 13px;
+}
+
+.issue437-shell-search.issue494-search-field input[type="search"] {
+  padding-left: 0 !important;
+}
+
+.issue437-shell-logout,
+.issue437-shell-action,
+#logoutButton,
+#adminShortcutButton,
+#refreshMessagesButton,
+.issue427-back,
+.issue427-input-row button[type="submit"],
+.floating-incident-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.issue437-shell-action {
+  min-width: 44px;
+}
+
+.issue437-shell-logout,
+#logoutButton,
+#adminShortcutButton,
+#refreshMessagesButton,
+.issue427-back {
+  min-height: 44px;
+}
+
+.issue427-back .issue494-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.issue427-conversation .issue427-type-chip {
+  max-width: 100%;
+}
+
+.issue427-conversation[data-kind="broadcast"] .issue427-type-chip,
+.issue427-conversation[data-kind="team"] .issue427-type-chip {
+  border-color: rgba(137, 92, 29, .28);
+  background: #f7ead7;
+  color: #755118;
+}
+
+.issue427-conversation[data-kind="direct"] .issue427-type-chip {
+  border-color: rgba(38, 95, 159, .24);
+  background: #e5eef9;
+  color: #265f9f;
+}
+
+.issue427-conversation[data-kind="teamchat"] .issue427-type-chip {
+  border-color: rgba(32, 107, 79, .24);
+  background: #e3f0e9;
+  color: #206b4f;
+}
+
+.issue427-conversation[data-kind="thread"] .issue427-type-chip {
+  border-color: rgba(181, 59, 52, .24);
+  background: #fde7e5;
+  color: #8f1d13;
+}
+
+.issue427-thread-head > .issue427-chip .issue494-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.issue438-row-icon .issue494-card-icon,
+.issue441-team-marker .issue494-card-icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.15;
+}
+
+.app-shell-fab-icon,
+.floating-incident-button .issue494-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.4;
+}
+
+@media (max-width: 390px) {
+  .issue494-nav-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .issue494-nav-label {
+    font-size: 9.5px;
+  }
+}

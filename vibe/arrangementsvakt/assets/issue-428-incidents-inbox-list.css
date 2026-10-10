@@ -1,0 +1,238 @@
+body[data-issue425-active-tab="incidents"] {
+  background: #f6f7f4;
+}
+
+#incidentPanel[data-issue428-incidents="true"] {
+  overflow: hidden;
+}
+
+#incidentPanel[data-issue428-incidents="true"] .section-heading {
+  margin-bottom: 6px;
+}
+
+#incidentPanel[data-issue428-incidents="true"] #overviewStats {
+  display: none;
+}
+
+.issue428-root {
+  display: grid;
+  gap: 8px;
+}
+
+.issue428-status {
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 0 1px 2px;
+}
+
+.issue428-chip,
+.issue428-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1;
+  padding: 5px 9px;
+}
+
+.issue428-filter {
+  cursor: pointer;
+}
+
+.issue428-filter[aria-pressed="true"] {
+  border-color: rgba(32, 107, 79, .35);
+  background: #206b4f;
+  color: #fff;
+}
+
+.issue428-chip[data-tone="critical"] {
+  border-color: rgba(181, 59, 52, .28);
+  background: #fde7e5;
+  color: #b53b34;
+}
+
+.issue428-chip[data-tone="urgent"],
+.issue428-chip[data-tone="working"] {
+  border-color: rgba(173, 107, 18, .28);
+  background: #fff0d6;
+  color: #ad6b12;
+}
+
+.issue428-chip[data-tone="resolved"] {
+  border-color: rgba(32, 107, 79, .24);
+  background: #e3f0e9;
+  color: #206b4f;
+}
+
+.issue428-chip[data-tone="archived"] {
+  background: #edf0eb;
+  color: #657066;
+}
+
+.issue428-search {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.issue428-search input {
+  min-height: 36px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  padding: 8px 10px;
+}
+
+.issue428-incident-list {
+  display: grid;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f1f4ef;
+  padding: 8px;
+}
+
+.issue428-incident-row {
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: stretch;
+  width: 100%;
+  min-height: 74px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  padding: 9px 10px 9px 0;
+  text-align: left;
+  box-shadow: 0 1px 0 rgba(25, 34, 28, .04);
+}
+
+.issue428-incident-row:focus-visible {
+  outline: 3px solid rgba(32, 107, 79, .28);
+  outline-offset: 2px;
+}
+
+.issue428-incident-row:hover {
+  border-color: rgba(32, 107, 79, .22);
+}
+
+.issue428-marker {
+  width: 4px;
+  border-radius: 999px;
+  background: #206b4f;
+}
+
+.issue428-incident-row[data-tone="critical"] .issue428-marker {
+  background: #b53b34;
+}
+
+.issue428-incident-row[data-tone="urgent"],
+.issue428-incident-row[data-tone="working"] {
+  background: #fffdf8;
+}
+
+.issue428-incident-row[data-tone="urgent"] .issue428-marker,
+.issue428-incident-row[data-tone="working"] .issue428-marker {
+  background: #ad6b12;
+}
+
+.issue428-incident-row[data-tone="resolved"],
+.issue428-incident-row[data-tone="archived"] {
+  opacity: .82;
+}
+
+.issue428-row-main {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  gap: 4px;
+}
+
+.issue428-row-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.issue428-row-top strong,
+.issue428-preview,
+.issue428-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.issue428-row-top strong {
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.issue428-preview {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.25;
+}
+
+.issue428-meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
+.issue428-side {
+  display: grid;
+  justify-items: end;
+  align-content: center;
+  gap: 6px;
+  min-width: 76px;
+}
+
+.issue428-side strong {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+@media (max-width: 620px) {
+  .issue428-incident-list {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    margin-inline: -12px;
+  }
+
+  .issue428-incident-row {
+    grid-template-columns: 4px minmax(0, 1fr);
+    padding-right: 9px;
+  }
+
+  .issue428-side {
+    grid-column: 2;
+    grid-row: 2;
+    grid-auto-flow: column;
+    justify-content: start;
+    justify-items: start;
+    min-width: 0;
+  }
+}

@@ -1,0 +1,376 @@
+body[data-issue437-shell] > .topbar {
+  display: none;
+}
+
+body[data-issue437-shell] main {
+  padding-top: 8px;
+}
+
+body[data-issue437-shell] #testModeBanner {
+  display: none !important;
+}
+
+.issue438-overview .issue438-section-head .eyebrow,
+#chatPanel > .section-heading .eyebrow,
+#incidentPanel > .section-heading .eyebrow,
+#teamPanel > .section-heading .eyebrow {
+  display: none !important;
+}
+
+#chatPanel[data-issue427-messages="true"] .issue427-heading > div > p:not(.eyebrow),
+#adminPanel > .admin-heading .eyebrow,
+#adminPanel .admin-section-head .eyebrow,
+#adminPanel .admin-section[aria-labelledby="adminEventTitle"] .admin-section-head .eyebrow,
+#adminPanel .admin-section[aria-labelledby="adminTeamTitle"] .admin-section-head .eyebrow,
+#adminPanel .admin-section[aria-labelledby="adminUserTitle"] .admin-section-head .eyebrow,
+#adminPanel .admin-section[aria-labelledby="adminImportTitle"] .admin-section-head .eyebrow,
+#adminPanel .admin-section[aria-labelledby="adminPushTitle"] .admin-section-head .eyebrow,
+#severityAdminSection .admin-section-head .eyebrow,
+#adminPanel .admin-section[aria-labelledby="adminExportTitle"] .admin-section-head .eyebrow {
+  display: none !important;
+}
+
+.issue437-app-shell {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 12px;
+  border: 1px solid rgba(186, 214, 236, .2);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b2742 0%, #0e3556 100%);
+  color: #f8fbff;
+  box-shadow: 0 14px 34px rgba(8, 25, 44, .22);
+}
+
+.issue437-shell-top {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto auto;
+  gap: 9px;
+  align-items: center;
+}
+
+.issue437-shell-brand {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.issue437-shell-title {
+  min-width: 0;
+}
+
+.issue437-shell-title .eyebrow {
+  margin: 0 0 2px;
+  color: #b9d7ef;
+  font-size: .64rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.issue437-shell-title h1,
+.issue437-shell-title p {
+  margin-bottom: 0;
+}
+
+.issue437-shell-title h1 {
+  overflow: hidden;
+  color: #fff;
+  font-size: 1.28rem;
+  line-height: 1.02;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.issue437-shell-meta {
+  overflow: hidden;
+  color: #d7e7f4;
+  font-size: .75rem;
+  font-weight: 760;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.issue437-shell-role-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  max-width: 11rem;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.issue437-shell-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.issue437-shell-action,
+.issue437-shell-logout {
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  font-size: .76rem;
+  font-weight: 900;
+  box-shadow: none;
+}
+
+.issue437-shell-action {
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+}
+
+.issue437-shell-logout {
+  width: auto;
+  min-width: 0;
+  padding: 0 11px;
+  white-space: nowrap;
+}
+
+.issue437-shell-action:hover,
+.issue437-shell-logout:hover {
+  border-color: rgba(255, 255, 255, .48);
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+}
+
+.issue437-shell-action:focus-visible,
+.issue437-shell-logout:focus-visible,
+.issue437-shell-search:focus-within,
+.issue437-app-shell .issue452-status-chip:focus-visible {
+  outline: 3px solid rgba(147, 197, 253, .75);
+  outline-offset: 2px;
+}
+
+.issue437-shell-action-admin {
+  border-color: rgba(255, 255, 255, .26);
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+}
+
+.issue437-shell-action-primary {
+  border-color: #fff;
+  background: #fff;
+  color: #0b2742;
+  font-size: 1.1rem;
+}
+
+.issue437-shell-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, .26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .12);
+  color: #eaf4ff;
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.issue437-shell-search .sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+}
+
+.issue437-shell-search-mark {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: .86;
+  position: relative;
+}
+
+.issue437-shell-search-mark::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 2px;
+  right: -6px;
+  bottom: -3px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.issue437-shell-search-input {
+  min-width: 0;
+  min-height: 32px;
+  border: 0;
+  padding: 0 0 0 3px;
+  background: transparent;
+  color: #fff;
+  font-size: .92rem;
+  box-shadow: none;
+}
+
+.issue437-shell-search-input::placeholder {
+  color: #c5d9ea;
+  opacity: 1;
+}
+
+.issue437-shell-search-input:focus-visible {
+  outline: 0;
+}
+
+.issue437-app-shell .issue452-operative-status-row {
+  gap: 6px;
+  margin-top: 0;
+}
+
+.issue437-app-shell .issue452-status-chip {
+  min-height: 28px;
+  border-color: rgba(255, 255, 255, .24);
+  background: rgba(255, 255, 255, .11);
+  color: #fff;
+  font-size: .72rem;
+  box-shadow: none;
+}
+
+.issue437-app-shell .issue452-status-chip[data-tone="ok"] {
+  border-color: #b9dec2;
+  background: #e3f4e8;
+  color: #115c2b;
+}
+
+.issue437-app-shell .issue452-status-chip[data-tone="warning"] {
+  border-color: #efd083;
+  background: #fff4d5;
+  color: #7a4d00;
+}
+
+.issue391-app-header {
+  display: none;
+}
+
+.bottom-nav {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.bottom-nav-button {
+  min-height: 44px;
+}
+
+@media (max-width: 760px) {
+  #pageMain :is(#setupView, #loginView, #testModeView, #appView, #chatPanel, #incidentPanel, #teamPanel, #adminPanel, #offlinePanel) :is(input, textarea, select, [contenteditable]:not([contenteditable="false"])),
+  body :is(#incidentDialog, #detailDialog, #installGuideDialog) :is(input, textarea, select, [contenteditable]:not([contenteditable="false"])),
+  body dialog:is(.incident-dialog, .thread-chat-dialog) :is(input, textarea, select, [contenteditable]:not([contenteditable="false"])) {
+    font-size: max(16px, 1em);
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-issue437-shell] main {
+    padding-top: 6px;
+  }
+
+  .issue437-app-shell {
+    gap: 7px;
+    margin-bottom: 9px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .issue437-shell-top {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 7px;
+    align-items: start;
+  }
+
+  .issue437-shell-brand {
+    display: none;
+  }
+
+  .issue437-shell-title h1 {
+    font-size: 1.18rem;
+  }
+
+  .issue437-shell-meta {
+    font-size: .72rem;
+  }
+
+  .issue437-shell-role-chip {
+    grid-column: 1;
+    justify-self: start;
+    min-height: 26px;
+    max-width: 100%;
+    padding: 0 9px;
+    font-size: .68rem;
+  }
+
+  .issue437-shell-actions {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    gap: 5px;
+  }
+
+  .issue437-shell-action,
+  .issue437-shell-logout {
+    height: 36px;
+    min-height: 36px;
+  }
+
+  .issue437-shell-action {
+    width: 36px;
+    min-width: 36px;
+  }
+
+  .issue437-shell-logout {
+    padding: 0 9px;
+  }
+
+  .issue437-shell-search {
+    min-height: 36px;
+    padding: 0 10px;
+  }
+
+  .issue437-app-shell .issue452-status-chip {
+    min-height: 27px;
+    padding: 0 9px;
+  }
+}
+
+@media (max-width: 380px) {
+  .issue437-shell-title h1 {
+    font-size: 1.1rem;
+  }
+
+  .issue437-shell-logout {
+    padding: 0 8px;
+  }
+}

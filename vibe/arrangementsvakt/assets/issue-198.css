@@ -1,0 +1,194 @@
+.current-user-label {
+  display: inline-flex;
+  align-items: center;
+  max-width: min(44vw, 24rem);
+  min-height: 28px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#pageMain,
+.workspace {
+  padding-bottom: calc(7.5rem + env(safe-area-inset-bottom));
+  scroll-padding-bottom: calc(7.5rem + env(safe-area-inset-bottom));
+}
+
+#appView > .panel:last-of-type,
+#adminPanel,
+#teamPanel,
+#incidentPanel,
+#offlinePanel,
+#chatPanel {
+  margin-bottom: 0;
+}
+
+.admin-sections {
+  align-items: start;
+}
+
+.admin-section {
+  min-width: 0;
+}
+
+.admin-section-head,
+#severityAdminSection .section-heading {
+  min-width: 0;
+}
+
+.admin-create-details {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+  overflow: hidden;
+}
+
+.admin-create-details > summary {
+  min-height: 38px;
+  padding: 9px 10px;
+  color: var(--accent-dark);
+  cursor: pointer;
+  font-weight: 900;
+  list-style-position: inside;
+}
+
+.admin-create-details[open] > summary {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.admin-create-details > .card-form,
+.admin-create-details > form,
+.admin-create-details .card-form {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.admin-list,
+.import-preview,
+.severity-admin-list {
+  overscroll-behavior: contain;
+  scroll-padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+.admin-list .compact-row,
+.import-preview .compact-row,
+.severity-row,
+.incident-row,
+#teamOverview .compact-row,
+#userOverview .compact-row {
+  min-width: 0;
+}
+
+.admin-list .row-main,
+.admin-list .row-foot,
+.import-preview .row-main,
+.import-preview .row-foot,
+#teamOverview .row-main,
+#userOverview .row-main,
+#incidentList .row-main,
+#incidentList .row-foot {
+  min-width: 0;
+}
+
+#severityAdminSection {
+  margin: 0;
+  padding: 0 0 14px;
+  border-top: 0;
+}
+
+#severityAdminSection.admin-section:last-child {
+  padding-bottom: 0;
+}
+
+#severityAdminSection .section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.floating-incident-button {
+  bottom: calc(5.35rem + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .top-actions {
+    width: 100%;
+  }
+
+  .current-user-label {
+    flex: 1 1 12rem;
+    max-width: 100%;
+  }
+
+  .admin-sections {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .admin-list {
+    max-height: none;
+  }
+
+  .admin-section {
+    gap: 8px;
+  }
+
+  #severityAdminSection .section-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .severity-actions .secondary,
+  .admin-create-details button,
+  .admin-create-details .secondary {
+    width: 100%;
+  }
+
+  .incident-row,
+  .compact-row {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "main" "meta" "foot";
+  }
+
+  .row-meta {
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+  }
+
+  #pageMain,
+  .workspace {
+    padding-bottom: calc(10rem + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(10rem + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav {
+    bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .floating-incident-button {
+    right: 12px;
+    bottom: calc(5.8rem + env(safe-area-inset-bottom));
+    max-width: calc(100vw - 24px);
+  }
+}

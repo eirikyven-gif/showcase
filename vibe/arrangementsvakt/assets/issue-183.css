@@ -1,0 +1,141 @@
+.chat-mode-switch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  margin: 0 12px 10px;
+  padding: 3px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+}
+
+.chat-mode-button {
+  position: relative;
+  min-height: 34px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+
+.chat-mode-button[aria-selected="true"] {
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+.chat-mode-badge,
+.nav-unread-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  min-height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.chat-mode-badge {
+  margin-left: 5px;
+}
+
+.bottom-nav-button.has-unread-badge {
+  position: relative;
+}
+
+.nav-unread-badge {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.bottom-nav-button[aria-current="page"] .nav-unread-badge {
+  box-shadow: 0 0 0 2px var(--accent-dark);
+}
+
+.chat-pane {
+  display: grid;
+  gap: 10px;
+}
+
+.controlled-message-form {
+  margin: 0 12px 12px;
+}
+
+.message-row.is-unread {
+  background: #fff8ed;
+}
+
+.message-row.is-unread .row-main strong {
+  color: var(--danger-dark, var(--danger));
+}
+
+.teamchat-list {
+  display: grid;
+  gap: 0;
+  margin: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+}
+
+.teamchat-message {
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.teamchat-message:last-child {
+  border-bottom: 0;
+}
+
+.teamchat-meta,
+.teamchat-body,
+.receipt-summary,
+.receipt-list p {
+  margin: 0;
+}
+
+.teamchat-meta,
+.receipt-summary,
+.receipt-list p {
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.teamchat-body {
+  white-space: pre-wrap;
+}
+
+.acknowledge-button {
+  justify-self: start;
+}
+
+.receipt-summary {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.receipt-list {
+  display: grid;
+  gap: 4px;
+}
+
+@media (max-width: 640px) {
+  .chat-mode-switch {
+    display: grid;
+    margin-inline: 8px;
+  }
+
+  .controlled-message-form,
+  .teamchat-list {
+    margin-inline: 8px;
+  }
+}

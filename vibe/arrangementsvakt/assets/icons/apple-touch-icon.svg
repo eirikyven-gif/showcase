@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" role="img" aria-labelledby="title desc">
+  <title id="title">Arrangementsvakt ikon</title>
+  <desc id="desc">Skjold med sjekkmerke og bokstavene AV.</desc>
+  <rect width="180" height="180" rx="36" fill="#f7f9f9"/>
+  <rect x="12" y="12" width="156" height="156" rx="28" fill="none" stroke="#162022" stroke-width="6"/>
+  <path d="M90 32l46 17v33c0 31-17 54-46 68-29-14-46-37-46-68V49l46-17z" fill="#0f6b52"/>
+  <path d="M62 89l18 18 39-44" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="90" y="139" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" fill="#162022">AV</text>
+</svg>

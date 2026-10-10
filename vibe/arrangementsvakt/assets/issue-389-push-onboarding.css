@@ -1,0 +1,134 @@
+.push-onboarding-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  border-color: #efd083;
+  background: #fffdf5;
+}
+
+.push-onboarding-panel[data-push-state="ready"] {
+  border-color: #b9dec2;
+  background: var(--ok-soft);
+}
+
+.push-onboarding-panel[data-push-state="blocked"],
+.push-onboarding-panel[data-push-state="server"],
+.push-onboarding-panel[data-push-state="unsupported"] {
+  border-color: #f1b3a9;
+  background: #fff7f5;
+}
+
+.push-onboarding-copy {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.push-onboarding-copy h2,
+.push-onboarding-copy p {
+  margin: 0;
+}
+
+.push-onboarding-copy p {
+  color: #34464b;
+  font-weight: 780;
+}
+
+.push-onboarding-role {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.push-onboarding-actions {
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+  min-width: min(100%, 14rem);
+}
+
+.push-onboarding-status {
+  max-width: 18rem;
+  color: var(--warning);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.25;
+  text-align: right;
+}
+
+.push-onboarding-panel[data-push-state="ready"] .push-onboarding-status {
+  color: var(--ok);
+}
+
+.push-onboarding-panel[data-push-state="blocked"] .push-onboarding-status,
+.push-onboarding-panel[data-push-state="server"] .push-onboarding-status,
+.push-onboarding-panel[data-push-state="unsupported"] .push-onboarding-status {
+  color: var(--danger);
+}
+
+#pushOnboardingButton[disabled] {
+  cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+  .push-onboarding-panel {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .push-onboarding-actions,
+  .push-onboarding-actions button {
+    width: 100%;
+  }
+
+  .push-onboarding-status {
+    max-width: 100%;
+    text-align: left;
+  }
+}
+
+
+/* Issue #450: teknisk pushstatus skal være kompakt på operative flater. */
+.push-onboarding-panel {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.push-onboarding-copy {
+  gap: 2px;
+}
+
+.push-onboarding-copy .eyebrow,
+.push-onboarding-role {
+  display: none;
+}
+
+.push-onboarding-copy h2 {
+  font-size: .95rem;
+}
+
+.push-onboarding-copy p,
+.push-onboarding-status {
+  font-size: .75rem;
+  line-height: 1.2;
+}
+
+.push-onboarding-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.push-onboarding-actions button {
+  min-height: 34px;
+  padding: 6px 10px;
+}
+
+#testModeBanner {
+  display: none !important;
+}

@@ -1,0 +1,49 @@
+/* v0.10.0-chat-message-to-incident-2026-06-09 */
+
+.issue271-chat-incident-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  margin: 6px 0 10px;
+}
+
+.issue271-chat-incident-button {
+  min-height: 30px;
+  padding-inline: 9px;
+}
+
+.issue271-chat-incident-state {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 8px;
+  border: 1px solid #b9dec2;
+  border-radius: 999px;
+  background: var(--ok-soft);
+  color: var(--ok);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.issue271-chat-source-hint {
+  margin: -2px 0 0;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel-soft);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+@media (max-width: 520px) {
+  .issue271-chat-incident-actions {
+    align-items: stretch;
+  }
+
+  .issue271-chat-incident-button {
+    width: 100%;
+  }
+}

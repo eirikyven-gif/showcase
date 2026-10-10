@@ -1,32 +1,25 @@
-# Arrangementsvakt · kandidatvurdering
+# Arrangementsvakt · Showcase-kopi
 
-## Kandidatvurdering
+Rute: `/vibe/arrangementsvakt/`. Denne er en funksjonell, statisk og lokal showcase-kopi av `eirikyven-gif/diverse-apper/apps/arrangementsvakt`, kildecommit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`.
 
-- **Status:** Beholdt i bred førstegangsrunde. Dette er ikke en beslutning om å kuratere eller forkaste kandidaten.
-- **Kilde og versjon:** `eirikyven-gif/diverse-apper/apps/arrangementsvakt`, offentlig `main` commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`, lest 2026-10-09. Kildens README oppgir `v0.14.1-issue-412-compact-prioritized-home`; appens aktive deploy/produksjonsstatus er ikke verifisert.
-- **Formål:** Kildens README beskriver en mobilvennlig dugnads- og hendelsesplattform for arrangement med ledelses-/medlemsroller, PIN-innlogging, arrangement, team, brukere, hendelser, kommentarer, bildevedlegg, meldinger og eksport.
-- **Stack:** Gjennomgåtte filer viser HTML, CSS, browser-JavaScript-moduler og PHP-endepunkter. API-mappen omfatter blant annet auth, arrangement, team, bruker, hendelse, melding, opplasting og push. README beskriver JSON-filer under `data/` som persistent runtime-lagring. Ingen framework-/byggbeskrivelse eller pakkemanifest ble funnet i appmappen.
-- **Tester:** 28 `.mjs`-smoketester ligger i appens `tests/`. README dokumenterer kommandoer for et utvalg. Ingen appnivå `package.json`, `composer.json` eller felles testscript ble funnet. Kildetestene ble ikke kjørt.
-- **SSoT og usikkerhet:** Gjennomgått appmappes SSoT-materiale har flere versjoner, utkast, supersederte filer og oppryddingsmarkører. Den oppgitte governance-siden har plassholdere og gir ikke et entydig appspesifikt, låst SSoT-grunnlag. Det er derfor ikke gjort antakelser om operativ betydning, nåværende arbeidsflyt eller gjeldende UI-kontrakt ut over README og konkrete kildefiler.
-- **API, auth, lagring og personvern:** Kilden implementerer PIN-/sesjonsbasert tilgang, rollefiltrering og PHP-API. README beskriver persistent JSON-lagring, bruker-/teamdata, hendelses- og meldingshistorikk, vedlegg, eksport og push-abonnementer. Faktisk produksjonskonfigurasjon, datainnhold, tilgang, retention, driftsmiljø og personvernpraksis er ikke uavhengig revidert.
-- **Rettigheter:** Ingen lisens eller uttrykkelig gjenbrukstillatelse ble funnet i gjennomgåtte appfiler. Kode-, design- og innholdsrettigheter er uavklart. Showcase-siden er skrevet selvstendig og kopierer ikke kildekode, grafikk eller reelle driftsdata.
-- **Kategori og målgruppe:** Arrangement og koordinering; arrangører og personer som vurderer verktøy for frivillig innsats. Dette følger produktbeskrivelsen, ikke bekreftet faktisk brukerbase.
-- **Slug/rute:** `arrangementsvakt` · `/vibe/arrangementsvakt/`. Sluggen manglet på showcase `main` `bfb6d7e0756fefc01b70c7e5c653a8f4781b600b` (34 katalogoppføringer etter PR #52); ny, isolert rute.
+## Bevarte flater og flyter
 
-## Demo-vurdering
+Kopien bruker kildens HTML-struktur, primære stylesheet og gjeldende UI-komponentlag. Den viser rollevalg for Løpsleder, Ledelse, Teamleder og Medlem; rollebasert navigasjon; prioritert oversikt; hendelsesfeed, søk/filtrering, detaljer, statuser, kommentarer og heving; Grupper og medlemsoversikt; samtaler/fellesmeldinger/gruppechat; admin for arrangement, gruppe og brukere; eksport; lokal ikke-sendt kø; og push-/installasjonsrelaterte statusflater i simulert tilstand. Red/white Vibe shell, retur til hub og lokal reset er lagt rundt kildeidentiteten.
 
-- **Demo-verdi:** En vurderingsside viser hva kildebeskrivelsen støtter og hvorfor en operativ kopi ikke er forsvarlig på dagens kunnskapsgrunnlag.
-- **Forenklinger:** Ingen vaktliste, sjekkliste, roller, hendelser, prioritering, varsler, statuser eller handlinger. Ingen produktprototype eller interaksjon.
-- **Risiko:** Kilden berører identitet, tilgang, arrangement, meldinger, hendelser og mulige sikkerhetskritiske opplysninger. Betydning, produksjonsbruk og faktiske data er ikke revidert. En etterligning kan gi feil forventninger om operative arbeidsflyter.
-- **Omfang:** Statisk HTML/CSS på `/vibe/arrangementsvakt/`. Ingen JavaScript, skjema, auth/PIN/sesjon, API, nettverkskall, browser/serverlagring, opplasting, push, private endepunkter eller person-/arrangementsdata.
-- **Fiktivt innhold:** Banneret presiserer at alt innhold, roller og eksempler er fiktive og ikke operative. Siden presenterer ikke konkrete eksempler på roller eller data.
+## Lokal simulering og personvern
+
+`assets/demo-api.js` erstatter API-et med en klientbasert simulator. Ingen HTTP-forespørsler, PHP, kontoer, PIN-autentisering, cookies, serverlagring, push, eksterne tjenester eller service-workerregistrering brukes. Roller velges som syntetiske demoidentiteter; administratorhandlinger er rollevisninger, ikke sikkerhetskontroller. Alle seednavn, meldinger, arrangementer, steder og hendelser er fiktive. Telefonverdier bruker null-prefiks og nye brukere normaliseres til syntetiske visningsnavn og `000000000`.
+
+Endringer i arbeidsflyten lagres i `localStorage` under `vibe.arrangementsvakt.*`, som er separat fra kildeappens lagringsnøkler. «Nullstill all demoaktivitet» sletter demoens tilstand og ikke-sendtkø og laster inn syntetiske startdata på nytt. Bilder vedlegges ikke persistent; opplastingshandlingen viser bare lokal simuleringsbekreftelse. CSV/JSON-eksport genereres i nettleseren fra syntetiske demoopplysninger.
+
+## Kildekartlegging og usikkerhet
+
+Kilde-README oppgir v0.14.1 issue-412 og beskriver HTML/CSS/JavaScript, PHP API-er og JSON-fillagring. Kilden har 28 Node-smoketester. Gjeldende app har API-er for setup/login, team, brukere, arrangement, hendelser, meldinger, chat, status, filopplasting, medlemsimport, eksport og push. SSoT v0.9 angir felles navigasjon Oversikt/Meldinger/Hendelser/Grupper med rollebasert innhold; v0.10 krever at Meldinger viser samtaler, og Grupper er egen oversikt. Eldre låste SSoT-er, utkast og ryddemarkører overlapper; nyere UI-fasit og appens aktive HTML/JS ble brukt for observerbare flater. Hele testpakken til kilden ble ikke kjørt. Ingen kildedata, serverkode eller hemmeligheter er med i showcase.
+
+## Dekningsgrenser
+
+Simuleringen dekker representative hovedhandlinger i én nettleserprofil. Den reproduserer ikke serverens auth-/rolleautorisasjon, reell flerbrukersynk, push, nettverksfeil, XLSX-importparser, vedvarende bildeopplasting eller PHP-lagring. Rollevalg og syntetisk admin er ikke egnet for reell koordinering. Ingen uttrykkelig lisens ble funnet i kildefilene; gjenbruksrettigheter er ikke dokumentert.
 
 ## QA
 
-- Kildeutdrag ble lest fra en skrivebeskyttet klone; kildefiler er ikke endret.
-- Vurderingsside og metadata hevder ikke at produksjonsstatus eller sikkerhet er bekreftet.
-- Nettleserbasert QA og deploy er ikke utført.
-
-## Issue #2 progress
-
-Dette er delvis fremdrift på issue #2: kandidaten er vurdert og lagt til som assessment-only rute i bred førstegangsrunde. Issue #2 er ikke lukket. Ingen deploy, merge eller selv-godkjenning er utført.
+Denne demoen er en delvis løsning på showcase Issue #2. Direkterute og refresh fungerer via statisk `index.html`; nettleseraktivitet oppbevares lokalt. QA fullført: hele showcase-testsettet passerer 73/73; alle rute-JavaScript-filer passerer `node --check`; `git diff --check` passerer. Headless Chromium verifiserte direkterute, dynamiske lokale UI-aktiva, rollevalg, oppretting av hendelse, refresh/persistens, full reset, keyboard-fokus og retur til hub ved 390 px og 1440 px. Ingen eksterne forespørsler, 404-er, browser/JS-feil eller horisontal overflow ble observert. Manuell WCAG-sjekk dekket semantiske landmarks, formetiketter, fokusrekkefølge/-synlighet og tastaturhandling; ingen formell skjermleser- eller kontrastmåling er kjørt.
