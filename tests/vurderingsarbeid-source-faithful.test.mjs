@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
@@ -36,6 +37,7 @@ test('rubric, workbook, student/cohort, progress and reset workflows are present
   assert.match(html, /Skriv som en faglig, nøktern og konkret støtte for faglærer/);
   assert.match(html, /localStorage\.removeItem\(LS_KEY\)/);
   assert.match(html, /localStorage\.setItem\(LS_KEY/);
+  assert.match(html, /eksisterende arbeidsøkt er beholdt/);
   assert.match(html, /student-oversikt-table-scroll/);
   assert.match(html, /overflow-x:auto/);
   assert.ok(statSync(path.join(root, 'vibe/vurderingsarbeid-fagskolen/assets/xlsx.full.min.js')).isFile());
@@ -59,6 +61,40 @@ test('source feedback workflows remain with clear local simulation and manual pr
   assert.match(html, /Stikkord for kriteriet/);
   assert.match(html, /computeSamletIndikator/);
   assert.match(html, /computeK0Status/);
+});
+
+test('all exact-source function declarations have an explicit implementation or security rationale', () => {
+  const ledger = JSON.parse(read('vibe/vurderingsarbeid-fagskolen/FUNCTION-COVERAGE.json'));
+  assert.equal(ledger.sourceCommit, sha);
+  assert.equal(ledger.functionCount, 141);
+  assert.equal(ledger.entries.length, ledger.functionCount);
+  assert.equal(new Set(ledger.entries.map((entry) => entry.sourceFunction)).size, ledger.functionCount);
+  for (const entry of ledger.entries) {
+    assert.equal(entry.source, 'app/vurderingsverktoy.html');
+    assert.ok(entry.line > 0, `${entry.sourceFunction} has a source line reference`);
+    assert.ok(entry.note.length > 30, `${entry.sourceFunction} has a concrete coverage note`);
+    if (entry.coverage === 'same-name') assert.match(html, new RegExp(`function ${entry.showcaseFunction}\\s*\\(`));
+    else if (entry.coverage === 'local-equivalent') assert.ok(entry.showcaseFunction.split(' / ').every((name) => html.includes(name)));
+    else {
+      assert.equal(entry.coverage, 'security-removed');
+      assert.equal(entry.showcaseFunction, null);
+      assert.match(entry.note, /credential|provider|network|external|secret|KI|AI|service|API key/i);
+    }
+  }
+});
+
+test('source-generated workbook fixture is sanitized, complete and covered by browser QA', () => {
+  const ledger = read('qa/vurderingsarbeid-browser.mjs');
+  assert.match(ledger, /vurderingsarbeid-source-template-synthetic\.xlsx/);
+  assert.match(ledger, /rubric scoring, progress filters, student reset and cohort move preserve assessment state/);
+  assert.match(ledger, /dataset XLSX round trip/);
+  assert.match(ledger, /keyboard focus/);
+  assert.ok(statSync(path.join(root, 'tests/fixtures/vurderingsarbeid-source-template-synthetic.xlsx')).size > 10000);
+  const fixture = createRequire(import.meta.url)('../vibe/vurderingsarbeid-fagskolen/assets/xlsx.full.min.js');
+  const workbook = fixture.read(readFileSync(path.join(root, 'tests/fixtures/vurderingsarbeid-source-template-synthetic.xlsx')), { type: 'buffer' });
+  assert.deepEqual(workbook.SheetNames, ['Veiledning', 'Rubrikk', 'Svarsett', 'Config', 'K_Thresholds', 'Studenter', 'Oppgavetekst']);
+  const students = fixture.utils.sheet_to_json(workbook.Sheets.Studenter, { header: 1 }).slice(1);
+  assert.deepEqual(students, [['DEMO-01', 'Eksempelstudent A', 'Syntetisk eksempelgruppe', ''], ['DEMO-02', 'Eksempelstudent B', 'Syntetisk eksempelgruppe', '']]);
 });
 
 test('no external AI credentials, provider services, network calls, or CDN enter runtime', () => {

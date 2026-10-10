@@ -764,6 +764,18 @@ function importFromWorkbook(wb, options = {}){
 
   const blockers = log.filter(l=>l.type==='blocker');
 
+  // A confirmed fresh import must not erase the current local session when the
+  // selected workbook is invalid. Keep the import report, but require a valid
+  // workbook before applying the requested replacement.
+  if(freshImport && blockers.length){
+    state.importLog = log;
+    saveState();
+    renderAll();
+    showStatus('Import hadde blokkere – eksisterende arbeidsøkt er beholdt. Se Importkontroll.','error');
+    openModal('modalImportkontroll');
+    return;
+  }
+
   if(rubrikk && blockers.filter(b=>b.source==='Rubrikk').length===0 && blockers.filter(b=>b.source==='Svarsett').length===0){
     // Apply config terskler
     const terskler = config || {A:90,B:80,C:70,D:60,E:50};
@@ -1814,22 +1826,23 @@ function refreshAiActionUi(){const complete=!!state.activeStudentId&&isComplete(
 // ============================================================
 function buildDataPrompt(type){
   if(!state.rubrikk || !state.activeStudentId) return '';
-  const v=getVurd(state.activeStudentId);
-  const sections=[];
-  if(state.oppgavetekst?.body) sections.push('## Oppgavetekst\n'+state.oppgavetekst.body);
-  const lines=['## Registrerte vurderinger'];
+  const vurd=getVurd(state.activeStudentId);
+  const oppgave=state.oppgavetekst?'\n\n## Oppgavetekst\n'+state.oppgavetekst.body:'';
+  let rubrikkTekst='\n\n## Registrerte vurderinger\n';
   for(const k of state.rubrikk.kriterier){
-    lines.push('\n### '+k.tittel+(k.isK0?' (Formelle krav)':''));
+    rubrikkTekst+='\n### '+k.tittel+(k.isK0?' (Formelle krav)':'')+'\n';
     for(const p of k.punkter){
-      lines.push('- '+p.tekst+': '+(v.svar?.[p.id]||'Ikke besvart'));
-      if(v.stikkordP?.[p.id]) lines.push('  Stikkord: '+v.stikkordP[p.id]);
+      const svar=vurd.svar[p.id]||'Ikke besvart';
+      rubrikkTekst+='- '+p.tekst+': **'+svar+'**\n';
+      if(vurd.stikkordP?.[p.id]) rubrikkTekst+='  Stikkord: '+vurd.stikkordP[p.id]+'\n';
     }
-    if(v.stikkordK?.[k.id]) lines.push('Stikkord for kriteriet: '+v.stikkordK[k.id]);
+    if(vurd.stikkordK?.[k.id]) rubrikkTekst+='Stikkord for kriteriet: '+vurd.stikkordK[k.id]+'\n';
   }
-  sections.push(lines.join('\n'));
-  sections.push('## Indikatorer\n- Samlet indikator: '+computeSamletIndikator(state.activeStudentId)+'\n- K0-status: '+(computeK0Status(state.activeStudentId)==='ok'?'Oppfylt':'Ikke oppfylt'));
-  sections.push(type==='underveis'?'Lag en kort fremovermelding: hva som er bra så langt, hva som mangler/svekker, konkrete neste steg.':'Lag et vurderingsutkast med helhetsvurdering, styrker, mangler/forbedringsområder, fremovermelding og K0-merknad ved behov.');
-  return sections.join('\n\n');
+  const ind=computeSamletIndikator(state.activeStudentId);
+  const k0=computeK0Status(state.activeStudentId);
+  const meta='\n\n## Indikatorer\n- Samlet indikator: '+ind+'\n- K0-status: '+(k0==='ok'?'Oppfylt':'Ikke oppfylt');
+  if(type==='underveis') return oppgave+rubrikkTekst+meta+'\n\nGenerer en kort fremovermelding med:\n1. Hva som er bra så langt\n2. Hva som mangler eller svekker\n3. Konkrete neste steg\n\nBaser deg kun på registrerte svar ovenfor.';
+  return oppgave+rubrikkTekst+meta+'\n\nGenerer en endelig KI-vurdering med følgende blokker:\n1. Helhetsvurdering\n2. Styrker\n3. Mangler og forbedringsområder\n4. Fremovermelding (3–5 punkter)\n5. K0-merknad (kun hvis relevant)\n\nDette er kun et tekstutkast for faglærer. Baser deg utelukkende på registrerte svar ovenfor.';
 }
 function buildAiClipboardText(type){
   return ['--- SYSTEMPROMPT ---','Du er en faglig støtte for en norsk faglærer som vurderer studentarbeider.\nDu skal kun bruke det vurderingsgrunnlaget som er gitt til deg. Du skal ikke finne på nye kriterier, nye krav eller nytt bevisgrunnlag.\nDu skal ikke fastsette endelig karakter. Du er beslutningsstøtte, ikke dommer.\nAll tekst skal være på norsk.',document.getElementById('globalKiStyring')?.value||DEFAULT_LOCAL_KI_STYRING, '', '--- DATAPROMPT ---',buildDataPrompt(type)].join('\n');
@@ -1864,16 +1877,19 @@ function localDraft(type){
     }
     if(v.stikkordK?.[k.id]) notes.push(k.tittel+': '+v.stikkordK[k.id]);
   }
-  const task=state.oppgavetekst?.body||'Ingen oppgavetekst er registrert.';
   const answerFacts=answered.length?answered.map(x=>x.criterion+' · '+x.point+': '+x.answer).join('\n'):'Ingen ordinære svar er registrert.';
   const noteFacts=notes.length?notes.join('\n'):'Ingen stikkord er registrert.';
+  const task=state.oppgavetekst?.body||'Ingen oppgavetekst er registrert.';
   const context='Oppgavetekst\n'+task+'\n\nRegistrerte svar\n'+answerFacts+'\n\nRegistrerte formelle svar\n'+(formalAnswers.join('\n')||'Ingen K0-punkt registrert.')+'\n\nRegistrerte stikkord\n'+noteFacts+'\n\nSamlet indikator: '+computeSamletIndikator(state.activeStudentId)+'\nK0-status: '+(computeK0Status(state.activeStudentId)==='ok'?'Oppfylt':'Ikke oppfylt');
   if(type==='underveis'){
     const todo=unanswered.length?unanswered.map(x=>x.criterion+' · '+x.point).join('\n'):'Ingen ubesvarte ordinære vurderingspunkt.';
     return ['Hva som er bra så langt','Lokalt registreringsutdrag (ikke en faglig konklusjon):\n'+answerFacts,'Hva som mangler eller svekker','Ubesvart i rubrikken:\n'+todo,'Konkrete neste steg','Gå gjennom ubesvarte punkt og vurder de registrerte svarene/stikkordene opp mot oppgaveteksten.\n\nGrunnlag for manuell gjennomgang\n'+context].join('\n\n');
   }
   const missing=unanswered.length?unanswered.map(x=>x.criterion+' · '+x.point+' (ikke besvart)').join('\n'):'Ingen ubesvarte ordinære vurderingspunkt.';
-  return ['Helhetsvurdering','Registrert indikator: '+computeSamletIndikator(state.activeStudentId)+'. Dette er et lokalt strukturutkast, ikke en faglig avgjørelse.','Styrker','Svar som faglærer kan vurdere:\n'+answerFacts,'Mangler og forbedringsområder',missing,'Fremovermelding','Faglærer vurderer registrerte svar og stikkord opp mot oppgaveteksten og dokumenterer videre tilbakemelding.','K0-merknad',computeK0Status(state.activeStudentId)==='ok'?'Formelle krav: oppfylt.':'Formelle krav: ikke oppfylt.','Vurderingsgrunnlag (til kontroll)',context].join('\n\n');
+  const finalSections=['Helhetsvurdering','Registrert indikator: '+computeSamletIndikator(state.activeStudentId)+'. Dette er et lokalt strukturutkast, ikke en faglig avgjørelse.','Styrker','Svar som faglærer kan vurdere:\n'+answerFacts,'Mangler og forbedringsområder',missing,'Fremovermelding','- Sammenhold registrerte svar og stikkord med oppgaveteksten.\n- Rediger tilbakemeldingen slik at den viser til det konkrete vurderingsgrunnlaget.\n- Kontroller at sluttteksten samsvarer med faglærers vurdering før godkjenning.'];
+  if(state.rubrikk.hasK0) finalSections.push('K0-merknad',computeK0Status(state.activeStudentId)==='ok'?'Formelle krav: oppfylt.':'Formelle krav: ikke oppfylt.');
+  finalSections.push('Vurderingsgrunnlag (til kontroll)',context);
+  return finalSections.join('\n\n');
 }
 function setKiStatus(id,text,kind='ok'){const el=document.getElementById(id);el.textContent=text;el.className='status-banner '+kind;el.classList.remove('hidden');}
 function genKiFremover(){if(!state.activeStudentId)return showStatus('Velg student først.','error');const out=localDraft('underveis');const el=document.getElementById('kiFremoverText');el.value=out;getVurd(state.activeStudentId).kiFremoverTekst=out;saveState();document.getElementById('kiFremoverOut').classList.remove('hidden');setKiStatus('kiFremoverStatus','Lokalt simulert strukturutkast opprettet – ingen KI-tjeneste ble kalt.');document.getElementById('kiFremoverTextStatus').textContent='Lagret lokalt for aktiv student.';}
