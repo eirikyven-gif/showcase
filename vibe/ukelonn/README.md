@@ -1,28 +1,45 @@
 # Ukelønn – showcase-demo
 
-## Kandidatvurdering
+**Direkterute:** `/vibe/ukelonn/`
+**Kilde:** `eirikyven-gif/diverse-apper/apps/ukelonn`, commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530` (kilderepoet er ikke endret). Kilde-README oppgir v0.17.0.
+**Låst appgrunnlag:** [SSoT-presisering – Ukelønn v0.14 LÅST](https://app.notion.com/p/3f2ba9485bce81e8a3cbeac59a5cd598). Showcase-funksjonen følger dessuten Vibe-utstilling v0.1, særlig krav 3, 4 og 6.
 
-- **Formål:** Registrere avtalte gjøremål for flere brukere og vise ukentlig grunnlag for ukelønn.
-- **Kategori:** Familieøkonomi og oppgaveoversikt.
-- **Målgruppe:** Voksne familiemedlemmer og voksne som vil utforske en enkel ukentlig oppgave-/beløpsoversikt. Kildens brukerflate ser ut til å omfatte flere familiemedlemmer, men denne demoen er bevisst avgrenset til voksne.
-- **Status:** Kilde-README beskriver v0.17.0 og sier eksplisitt at denne versjonen ikke er deployet eller live QA-verifisert. Showcase-kandidaten beholdes i bred førstegangsrunde; ingen kuratering eller utsiling.
-- **Kilde:** `eirikyven-gif/diverse-apper`, `apps/ukelonn`, `main`, commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`, lest 2026-10-08. `version.json` oppgir 0.17.0. Kildecheckoutet er kun lest.
-- **Stack:** Semantisk HTML, scoped CSS og vanilla JavaScript i klienten; same-origin PHP/JSON API-er; filbasert privat JSON-lagring ifølge arkitekturdokumentasjonen. Ukelønn har egne auth/session-, datarot- og komponentgrenser.
-- **Tester:** README dokumenterer Node UI-kontrakter, PHP-sesjonskontrakt og deploysmoke-prosedyre. Kildeversjonen er likevel ikke live QA-verifisert; testene fra kildeappen ble ikke kjørt for denne showcase-endringen.
-- **API og auth:** Kilden dokumenterer API-endepunkter for auth, gjøremål, registreringer, forslag, utbetalingskrav, historikk, vedlegg og adminbetalinger. Separat bruker- og admininnlogging; passord/PIN-hasher, server-side rolle/CSRF og PHP-sesjoner. README oppgir persistent fornybar brukercookie uten appstyrt idle-timeout og adminfrist på 180 dager.
-- **Lagring:** Privat JSON-data for brukere, roller, sessionrelaterte data, gjøremål, registreringer, perioder, betalinger, historikk og vedlegg. Vedlegg serveres via autorisert endepunkt; runtime-data skal ligge utenfor webroten.
-- **Personvern og risiko:** Kan inneholde navn, PIN/passord-hasher, sesjoner, oppgave- og betalingshistorikk og bilder. Kilde-README nevner også e-postvarsler og en frivillig SMS-lenke. Ingen ekte data, identifikatorer, kildekode, API-er, auth eller lagringsmodell er tatt inn i demoen. Ikke inviter barn til å oppgi persondata.
-- **Rettigheter/usikkerhet:** Ingen lisens eller gjenbrukstillatelse ble verifisert i inspiserte kildefiler. Demoen er en selvstendig statisk utforming med generiske oppgaver og fiktive voksne; ingen kildeartefakter er kopiert. Produksjonsstatus, faktisk bruk og rettighetsgrunnlag for kildeverk er uavklart.
+## Dette kan utforskes
 
-## Demo og avgrensning
+Demoen beholder kildeappens sidemønster, norske produkttekster, bruker- og adminmenyer, kompakte tabeller, modaler, søkefelt og sentrale arbeidsflyter:
 
-Ny, original `/vibe/ukelonn/`-rute. Viser kun statiske, fiktive ukeoppgaver og beløp for «Voksen A» og «Voksen B». Ingen input, registrering, konto, bilder/opplasting, innlogging, API, nettverkskall, cookies, nettleserlagring, betaling eller datauthenting. Beløp er illustrative, og ingenting beregnes eller utbetales.
+- Bruker: registrere ett eller flere gjøremål, se og endre/slette egne registreringer, foreslå gjøremål, se ukesoversikt og løpende saldo, be om utbetaling og åpne tidligere perioder.
+- Admin: dashboard, opprette/redigere/deaktivere/slette gjøremål, administrere demo-brukere, se historikk og registreringer, behandle forslag og utbetalingskrav, registrere betalinger og perioder.
+- Excel-mal kan lastes ned som en lokal, tom arbeidsbok, og `.xlsx`-rader kan importeres i nettleseren uten serverkall.
+- Bruker- og admininnganger er rollevalg. Det finnes ingen PIN, passord, konto eller autentisering.
 
-## QA
+Rutene tilsvarer kildeappens `/`, `/logg-inn/`, `/registrer/`, `/min-oversikt/`, `/historikk/`, `/admin/`, `/admin/gjoremal/`, `/admin/brukere/`, `/admin/brukere/historikk/`, `/admin/registreringer/`, `/admin/forslag/`, `/admin/perioder/`, `/admin/utbetalinger/` og `/admin/logg-inn/`, under `/vibe/ukelonn/`.
 
-- Automatisert showcase-test dekker unik katalogslug, canonical/direct route, syntetisk vokseninnhold, ingen input eller barnenavn og fravær av auth, nettverk, cookies og lagring.
-- Kilde-QA-testene er kun dokumentert i README; ikke kjørt i kilde-repoet.
-- Manuell Chromium-QA lokalt: direkte URL og refresh ga HTTP 200; layout testet ved 390 px og 1440 px uten horisontal overflow; første Tab stopper på synlig hoppelenke; null felt/skjema, tom cookie og nettleserlagring, null eksterne forespørsler og JavaScript-feil.
-- Full showcase-kontroller: `node --test tests/*.test.mjs` (25 tester bestått), `node --check tests/vibe-static.test.mjs`, JSON parsing av katalog og `git diff --check` bestått.
-- Deploy/live QA: ikke utført.
-- **Issue #2:** Delvis fremdrift mot bred førstegangsvurdering; Ukelønn beholdes som kandidat. Dette bidraget fullfører ikke Issue #2.
+## Demo-data, lokal lagring og reset
+
+De to forhåndsdefinerte demobrukerne er **Voksen A** og **Voksen B**; brukerinngangen lar besøkende bytte profil uten PIN eller innlogging. Admin er en separat, simulert rolle. Gjøremål, beløp, status, perioder, registreringer, forslag og betalingshendelser er syntetiske. Foreslåtte navn fra brukerens lokale demoendringer bør fortsatt være fiktive; ikke skriv inn virkelige navn, PIN-er eller betalingsopplysninger.
+
+Endringer lagres med `localStorage` på denne enheten for å bevare arbeidsflyten ved navigasjon, refresh og gjenåpning. En synlig melding på hver side forklarer lagringen og knappen **Nullstill alle demoendringer** sletter demoens nøkkel og starter de syntetiske eksempeldataene på nytt. Ingen cookie, IndexedDB eller sessionStorage brukes.
+
+Appens JavaScript `fetch`-kall blir håndtert av `assets/demo-api.js` i nettleseren og avvises dersom de ikke er lokale API-simuleringer. Ingen API-forespørsel når serveren. Ingen server-side kode eller lagring følger med. Bildevalg oppfyller kun demonstrasjonsflyten: filinnhold leses ikke, lagres ikke eller sendes; et eventuelt vedlegg vises som simulert. E-post/SMS og private tjenester er ikke kopiert eller kalt.
+
+## Kildegjennomgang og grenser
+
+Kilde-README beskriver PHP JSON-API-er, separat admin-/brukerinnlogging med PIN/passord, serverøkter, privat JSON-lagring, periodeoppgjør, vedlegg, e-post og valgfri SMS-lenke. Disse erstattes av lokale, syntetiske simuleringer. Kildens HTML, CSS og klientflyter for de brukerrettede sidene er utgangspunktet; PHP, API-endepunkter, konfigurasjon, autentiseringsverdier, vedlegg og runtime-data er ikke kopiert.
+
+Kilde-UI-testene dokumenterer blant annet tabellrekkefølge, modalredigering/Escape, fokusretur, kompakt mobilvisning, filmal og historikk. Kildens PHP-sesjons- og backendtester gjelder ikke den rene statiske demoen; showcase-testene kontrollerer den lokale simuleringen og rutene i denne kopien.
+
+## Kontroller
+
+Kjør fra showcase-roten:
+
+```sh
+node --test tests/ukelonn-showcase.test.mjs
+node --test tests/vibe-static.test.mjs
+```
+
+Manuell QA: åpne `/vibe/ukelonn/` direkte; naviger til hver side og refresh; kontroller lokale endringer etter refresh og full reset; prøv modal med Escape, tastaturfokus, navigasjonsmeny, samt mobilbredder. Demoen skal aldri sende aktivitet eller skjemadata over nettverket.
+
+## Leveransestatus
+
+Dette er én isolert showcase-kopi for `ukelonn`; PR refererer til Issue #2 som delvis løst. PR-forfatteren utfører ikke egen godkjenning. Deploy utføres gjennom etablert showcase-flyt etter merge.
