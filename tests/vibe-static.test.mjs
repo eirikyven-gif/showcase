@@ -213,7 +213,10 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     const routeSlug = path.relative(vibeRoot, file).split(path.sep)[0];
     const routeEntry = catalog.apps.find((entry) => entry.slug === routeSlug);
     const allowsLocalStorage = /localStorage|nettleserlagring|nettleserens lokale lagring/i.test(routeEntry?.scope || '');
-    assert.doesNotMatch(source, /\b(?:sessionStorage|indexedDB)\b/, `${file} does not use unreviewed browser storage`);
+    const allowsIndexedDb = /indexeddb/i.test(routeEntry?.scope || '');
+    const allowsLocalStaticFetch = /same-origin requests for this app's own static shell/i.test(routeEntry?.scope || '');
+    if (!allowsIndexedDb) assert.doesNotMatch(source, /\bindexedDB\b/, `${file} does not use undeclared IndexedDB`);
+    assert.doesNotMatch(source, /\bsessionStorage\b/, `${file} does not use sessionStorage`);
     if (!allowsLocalStorage) assert.doesNotMatch(source, /\blocalStorage\b/, `${file} has no undeclared browser persistence`);
     if (routeSlug === 'bingo' && file.endsWith('.js')) {
       assert.match(source, /localStorage/, `${file} uses local-only Bingo workflow persistence`);
@@ -232,7 +235,7 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     for (const secretPattern of secretPatterns) {
       assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
     }
-    if (file.endsWith('.js') && file !== hubScript && routeSlug !== 'ukelonn') {
+    if (file.endsWith('.js') && file !== hubScript && routeSlug !== 'ukelonn' && !allowsLocalStaticFetch) {
       assert.doesNotMatch(source, /\bfetch\s*\(/, `${file} makes no API/network call`);
     }
   }

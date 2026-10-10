@@ -1,0 +1,10 @@
+{
+  "name": "analog-synthesizer-vibe-copy",
+  "version": "0.15.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check assets/app.js && node --check assets/audio-engine.js && node --check assets/audio-playback-controller.js && node --check assets/master-waveform.js && node --check assets/recording-waveform.js && node --check assets/sequencer-editor.js && node --check assets/midi-controller.js && node --check assets/pad-activation.js && node --check assets/patch-router.js && node --check assets/sample-store.js && node --check assets/project-sync.js && node --check assets/local-sample-library.js && node --check assets/shared-recording-library.js && node --check assets/update-controller.js && node --check assets/local-library.js && node --check assets/local-data.js && node --check assets/state.js && node --check service-worker.js && node --check audio-worklets/noise-processor.js && node --check audio-worklets/voice-processor.js",
+    "test": "node --test tests/audio-playback.test.mjs tests/audio-resume-lifecycle.test.mjs tests/master-waveform.test.mjs tests/midi-controller.test.mjs tests/midi-integration.test.mjs tests/pad-activation.test.mjs tests/pad-sampler.test.mjs tests/recorder-preview.test.mjs tests/recording-waveform.test.mjs tests/sequencer-editor.test.mjs"
+  }
+}

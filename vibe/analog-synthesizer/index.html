@@ -1,38 +1,333 @@
-<!doctype html>
-<html lang="no">
+<!DOCTYPE html>
+<html lang="no" data-build="2026-10-10.1">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#a51625">
-  <meta name="description" content="Spill enkle syntetiske toner direkte i nettleseren.">
-  <title>Analog Synthesizer · Vibe</title>
-  <link rel="stylesheet" href="/vibe/analog-synthesizer/style.css">
-  <script src="/vibe/analog-synthesizer/app.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Modulær synthesizer med lokale prosjekter, samples og opptak. Data lagres bare i denne nettleseren.">
+  <link rel="manifest" href="./manifest.webmanifest?build=2026-10-10.1">
+  <link rel="icon" href="./assets/icons/icon.svg?build=2026-10-10.1" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/icon-180.png?build=2026-10-10.1">
+  <link rel="stylesheet" href="./assets/styles.css?build=2026-10-10.1">
+  <title>Analog Synthesizer</title>
 </head>
 <body>
-  <header class="topbar"><a class="back" href="/vibe/">← Alle demoer</a><span class="badge">VIBE · LYDLEKE</span></header>
-  <main>
-    <p class="eyebrow">ET LITE SYNTHETISK INSTRUMENT</p>
-    <h1>Analog Synthesizer</h1>
-    <p class="lead">Velg en klang, form lyden og spill toner med tastene eller knappene.</p>
-    <section class="notice" aria-label="Personvern og lydtilgang"><strong>Alt skjer lokalt i nettleseren.</strong> Lyd starter bare når du trykker «Start lyd». Ingen mikrofon, opptak eller lagring.</section>
-    <section class="instrument" aria-label="Synthesizer">
-      <div class="transport"><div><span class="eyebrow">LYDMOTOR</span><p id="status" role="status" aria-live="polite">Av — trykk Start lyd for å begynne</p></div><button id="audio-toggle" class="primary" type="button">Start lyd</button></div>
-      <div class="preset-row"><label for="preset">Klangpreset</label><select id="preset"><option value="warm">Varm puls</option><option value="bright">Lys trekant</option><option value="deep">Dyp bass</option></select></div>
-      <div class="controls">
-        <label class="knob"><span>Frekvens</span><input id="frequency" type="range" min="120" max="1200" value="440"><output for="frequency">440 Hz</output></label>
-        <label class="knob"><span>Filter</span><input id="filter" type="range" min="250" max="8000" value="3200"><output for="filter">3.2 kHz</output></label>
-        <label class="knob"><span>Volum</span><input id="volume" type="range" min="0" max="35" value="16"><output for="volume">16%</output></label>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 56 56" aria-hidden="true"><rect x="2" y="2" width="52" height="52" rx="15" fill="#0f172a" stroke="#5eead4" stroke-width="3"/><path d="M11 31c5-16 10 16 16 0s11 16 18-5" fill="none" stroke="#67e8f9" stroke-width="4" stroke-linecap="round"/></svg>
+      <div><p class="eyebrow">Flyttbar iPad-rack</p><h1>Analog Synthesizer <span>v0.15.1</span></h1></div>
+    </div>
+    <div class="top-actions">
+      <span id="versionStatus" class="status-pill">v0.15.1</span>
+      <span id="audioStatus" class="status-pill" role="status">Lyd er av</span>
+      <span id="midiStatus" class="status-pill midi-status" role="status" aria-live="polite">MIDI: ikke koblet</span>
+      <button id="openMidiSettings" class="button" type="button" aria-haspopup="dialog" aria-controls="midiDialog">MIDI-oppsett</button>
+      <button id="openRecorder" class="button record" type="button">Opptaker</button>
+      <button id="editModules" class="button" type="button">Rediger moduler</button>
+      <button id="installApp" class="button" type="button">Installer app</button>
+      <div class="audio-top-controls" role="group" aria-label="Global lydavspilling">
+        <button id="audioToggle" class="button primary" type="button" aria-controls="audioPlayer" aria-pressed="false">Start lyd</button>
+        <button id="audioStop" class="button" type="button" aria-controls="audioPlayer" disabled>Stopp</button>
       </div>
-      <div class="keyboard-wrap"><div class="keyboard-heading"><h2>Spill toner</h2><span>Tastatur: A W S E D F T G Y H U J</span></div>
-        <div class="keyboard" role="group" aria-label="Pianotangenter">
-          <button type="button" data-note="0" aria-label="C4, tast A">C</button><button type="button" data-note="1" class="black" aria-label="Ciss 4, tast W">C♯</button><button type="button" data-note="2" aria-label="D4, tast S">D</button><button type="button" data-note="3" class="black" aria-label="Diss 4, tast E">D♯</button><button type="button" data-note="4" aria-label="E4, tast D">E</button><button type="button" data-note="5" aria-label="F4, tast F">F</button><button type="button" data-note="6" class="black" aria-label="Fiss 4, tast T">F♯</button><button type="button" data-note="7" aria-label="G4, tast G">G</button><button type="button" data-note="8" class="black" aria-label="Giss 4, tast Y">G♯</button><button type="button" data-note="9" aria-label="A4, tast H">A</button><button type="button" data-note="10" class="black" aria-label="Aiss 4, tast U">A♯</button><button type="button" data-note="11" aria-label="B4, tast J">B</button>
+      <button id="panicButton" class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button>
+    </div>
+  </header>
+
+  <aside id="updateBanner" class="update-banner" hidden role="status">
+    <span>Ny versjon er klar.</span><button id="updateNow" class="button primary" type="button">Oppdater nå</button>
+  </aside>
+
+  <main>
+    <section class="privacy-banner" role="note"><strong>Kun på denne enheten.</strong> Oppsett, samplefiler, MIDI-profiler og opptak lagres lokalt i nettleseren til de slettes. Ingen konto eller synkronisering. Ikke bruk privat lyd du ikke vil beholde her. <button id="resetLocalDataInline" class="button ghost" type="button">Slett alle lokale data</button></section>
+    <section class="project-bar" aria-label="Prosjekter lagret lokalt på denne enheten">
+      <label class="compact-field"><span>Preset</span><select id="presetSelect" aria-label="Velg lokalt preset"></select></label>
+      <button id="savePreset" class="button" type="button">Lagre preset</button>
+      <button id="resetPreset" class="button ghost" type="button">Nullstill lyd</button>
+      <span id="syncStatus" class="status-pill">Bare lokalt</span>
+      <label class="compact-field project-id"><span>Lokalt prosjekt</span><input id="projectId" type="text" autocomplete="off" inputmode="text" placeholder="Prosjekt-ID"></label>
+      <button id="createProject" class="button" type="button">Nytt lokalt prosjekt</button>
+      <button id="loadProject" class="button" type="button">Hent</button>
+      <button id="saveProject" class="button" type="button">Lagre lokalt</button>
+      <button id="openSampleLibrary" class="button" type="button">Samplebibliotek</button>
+      <button id="forgetProject" class="button ghost" type="button">Lukk prosjekt</button><button id="resetLocalData" class="button panic-button" type="button">Slett lokale data</button>
+    </section>
+
+    <section id="moduleEditor" class="module-editor" hidden aria-label="Modulredigering">
+      <div><p class="eyebrow">Redigeringsmodus</p><h2>Flytt, slå av eller fjern moduler</h2></div>
+      <div class="module-editor-actions"><button id="resetLayout" class="button ghost" type="button">Nullstill layout</button><button id="finishEditing" class="button primary" type="button">Ferdig</button></div>
+      <div id="moduleDrawer" class="module-drawer" role="group" aria-label="Skjulte moduler"></div>
+    </section>
+
+    <section id="moduleRack" class="module-grid rack-grid" aria-label="Synthesizermoduler">
+      <article class="module" data-module-id="vco"><header><div><p>Kilde</p><h2>Oscillator</h2></div></header><div class="source-toolbar"><button id="synthMute" class="button state-button" type="button">Mute</button><button id="synthSolo" class="button state-button" type="button">Solo</button></div><div class="segmented" id="waveformButtons"></div><div id="vcoControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="noise"><header><div><p>Kilde</p><h2>Noise</h2></div></header><div class="source-toolbar"><button id="noiseMute" class="button state-button" type="button">Mute</button><button id="noiseSolo" class="button state-button" type="button">Solo</button><button id="noiseDrone" class="button state-button" type="button">Drone / Hold</button></div><div class="segmented" id="noiseButtons"></div><div id="noiseControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="sampleHold"><header><div><p>Modulasjon</p><h2>Sample &amp; Hold</h2></div></header><div id="sampleHoldControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="wavefolder"><header><div><p>Form</p><h2>Wavefolder</h2></div></header><div id="wavefolderControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="filter"><header><div><p>Form</p><h2>Filter</h2></div></header><div class="segmented" id="filterButtons"></div><div id="filterControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="envelope"><header><div><p>Dynamikk</p><h2>ADSR / VCA</h2></div></header><div id="envelopeControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="lfo"><header><div><p>Modulasjon</p><h2>LFO</h2></div></header><div class="segmented" id="lfoTargetButtons"></div><div id="lfoControls" class="control-stack"></div></article>
+
+      <article class="module module-kick" data-module-id="kick">
+        <header><div><p>Instrument</p><h2>Kick</h2></div></header>
+        <div class="source-toolbar"><button id="kickMute" class="button state-button" type="button">Mute</button><button id="kickSolo" class="button state-button" type="button">Solo</button></div>
+        <button id="kickPad" class="kick-pad" type="button"><span>Manuell trigger</span><strong>KICK</strong></button>
+        <div id="kickControls" class="control-stack"></div>
+      </article>
+
+      <article class="module module-sequencer wide" data-module-id="sequencer">
+        <header>
+          <div><p>Mønster og transport</p><h2>Sequencer</h2></div>
+          <div class="module-actions"><button id="sequencerToggle" class="button primary" type="button">Start</button><button id="randomizeSequence" class="button ghost" type="button">Variasjon</button></div>
+        </header>
+        <section class="sequencer-transport" aria-labelledby="transportHeading">
+          <h3 id="transportHeading">Transport</h3>
+          <div id="transportControls" class="sequence-controls"></div>
+        </section>
+        <div class="sequencer-tracks">
+          <section class="sequencer-track synth-track" aria-labelledby="synthTrackHeading">
+            <div class="sequencer-track-heading">
+              <div><p>Spor 1</p><h3 id="synthTrackHeading">Synthspor</h3></div>
+              <div id="sequenceLengthButtons" class="segmented" role="group" aria-label="Antall synthtrinn"></div>
+            </div>
+            <div id="sequenceControls" class="sequence-controls track-controls"></div>
+            <div class="step-selection-toolbar">
+              <button id="multiSelectSteps" class="button state-button" type="button" aria-pressed="false">Velg flere · av</button>
+              <p id="sequencerSelectionStatus" role="status" aria-live="polite">Enkeltvalg er på. ● betyr aktiv, ✓ betyr valgt og ▶ betyr spiller.</p>
+            </div>
+            <div id="noteSteps" class="step-grid" role="group" aria-label="Synthtrinn"></div>
+            <section id="synthStepEditor" class="step-editor" aria-label="Rediger valgt synthtrinn"></section>
+          </section>
+        </div>
+      </article>
+
+      <article class="module" data-module-id="microphone"><header><div><p>Direktekilde</p><h2>Mikrofon</h2></div><span id="micStatus" class="source-status">Av</span></header><div class="source-toolbar"><button id="startMic" class="button primary" type="button">Start mikrofon</button><button id="toggleMicMonitor" class="button" type="button" disabled>Monitor av</button><button id="stopMic" class="button ghost" type="button" disabled>Slipp</button></div><p class="safety-note">Monitoring er av som standard. Bruk hodetelefoner.</p><div class="level-meter"><i id="micMeter"></i></div><div class="source-toolbar"><button id="micMute" class="button state-button" type="button">Mute</button><button id="micSolo" class="button state-button" type="button">Solo</button><button id="recordMicA" class="button record" type="button">Mic → A</button><button id="recordMicB" class="button record" type="button">Mic → B</button><button id="stopMicRecord" class="button" type="button" disabled>Stopp</button></div><div id="microphoneControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="voiceFx"><header><div><p>Prosess</p><h2>Voice FX</h2></div></header><div id="voicePresetButtons" class="segmented voice-presets"></div><div id="voiceFxControls" class="control-stack"></div></article>
+
+      <article class="module sample-module" data-module-id="sampleA" data-slot="A"><header><div><p>Lokal lyd</p><h2>Sample A</h2></div><span id="sampleAStatus" class="source-status">Tom</span></header><div id="sampleAProgress" class="sample-progress" role="progressbar" aria-label="Avspillingsposisjon for Sample A" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="Stoppet, 00:00 av 00:00"><svg class="sample-waveform" viewBox="0 0 320 74" aria-hidden="true"><path class="wave-zero" d="M0 37H320"/><path id="sampleAWaveform" class="wave-data" d="M0 37H320"/><line id="sampleAPlayhead" class="sample-playhead" x1="0" y1="0" x2="0" y2="74" hidden/></svg><output id="sampleAProgressTime" class="sample-progress-time">00:00 / 00:00</output></div><div class="source-toolbar"><label class="button file-button">Importer<input id="sampleAFile" type="file"></label><button id="sampleALibrary" class="button" type="button">Fra bibliotek</button><button id="sampleAPlay" class="button primary" type="button">Spill</button><button id="sampleAStop" class="button" type="button">Stopp</button><button id="sampleAEdit" class="button" type="button">Rediger lydklipp</button><button id="sampleARemove" class="button ghost" type="button">Fjern lyd</button></div><div class="source-toolbar"><button id="sampleALoop" class="button state-button" type="button">Loop</button><button id="sampleAReverse" class="button state-button" type="button">Reverse</button><button id="sampleAMute" class="button state-button" type="button">Mute</button><button id="sampleASolo" class="button state-button" type="button">Solo</button></div><div class="level-meter"><i id="sampleAMeter"></i></div><div id="sampleAControls" class="control-stack"></div></article>
+
+      <article class="module sample-module" data-module-id="sampleB" data-slot="B"><header><div><p>Lokal lyd</p><h2>Sample B</h2></div><span id="sampleBStatus" class="source-status">Tom</span></header><div id="sampleBProgress" class="sample-progress" role="progressbar" aria-label="Avspillingsposisjon for Sample B" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="Stoppet, 00:00 av 00:00"><svg class="sample-waveform" viewBox="0 0 320 74" aria-hidden="true"><path class="wave-zero" d="M0 37H320"/><path id="sampleBWaveform" class="wave-data" d="M0 37H320"/><line id="sampleBPlayhead" class="sample-playhead" x1="0" y1="0" x2="0" y2="74" hidden/></svg><output id="sampleBProgressTime" class="sample-progress-time">00:00 / 00:00</output></div><div class="source-toolbar"><label class="button file-button">Importer<input id="sampleBFile" type="file"></label><button id="sampleBLibrary" class="button" type="button">Fra bibliotek</button><button id="sampleBPlay" class="button primary" type="button">Spill</button><button id="sampleBStop" class="button" type="button">Stopp</button><button id="sampleBEdit" class="button" type="button">Rediger lydklipp</button><button id="sampleBRemove" class="button ghost" type="button">Fjern lyd</button></div><div class="source-toolbar"><button id="sampleBLoop" class="button state-button" type="button">Loop</button><button id="sampleBReverse" class="button state-button" type="button">Reverse</button><button id="sampleBMute" class="button state-button" type="button">Mute</button><button id="sampleBSolo" class="button state-button" type="button">Solo</button></div><div class="level-meter"><i id="sampleBMeter"></i></div><div id="sampleBControls" class="control-stack"></div></article>
+
+      <article class="module pad-sampler-module wide" data-module-id="padSampler">
+        <header><div><p>12 sampleplasser</p><h2>Pad Sampler</h2></div><span id="padSamplerStatus" class="source-status" role="status">0 av 12 klare</span></header>
+        <div id="padGrid" class="pad-grid" role="group" aria-label="Tolv samplepads"></div>
+        <section class="pad-editor" aria-labelledby="selectedPadHeading">
+          <div><p class="eyebrow">Valgt pad</p><h3 id="selectedPadHeading">Pad 1</h3><output id="selectedPadName">Tom</output></div>
+          <label class="compact-field" for="padMode"><span>Avspillingsmodus</span><select id="padMode"><option value="one-shot">One-shot</option><option value="loop-hold">Loop (av/på)</option></select></label>
+          <div id="padParameterControls" class="control-stack pad-parameter-controls" aria-label="Lydparametere for Pad 1"></div>
+          <div class="source-toolbar">
+            <label class="button file-button">Importer<input id="padFile" type="file" accept="audio/*"></label>
+            <button id="padProjectLibrary" class="button" type="button">Prosjektbibliotek</button>
+            <button id="padRecordingLibrary" class="button" type="button">Opptaksbibliotek</button>
+            <button id="padRemove" class="button ghost" type="button">Fjern lyd</button>
+          </div>
+        </section>
+        <div class="source-toolbar"><button id="padMute" class="button state-button" type="button">Mute</button><button id="padSolo" class="button state-button" type="button">Solo</button></div>
+        <div class="level-meter" role="meter" aria-label="Pad Sampler lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="padMeter"></i></div>
+        <div id="padSamplerControls" class="control-stack"></div>
+      </article>
+
+      <article class="module" data-module-id="mixer"><header><div><p>Sju lydkilder</p><h2>Mikser</h2></div></header><div class="mixer-channels" aria-label="Lydnivå for mikserkanaler"><div class="meter-row"><span>VCO</span><div class="level-meter" role="meter" aria-label="VCO lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="synthMeter"></i></div><output id="synthMeterValue" class="meter-value">−∞ dB</output></div><div class="meter-row"><span>Noise</span><div class="level-meter" role="meter" aria-label="Noise lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="noiseMeter"></i></div><output id="noiseMeterValue" class="meter-value">−∞ dB</output></div><div class="meter-row"><span>Kick</span><div class="level-meter" role="meter" aria-label="Kick lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="kickMeter"></i></div><output id="kickMeterValue" class="meter-value">−∞ dB</output></div><div class="meter-row"><span>Mikrofon</span><div class="level-meter inactive" role="meter" aria-label="Mikrofon lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Inaktiv"><i id="micMixerMeter"></i></div><output id="micMixerMeterValue" class="meter-value">Inaktiv</output></div><div class="meter-row"><span>Sample A</span><div class="level-meter" role="meter" aria-label="Sample A lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="sampleAMixerMeter"></i></div><output id="sampleAMixerMeterValue" class="meter-value">−∞ dB</output></div><div class="meter-row"><span>Sample B</span><div class="level-meter" role="meter" aria-label="Sample B lydnivå" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="sampleBMixerMeter"></i></div><output id="sampleBMixerMeterValue" class="meter-value">−∞ dB</output></div><div class="meter-row"><span>Pads</span><div class="level-meter" role="meter" aria-label="Pad Sampler lydnivå i mikser" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60" aria-valuetext="Ingen signal"><i id="padMixerMeter"></i></div><output id="padMixerMeterValue" class="meter-value">−∞ dB</output></div></div><div id="mixerControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="delay"><header><div><p>Send FX</p><h2>Delay</h2></div></header><div id="delayControls" class="control-stack"></div></article>
+
+      <article class="module" data-module-id="master"><header><div><p>Sikker utgang</p><h2>Master / opptak</h2></div></header><div id="masterControls" class="control-stack"></div><div class="source-toolbar"><button id="recordButton" class="button record" type="button">Ta opp</button><button id="playRecording" class="button" type="button" disabled>Spill</button><button id="downloadRecording" class="button" type="button" disabled>Last ned</button><button id="downloadWav" class="button" type="button" disabled>WAV</button></div></article>
+
+      <article class="module" data-module-id="scope"><header><div><p>Utgang</p><h2>Scope</h2></div><output id="outputLevel">−∞ dB</output></header><svg id="scope" viewBox="0 0 640 96"><path class="scope-grid" d="M0 24H640M0 48H640M0 72H640M80 0V96M160 0V96M240 0V96M320 0V96M400 0V96M480 0V96M560 0V96"/><path id="scopePath" class="scope-line" d="M0 48H640"/></svg></article>
+
+      <article class="module wide" data-module-id="keyboard"><header><div><p>Valgfri spilleflate</p><h2>Keyboard</h2></div><div class="octave-actions"><button id="octaveDown" class="button ghost" type="button">−</button><output id="octaveValue">C3–C4</output><button id="octaveUp" class="button ghost" type="button">+</button></div></header><div id="keyboard" class="keyboard"></div></article>
+    </section>
+  </main>
+  <aside id="audioPlayer" class="audio-player" data-state="initial" aria-labelledby="audioPlayerState">
+    <div class="audio-player-summary">
+      <p class="eyebrow">Masterutgang</p>
+      <strong id="audioPlayerState">Klar</strong>
+      <p id="audioPlayerStatus">Trykk Start lyd for å aktivere lydmotoren.</p>
+    </div>
+    <div class="audio-player-visual">
+      <svg id="audioPlayerWaveform" viewBox="0 0 640 90" preserveAspectRatio="none" aria-hidden="true">
+        <path class="audio-player-grid" d="M0 45H640M160 0V90M320 0V90M480 0V90"/>
+        <path id="audioPlayerWaveformPath" class="audio-player-waveform-path" d="M0 45H640"/>
+      </svg>
+      <p id="audioPlayerWaveformStatus" role="status" aria-live="polite">Venter på lyd · flat linje</p>
+    </div>
+    <div class="audio-player-controls" role="group" aria-label="Global lydavspilling">
+      <button id="playerAudioToggle" class="button primary" type="button" aria-pressed="false">Start lyd</button>
+      <button id="playerAudioStop" class="button" type="button" disabled>Stopp</button>
+    </div>
+  </aside>
+  <section id="focusWorkspace" class="focus-workspace" role="dialog" aria-modal="true" aria-labelledby="focusTitle" hidden>
+    <header class="focus-heading"><div><p class="eyebrow">Større arbeidsflate</p><h2 id="focusTitle">Fokusvisning</h2></div><span id="focusCount" class="status-pill">0 / 4 moduler</span><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button><button id="closeFocusWorkspace" class="button primary" type="button">Lukk alle</button></header>
+    <nav id="focusModulePicker" class="focus-picker" aria-label="Legg til modul i fokusvisningen"></nav>
+    <div id="focusGrid" class="focus-grid" data-count="0"></div>
+  </section>
+  <dialog id="installDialog" class="library-dialog install-dialog" aria-labelledby="installTitle">
+    <div class="library-heading"><div><p class="eyebrow">iPad og Safari</p><h2 id="installTitle">Legg appen på hjemskjermen</h2></div><div class="dialog-actions"><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button><button id="closeInstallDialog" class="button ghost" type="button">Lukk</button></div></div>
+    <ol><li>Trykk på Del-knappen i Safari.</li><li>Velg «Legg til på Hjem-skjermen».</li><li>Trykk «Legg til». Appen åpnes deretter i egen visning.</li></ol>
+    <p class="safety-note">Lyd, opptak og lokale presets virker også uten nett etter at appen er lastet inn.</p>
+  </dialog>
+  <dialog id="midiDialog" class="library-dialog midi-dialog" aria-labelledby="midiTitle" aria-describedby="midiDescription">
+    <div class="library-heading midi-heading">
+      <div><p class="eyebrow">Ekstern maskinvare</p><h2 id="midiTitle">MIDI-oppsett</h2></div>
+      <div class="dialog-actions"><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button><button id="closeMidiSettings" class="button ghost" type="button">Lukk</button></div>
+    </div>
+    <p id="midiDescription" class="midi-intro">Koble fysiske knotter, fadere og knapper til appens parametere og funksjoner. Oppsettene lagres lokalt på denne enheten.</p>
+
+    <section class="midi-section midi-connect" aria-labelledby="midiConnectTitle">
+      <div class="midi-section-heading">
+        <div><p class="eyebrow">Tilkobling</p><h3 id="midiConnectTitle">MIDI-enheter</h3></div>
+        <button id="requestMidiAccess" class="button primary" type="button" aria-controls="midiDeviceList" aria-describedby="midiSupportMessage">Koble til MIDI</button>
+      </div>
+      <p id="midiSupportMessage" class="midi-live-status" role="status" aria-live="polite">Web MIDI fungerer i Chrome og Edge på datamaskin. Safari på iPad og iPhone støtter ikke direkte MIDI-tilkobling.</p>
+      <p id="midiActivity" class="midi-activity" aria-live="off">Ingen MIDI-signaler mottatt ennå.</p>
+      <div id="midiDeviceList" class="midi-list midi-device-list" role="list" aria-label="Tilkoblede MIDI-enheter">
+        <p class="midi-empty" role="listitem">Ingen MIDI-enheter er koblet til.</p>
+      </div>
+    </section>
+
+    <section class="midi-section" aria-labelledby="midiProfileTitle">
+      <div class="midi-section-heading">
+        <div><p class="eyebrow">Lagre og bytt oppsett</p><h3 id="midiProfileTitle">Kontrollerprofil</h3></div>
+      </div>
+      <div class="midi-profile-layout">
+        <label class="midi-field" for="midiProfileSelect"><span>Aktiv profil</span><select id="midiProfileSelect"><option value="">Ingen profil valgt</option></select></label>
+        <div class="midi-actions" aria-label="Administrer kontrollerprofil">
+          <button id="newMidiProfile" class="button" type="button">Ny profil</button>
+          <button id="renameMidiProfile" class="button" type="button">Gi nytt navn</button>
+          <button id="deleteMidiProfile" class="button ghost" type="button">Slett</button>
         </div>
       </div>
-      <p class="hint">Lyd krever en nettleser som støtter Web Audio. Bruk hodetelefoner ved behov.</p>
+      <div class="midi-reference">
+        <div>
+          <strong>Referanseprofil: 2 × Akai MIDImix</strong>
+          <p id="midimixProfileDescription">Konfigurer i MIDImix Editor: Enhet 1 på kanal 1 styrer kick, sequencer, transport og 24 andre parametere. Enhet 2 på kanal 2 styrer de siste 25.</p>
+        </div>
+        <button id="loadMidimixProfile" class="button" type="button" aria-describedby="midimixProfileDescription">Last referanseprofil</button>
+      </div>
     </section>
-    <details class="about"><summary>Om denne demoen</summary><p>Dette er en forenklet, selvstendig utgave laget for Vibe. Tonene genereres lokalt med Web Audio API. Kontroller og valg finnes bare mens siden er åpen.</p></details>
-  </main>
-  <footer><a href="/vibe/">Tilbake til Vibe-huben</a></footer>
+
+    <section class="midi-section" aria-labelledby="midiLearnTitle">
+      <div class="midi-section-heading">
+        <div><p class="eyebrow">Koble fysisk kontroll</p><h3 id="midiLearnTitle">MIDI Learn</h3></div>
+      </div>
+      <div class="midi-learn-grid">
+        <label class="midi-field" for="midiLearnTarget">
+          <span>Parameter eller funksjon</span>
+          <select id="midiLearnTarget">
+            <option value="">Velg mål</option>
+            <optgroup label="Kontinuerlige parametere" data-midi-target-group="continuous"></optgroup>
+            <optgroup label="Knapper og triggere" data-midi-target-group="actions"></optgroup>
+          </select>
+        </label>
+        <label class="midi-field" for="midiLearnMode">
+          <span>Kontrolltype</span>
+          <select id="midiLearnMode">
+            <option value="auto">Automatisk</option>
+            <option value="continuous">Kontinuerlig</option>
+            <option value="toggle">Av/på</option>
+            <option value="trigger">Trigger</option>
+          </select>
+        </label>
+        <label class="midi-field" for="midiLearnChannel">
+          <span>MIDI-kanal</span>
+          <select id="midiLearnChannel">
+            <option value="auto">Automatisk fra signal</option>
+            <option value="1">Kanal 1</option>
+            <option value="2">Kanal 2</option>
+            <option value="3">Kanal 3</option>
+            <option value="4">Kanal 4</option>
+            <option value="5">Kanal 5</option>
+            <option value="6">Kanal 6</option>
+            <option value="7">Kanal 7</option>
+            <option value="8">Kanal 8</option>
+            <option value="9">Kanal 9</option>
+            <option value="10">Kanal 10</option>
+            <option value="11">Kanal 11</option>
+            <option value="12">Kanal 12</option>
+            <option value="13">Kanal 13</option>
+            <option value="14">Kanal 14</option>
+            <option value="15">Kanal 15</option>
+            <option value="16">Kanal 16</option>
+          </select>
+        </label>
+      </div>
+      <div class="midi-actions midi-learn-actions">
+        <button id="startMidiLearn" class="button primary" type="button" aria-controls="midiLearnStatus">Start MIDI Learn</button>
+        <button id="cancelMidiLearn" class="button ghost" type="button" aria-controls="midiLearnStatus" disabled>Avbryt</button>
+      </div>
+      <p id="midiLearnStatus" class="midi-live-status" role="status" aria-live="polite" tabindex="-1">Velg et mål, og beveg deretter ønsket kontroll på MIDI-enheten.</p>
+    </section>
+
+    <section class="midi-section midi-mappings" aria-labelledby="midiMappingsTitle">
+      <div class="midi-section-heading">
+        <div><p class="eyebrow">Aktiv profil</p><h3 id="midiMappingsTitle">MIDI-koblinger</h3></div>
+      </div>
+      <div id="midiMappingList" class="midi-list midi-mapping-list" role="list" aria-label="Lagrede MIDI-koblinger">
+        <p class="midi-empty" role="listitem">Profilen har ingen MIDI-koblinger ennå.</p>
+      </div>
+    </section>
+  </dialog>
+  <dialog id="recorderDialog" class="library-dialog recorder-dialog" aria-labelledby="recorderTitle" aria-describedby="recorderDescription">
+    <div class="library-heading"><div><p class="eyebrow">Prosjektuavhengig støtteverktøy</p><h2 id="recorderTitle">Opptaker</h2></div><div class="dialog-actions"><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button><button id="closeRecorder" class="button ghost" type="button">Lukk</button></div></div>
+    <p id="recorderDescription" class="safety-note">Ta opp fra mikrofon eller masterutgang, trim utkastet og lagre en WAV i det felles biblioteket. Maks 120 sekunder.</p>
+    <fieldset id="recorderSource" class="recorder-source"><legend>Lydkilde</legend><label><input id="recorderSourceMic" name="recorderSource" type="radio" value="microphone"><span>Mikrofon</span></label><label><input id="recorderSourceMaster" name="recorderSource" type="radio" value="master" checked><span>Masterutgang</span></label></fieldset>
+    <div class="recorder-transport"><button id="startRecorder" class="button record" type="button">Start opptak</button><button id="stopRecorder" class="button" type="button" disabled>Stopp</button><button id="cancelRecorder" class="button ghost" type="button" disabled>Avbryt</button><output id="recorderTimer">00:00 / 02:00</output></div>
+    <p id="recorderStatus" class="recorder-status" role="status" aria-live="polite">Klar</p>
+    <section id="recorderDraft" class="recorder-draft" aria-labelledby="recorderDraftTitle" hidden>
+      <div class="sample-editor-summary"><strong id="recorderDraftTitle">Midlertidig utkast</strong><span id="recorderTotal">Total: 0,000 s</span><span id="recorderSelected">Valgt: 0,000 s</span></div>
+      <div id="recorderTimeline" class="sample-editor-timeline recorder-timeline" aria-label="Bølgeform og valgt opptaksområde">
+        <svg class="sample-editor-waveform" viewBox="0 0 1000 240" preserveAspectRatio="none" aria-hidden="true"><path class="wave-zero" d="M0 120H1000"/><path id="recorderWaveform" class="wave-data" d="M0 120H1000"/></svg>
+        <div id="recorderSelection" class="sample-editor-selection" data-recorder-trim><span>Valgt område</span></div>
+        <button id="recorderStartHandle" class="sample-editor-handle start" type="button" role="slider" aria-label="Starttid for opptak" aria-orientation="horizontal" data-recorder-trim><span aria-hidden="true">◀ Start</span></button>
+        <button id="recorderEndHandle" class="sample-editor-handle end" type="button" role="slider" aria-label="Sluttid for opptak" aria-orientation="horizontal" data-recorder-trim><span aria-hidden="true">Slutt ▶</span></button>
+      </div>
+      <div class="sample-editor-times" data-recorder-trim><label><span>Start (sekunder)</span><input id="recorderStartTime" type="number" min="0" step="0.001" inputmode="decimal"></label><label><span>Slutt (sekunder)</span><input id="recorderEndTime" type="number" min="0" step="0.001" inputmode="decimal"></label></div>
+      <div class="sample-editor-preview" data-recorder-trim><button id="previewRecorder" class="button primary" type="button">Lytt til utvalg</button><button id="stopRecorderPreview" class="button" type="button">Stopp avspilling</button><button id="resetRecorderTrim" class="button ghost" type="button">Nullstill trim</button></div>
+      <div class="sample-editor-actions" data-recorder-trim><button id="discardRecorderDraft" class="button ghost" type="button">Forkast utkast</button><button id="saveRecorderDraft" class="button primary" type="button">Lagre i bibliotek</button></div>
+    </section>
+    <section class="shared-library" aria-labelledby="sharedLibraryTitle"><div class="library-heading"><div><p class="eyebrow">Felles for denne appinstallasjonen</p><h3 id="sharedLibraryTitle">Opptaksbibliotek på denne enheten</h3></div><button id="refreshSharedLibrary" class="button" type="button">Oppdater</button></div><p id="sharedLibraryTarget" class="library-target" role="status">Velg Sample A eller B for et opptak.</p><div class="library-summary"><span id="sharedLibraryUsage">Henter…</span><span>Bare tilgjengelig i denne nettleseren</span></div><div id="sharedLibraryList" class="library-list" role="list"></div></section>
+  </dialog>
+  <dialog id="recordingNameDialog" class="library-dialog name-dialog" aria-labelledby="recordingNameTitle">
+    <div class="library-heading"><div><p class="eyebrow">Lagre WAV</p><h2 id="recordingNameTitle">Gi opptaket et navn</h2></div><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button></div>
+    <label class="name-field"><span>Navn</span><input id="recordingName" type="text" maxlength="80" autocomplete="off" required></label>
+    <p id="recordingNameError" class="field-error" role="alert"></p>
+    <div class="sample-editor-actions"><button id="cancelRecordingName" class="button ghost" type="button">Avbryt</button><button id="confirmRecordingName" class="button primary" type="button">Lagre</button></div>
+  </dialog>
+  <dialog id="sampleEditorDialog" class="library-dialog sample-editor-dialog" role="dialog" aria-modal="true" aria-labelledby="sampleEditorTitle" aria-describedby="sampleEditorDescription">
+    <div class="library-heading"><div><p class="eyebrow">Non-destruktiv lokal redigering</p><h2 id="sampleEditorTitle">Rediger lydklipp</h2></div><div class="dialog-actions"><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button><button id="closeSampleEditor" class="button ghost" type="button">Lukk</button></div></div>
+    <p id="sampleEditorDescription" class="safety-note">Velg området som skal beholdes. Originalfilen i det lokale biblioteket endres ikke.</p>
+    <div class="sample-editor-summary" aria-live="polite"><strong id="sampleEditorFilename">Ingen fil</strong><span id="sampleEditorTotal">Total: 0,000 s</span><span id="sampleEditorSelected">Valgt: 0,000 s</span></div>
+    <div id="sampleEditorTimeline" class="sample-editor-timeline" aria-label="Bølgeform og valgt område">
+      <svg class="sample-editor-waveform" viewBox="0 0 1000 240" preserveAspectRatio="none" aria-hidden="true"><path class="wave-zero" d="M0 120H1000"/><path id="sampleEditorWaveform" class="wave-data" d="M0 120H1000"/></svg>
+      <div id="sampleEditorSelection" class="sample-editor-selection"><span>Valgt område</span></div>
+      <button id="sampleEditorStartHandle" class="sample-editor-handle start" type="button" role="slider" aria-label="Starttid" aria-orientation="horizontal"><span aria-hidden="true">◀ Start</span></button>
+      <button id="sampleEditorEndHandle" class="sample-editor-handle end" type="button" role="slider" aria-label="Sluttid" aria-orientation="horizontal"><span aria-hidden="true">Slutt ▶</span></button>
+    </div>
+    <div class="sample-editor-times">
+      <label><span>Start (sekunder)</span><input id="sampleEditorStartTime" type="number" min="0" step="0.001" inputmode="decimal"></label>
+      <label><span>Slutt (sekunder)</span><input id="sampleEditorEndTime" type="number" min="0" step="0.001" inputmode="decimal"></label>
+    </div>
+    <div class="sample-editor-preview"><button id="previewSampleSelection" class="button primary" type="button">Lytt til utvalg</button><button id="stopSampleSelection" class="button" type="button">Stopp</button><button id="resetSampleSelection" class="button ghost" type="button">Nullstill</button></div>
+    <div class="sample-editor-actions"><button id="cancelSampleEditor" class="button ghost" type="button">Avbryt</button><button id="cropSampleSelection" class="button primary" type="button">Klipp til lokal kopi</button></div>
+    <p id="sampleEditorStatus" class="sample-editor-status" role="status" aria-live="polite">Klar</p>
+  </dialog>
+  <dialog id="sampleLibraryDialog" class="library-dialog" aria-labelledby="sampleLibraryTitle" aria-describedby="sampleLibraryDescription sampleLibraryTarget">
+    <div class="library-heading"><div><p class="eyebrow">Lokalt bibliotek</p><h2 id="sampleLibraryTitle">Lokale samples</h2></div><div class="dialog-actions"><button class="button panic-button panic-action" type="button" aria-label="PANIKK: stopp lyd og nullstill aktiv økt til Init">PANIKK</button><button id="closeSampleLibrary" class="button ghost" type="button">Lukk</button></div></div>
+    <p id="sampleLibraryDescription" class="safety-note">Velg inntil 20 lydfiler samtidig. Biblioteket lagres bare på denne enheten.</p>
+    <p id="sampleLibraryTarget" class="library-target" role="status">Administrer lokale lydfiler, eller velg Sample A, B eller en pad for hver fil.</p>
+    <div class="library-upload"><label class="button file-button">Velg lydfiler<input id="sampleLibraryFiles" type="file" multiple></label><button id="uploadSampleLibrary" class="button primary" type="button" disabled>Last opp</button><button id="refreshSampleLibrary" class="button" type="button">Oppdater liste</button></div>
+    <div class="library-summary"><span id="sampleLibrarySelection">Ingen filer valgt</span><span id="sampleLibraryUsage">Ikke koblet til</span></div>
+    <div id="sampleLibraryList" class="library-list" role="list"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./assets/app.js?build=2026-10-10.1"></script>
 </body>
 </html>

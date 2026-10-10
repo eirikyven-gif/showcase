@@ -21,6 +21,7 @@ The hub creates cards from that JSON and searches all four content fields. Searc
 ## Routes
 
 - `/vibe/` serves the hub.
+- `/vibe/analog-synthesizer/` serves the Analog Synthesizer local showcase copy; see its [privacy, source and QA notes](analog-synthesizer/README.md).
 - Card links are rooted at `/vibe/[slug]/` for reviewed static demo routes.
 - `404.html` handles unknown paths on static hosts that support directory-level 404 pages and includes a link back to `/vibe/`. Host behavior for custom 404 documents varies; verify it when selecting the public host. Individual reviewed static demo routes are current work and are added incrementally.
 
