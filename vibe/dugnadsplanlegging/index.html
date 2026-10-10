@@ -1,27 +1,327 @@
 <!doctype html>
 <html lang="nb">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Prøv en enkel vaktplan med oppdiktede skift og deltakere.">
-  <title>Dugnadsplanlegging – Vibe</title>
+  <meta name="description" content="En trofast dugnadsplanleggingsdemo med vaktplan, påmelding og offentlig oversikt. Lokale syntetiske data.">
+  <title>Dugnadsplanlegging · Vibe</title>
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/dugnadsplanlegging/style.css">
-  <script src="/vibe/dugnadsplanlegging/app.js" defer></script>
 </head>
-<body>
-  <a class="skip-link" href="#main">Hopp til vaktplanen</a>
-  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – tilbake til apphub">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
-  <main id="main" class="page-shell">
-    <section class="intro"><p class="eyebrow">Planlegging · trygg demo</p><h1>Dugnadsplanlegging</h1><p class="intro-copy">Prøv en enkel vaktplan med oppdiktede skift og deltakere. Endringer finnes bare mens siden er åpen.</p></section>
-    <aside class="demo-note" aria-label="Demomerking"><strong>Syntetisk eksempel</strong><span>Ingen ekte arrangementer eller personer. Ingenting sendes eller lagres.</span></aside>
-    <section class="plan" aria-labelledby="plan-heading">
-      <div class="section-heading"><div><p class="eyebrow">Eksempelplan</p><h2 id="plan-heading">Lørdagsdugnad</h2></div><button id="reset-plan" class="secondary" type="button">Nullstill planen</button></div>
-      <p id="plan-status" class="status" aria-live="polite">Tre oppdiktede skift er klare.</p>
-      <div id="shift-list" class="shift-list"></div>
+<body class="showcase-demo">
+  <a class="vibe-skip" href="#main">Hopp til appen</a>
+  <div class="vibe-bar"><a href="/vibe/" aria-label="Tilbake til Vibe hub">vibe<span>.</span></a><span>Trygg, lokal demonstrasjon</span><a href="/vibe/">Alle verktøy</a></div>
+  <aside class="local-notice"><strong>Syntetisk demo · lagres bare på denne enheten</strong><span>Ikke skriv inn ekte personopplysninger. Ingen innlogging, serverlagring eller meldinger brukes. Knappen Nullstill fjerner alle demoendringer.</span></aside>
+  <nav id="demo-surfaces" aria-label="Appflater"><button type="button" data-surface="admin" aria-pressed="true">Vaktplan</button><button type="button" data-surface="signup" aria-pressed="false">Påmelding</button><button type="button" data-surface="overview" aria-pressed="false">Offentlig oversikt</button><button type="button" data-surface="superadmin" aria-pressed="false">Dugnader og roller</button><label>Simulert rolle <select id="demo-role"><option>Admin</option><option>Superadmin</option></select></label><span id="role-note" role="status">Rolle er kun en visningssimulering.</span></nav>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Dugnad</p>
+      <h1>Dugnadsplanlegging</h1>
+    </div>
+    <div class="top-actions" aria-label="Datahandlinger">
+      <button id="exportButton" type="button" class="secondary">Eksporter JSON</button>
+      <label class="file-button">
+        Importer JSON
+        <input id="importInput" type="file" accept="application/json,.json">
+      </label>
+      <button id="resetButton" type="button" class="danger">Nullstill</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="status-line" aria-live="polite">
+      <span id="saveStatus">Lokal lagring klar.</span>
+      <span id="duplicateNotice" class="notice"></span>
     </section>
-    <section class="how-it-works"><h2>Slik bruker du demoen</h2><p>Velg en oppdiktet deltaker på et skift. Valget oppdaterer bare visningen og forsvinner når du laster siden på nytt.</p></section>
+
+    <nav class="tabs" aria-label="Hovedvisninger">
+      <button class="tab active" type="button" data-tab="vaktplan">Vaktplan</button>
+      <button class="tab" type="button" data-tab="oppslag">Oppslag</button>
+      <button class="tab" type="button" data-tab="oppgavesok">Oppgavesøk</button>
+      <button class="tab" type="button" data-tab="sms">SMS</button>
+      <button class="tab" type="button" data-tab="oversikt">Oversikt</button>
+    </nav>
+
+    <section id="vaktplan" class="tab-panel active" aria-labelledby="vaktplan-heading">
+      <section class="panel timeline-panel">
+        <div class="section-heading">
+          <div>
+            <h2 id="vaktplan-heading">Vaktplan</h2>
+            <p>Tider bortover, oppgaver nedover og enkel status i cellene. Trykk et tidsrom for detaljer.</p>
+          </div>
+          <label class="search-label">
+            Velg visning
+            <select id="timelineDay"></select>
+          </label>
+        </div>
+        <div id="timelineSummary" class="timeline-summary" aria-live="polite"></div>
+        <div class="timeline-legend" aria-label="Forklaring">
+          <span><span class="legend-swatch staffed"></span>Dekket</span>
+          <span><span class="legend-swatch missing"></span>Delvis dekket</span>
+          <span><span class="legend-swatch missing"></span>Ikke dekket</span>
+          <span><span class="legend-swatch no-need"></span>Ikke behov</span>
+        </div>
+        <div id="timelineMatrix" class="timeline-scroll"></div>
+      </section>
+
+      <div class="split-grid">
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <h2>Personer og grupper</h2>
+              <p>Registrer frivillige, grupper og telefonnummer.</p>
+            </div>
+          </div>
+          <form id="contactForm" class="grid-form">
+            <input type="hidden" name="id">
+            <label>
+              Type
+              <select name="type" required>
+                <option value="person">Person</option>
+                <option value="gruppe">Gruppe</option>
+              </select>
+            </label>
+            <label>
+              Navn
+              <input name="name" autocomplete="name" required>
+            </label>
+            <label>
+              Telefon
+              <input name="phone" autocomplete="tel" inputmode="tel" placeholder="+47 ...">
+            </label>
+            <label>
+              Kontaktpunkter for gruppe
+              <textarea name="contactPoints" rows="3" placeholder="Navn + telefon, ett per linje"></textarea>
+            </label>
+            <label>
+              Notat
+              <textarea name="notes" rows="3" placeholder="Valgfritt"></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="submit">Lagre person/gruppe</button>
+              <button id="cancelContactEdit" type="button" class="secondary hidden">Avbryt redigering</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <h2>Oppgaver og vakter</h2>
+              <p>Legg inn reelt start- og sluttidspunkt. Bemanning legges til per tidsrom etter at vakten er lagret.</p>
+            </div>
+          </div>
+          <form id="shiftForm" class="grid-form">
+            <input type="hidden" name="id">
+            <label class="wide">
+              Oppgave/vakt
+              <input name="title" required placeholder="F.eks. Supportområde">
+            </label>
+            <label>
+              Startdato
+              <input name="startDate" type="date" required>
+            </label>
+            <label>
+              Starttid
+              <input name="startTime" type="time" required>
+            </label>
+            <label>
+              Sluttdato
+              <input name="endDate" type="date" required>
+            </label>
+            <label>
+              Sluttid
+              <input name="endTime" type="time" required>
+            </label>
+            <label>
+              Sted
+              <input name="location" placeholder="Valgfritt">
+            </label>
+            <label>
+              Behov per tidsrom
+              <input name="capacity" type="number" min="1" step="1" value="1">
+            </label>
+            <label class="wide">
+              Notat
+              <textarea name="notes" rows="3" placeholder="Valgfritt"></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="submit">Lagre vakt</button>
+              <button id="cancelShiftEdit" type="button" class="secondary hidden">Avbryt redigering</button>
+            </div>
+          </form>
+
+          <section id="assignmentEditor" class="assignment-editor hidden" aria-labelledby="assignmentHeading">
+            <h3 id="assignmentHeading">Bemanning</h3>
+            <div id="assignmentList" class="assignment-list-panel" aria-live="polite"></div>
+            <form id="assignmentForm" class="grid-form assignment-form">
+              <input type="hidden" name="id">
+              <label class="wide">
+                Person/gruppe
+                <select name="contactId" required></select>
+              </label>
+              <label>
+                Fra dato
+                <input name="startDate" type="date" required>
+              </label>
+              <label>
+                Fra tid
+                <input name="startTime" type="time" required>
+              </label>
+              <label>
+                Til dato
+                <input name="endDate" type="date" required>
+              </label>
+              <label>
+                Til tid
+                <input name="endTime" type="time" required>
+              </label>
+              <label class="wide">
+                Kommentar
+                <textarea name="notes" rows="2" placeholder="Valgfritt"></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="submit">Legg til tildeling</button>
+                <button id="cancelAssignmentEdit" type="button" class="secondary hidden">Avbryt tildeling</button>
+              </div>
+            </form>
+          </section>
+        </section>
+      </div>
+    </section>
+
+    <section id="oppslag" class="tab-panel">
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <h2>Oppslag</h2>
+            <p>Søk etter person eller gruppe og se tilhørende tildelinger.</p>
+          </div>
+          <label class="search-label">
+            Søk person/gruppe
+            <input id="contactSearch" type="search" placeholder="Navn, telefon, type eller notat">
+          </label>
+        </div>
+        <div id="contactList" class="list"></div>
+      </section>
+    </section>
+
+    <section id="oppgavesok" class="tab-panel">
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <h2>Oppgavesøk</h2>
+            <p>Søk etter oppgave, tidsrom, sted eller bemanning.</p>
+          </div>
+          <label class="search-label">
+            Søk oppgave/vakt
+            <input id="shiftSearch" type="search" placeholder="Oppgave, dato, sted eller navn">
+          </label>
+        </div>
+        <div id="shiftList" class="list"></div>
+      </section>
+    </section>
+
+    <section id="sms" class="tab-panel">
+      <div class="split-grid sms-grid">
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <h2>SMS</h2>
+              <p>Velg mottakere, skriv melding og kontroller forhåndsvisning før AppleScript kjøres.</p>
+            </div>
+            <button id="smsBridgeCheckButton" type="button" class="secondary">Se SMS-simulering</button>
+          </div>
+
+          <form id="smsForm" class="grid-form">
+            <label>
+              Mottakervalg
+              <select id="smsSource" name="smsSource">
+                <option value="person">En person</option>
+                <option value="gruppe">En gruppe</option>
+                <option value="shift">Valgt oppgave/vakt</option>
+                <option value="all">Alle med telefonnummer</option>
+              </select>
+            </label>
+            <label id="smsTargetLabel">
+              Velg mottaker
+              <select id="smsTarget" name="smsTarget"></select>
+            </label>
+            <label>
+              Meldingsmal
+              <select id="smsTemplate" name="smsTemplate">
+                <option value="custom">Egendefinert melding</option>
+                <option value="reminder">Påminning om vakt</option>
+                <option value="change">Endring i vaktplan</option>
+                <option value="thanks">Takk for hjelpen</option>
+              </select>
+            </label>
+            <label class="wide">
+              Melding
+              <textarea id="smsMessage" name="smsMessage" rows="6" placeholder="Skriv SMS-tekst her"></textarea>
+            </label>
+            <label class="checkbox-label wide">
+              <input id="smsDryRun" type="checkbox" checked>
+              Tørrkjøring - vis hva som ville blitt sendt uten å sende SMS.
+            </label>
+            <div class="form-actions">
+              <button id="smsDryRunButton" type="button" class="secondary">Kjør tørrtest</button>
+              <button id="smsCopyScriptButton" type="button" class="secondary">Kopier AppleScript</button>
+            </div>
+          </form>
+          <p id="smsBridgeStatus" class="bridge-status" aria-live="polite">AppleScript-bro ikke sjekket.</p>
+        </section>
+
+        <section class="panel">
+          <h2>Forhåndsvisning og bekreftelse</h2>
+          <div id="smsPreviewSummary" class="sms-preview-summary" aria-live="polite"></div>
+
+          <h3>Mottakere som får SMS</h3>
+          <div id="smsRecipientList" class="list compact"></div>
+
+          <h3>Mangler telefonnummer</h3>
+          <div id="smsMissingList" class="list compact"></div>
+
+          <label class="wide">
+            Inert eksempeltekst (kan ikke sende SMS)
+            <textarea id="smsAppleScript" rows="10" readonly></textarea>
+          </label>
+
+          <label class="checkbox-label danger-confirm">
+            <input id="smsConfirmSend" type="checkbox">
+            Jeg har kontrollert syntetiske mottakere og melding i forhåndsvisningen.
+          </label>
+          <button id="smsSendButton" type="button" class="danger">Simuler SMS (sendes ikke)</button>
+          <p id="smsSendStatus" class="bridge-status" aria-live="polite"></p>
+        </section>
+      </div>
+    </section>
+
+    <section id="oversikt" class="tab-panel">
+      <div class="split-grid overview-grid">
+        <section class="panel">
+          <h2>Oversikt</h2>
+          <div id="summaryCards" class="summary-grid"></div>
+        </section>
+        <section class="panel">
+          <h2>Mangler telefonnummer</h2>
+          <div id="missingPhoneList" class="list compact"></div>
+        </section>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer"><span>Vibe<span>.</span></span><a href="/vibe/">Tilbake til huben</a></footer>
+
+  <section id="public-surface" class="public-surface" hidden aria-live="polite"></section>
+
+  <template id="emptyTemplate">
+    <p class="empty">Ingen treff.</p>
+  </template>
+
+  <script src="app.js" defer></script>
+  <script src="issue320.js" defer></script>
+  <script src="timeline.js" defer></script>
+  <script src="issue322.js" defer></script>
+  <script src="public.js" defer></script>
+  <script src="norsk.js" defer></script>
 </body>
 </html>
