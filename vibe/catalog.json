@@ -1,4 +1,4 @@
-    {
+{
   "apps": [
     {
       "slug": "fagquizer",
@@ -142,7 +142,7 @@
       "routeState": "Eksisterende /vibe/emnebeskrivelser-editor/-rute får ny funksjonell runtime; ingen slugendring eller rutekollisjon. Showcase SemVer minor bump til v0.42.0.",
       "sourceUncertainty": "Kilden har PIN-fri app/emneside.html og separat PIN-variant med edit-pin-config.js. PIN-fri original ble valgt etter README; ingen PIN-data eller tilgangslås kopieres. SSoT angir v1.8.0, mens kildefilens footer viser v1.8.4. Innholdsrettigheter og faktisk produksjonsbruk er ikke uavhengig verifisert."
     },
-    {
+        {
       "slug": "reservering",
       "name": "Reservering · kundebooking og admin",
       "useCase": "Velg en ledig dato og tid, registrer en syntetisk booking, og utforsk adminflyt for reservasjoner og tilgjengelighet.",
