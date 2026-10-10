@@ -26,7 +26,7 @@ function formHasSubmitGuard(formAttributes, pageScripts) {
   const formVariable = pageScripts.match(selectorPattern)?.[1];
   if (!formVariable) return false;
   const submitPattern = new RegExp(
-    `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*\\w+\\s*\\)\\s*=>\\s*\\w+\\.preventDefault\\(\\)`,
+    `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*(\\w+)\\s*\\)\\s*=>\\s*(?:\\{\\s*)?\\1\\.preventDefault\\(\\)`,
   );
   return submitPattern.test(pageScripts);
 }
@@ -227,6 +227,13 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
 
   const hub = readFileSync(hubScript, 'utf8');
   assert.match(hub, /fetch\s*\(\s*['"]\/vibe\/catalog\.json['"]/, 'hub only fetches the static catalog');
+  const reserveringHtml = read('vibe/reservering/index.html');
+  const reserveringScript = read('vibe/reservering/app.js');
+  assert.match(reserveringHtml, /lagres kun lokalt i denne nettleseren/);
+  assert.match(reserveringHtml, /id="reset-demo"/);
+  assert.match(reserveringScript, /localStorage\.setItem\(storageKey/);
+  assert.match(reserveringScript, /localStorage\.removeItem\(storageKey/);
+  assert.doesNotMatch(reserveringScript, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie)\b|https?:\/\//i);
 });
 
 test('Nedtelling e-post is a local canvas preview with an accessible direct route', () => {

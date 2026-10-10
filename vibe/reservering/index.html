@@ -3,31 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En statisk konseptdemo for kalender og oppdiktede ledige tider.">
-  <title>Ledige tider · Vibe</title>
+  <meta name="description" content="En interaktiv, syntetisk demo av kundebooking og administrasjon av reservasjoner.">
+  <title>Reservering · Vibe</title>
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/reservering/style.css">
   <script src="/vibe/reservering/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Hopp til kalenderen</a>
+  <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
   <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – tilbake til apphub">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
   <main id="main" class="page-shell">
-    <section class="intro"><p class="eyebrow">Kalender · konseptdemo</p><h1>Finn en ledig stund.</h1><p class="intro-copy">En rolig oversikt over oppdiktede tider for et fiktivt atelier. Se hvordan en kalender kan gjøre tilgjengelighet enkel å forstå.</p></section>
-    <aside class="demo-note" aria-label="Demomerking"><strong>Kun syntetiske eksempeldata</strong><span>Fiktivt atelier og oppdiktede tider. Dette er ingen bestilling, og ingenting sendes eller lagres.</span></aside>
-    <section class="calendar panel" aria-labelledby="calendar-title">
-      <div class="calendar-head"><div><p class="eyebrow">Eksempelkalender</p><h2 id="calendar-title">Lysrom atelier</h2><p class="sub">Tilgjengelighet · uke 42</p></div><div class="legend"><span><i class="available-dot"></i>Ledig i eksempelet</span><span><i class="busy-dot"></i>Opptatt i eksempelet</span></div></div>
-      <div class="calendar-scroll"><div class="week-grid" role="table" aria-label="Oppdiktet tilgjengelighet mandag til fredag i uke 42">
-        <div class="corner" role="columnheader">Tid</div><div role="columnheader">Man <b>12</b></div><div role="columnheader">Tir <b>13</b></div><div role="columnheader">Ons <b>14</b></div><div role="columnheader">Tor <b>15</b></div><div role="columnheader">Fre <b>16</b></div>
-        <div class="time" role="rowheader">09:00</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div>
-        <div class="time" role="rowheader">10:30</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div>
-        <div class="time" role="rowheader">13:00</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div>
-        <div class="time" role="rowheader">14:30</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div><div class="slot open" role="cell">Ledig</div><div class="slot busy" role="cell">Opptatt</div><div class="slot open" role="cell">Ledig</div>
-      </div></div>
-      <p class="calendar-foot">Tider vises kun for å illustrere kalenderen. De kan ikke velges eller reserveres.</p>
+    <section class="intro"><p class="eyebrow">WordPress booking · interaktiv demo</p><h1>Reserver en tid.</h1><p class="intro-copy">Prøv hele flyten fra valg av dato til bekreftelse, eller åpne den lokale adminvisningen.</p></section>
+    <aside class="demo-note" aria-label="Viktig informasjon"><strong>Syntetisk demo – ikke en ekte reservasjon</strong><span>Demo-bookinger og innstillinger lagres kun lokalt i denne nettleseren. Ingenting sendes til server eller API. Bruk bare syntetiske verdier. Nullstill all demoaktivitet for å gå tilbake til eksempeldata.</span><button id="reset-demo" type="button" class="button secondary">Nullstill all demoaktivitet</button></aside>
+
+    <nav class="view-tabs" aria-label="Demo-visning">
+      <button type="button" class="tab-button active" data-view="booking" aria-pressed="true">Kundebooking</button>
+      <button type="button" class="tab-button" data-view="admin" aria-pressed="false">Administrasjon</button>
+    </nav>
+
+    <section id="booking-view" class="view" aria-labelledby="booking-title">
+      <div class="layout">
+        <div class="stack">
+          <article class="card">
+            <div class="card-header"><div class="card-title"><h2 id="booking-title">1. Velg dato</h2><p>Velg en ledig dag. Fulle og blokkerte dager kan ikke velges.</p></div><div class="legend"><span><i class="dot available-dot"></i>Ledig</span><span><i class="dot full-dot"></i>Full</span><span><i class="dot blocked-dot"></i>Blokkert</span></div></div>
+            <div class="month-nav"><button type="button" class="icon-button" id="previous-month" aria-label="Forrige måned">‹</button><h3 id="month-label" aria-live="polite"></h3><button type="button" class="icon-button" id="next-month" aria-label="Neste måned">›</button></div>
+            <div id="calendar" class="calendar" role="group" aria-label="Velg dato"></div>
+            <p class="helper">Kalenderen og kapasiteten er oppdiktet. Endringer lagres lokalt i denne nettleseren.</p>
+          </article>
+          <article class="card" aria-labelledby="times-heading"><div class="card-header"><div class="card-title"><h2 id="times-heading">2. Velg tidspunkt</h2><p id="selected-date-label">Velg først en ledig dato.</p></div></div><div id="time-slots" class="times-grid" aria-live="polite"></div></article>
+          <article class="card"><div class="card-header"><div class="card-title"><h2>3. Fyll inn opplysninger</h2><p>Feltene viser syntetiske eksempler. De blir bare behandlet lokalt mens siden er åpen.</p></div></div>
+            <form id="booking-form" novalidate>
+            <div class="form-grid">
+                <label class="field"><span>Navn *</span><input id="customer-name" name="name" autocomplete="off" required value="Demakunde Eksempel"><small id="name-error" class="field-error"></small></label>
+                <label class="field"><span>Telefonnummer *</span><input id="customer-phone" name="phone" type="tel" autocomplete="off" required value="00000000"><small id="phone-error" class="field-error"></small></label>
+                <label class="field"><span>E-post *</span><input id="customer-email" name="email" type="email" autocomplete="off" required value="kunde@example.invalid"><small id="email-error" class="field-error"></small></label>
+                <label class="field"><span>Valgt tidspunkt</span><input id="booking-summary" readonly value="Ikke valgt"></label>
+                <label class="field full-width"><span>Merknad (valgfritt, kun syntetisk)</span><textarea id="customer-note" name="note" rows="3" autocomplete="off" placeholder="Demo – eksempelmerknad"></textarea><small>La feltet stå tomt, eller bruk tekst som begynner med «Demo» eller «Syntetisk».</small></label>
+                <label class="terms full-width"><input id="terms" type="checkbox"><span>Jeg godtar vilkårene for reservasjon</span></label>
+              </div>
+              <div class="actions"><button type="submit" class="button primary">Bekreft reservasjon</button><button type="reset" class="button secondary" id="reset-booking">Nullstill valg</button></div>
+              <p id="booking-message" class="status-message" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+          <article class="card hidden" id="confirmation" tabindex="-1"><div class="notice success"><h2 id="confirmation-title">Reservasjonen er registrert i demoen</h2><p id="confirmation-copy"></p><p>Ingen e-post er sendt. Demodataene blir liggende lokalt til du nullstiller dem.</p></div><div class="actions"><button id="download-ics" type="button" class="button secondary">↓ Last ned kalenderfil</button><button id="cancel-booking" type="button" class="button danger">Avbestill via demolenke</button><button id="new-booking" type="button" class="button primary">Lag en ny demoreservasjon</button></div></article>
+        </div>
+        <aside class="summary"><article class="card"><div class="card-title"><h2>Din reservasjon</h2><p>Oppsummeringen følger valgene dine.</p></div><dl class="summary-list"><div><dt>Dato</dt><dd id="summary-date">Ikke valgt</dd></div><div><dt>Tidspunkt</dt><dd id="summary-time">Ikke valgt</dd></div><div><dt>Varighet</dt><dd>60 minutter</dd></div><div><dt>Status</dt><dd id="summary-status">Velg en ledig tid</dd></div></dl></article><article class="card"><div class="notice info"><strong>Demoinformasjon</strong><p>Originalen bruker e-postbekreftelse og en personlig kanselleringslenke. I denne isolerte demoen vises bekreftelsen lokalt og ICS-filen lages i nettleseren. Ingen e-post eller magisk lenke sendes.</p></div></article></aside>
+      </div>
     </section>
-    <section class="how-it-works"><h2>En oversikt, ikke en bestilling</h2><p>Kalenderen viser et fast eksempel på ledige og opptatte tider. Tilgjengeligheten er oppdiktet og har ingen kobling til et faktisk lokale eller en kalender.</p></section>
+
+    <section id="admin-view" class="view hidden" aria-labelledby="admin-title">
+      <article class="card admin-intro"><div><p class="eyebrow">Lokal rolleveksling · ingen innlogging</p><h2 id="admin-title">Reservasjonsadministrasjon</h2><p>Bytt mellom redaktør og administrator for å utforske tilgangene. Rollene er bare visuelle eksempler.</p></div><label class="field role-field"><span>Demorolle</span><select id="demo-role"><option value="editor">Redaktør</option><option value="administrator">Administrator</option></select></label></article>
+      <div class="admin-tabs" role="tablist" aria-label="Administrer demo"><button type="button" class="admin-tab active" role="tab" aria-selected="true" data-panel="reservations-panel">Reservasjoner</button><button type="button" class="admin-tab" role="tab" aria-selected="false" data-panel="availability-panel">Tilgjengelighet</button><button type="button" class="admin-tab" role="tab" aria-selected="false" data-panel="settings-panel">Innstillinger</button></div>
+      <section id="reservations-panel" class="admin-panel" role="tabpanel"><article class="card"><div class="card-header"><div class="card-title"><h3>Reservasjoner</h3><p>Oppdiktede poster · tidligere reservasjoner skjules som standard.</p></div><button type="button" class="button secondary" id="export-csv">↓ Eksporter CSV</button></div><div class="filters"><label class="field"><span>Søk i reservasjoner</span><input id="reservation-search" type="search" placeholder="Navn, dato eller status"></label><label class="field"><span>Vis</span><select id="reservation-filter"><option value="upcoming">Kommende</option><option value="all">Alle</option><option value="past">Tidligere</option><option value="cancelled">Kansellerte</option></select></label><button type="button" class="button primary" id="add-reservation">Ny reservasjon</button></div><div class="table-wrap"><table><thead><tr><th scope="col">Dato og tid</th><th scope="col">Kunde (syntetisk)</th><th scope="col">Kontakt (syntetisk)</th><th scope="col">Status</th><th scope="col">Handlinger</th></tr></thead><tbody id="reservation-rows"></tbody></table></div><p id="table-empty" class="empty-state hidden">Ingen reservasjoner samsvarer med søket.</p><p id="admin-message" class="status-message" role="status" aria-live="polite"></p></article></section>
+      <section id="availability-panel" class="admin-panel hidden" role="tabpanel"><div class="admin-grid"><article class="card"><h3>Ukentlig tilgjengelighet</h3><p>Velg aktive tider for hver ukedag.</p><div id="weekly-hours" class="weekly-hours"></div><p id="availability-message" class="status-message" role="status"></p></article><article class="card"><h3>Blokker periode</h3><p>Steng én eller flere oppdiktede datoer.</p><form id="blockout-form" class="inline-form"><label class="field"><span>Fra dato</span><input id="blockout-start" type="date" required></label><label class="field"><span>Til dato</span><input id="blockout-end" type="date" required></label><label class="field"><span>Beskrivelse</span><input id="blockout-label" required value="Demo – stengt"></label><button class="button primary" type="submit">Blokker periode</button></form><ul id="blockout-list" class="blockout-list"></ul></article></div></section>
+      <section id="settings-panel" class="admin-panel hidden" role="tabpanel"><article class="card settings-card"><h3>E-postinnstillinger</h3><p>Eksempeladressen lagres kun lokalt. Ingen e-post blir sendt.</p><form id="settings-form"><label class="field"><span>Eksempeladresse for adminvarsler</span><input type="email" id="admin-email" value="admin@example.invalid" autocomplete="off"></label><button class="button primary" type="submit">Lagre lokalt</button><p id="settings-message" class="status-message" role="status"></p></form></article></section>
+    </section>
+    <dialog id="reservation-dialog" class="edit-dialog"><form id="reservation-edit-form"><div class="card-title"><h2 id="dialog-title">Rediger reservasjonsdemo</h2><p>Bruk kun syntetiske verdier. Endringene lagres bare lokalt i denne nettleseren.</p></div><input id="edit-id" type="hidden"><div class="form-grid dialog-fields"><label class="field"><span>Navn (syntetisk)</span><input id="edit-name" required></label><label class="field"><span>Telefon (syntetisk)</span><input id="edit-phone" required></label><label class="field"><span>E-post (syntetisk)</span><input id="edit-email" type="email" required></label><label class="field"><span>Dato</span><input id="edit-date" type="date" required></label><label class="field"><span>Tid</span><input id="edit-time" type="time" required></label><label class="field"><span>Status</span><select id="edit-status"><option value="active">Aktiv</option><option value="cancelled">Kansellert</option></select></label><label class="field full-width"><span>Merknad</span><textarea id="edit-note" rows="2" placeholder="Demo – eksempelmerknad"></textarea><small>La tomt, eller begynn med Demo eller Syntetisk.</small></label></div><div class="actions"><button class="button primary" type="submit">Lagre demoreservasjon</button><button class="button secondary" type="button" id="close-dialog">Avbryt</button></div></form></dialog>
+    <footer class="demo-footer"><p>Reservering · interaktiv syntetisk demonstrasjon</p><a href="/vibe/">Tilbake til apphub</a></footer>
   </main>
-  <footer class="site-footer"><span>Vibe<span>.</span></span><a href="/vibe/">Tilbake til huben</a></footer>
 </body>
 </html>

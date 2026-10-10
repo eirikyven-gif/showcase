@@ -1,25 +1,24 @@
-# Ledige tider · kalenderkonsept
+# Reservering · showcase-kopi
 
-| Felt | Vurdering |
-|---|---|
-| Purpose | Utforske en enkel kalenderoversikt med ledige og opptatte tidspunkt. |
-| Category | Planlegging og bookingkonsepter. |
-| Audience | Små virksomheter, tjenesteytere og personer som utforsker kalenderbasert tilgjengelighet. |
-| Status | Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling. |
-| Slug | `reservering` · `/vibe/reservering/` |
-| Demo value | Viser hvordan en ukesoversikt kan kommunisere tilgjengelighet raskt på desktop og mobil. |
-| Simplifications | Fast kalender med kun oppdiktede ukedager, tider og tilgjengelighet. Ingen valgbare tider eller bestillingsflyt. |
-| Risk | Booking håndterer ofte personopplysninger, kalenderstatus og bekreftelsesmekanismer. Slik funksjonalitet er ikke representert. Kildestatus og kildebeskrivelse er ikke verifisert. |
-| Scope | Selvstendig statisk HTML/CSS/JS for `/vibe/reservering/`. Ingen kildekode, logo, virksomhet, database, API, innlogging, skjema, e-post, tokenlenker, persistens eller eksterne kall. |
+Interaktiv, statisk demonstrasjon av funksjonene i `eirikyven-gif/Wp-Reservering`, tilgjengelig direkte på `/vibe/reservering/`.
 
-## Kildegjennomgang og usikkerhet
+## Funksjoner som er bevart
 
-Kandidatkilden `eirikyven-gif/Wp-Reservering` ble lest skrivebeskyttet ved offentlig main commit `387180a0768f0bcc5c8a7c0d0d7ccd32817e8f6e` (2026-10-09). Pluginens readme.txt oppgir v0.1.5 og implementerte bookingfunksjoner. WordPress/PHP-pluginen bruker en egen database-tabell for reservasjoner og options for tilgjengelighet/innstillinger; adminfunksjoner bruker capabilities og nonce. Booking behandler navn, telefon, e-post, merknad, kanselleringstoken og e-postvarsling. Ingen produksjonsmiljø, faktiske kundedata eller retention er undersøkt. Ingen testkode/testmappe ble funnet; package.json har kun build/dev. Pluginens readme erklærer GPL-2.0-or-later. Ingen kildefiler, UI, merkevare eller data er kopiert. Demoen er et selvstendig fiktivt kalenderkonsept og hevder ikke å representere eller være kompatibel med bookingpluginen.
+- Kundens kalender med ledige, fulle og blokkerte dager, valg av dato og ledig tidspunkt.
+- Bestillingsskjema med navn, telefon, e-post, valgfri merknad og obligatorisk vilkårsaksept.
+- Oppsummering før innsending, feltvalidering, lokal bekreftelse og ny booking.
+- Lokal ICS-nedlasting for demoreservasjonen.
+- Adminoversikt med kommende/tidligere/alle/kansellerte poster, søk, redigering, oppretting, sletting og CSV-eksport.
+- Demorolle for redaktør/administrator.
+- Ukentlig tilgjengelighet med valg av tidspunkt per ukedag, blokkering av datointervall og fjerning av blokkering.
+- Admin-e-postinnstilling som eksempelverdi.
 
-## Personvern og sikkerhetsgrenser
+## Syntetisering og personvern
 
-Kalenderen inneholder bare generiske, oppdiktede tidspunkt og ledig/opptatt-markeringer. Ingen booking kan opprettes. Det finnes ingen kundeopplysninger, kontaktfelt, autentisering, database, lagring i nettleseren, serverkall, e-post, tokenlenker, API eller eksterne tjenester. Dette er en visuell prototype, ikke en tilgjengelighetskilde.
+Alle forhåndsutfylte kundeopplysninger er syntetiske (`example.invalid` og reserverte nullverdier). Bestillingsskjema og adminredigering tillater kun forhåndsdefinerte Demakunde-navn, nullverdier for telefon, `example.invalid`-adresser og et lite sett faste syntetiske merknader. Bruk bare demaverdier. Ingen reell WordPress-innlogging, rolleautorisasjon, database, API, e-post, cookie, tracking eller serverkall finnes. Syntetiske bookinger, kanselleringer, tilgjengelighet, blokkeringer, demorolle og eksempeladresse lagres i `localStorage` på denne enheten og deles aldri med server eller API. Den synlige knappen «Nullstill all demoaktivitet» sletter demoens lagringsnøkkel og laster seed-dataene på nytt. CSV- og ICS-filer genereres lokalt med syntetiske verdier; ingen data lastes opp. E-post og personlige kanselleringslenker simuleres ikke som fungerende eksterne handlinger.
 
-## Omfang og kontroll
+Kildekoden deklarerer GPL-2.0-or-later. Denne kopien gjenskaper oppførsel og innholdsstruktur i selvstendig statisk kode; den inneholder ikke originalens backend eller kildedata. Faktisk produksjonsbruk/retensjon i kilden er ikke verifisert.
 
-Én statisk rute, én katalogoppføring og denne vurderingen. Tastaturbruk krever ingen interaktive kontroller; tabelloverskrifter beskriver kalenderaksene. Kalenderen kan rulles vannrett på små skjermer uten at sideinnholdet må krympes. Issue #2 er delvis løst ved å beholde kandidaten i bred førstegangsvurdering og legge til en trygg, original konseptdemo.
+## Kontroll
+
+Kjør showcase-regresjonstestene fra repo-roten med `node --test tests/*.test.mjs`. Testen for reservering kontrollerer rutens funksjonsområder, katalogmetadata, syntetiske eksempeldata og at lagringen er begrenset til den eksplisitt dokumenterte lokale demotilstanden.
