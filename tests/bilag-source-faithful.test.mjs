@@ -26,6 +26,8 @@ test('source-facing queue, sheets, human review, movement, stop, resume, log, an
   assert.match(app, /localStorage\.setItem\(STORAGE_KEY/);
   assert.match(app, /state\.log = preservedLog/);
   assert.match(app, /target\.some\(\(existing\) => existing\.id === fingerprint\)/);
+  assert.match(app, /const selectedIds = new Set\(selected\.map\(\(item\) => item\.id\)\)/);
+  assert.match(app, /document\.querySelector\('#reset-demo'\)\.disabled = busy/);
 });
 
 test('demo uses explicit synthetic fixtures and contains no live service integration', () => {

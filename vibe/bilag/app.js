@@ -42,7 +42,7 @@
     document.querySelector('#live-message').textContent = message;
   }
 
-  function countLabel(count, noun) { return `${count} ${noun}${count === 1 ? '' : 'er'}`; }
+  function countLabel(count) { return `${count} ${count === 1 ? 'varelinje' : 'varelinjer'}`; }
 
   function render() {
     renderQueue();
@@ -54,6 +54,7 @@
     document.querySelector('#run-state').textContent = busy ? 'Sorterer syntetiske eksempler …' : state.stopped ? 'Stoppet · fremdrift beholdt' : remaining ? 'Klar · syntetisk kø' : 'Ferdig · alle eksempler gjennomgått';
     document.querySelector('#start-run').disabled = busy || remaining === 0;
     document.querySelector('#stop-run').disabled = !busy;
+    document.querySelector('#reset-demo').disabled = busy;
     saveState();
   }
 
@@ -99,7 +100,7 @@
       });
       body.append(row);
     });
-    document.querySelector(`#${sheetName}-count`).textContent = countLabel(rows.length, 'varelinje');
+    document.querySelector(`#${sheetName}-count`).textContent = countLabel(rows.length);
   }
 
   function renderLog() {
@@ -190,11 +191,9 @@
       render();
       return;
     }
-    selected.forEach((item) => {
-      item.move = false;
-      state.sheets[targetName].push(item);
-    });
-    state.sheets[sourceName] = state.sheets[sourceName].filter((item) => !item.move);
+    const selectedIds = new Set(selected.map((item) => item.id));
+    selected.forEach((item) => state.sheets[targetName].push({ ...item, move: false }));
+    state.sheets[sourceName] = state.sheets[sourceName].filter((item) => !selectedIds.has(item.id));
     addLog('0', '0', '0', '—', `Manuell flytting · ${selected.length} rad(er)`);
     announce(`${selected.length} syntetisk rad flyttet til ${targetName === 'losore' ? 'Løsøre' : 'Drift'}. X-markeringene for menneskelig vurdering fulgte raden.`);
     render();
