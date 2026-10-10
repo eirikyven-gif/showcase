@@ -3,38 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#a9283c">
-  <title>Fagquizer · liten regelquiz</title>
+  <meta name="theme-color" content="#193b49">
+  <title>Fagquizer · testapp</title>
   <link rel="stylesheet" href="style.css">
+  <script src="data.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Hopp til quizen</a>
-  <header class="topbar"><a href="/vibe/" aria-label="Tilbake til Vibe-utstillingen">Vibe <span>·</span> Utstilling</a><span class="demo-tag">Konseptdemo</span></header>
-  <main id="main" class="layout">
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">FAGQUIZER · KORT EKSEMPEL</p>
-      <h1 id="page-title">Prøv en liten regelquiz</h1>
-      <p>Et oppdiktet minieksempel på hvordan et spørsmål med svaralternativer kan se ut.</p>
-    </section>
-
-    <section class="quiz-card" aria-labelledby="question-title">
-      <div class="card-head"><span class="step">EKSEMPEL · 1 SPØRSMÅL</span><span class="local">Bare på denne siden</span></div>
-      <h2 id="question-title">I denne oppdiktede modellen betyr ▲ «stopp» og ● «fortsett». Hva betyr ▲?</h2>
-      <p class="helper">Velg ett svar. Modellen og symbolene er laget bare for denne demoen.</p>
-      <fieldset id="answers" aria-describedby="answer-hint">
-        <legend>Velg et svar</legend>
-        <label class="option"><input type="radio" name="answer" value="go"><span class="letter">A</span><span>Fortsett</span></label>
-        <label class="option"><input type="radio" name="answer" value="stop"><span class="letter">B</span><span>Stopp</span></label>
-        <label class="option"><input type="radio" name="answer" value="wait"><span class="letter">C</span><span>Vent litt</span></label>
-      </fieldset>
-      <p id="answer-hint" class="hint">Svaret vurderes bare mot regelen som står i spørsmålet.</p>
-      <div class="actions"><button id="check" class="primary" type="button">Se svar</button><button id="restart" class="secondary" type="button">Start på nytt</button></div>
-      <p id="feedback" class="feedback" role="status" aria-live="polite" hidden></p>
-    </section>
-
-    <aside class="notice"><strong>Om eksemplet</strong><p>Dette er en original, syntetisk grensesnittskisse. Den er ikke offisielt kursmateriell, og den er ikke et validert undervisnings- eller vurderingsverktøy. Valget behandles lokalt i minnet; ingenting lagres eller sendes.</p></aside>
+  <a class="skip-link" href="#main">Hopp til innholdet</a>
+  <header class="topbar"><a href="/vibe/" aria-label="Tilbake til Vibe-utstillingen">Vibe <span>·</span> Utstilling</a><span class="demo-tag">Syntetisk testdemo</span></header>
+  <main id="main" class="wrap">
+    <div class="toolbar"><div id="identity" aria-live="polite"></div><button id="reset" class="quiet" type="button">Nullstill all demodata</button></div>
+    <div id="view" tabindex="-1"></div>
     <footer><a href="/vibe/">← Tilbake til Vibe-utstillingen</a></footer>
+    <aside class="privacy"><strong>Testapp · bare syntetiske data</strong><p>Ingen ekte konto, elev, innlogging, KI-tjeneste eller server brukes. Fremdrift, svar, rolle og flashcardvalg kan lagres lokalt i denne nettleseren slik at appflytene kan testes. Nullstill-knappen sletter hele denne demoens lokale lagring. Ikke skriv inn personopplysninger.</p></aside>
   </main>
 </body>
 </html>

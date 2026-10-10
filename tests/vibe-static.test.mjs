@@ -212,6 +212,10 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
       assert.match(source, /localStorage/, `${file} uses local-only Bingo workflow persistence`);
       assert.match(source, /localStorage\.removeItem\(STORE_KEY\)/, `${file} has a full local reset`);
     }
+    if (file === path.join(vibeRoot, 'fagquizer/app.js')) {
+      assert.match(source, /localStorage\.setItem\(STORE/, 'Fagquizer stores only its local demo state');
+      assert.match(source, /localStorage\.removeItem\(STORE\)/, 'Fagquizer offers a full local reset');
+    }
     assert.doesNotMatch(source, /\bdocument\.cookie\b/, `${file} does not read/write cookies`);
     assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
     assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no real password field`);
