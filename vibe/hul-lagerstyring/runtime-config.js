@@ -6,15 +6,15 @@
   // Frontend deploy-workflow skriver miljøspesifikk runtime-konfig på one.com.
   // backendBaseUrl skal settes i deploy-miljø, ikke hardkodes i repo.
   //
-  // Lokal utviklingsmodus: backendBaseUrl peker mot hul-mock.local og mockBackend=true
+  // Lokal demo: mock://-adressen er bare en nøkkel for fetch-interceptoren.
   // aktiverer in-browser mock-backend (mock-backend.js) som intercepter fetch-kall.
-  // I produksjon: sett backendBaseUrl til GAS-webapp-URL og mockBackend: false (eller utelat feltet).
+  // Nettverkstilgang er blokkert av rutens CSP; denne adressen skal aldri nå nettverket.
   window.__HUL_RUNTIME_CONFIG = {
     frontendVersion: '0.0.3-dev',
     frontendBuildNumber: 'local-dev',
     frontendLastDeployAt: '',
     appBuildId: 'dev-local',
-    backendBaseUrl: 'https://hul-mock.local',
+    backendBaseUrl: 'mock://hul-mock.local',
     mockBackend: true,
     healthPath: '/api/v1/health',
     sessionPath: '/api/v1/session',

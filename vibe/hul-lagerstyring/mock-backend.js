@@ -557,10 +557,8 @@
 
   function parseMockUrl(url) {
     var str = String(url || '');
-    // Fjern protokoll + host. Stopp ved første '/' eller '?' slik at
-    // ?action=foo uten sti-komponent (f.eks. https://hul-mock.local?action=foo)
-    // parseres like korrekt som https://hul-mock.local/?action=foo.
-    var withoutOrigin = str.replace(/^https?:\/\/[^/?]+/, '').replace(/^\//, '');
+    // Fjern mock-protokoll + host slik at dette aldri blir en nettverksadresse.
+    var withoutOrigin = str.replace(/^[a-z][a-z0-9+.-]*:\/\/[^/?]+/i, '').replace(/^\//, '');
     var qIdx = withoutOrigin.indexOf('?');
     var pathPart = qIdx !== -1 ? withoutOrigin.slice(0, qIdx) : withoutOrigin;
     var queryPart = qIdx !== -1 ? withoutOrigin.slice(qIdx + 1) : '';

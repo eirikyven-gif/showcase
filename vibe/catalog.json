@@ -864,13 +864,13 @@
       "status": "Kildebasert browserdemo med mockbackend og syntetiske eksempeldata; Issue #2 delvis løst.",
       "demoValue": "Prøv den faktiske frontendarbeidsflaten: søk, detalj, redigering, lister, utlån, import/eksport og administrasjon mot lokal mock.",
       "simplifications": "GAS, Google Sheets, ekte backend, autentisering og eksterne API-er er tatt bort. Showcase bruker kildens mockbackend og seedverdier.",
-      "risk": "Mockdata og brukerens egne inndata lagres i localStorage til de nullstilles. Ikke oppgi personopplysninger. Styling er avhengig av Tailwind CDN. Kilde-/gjenbruksrettigheter og produksjonsparitet er ikke verifisert.",
+      "risk": "Mockdata og brukerens egne inndata lagres i localStorage til reset. Ikke oppgi personopplysninger. Kilde-/gjenbruksrettigheter og produksjonsparitet er uavklart; mockbackend er ikke produksjonssystem.",
       "scope": "Kopi av app/frontend på /vibe/hul-lagerstyring/; runtime låst til mockBackend=true og authMode=none; CSP connect-src none; HUL mockdata lagres i localStorage og visningstilstand i sessionStorage, forklart i synlig varsel og slettbar med reset.",
       "source": "eirikyven-gif/hul-lager-html-gas, offentlig main commit fdda6419dbe8c8891eb9d27f9f6e56ec3151a602 (undersøkt 2026-10-10). Ingen kildefiler endret.",
-      "sourceStack": "Kilden har HTML, Tailwind CDN, browser JavaScript, Google Apps Script og Google Sheets. Showcase beholder HTML/browser JS og mockbackend.",
+      "sourceStack": "Kilden har HTML, Tailwind CDN, browser JavaScript, Google Apps Script og Google Sheets. Showcase beholder HTML/browser JS/mockbackend og bruker lokalt bygget style.css; ingen ekstern runtime-ressurs.",
       "sourceTests": "Kilde CI/tester kjøres ikke som del av showcase-workflowen. Showcase valideres med node --test tests/*.test.mjs og deployworkflowens katalog-/ressurskontroller.",
-      "sourceApiAuthStoragePrivacy": "Kildens app har auth/API-klient og GAS/Sheets-integrasjon. Showcase konfigurerer authMode none, bruker kun mockBackend som interceptorer interne fetch til hul-mock.local, og CSP connect-src none blokkerer nettverkstilgang. Mockdatabase i localStorage nøkkel HUL_MOCK_DB_v1 og HUL-visningstilstand i sessionStorage nullstilles med synlig knapp. Ingen produksjonsdata/secrets/API-adresser følger med.",
-      "routeState": "Ny isolert /vibe/hul-lagerstyring/-rute på showcase main 425c075 (VERSION 0.57.0); foreslått 0.58.0. Issue #2 delvis løst. Ikke merget eller deployet.",
+      "sourceApiAuthStoragePrivacy": "Kildens app har auth/API-klient og GAS/Sheets-integrasjon. Showcase låser authMode none, bruker kun mockBackend gjennom den interne mock://-interceptoren og CSP connect-src none. CSP begrenser script/style/bilder/medier/skrifttyper til samme origin (vedlegg kan bruke data/blob). Mockdatabase i localStorage HUL_MOCK_DB_v1 og visningstilstand i sessionStorage nullstilles med synlig knapp. Ingen produksjonsdata/secrets/API-adresser eller off-origin ressurser følger med.",
+      "routeState": "Eksisterende /vibe/hul-lagerstyring/-rute, adskilt fra lagerstyring-hell-ultra, lagerkart-vinter og vinterlagring-fornes. Oppfølgingsfix på showcase main 108b0ab (VERSION 0.59.0); foreslått 0.60.0. Issue #2 delvis løst. PR åpen; ikke deployet.",
       "rightsUncertainty": "Ingen lisens eller særskilt gjenbrukstillatelse er verifisert i kildens gjennomgåtte filer. Videre offentlig gjenbruk av kildekode, UI og innhold krever rettighetsavklaring."
     }
   ]

@@ -3,30 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" />
     <meta name="theme-color" content="#dbeafe" />
     <title>HUL Lagerstyring · lokal demo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              hulBlue: '#1d4ed8',
-              hulBlueDark: '#1e3a8a',
-              hulBlueSoft: '#dbeafe'
-            }
-          }
-        }
-      };
-    </script>
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body class="h-full text-slate-900">
     <aside class="sticky top-0 z-50 border-b-2 border-amber-500 bg-amber-50 px-4 py-3 text-sm text-slate-900 shadow" aria-label="Viktig informasjon om demoen">
@@ -41,7 +21,7 @@
           <section class="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 text-center" role="status" aria-live="polite">
             <p class="text-sm font-semibold text-hulBlueDark">Hell Ultra Lagerstyring</p>
             <h1 class="mt-2 text-xl font-semibold text-slate-900">Laster app-shell…</h1>
-            <p class="mt-2 text-sm text-slate-700">Klargjører innlogging og sesjon.</p>
+            <p class="mt-2 text-sm text-slate-700">Klargjører lokal demovisning…</p>
           </section>
         </main>
       </div>
