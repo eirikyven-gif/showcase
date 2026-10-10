@@ -1,0 +1,1136 @@
+{
+  "sourceRepository": "eirikyven-gif/app-vurderingsarbeid",
+  "sourceCommit": "73cb9eded2f6517e3ebfbed45bdaf8e70395dac3",
+  "sourceFile": "app/vurderingsverktoy.html",
+  "functionCount": 141,
+  "entries": [
+    {
+      "sourceFunction": "createEmptyAiKeys",
+      "source": "app/vurderingsverktoy.html",
+      "line": 542,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Removes real provider credentials; the demo offers no provider-key registry or secret storage."
+    },
+    {
+      "sourceFunction": "createDefaultSelectedModels",
+      "source": "app/vurderingsverktoy.html",
+      "line": 546,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider/model selection implies a live external integration, which this local demo does not connect."
+    },
+    {
+      "sourceFunction": "createDefaultAiSettings",
+      "source": "app/vurderingsverktoy.html",
+      "line": 554,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "saveAiSettings / resetKiSettings",
+      "note": "Provider/model/key configuration is omitted; only explicitly local guidance settings are retained."
+    },
+    {
+      "sourceFunction": "createDefaultStudentOversiktFilters",
+      "source": "app/vurderingsverktoy.html",
+      "line": 589,
+      "coverage": "same-name",
+      "showcaseFunction": "createDefaultStudentOversiktFilters",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getAiKeyStorageKey",
+      "source": "app/vurderingsverktoy.html",
+      "line": 597,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "No API key is requested or stored in localStorage."
+    },
+    {
+      "sourceFunction": "hasArbeidsoktData",
+      "source": "app/vurderingsverktoy.html",
+      "line": 601,
+      "coverage": "same-name",
+      "showcaseFunction": "hasArbeidsoktData",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "createFreshImportState",
+      "source": "app/vurderingsverktoy.html",
+      "line": 615,
+      "coverage": "same-name",
+      "showcaseFunction": "createFreshImportState",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "applyFreshImportState",
+      "source": "app/vurderingsverktoy.html",
+      "line": 629,
+      "coverage": "same-name",
+      "showcaseFunction": "applyFreshImportState",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getAiProvider",
+      "source": "app/vurderingsverktoy.html",
+      "line": 644,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "No provider selection exists because no external AI service is called."
+    },
+    {
+      "sourceFunction": "getAiModel",
+      "source": "app/vurderingsverktoy.html",
+      "line": 649,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "No provider model selection exists because no external AI service is called."
+    },
+    {
+      "sourceFunction": "getAiKey",
+      "source": "app/vurderingsverktoy.html",
+      "line": 655,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Credential retrieval is removed; no key is collected or persisted."
+    },
+    {
+      "sourceFunction": "isAiKeyStored",
+      "source": "app/vurderingsverktoy.html",
+      "line": 659,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Credential-presence checks are removed with API key storage."
+    },
+    {
+      "sourceFunction": "getAiKeyTimestamp",
+      "source": "app/vurderingsverktoy.html",
+      "line": 663,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Key timestamp metadata is removed because the demo stores no provider credentials."
+    },
+    {
+      "sourceFunction": "loadState",
+      "source": "app/vurderingsverktoy.html",
+      "line": 667,
+      "coverage": "same-name",
+      "showcaseFunction": "loadState",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "saveState",
+      "source": "app/vurderingsverktoy.html",
+      "line": 730,
+      "coverage": "same-name",
+      "showcaseFunction": "saveState",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "buildSvarsettDef",
+      "source": "app/vurderingsverktoy.html",
+      "line": 750,
+      "coverage": "same-name",
+      "showcaseFunction": "buildSvarsettDef",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getDefaultSvarsettDefs",
+      "source": "app/vurderingsverktoy.html",
+      "line": 769,
+      "coverage": "same-name",
+      "showcaseFunction": "getDefaultSvarsettDefs",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "mergeSvarsettDefs",
+      "source": "app/vurderingsverktoy.html",
+      "line": 799,
+      "coverage": "same-name",
+      "showcaseFunction": "mergeSvarsettDefs",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getSvarsettDefs",
+      "source": "app/vurderingsverktoy.html",
+      "line": 803,
+      "coverage": "same-name",
+      "showcaseFunction": "getSvarsettDefs",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getSvarsettDef",
+      "source": "app/vurderingsverktoy.html",
+      "line": 807,
+      "coverage": "same-name",
+      "showcaseFunction": "getSvarsettDef",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "scoreKriterium",
+      "source": "app/vurderingsverktoy.html",
+      "line": 814,
+      "coverage": "same-name",
+      "showcaseFunction": "scoreKriterium",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "scoreToGrade",
+      "source": "app/vurderingsverktoy.html",
+      "line": 835,
+      "coverage": "same-name",
+      "showcaseFunction": "scoreToGrade",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "computeK0Status",
+      "source": "app/vurderingsverktoy.html",
+      "line": 846,
+      "coverage": "same-name",
+      "showcaseFunction": "computeK0Status",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "computeSamletIndikator",
+      "source": "app/vurderingsverktoy.html",
+      "line": 859,
+      "coverage": "same-name",
+      "showcaseFunction": "computeSamletIndikator",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "computeVekter",
+      "source": "app/vurderingsverktoy.html",
+      "line": 879,
+      "coverage": "same-name",
+      "showcaseFunction": "computeVekter",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "ensureRubrikkWeightFields",
+      "source": "app/vurderingsverktoy.html",
+      "line": 885,
+      "coverage": "same-name",
+      "showcaseFunction": "ensureRubrikkWeightFields",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getKriterieWeightStatus",
+      "source": "app/vurderingsverktoy.html",
+      "line": 901,
+      "coverage": "same-name",
+      "showcaseFunction": "getKriterieWeightStatus",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "countBesvart",
+      "source": "app/vurderingsverktoy.html",
+      "line": 907,
+      "coverage": "same-name",
+      "showcaseFunction": "countBesvart",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "isComplete",
+      "source": "app/vurderingsverktoy.html",
+      "line": 921,
+      "coverage": "same-name",
+      "showcaseFunction": "isComplete",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "countRemainingStudents",
+      "source": "app/vurderingsverktoy.html",
+      "line": 926,
+      "coverage": "same-name",
+      "showcaseFunction": "countRemainingStudents",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getVurd",
+      "source": "app/vurderingsverktoy.html",
+      "line": 931,
+      "coverage": "same-name",
+      "showcaseFunction": "getVurd",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "handleFile",
+      "source": "app/vurderingsverktoy.html",
+      "line": 940,
+      "coverage": "same-name",
+      "showcaseFunction": "handleFile",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "importFromWorkbook",
+      "source": "app/vurderingsverktoy.html",
+      "line": 958,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "importFromWorkbook",
+      "note": "Valid fresh workbooks retain the source replacement flow. Safety correction: if workbook parsing reports blockers, the showcase keeps the existing local student and assessment session instead of clearing it, then displays the source import-control report; only a blocker-free workbook replaces that session."
+    },
+    {
+      "sourceFunction": "sheetToRows",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1044,
+      "coverage": "same-name",
+      "showcaseFunction": "sheetToRows",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseSvarsett",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1052,
+      "coverage": "same-name",
+      "showcaseFunction": "parseSvarsett",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseRubrikk",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1131,
+      "coverage": "same-name",
+      "showcaseFunction": "parseRubrikk",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseConfig",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1192,
+      "coverage": "same-name",
+      "showcaseFunction": "parseConfig",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseKThresholds",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1210,
+      "coverage": "same-name",
+      "showcaseFunction": "parseKThresholds",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseStudenter",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1232,
+      "coverage": "same-name",
+      "showcaseFunction": "parseStudenter",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseOppgavetekst",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1257,
+      "coverage": "same-name",
+      "showcaseFunction": "parseOppgavetekst",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "addImportLog",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1282,
+      "coverage": "same-name",
+      "showcaseFunction": "addImportLog",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "computeFingerprint",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1289,
+      "coverage": "same-name",
+      "showcaseFunction": "computeFingerprint",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "createDatasetVeiledningSheet",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1310,
+      "coverage": "same-name",
+      "showcaseFunction": "createDatasetVeiledningSheet",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "exportDatasett",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1338,
+      "coverage": "same-name",
+      "showcaseFunction": "exportDatasett",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "handleDatasetFile",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1388,
+      "coverage": "same-name",
+      "showcaseFunction": "handleDatasetFile",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "importDatasett",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1402,
+      "coverage": "same-name",
+      "showcaseFunction": "importDatasett",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "downloadMal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1486,
+      "coverage": "same-name",
+      "showcaseFunction": "downloadMal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderAll",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1586,
+      "coverage": "same-name",
+      "showcaseFunction": "renderAll",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderStudentSelector",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1612,
+      "coverage": "same-name",
+      "showcaseFunction": "renderStudentSelector",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderKriterieNav",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1642,
+      "coverage": "same-name",
+      "showcaseFunction": "renderKriterieNav",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderKriteriePanel",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1670,
+      "coverage": "same-name",
+      "showcaseFunction": "renderKriteriePanel",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderTopBar",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1803,
+      "coverage": "same-name",
+      "showcaseFunction": "renderTopBar",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderWeightEditor",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1866,
+      "coverage": "same-name",
+      "showcaseFunction": "renderWeightEditor",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "parseWeightValue",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1899,
+      "coverage": "same-name",
+      "showcaseFunction": "parseWeightValue",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "saveLocalWeights",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1909,
+      "coverage": "same-name",
+      "showcaseFunction": "saveLocalWeights",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderStudentNavStatus",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1946,
+      "coverage": "same-name",
+      "showcaseFunction": "renderStudentNavStatus",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderImportkontroll",
+      "source": "app/vurderingsverktoy.html",
+      "line": 1960,
+      "coverage": "same-name",
+      "showcaseFunction": "renderImportkontroll",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "setSvar",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2000,
+      "coverage": "same-name",
+      "showcaseFunction": "setSvar",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "setStikkordK",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2014,
+      "coverage": "same-name",
+      "showcaseFunction": "setStikkordK",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "setStikkordP",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2022,
+      "coverage": "same-name",
+      "showcaseFunction": "setStikkordP",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "setActiveStudent",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2030,
+      "coverage": "same-name",
+      "showcaseFunction": "setActiveStudent",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "onSlutttekstEdit",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2067,
+      "coverage": "same-name",
+      "showcaseFunction": "onSlutttekstEdit",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "godkjennSlutttekst",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2071,
+      "coverage": "same-name",
+      "showcaseFunction": "godkjennSlutttekst",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getGlobalKiStyringstekst",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2084,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "buildAiClipboardText",
+      "note": "The source global instruction is embedded verbatim as the local default and included in copied prompt text."
+    },
+    {
+      "sourceFunction": "buildSystemPrompt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2089,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "buildAiClipboardText",
+      "note": "Its user-facing instruction content is retained for manually copied prompt context; it is never sent to an AI service."
+    },
+    {
+      "sourceFunction": "buildAiClipboardText",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2097,
+      "coverage": "same-name",
+      "showcaseFunction": "buildAiClipboardText",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "buildDataPrompt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2107,
+      "coverage": "same-name",
+      "showcaseFunction": "buildDataPrompt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "extractGeminiText",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2132,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider response parsing is removed because no Gemini request or response is made."
+    },
+    {
+      "sourceFunction": "extractOpenAiText",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2141,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider response parsing is removed because no OpenAI request or response is made."
+    },
+    {
+      "sourceFunction": "extractClaudeText",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2153,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider response parsing is removed because no Claude request or response is made."
+    },
+    {
+      "sourceFunction": "createAiError",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2161,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "External AI service errors cannot occur in the local-only flow; manufacturing provider error states would misrepresent service behavior."
+    },
+    {
+      "sourceFunction": "mapHttpErrorCategory",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2165,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider HTTP error mapping is removed with all outbound provider requests."
+    },
+    {
+      "sourceFunction": "parseJsonSafe",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2173,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider response JSON parsing is removed with all external provider requests."
+    },
+    {
+      "sourceFunction": "fetchGeminiCandidate",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2177,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Would transmit assessment content to a private external AI endpoint; outbound calls and provider credentials are prohibited in the showcase."
+    },
+    {
+      "sourceFunction": "fetchOpenAiChoice",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2193,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Would transmit assessment content to a private external AI endpoint; outbound calls and provider credentials are prohibited in the showcase."
+    },
+    {
+      "sourceFunction": "fetchClaudeMessage",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2213,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Would transmit assessment content to a private external AI endpoint; outbound calls and provider credentials are prohibited in the showcase."
+    },
+    {
+      "sourceFunction": "callGemini",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2233,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Would invoke a private external AI provider using sensitive assessment content and a credential; removed."
+    },
+    {
+      "sourceFunction": "callOpenAi",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2259,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Would invoke a private external AI provider using sensitive assessment content and a credential; removed."
+    },
+    {
+      "sourceFunction": "callClaude",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2287,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Would invoke a private external AI provider using sensitive assessment content and a credential; removed."
+    },
+    {
+      "sourceFunction": "callAi",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2312,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider orchestration is removed so no provider call or misleading live-service claim can occur."
+    },
+    {
+      "sourceFunction": "refreshAiActionUi",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2323,
+      "coverage": "same-name",
+      "showcaseFunction": "refreshAiActionUi",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "updateKiPromptModalStatus",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2334,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "openKiPromptModal",
+      "note": "Copy-preview status is handled in the local modal callback; no provider/network status is shown."
+    },
+    {
+      "sourceFunction": "openKiPromptModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2342,
+      "coverage": "same-name",
+      "showcaseFunction": "openKiPromptModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "fallbackCopyText",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2359,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "openKiPromptModal",
+      "note": "Clipboard failure falls back to selecting the preview text for explicit manual copy."
+    },
+    {
+      "sourceFunction": "copyKiPromptFromModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2372,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "openKiPromptModal",
+      "note": "The local prompt preview supports explicit copy and visible text selection fallback."
+    },
+    {
+      "sourceFunction": "copyAiPrompt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2397,
+      "coverage": "same-name",
+      "showcaseFunction": "copyAiPrompt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "copyKiFremoverPrompt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2424,
+      "coverage": "same-name",
+      "showcaseFunction": "copyKiFremoverPrompt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "copyKiEndeligPrompt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2428,
+      "coverage": "same-name",
+      "showcaseFunction": "copyKiEndeligPrompt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "genKiFremover",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2432,
+      "coverage": "same-name",
+      "showcaseFunction": "genKiFremover",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "genKiEndelig",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2458,
+      "coverage": "same-name",
+      "showcaseFunction": "genKiEndelig",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "exportTekst",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2482,
+      "coverage": "same-name",
+      "showcaseFunction": "exportTekst",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "copyEksport",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2544,
+      "coverage": "same-name",
+      "showcaseFunction": "copyEksport",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "updateAiModelField",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2554,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider model controls are removed because no live service or provider configuration exists."
+    },
+    {
+      "sourceFunction": "updateAiProviderUi",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2565,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider controls are removed to avoid representing an unavailable external integration."
+    },
+    {
+      "sourceFunction": "onAiProviderChange",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2579,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Provider switching is removed because the demo makes no provider request."
+    },
+    {
+      "sourceFunction": "saveAiSettings",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2591,
+      "coverage": "same-name",
+      "showcaseFunction": "saveAiSettings",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "saveAiKey",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2604,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "The demo must not collect or persist real secrets, including in browser storage."
+    },
+    {
+      "sourceFunction": "fjernLagretNokkel",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2616,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "API key add/remove controls and storage are omitted entirely."
+    },
+    {
+      "sourceFunction": "nullstillKiOppsett",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2628,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "resetKiSettings",
+      "note": "Local guidance can be reset; provider, model and credential settings do not exist in the demo."
+    },
+    {
+      "sourceFunction": "toggleKeyVis",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2646,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Secret reveal controls are removed because no provider credential is collected."
+    },
+    {
+      "sourceFunction": "updateNokkelStatus",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2653,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "Credential status is omitted with provider credential handling."
+    },
+    {
+      "sourceFunction": "testKiOppsett",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2676,
+      "coverage": "security-removed",
+      "showcaseFunction": null,
+      "note": "A simulated “connection successful” would be false; testing a real connection requires credentials and an outbound private-service call."
+    },
+    {
+      "sourceFunction": "openInnstillinger",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2699,
+      "coverage": "local-equivalent",
+      "showcaseFunction": "panel-ki",
+      "note": "The settings section is embedded in the KI-support tab and retains the editable local instruction; external provider/key settings are removed."
+    },
+    {
+      "sourceFunction": "openModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2711,
+      "coverage": "same-name",
+      "showcaseFunction": "openModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "closeModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2715,
+      "coverage": "same-name",
+      "showcaseFunction": "closeModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "showTab",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2728,
+      "coverage": "same-name",
+      "showcaseFunction": "showTab",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "startExcelImportFlow",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2737,
+      "coverage": "same-name",
+      "showcaseFunction": "startExcelImportFlow",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderNyImportModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2748,
+      "coverage": "same-name",
+      "showcaseFunction": "renderNyImportModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "bekreftNyImportNullstilling",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2814,
+      "coverage": "same-name",
+      "showcaseFunction": "bekreftNyImportNullstilling",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "normalizeSearchText",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2824,
+      "coverage": "same-name",
+      "showcaseFunction": "normalizeSearchText",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getStudentOversiktProgressStatus",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2831,
+      "coverage": "same-name",
+      "showcaseFunction": "getStudentOversiktProgressStatus",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getStudentOversiktRowMeta",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2839,
+      "coverage": "same-name",
+      "showcaseFunction": "getStudentOversiktRowMeta",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getStudentOversiktProgressLabel",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2853,
+      "coverage": "same-name",
+      "showcaseFunction": "getStudentOversiktProgressLabel",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getStudentOversiktK0Label",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2859,
+      "coverage": "same-name",
+      "showcaseFunction": "getStudentOversiktK0Label",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getStudentOversiktActiveFilterSummary",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2865,
+      "coverage": "same-name",
+      "showcaseFunction": "getStudentOversiktActiveFilterSummary",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "getFilteredStudentsForOversikt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2873,
+      "coverage": "same-name",
+      "showcaseFunction": "getFilteredStudentsForOversikt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "setStudentOversiktSearch",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2897,
+      "coverage": "same-name",
+      "showcaseFunction": "setStudentOversiktSearch",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "nullstillStudentOversiktSok",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2904,
+      "coverage": "same-name",
+      "showcaseFunction": "nullstillStudentOversiktSok",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "setStudentOversiktFilter",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2914,
+      "coverage": "same-name",
+      "showcaseFunction": "setStudentOversiktFilter",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "nullstillStudentOversiktFiltre",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2920,
+      "coverage": "same-name",
+      "showcaseFunction": "nullstillStudentOversiktFiltre",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderStudentOversikt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 2925,
+      "coverage": "same-name",
+      "showcaseFunction": "renderStudentOversikt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "aapneStudent",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3086,
+      "coverage": "same-name",
+      "showcaseFunction": "aapneStudent",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "openNullstillVurderingModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3091,
+      "coverage": "same-name",
+      "showcaseFunction": "openNullstillVurderingModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderNullstillVurderingModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3102,
+      "coverage": "same-name",
+      "showcaseFunction": "renderNullstillVurderingModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "bekreftNullstillVurderinger",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3183,
+      "coverage": "same-name",
+      "showcaseFunction": "bekreftNullstillVurderinger",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "forrigeStudent",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3205,
+      "coverage": "same-name",
+      "showcaseFunction": "forrigeStudent",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "nesteStudent",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3220,
+      "coverage": "same-name",
+      "showcaseFunction": "nesteStudent",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "tilStudentoversikt",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3235,
+      "coverage": "same-name",
+      "showcaseFunction": "tilStudentoversikt",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "copySlutttekst",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3239,
+      "coverage": "same-name",
+      "showcaseFunction": "copySlutttekst",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "showStatus",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3250,
+      "coverage": "same-name",
+      "showcaseFunction": "showStatus",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "esc",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3261,
+      "coverage": "same-name",
+      "showcaseFunction": "esc",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "stripMarkdown",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3265,
+      "coverage": "same-name",
+      "showcaseFunction": "stripMarkdown",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "onKiFremoverEdit",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3287,
+      "coverage": "same-name",
+      "showcaseFunction": "onKiFremoverEdit",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "nullstillKiFremover",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3297,
+      "coverage": "same-name",
+      "showcaseFunction": "nullstillKiFremover",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "makeKullId",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3312,
+      "coverage": "same-name",
+      "showcaseFunction": "makeKullId",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "renderKullSelector",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3316,
+      "coverage": "same-name",
+      "showcaseFunction": "renderKullSelector",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "switchKull",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3340,
+      "coverage": "same-name",
+      "showcaseFunction": "switchKull",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "openNyttKullModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3363,
+      "coverage": "same-name",
+      "showcaseFunction": "openNyttKullModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "bekreftNyttKull",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3369,
+      "coverage": "same-name",
+      "showcaseFunction": "bekreftNyttKull",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "openFlyttModal",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3382,
+      "coverage": "same-name",
+      "showcaseFunction": "openFlyttModal",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    },
+    {
+      "sourceFunction": "bekreftFlyttStudent",
+      "source": "app/vurderingsverktoy.html",
+      "line": 3404,
+      "coverage": "same-name",
+      "showcaseFunction": "bekreftFlyttStudent",
+      "note": "Same-named showcase function is retained in index.html; user workflow is exercised in the source-parity browser QA where applicable."
+    }
+  ]
+}

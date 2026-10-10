@@ -14,7 +14,7 @@ Excel-filer og vurderingsdata behandles i nettleseren. Endringer lagres i `local
 
 ## Kilde og status
 
-Kildebevis, funksjonsmatrise og sikkerhetsunntak er dokumentert i [PARITY.md](PARITY.md). Showcase-baseline er `origin/main` `38518a5466b8a3f9098d916c0f9190c696ffb0d9`, `VERSION 0.60.1`; denne endringen foreslår `0.61.0`. Issue #2 er delvis løst mens ekte ekstern KI-tjeneste er erstattet av lokal simulering. Lisens/gjenbrukstillatelse er ikke funnet i gjennomgått kildemateriale og må avklares. Draft PR; ikke merget eller deployet.
+Kildebevis, browser-QA og full deklarasjonsoversikt for 141 kildefunksjoner står i [PARITY.md](PARITY.md) og [FUNCTION-COVERAGE.json](FUNCTION-COVERAGE.json). Den kildegenererte Excel-malen med syntetiske elevverdier ligger i `tests/fixtures/vurderingsarbeid-source-template-synthetic.xlsx`; kildedatafila er ikke endret. Showcase-baseline er `origin/main` `38518a5466b8a3f9098d916c0f9190c696ffb0d9`, `VERSION 0.60.1`; denne endringen foreslår `0.61.0`. Issue #2 er delvis løst: prompt-/godkjenningsarbeidsflytene er bevart, men ekstern KI-generering, provider-innstillinger og nøkler er fjernet av personvern- og nettverksgrunner. Lisens/gjenbrukstillatelse er ikke funnet i gjennomgått kildemateriale og må avklares. Draft PR; ikke merget eller deployet.
 
 ## QA
 
