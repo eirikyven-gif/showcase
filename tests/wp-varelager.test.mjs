@@ -46,6 +46,15 @@ test('tenant list/detail fields, rental history, and synthetic contact notes are
   assert.match(audit, /contact detail/i);
 });
 
+test('reports nest stock count and expose source absolute/delta controls with required reason', () => {
+  assert.match(js, /data-report-sub="lageropptelling"/);
+  assert.match(js, /value="opptelling">Opptelling \(absolutt antall\)/);
+  assert.match(js, /value="justering">Justering \(\+\/- delta\)/);
+  assert.match(js, /data-count-reason=.*required/);
+  assert.match(js, /if\(!reason\.value\.trim\(\)\)/);
+  assert.doesNotMatch(html, /data-tab="opptelling"/);
+});
+
 test('local import/export, synthetic sharing and safety boundaries are explicit', () => {
   assert.match(js, /function parseCsv/);
   assert.match(js, /function downloadXlsx/);

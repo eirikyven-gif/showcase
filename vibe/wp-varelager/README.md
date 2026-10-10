@@ -10,7 +10,7 @@ Sikkerhetssubstitusjoner: ingen ekte innlogging/roller, konto- eller persondata,
 
 ## Status og QA
 
-Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kontaktvisning er implementert lokalt, men må QA-sammenlignes med kilden. Kjente sentrale gap omfatter avtaleformens eksakte arbeidsflyt, rapport/opptelling, CSV/XLSX-kontrakt, delte lister og egne adminvisninger. Derfor er dette ikke en ferdig eller trofast port.
+Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kontaktvisning og rapportens nested opptelling er implementert lokalt, men må QA-sammenlignes med kilden. Kjente sentrale gap omfatter avtaleformens eksakte arbeidsflyt, CSV/XLSX-kontrakt, delte lister og egne adminvisninger. Derfor er dette ikke en ferdig eller trofast port.
 
 Kontroller: `node --test tests/wp-varelager.test.mjs` dekker proveniens, katalogversjon, seks kildefaner, sikkerhetsgrenser og at åpne gap fortsatt er dokumentert. Full lokal browser-QA, parity-aksept og CI for endelig implementasjon gjenstår. Teststatus må oppdateres etter hver parity-endring.
 
