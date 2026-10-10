@@ -1,31 +1,44 @@
-# Bingo
+# Bingo · Vibe-demo
 
-## Første vurdering
+Isolert, statisk nettleserkopi av Bingo-flyten på `/vibe/bingo/`. Den beholder offentlig ukevisning, tall- og navnebrett, utskrifts-/PDF-flyt og administrasjon av betalingstekst, QR-bilde og logo med forhåndsvisning.
 
-- **Formål og bruk:** Et ukentlig, utskrivbart BINGO-brett med navne- og tallbrett, offentlig nedlasting og administrasjon av aktiv uke.
-- **Kategori:** Spill og arrangement.
-- **Målgruppe:** Arrangører som deler en enkel bingorunde, og deltakere som spiller fra et utdelt brett.
-- **Status:** Beholdt i bred førstegangsvurdering. Dette er en original konseptdemo, ikke en kildekodeport eller operativ tjeneste.
-- **Slug og kollisjon:** `bingo`; kontrollert mot siste `origin/main` 2026-10-08. Ingen tidligere `bingo`-katalogoppføring eller `/vibe/bingo/`-rute.
-- **Kildeversjon:** `eirikyven-gif/diverse-apper`, `main` ved commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`, lest 2026-10-08. Kildens README oppgir Bingo v0.1.0 og deployendring v0.1.1; pakken oppgir versjonen separat. Kilderepoet ble kun klonet og lest, ikke endret.
-- **Kildestakk:** PHP API og admin, HTML/CSS/JS-nettleserflater, Node.js `node:test`-tester, Google Apps Script-uketrigger og SSB Statistikkbanken som genereringskilde. Kilden dokumenterer `npm test` og `npm run lint`; ingen av dem ble kjørt fordi kilden ble vurdert skrivebeskyttet og ikke er del av showcase-endringens validering.
-- **Kilde-API og integrasjoner:** Offentlig PHP-nedlasting/API, admin- og genereringsendepunkter, SSB tabell 10467, Google Apps Script-trigger og egen deployworkflow. Kilde-API-ene ble ikke kalt.
-- **Kildeauth og lagring:** Admin bruker passord/hash-baserte credentials, PHP-sesjon og CSRF. JSON-state, private konfigurasjonsverdier, PDF-filer og assets lagres på serveren. Admin kan laste opp logo/QR; Apps Script bruker et hemmelig trigger-token.
-- **Personvern og risiko:** Kildebeskrivelsen omfatter aktive mottakere, leveringsmodell, betalingsinnstillinger, QR/logo, publiseringsmetadata og administratortilgang. Faktisk utrulling, mottakerdata, tilgangsstyring, retention i drift og produksjonsbruk er ikke uavhengig verifisert. Ikke bruk kildetjenesten med reelle mottakere eller betalingsinformasjon uten separat vurdering.
-- **Rettigheter/usikkerhet:** Ingen lisens-/rettighetsavklaring ble funnet i de gjennomgåtte Bingo-filene. Opphavsrett til kildeimplementasjon, maler, navn og eventuelle eksterne kildeverdier er derfor uavklart. Ingen av kildens kode, maler, grafikk, tekst, logoer eller virkelige data er tatt med her.
-- **Demoverdi:** Brettet gjør den enkle deltakerdelen forståelig og lar besøkende markere og nullstille eksempelruter.
-- **Forenklinger:** Ett fast, syntetisk tallbrett; valg endres bare i DOM-minnet. Ingen trekking, flere spillere, utskrift, PDF, generering eller vinnerlogikk.
-- **Avhengigheter:** Kun HTML, CSS og nettleser-JavaScript; hubbens eksisterende lokale stilark. Ingen pakker eller tredjepartsressurser.
-- **Omfang:** Responsiv `/vibe/bingo/`-side. Ingen innlogging, admin, hemmeligheter, cron, server/API, opplasting, PII, persistent lagring eller eksterne kall. Nullstilling tømmer markeringer og returnerer fokus til første rute.
+## Kilde og krav
 
-## QA
+- Kilde: `eirikyven-gif/diverse-apper/apps/bingo`, commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530` (kilderepoet er kun lest).
+- Gjennomgått: hele appmappen, app-README, samtlige 14 kilde-testfiler, manifest, offentlige/admin-flater, API-er, HTML-maler, CSS/JS, deployworkflow og Google Apps Script-instruks.
+- Låst krav: Bingo SSoT v0.1 og presisering v0.2 i Notion. v0.2 fastslår GAS som eneste produksjonsgenerator; admin kan fortsatt vedlikeholde QR/logo/betalingstekst og forhåndsvise begge godkjente brettmaler. Kildens GitHub issue #662, #664 og #666 er også lest.
+- Kildens README oppgir ukentlig offentlig PDF-publisering, separat PHP-admin, ukegenerering, appspesifikk konfigurasjon og beskyttet lagring. Koden har PHP-API-er, JSON-state, filopplasting, PHP-sesjon/CSRF, SSB-tabell 10467 og GAS-trigger. Kildearbeidet ble ikke kjørt eller endret.
 
-Automatisert test dekker katalogmetadata, semantisk knappestruktur, syntetisk brett, toggling, nullstilling, fokus og fravær av nettverk/lagring. `node --check` kjøres på JavaScript, og hele showcase-testpakken kjøres før PR.
+## Funksjoner som er bevart
 
-Chromium 151 / Playwright QA ved 320, 375, 390, 768, 1024 og 1440 px: direkterute og hubretur virket uten horisontal overflow. Første Tab ga synlig fokus på skipplenken; rutevalg, fri midtrute, statusmelding og reset/fokusretur ble kontrollert. Reload nullstilte brettet. Ingen JavaScript-feil eller eksterne forespørsler. Skjermleser ble ikke manuelt testet. Ingen live- eller deploykontroll er utført.
+- Offentlig aktiv-ukevisning med tallbrett og navnebrett.
+- 30 brett av hver type, brettnavigasjon, B/I/N/G/O-oppsett, fri midtrute og utskrift eller «Lagre som PDF» gjennom nettleserens utskriftsdialog.
+- Separat admin-visning med syntetisk «Bingo-arrangør»-rolle, betalingslinje med linjeskift, valg av QR- og logobilde, umiddelbar forhåndsvisning og simulert generering/regenerering av aktiv uke.
+- De samme brettene og verdiene brukes i offentlig og administrativ forhåndsvisning og ved lokal utskrift.
 
-## Issue #2 progress
+## Syntetisk eller lokal simulering
 
-Delvis fremdrift: kandidaten beholdes i bred førstegangsrunde og får en isolert, syntetisk statisk demonstrasjon med dokumentert kildeusikkerhet. Dette fullfører ikke den samlede kandidatgjennomgangen. PR er ikke merget eller deployet.
+- Tallrekkene er deterministiske demoeksempler innenfor BINGO-intervallene 1–75. Navnepoolene bruker bare merkede `Eksempelnavn B-01`-etiketter. Uke og publiseringstid er demoverdier.
+- Admininngang er en rolleknapp, ikke innlogging. Det finnes ingen konto, passord, session, cookies eller autentisering.
+- Betalingstekst, bildeverdier og simulert aktiv uke lagres i `localStorage` under `vibe-bingo-demo-v1`, slik at kildearbeidsflyten overlever refresh. De forlater ikke nettleseren. Velg «Nullstill alle lokale demodata» for å fjerne dem.
+- QR-kode og logo er frivillige eksempelbilder, kun i nettleseren. SVG avvises hvis den inneholder skript eller eksterne ressurshenvisninger; bildefiler over 300 kB avvises for å holde lokal lagring håndterlig.
+- Generering oppretter bare 30 lokale syntetiske brett og en lokal statuskvittering. Den kontakter ikke Google Apps Script, SSB, One.com, kilde-API-er eller andre tjenester.
+- Nettleserens utskriftsdialog lar besøkende skrive ut eller lagre de 30 syntetiske sidene som PDF. Ingen fil lastes opp eller skrives til server.
+- Ingen kildekode, logo, dokumentmal, API-respons, kontoopplysning, hemmelighet, ekte betalingsdata eller identifiserende personopplysninger er med i kopien.
 
-Showcase-versjon ved leveransen: `0.28.0` (minor etter `0.27.5` på siste `main`).
+## Risiko og usikkerhet
+
+- Kildedokumentasjonen omtaler betalingsinformasjon, bildeopplastinger, mottakere, admin og serverdrift. Faktisk produksjonsbruk og personvernpraksis er ikke uavhengig verifisert.
+- Bruk kun tydelig syntetiske verdier og bilder i demoen. Lokal nettleserlagring deles ikke med serveren, men ligger igjen på enheten til den nullstilles eller nettleserdata slettes.
+- Kilde-README/appfilene dokumenterer ikke en lisens for kildekode eller visuelle aktiva. Denne kopien gjenskaper arbeidsflyten selvstendig og tar ikke med kildefiler eller aktiva.
+- Retensjon, e-postutsending og mottakerregister finnes ikke som brukerflater i den gjennomgåtte kilden og er derfor ikke lagt til i demoen.
+
+## Tester og QA
+
+Fokusert test finnes i `tests/bingo.test.mjs`. Kjør med `node --test tests/bingo.test.mjs`; full repo-validering kjøres med `node --test tests/*.test.mjs`. JavaScript kontrolleres med `node --check vibe/bingo/bingo.js`.
+
+Responsive visninger, direkterute, refresh, hubretur, begge adminforhåndsvisninger, nettleserutskrift, tastatur, synlig fokus, tilgjengelige etiketter, localStorage-nullstilling og fravær av nettverkskall inngår i QA for PR-en. Faktisk produksjonsdeploy til yven.me er ikke en del av PR-en.
+
+## Issue #2
+
+Delvis adressert: Bingo-kandidaten beholdes i den brede vurderingen og ruten er oppgradert til en funksjonstro, syntetisk arbeidsflytdemo. Dette løser ikke resten av showcase-issue #2.
