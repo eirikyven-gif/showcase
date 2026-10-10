@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrering – Vinterlagring</title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body class="simple-page">
+  <div class="page-hero">
+    <header class="site-header">
+      <a class="brand" href="../" aria-label="Fornes gård – Vinterlagring">
+        <svg class="brand-logo" viewBox="0 0 220 88" role="img" aria-labelledby="logoTitle logoDesc">
+          <title id="logoTitle">Fornes gård</title>
+          <desc id="logoDesc">Tekstbasert logo for Fornes gård 1548</desc>
+          <rect x="6" y="6" width="208" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+          <path d="M28 62 C46 44, 60 44, 76 62 C94 42, 112 42, 130 62 C148 42, 166 42, 192 62" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <text x="110" y="35" text-anchor="middle" font-size="23" font-weight="700" letter-spacing="0.02em">Fornes gård</text>
+          <text x="110" y="52" text-anchor="middle" font-size="11" letter-spacing="0.22em">1548</text>
+        </svg>
+        <span><small>Vinterlagring</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Hovedmeny">
+        <a href="./" aria-current="page">Registrering</a>
+        <a href="../kunde/">Kunde</a>
+        <a href="../admin/">Admin</a>
+      </nav>
+    </header>
+
+    <section class="hero-content" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Registrering</p>
+        <h1 id="page-title">Meld inn vinterlagring</h1>
+        <p class="lead">Skjemaet kommer i en senere patch. Denne siden viser felles visuelt grunnlag og komponentmønster.</p>
+      </div>
+      <aside class="hero-card">
+        <p class="eyebrow">Kommer senere</p>
+        <h2>Kunde og enheter</h2>
+        <p class="muted">Kundeinfo fylles inn én gang, og flere enheter kan legges til i samme innsending.</p>
+      </aside>
+    </section>
+  </div>
+
+  <main class="page-main">
+    <section class="section intro-grid" aria-labelledby="placeholder-title">
+      <div class="panel panel-form">
+        <p class="eyebrow">Skjemamønster</p>
+        <h2 id="placeholder-title">Eksempel på felter</h2>
+        <p class="muted">Dette er kun visuell placeholder. Ingen data sendes eller lagres.</p>
+        <div class="field-grid" aria-label="Eksempel på registreringsfelter">
+          <label>Navn
+            <input type="text" value="Mockkunde Nord" readonly>
+          </label>
+          <label>Telefon
+            <input type="tel" value="mocktelefon" readonly>
+          </label>
+          <label>E-post
+            <input type="email" value="mock@eksempel.invalid" readonly>
+          </label>
+          <label>Kontaktpreferanse
+            <select disabled>
+              <option>SMS</option>
+            </select>
+          </label>
+        </div>
+        <div class="unit-card">
+          <div>
+            <strong>Enhet 1</strong>
+            <span>Bobil · 7,4 m · MOCK 1</span>
+          </div>
+          <span class="badge badge-wait">Venteliste</span>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary">Legg til enhet</button>
+          <button type="button" class="btn btn-secondary">Send registrering</button>
+        </div>
+      </div>
+
+      <aside class="panel panel-customer">
+        <p class="eyebrow">Status</p>
+        <h2>Ikke aktiv ennå</h2>
+        <p class="muted">Reell registrering, validering og innsending implementeres i et senere issue.</p>
+        <a class="btn btn-ghost" href="../">Tilbake til forsiden</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>Versjon 0.1.3 · Placeholder-side uten backend eller datalagring.</p>
+  </footer>
+</body>
+</html>

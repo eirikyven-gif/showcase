@@ -1,32 +1,21 @@
 # Vinterlagring Fornes
 
-En original, statisk eksempelvisning av én fiktiv enhet og én fast lagringsstatus. Ruten er `/vibe/vinterlagring-fornes/`.
+Kildebasert, statisk visning av frontendskallet i `/vibe/vinterlagring-fornes/`.
 
-## Første vurderingsrunde
+## Kilde og omfang
 
-- **Formål:** Vise et kort eksempel på hvordan status for en enhet i vinterlagring kan presenteres.
-- **Kategori:** Gårdsadministrasjon og lagerstyring.
-- **Målgruppe:** Lageransvarlige, gårdsbrukere og personer som utforsker vinterlagring.
-- **Status:** Beholdt i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.
-- **Foreslått slug:** `vinterlagring-fornes`.
-- **Synlig demo-verdi:** En samlet oversikt over én eksempelplass, lagringsstatus, miljøsignal og sesongforløp.
-- **Forenklinger:** Kun den abstrakte enheten V-04 med status «Lagret». Ingen registrering, kundeprofil, identifikatorer, flytting eller endring av tilstand.
-- **Avhengigheter:** Plain HTML og CSS, uten rammeverk, kjøretidsbibliotek eller eksterne ressurser.
-- **Risiko:** Kildeappen er beskrevet som en kunde-/adminarbeidsflyt med PHP-session, e-post og database, og risiko knyttet til kundeopplysninger. Kildeproduksjon og kildetest er ikke besøkt; beskrivelsen bygger på tilgjengelig intern inventarinformasjon. Mulig overlapp med Lagerkart Vinter og tilhørighet i samme produktfamilie er uavklart. Den brede første runden beholder begge kandidater; eventuell kuratering er senere arbeid. Demoen er ikke egnet til operativ lagerstyring.
-- **Omfang:** Én isolert, responsiv, skrivebeskyttet visning. Ingen innlogging, skjema for personopplysninger, e-post, database, session, API eller lagring.
+Kilden er `eirikyven-gif/vinterlagring`, `main` commit `a26c5e99183bded5549bcb4c1ebd03cf2973cf90` (2026-10-10). Ruten gjengir kildefrontendens startside og de tre eksisterende områdene: registrering, kunde og admin. Kildens `app.js` implementerer ingen handlinger; sidene beskriver selv skjema, tokenvisning og adminfunksjoner som placeholders eller framtidig arbeid. Demoen later derfor ikke som om disse arbeidsflytene virker.
 
-## Data og personvern
+`docs/ssot/CURRENT_SSOT.md` beskriver ønsket framtidig funksjonelt scope. Det omfatter innsending av kunde/enheter, autentisert admin, magisk lenke, hendelser og varsling, database, eksport, fornyelse og arkivering. Dette scope er ikke implementert i kildecommitten som er kopiert.
 
-V-04, plass, sesong, miljø og tilstand er oppdiktede eksempelverdier. Ingen PHP, autentisering, kundeopplysninger, personskjema, e-post, database, nettleserlagring, eksterne kall eller eksterne ressurser. Ingen funksjon sender data. Siden viser kun den faste tilstanden i markup.
+## Personvern og sikkerhet
 
-## Lokal kjøring
+Alle viste navn, kontaktverdier, enheter, kjennemerker, summer og statistikker er syntetiske eksempelverdier fra kildens mock-UI eller tydelig generiske verdier. Ingen ekte personopplysninger, tokens, hemmeligheter, database, PHP/backend, innlogging, API-kall, e-post, nettleserlagring eller eksterne ressurser følger med. `config.js` beholdes som del av frontendens eksisterende struktur; `apiBasePath` er ubrukt. Ikke skriv inn reelle opplysninger eller bruk demoen til drift.
 
-Fra repo-roten: `python3 -m http.server 8000`, og åpne `http://localhost:8000/vibe/vinterlagring-fornes/`.
+## Lokal visning
 
-## Tester, QA og publisering
+Fra repo-roten: `python3 -m http.server 8000`, åpne `http://localhost:8000/vibe/vinterlagring-fornes/`. Registrering, Kunde og Admin navigerer til de respektive statiske placeholder-sidene.
 
-- Tester: `node --test tests/*.test.mjs` (16 bestått) og `git diff --check` bestått.
-- QA: Chromium headless på 1440, 390 og 320 px; direkterute, statusinnhold, første tastaturfokus og mobilbredde kontrollert. Ingen vannrett overflow, konsollfeil eller eksterne forespørsler observert.
-- Tilgjengelighet: semantiske landemerker og overskrifter, tekstlig status, synlig tastaturfokus og redusert-bevegelse-regel kontrollert. Ingen interaktive skjemafelt.
-- Eksterne kall/ressurser: ingen. Nettleseren hentet kun HTML og lokal CSS.
-- Deploy: ikke publisert. PR-en delvis løser Issue #2; publisering følger prosjektets vanlige deployflyt etter uavhengig review og merge.
+## QA og deploy
+
+Kjør `node --test tests/vinterlagring.test.mjs` og `node --test tests/*.test.mjs`. Kontroller også alle lenkede ressurser via deployworkflowens statiske validering. Ruten er ikke deployet; deploy følger showcase-repoets vanlige prosess etter review og merge. Endringen løser Issue #2 delvis ved å gjøre eksisterende route kildebasert, men den implementerer ikke kilde-SSoT-funksjonene som ennå mangler i selve kilden.
