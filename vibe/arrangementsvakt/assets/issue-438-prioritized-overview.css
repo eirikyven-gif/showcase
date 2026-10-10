@@ -1,0 +1,300 @@
+.issue438-overview {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.issue438-role-intro {
+  margin: 0;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.issue438-status-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.issue438-status-chip {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 3px;
+  min-height: 52px;
+  padding: 9px 10px;
+  border: 1px solid #d9e2e5;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 900;
+  box-shadow: 0 3px 10px rgba(22, 32, 34, .04);
+}
+
+.issue438-status-chip strong {
+  color: #162022;
+  font-size: 1.08rem;
+  line-height: 1;
+}
+
+.issue438-status-chip[data-tone="critical"] {
+  border-color: #f5b7b3;
+  background: #fff8f7;
+  color: var(--danger);
+}
+
+.issue438-status-chip[data-tone="warning"] {
+  border-color: #efd083;
+  background: #fffaf0;
+  color: var(--warning);
+}
+
+.issue438-status-chip[data-tone="info"] {
+  border-color: #bdd3ff;
+  background: #f4f8ff;
+  color: var(--info);
+}
+
+.issue438-status-chip[data-tone="ok"] {
+  border-color: #b9dec2;
+  background: #f7fcf9;
+  color: var(--ok);
+}
+
+.issue438-search {
+  display: none;
+}
+
+.issue438-section {
+  display: grid;
+  gap: 8px;
+}
+
+.issue438-section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+}
+
+.issue438-section-head h2,
+.issue438-section-head p {
+  margin-bottom: 0;
+}
+
+.issue438-section-head h2 {
+  color: #162022;
+  font-size: 1rem;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.issue438-section-head > span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.issue438-list {
+  display: grid;
+  gap: 8px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.issue438-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 8px;
+  width: 100%;
+  min-height: 76px;
+  padding: 10px;
+  border: 1px solid #d9e2e5;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 3px 10px rgba(22, 32, 34, .04);
+}
+
+.issue438-row:last-child {
+  border-bottom: 1px solid #d9e2e5;
+}
+
+.issue438-row:hover,
+.issue438-row:focus-visible {
+  border-color: #12324f;
+  background: #f8fbfc;
+  color: #162022;
+  box-shadow: inset 4px 0 0 #12324f, 0 6px 16px rgba(18, 50, 79, .08);
+}
+
+.issue438-row:focus-visible,
+.issue438-quick-action:focus-visible {
+  outline: 3px solid rgba(18, 50, 79, .28);
+  outline-offset: 2px;
+}
+
+.issue438-row-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #d6e1e7;
+  border-radius: 8px;
+  background: #f2f6f7;
+  color: #34464b;
+  font-size: .72rem;
+  font-weight: 950;
+}
+
+.issue438-row[data-tone="critical"] .issue438-row-icon {
+  border-color: rgba(180, 35, 24, .22);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.issue438-row[data-tone="warning"] .issue438-row-icon {
+  border-color: rgba(137, 92, 29, .24);
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.issue438-row[data-tone="info"] .issue438-row-icon {
+  border-color: rgba(38, 95, 159, .22);
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.issue438-row[data-tone="ok"] .issue438-row-icon {
+  border-color: rgba(32, 107, 79, .24);
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.issue438-row-main {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.issue438-row-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.issue438-row-top strong,
+.issue438-row-text,
+.issue438-row-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.issue438-row-top strong {
+  min-width: 0;
+  color: #162022;
+  font-size: .9rem;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.issue438-row-top small,
+.issue438-row-meta {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 850;
+}
+
+.issue438-row-text {
+  color: #34464b;
+  font-size: .8rem;
+  font-weight: 760;
+  line-height: 1.25;
+}
+
+.issue438-list > .empty-state {
+  margin: 0;
+  border: 1px solid #d9e2e5;
+  border-radius: 8px;
+  background: #f8fbfc;
+  color: #34464b;
+  padding: 12px;
+  font-size: .82rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.issue438-quick-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.issue438-quick-action {
+  display: grid;
+  justify-content: start;
+  gap: 3px;
+  min-height: 58px;
+  padding: 10px;
+  border: 1px solid #d9e2e5;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  text-align: left;
+  box-shadow: 0 3px 10px rgba(22, 32, 34, .04);
+}
+
+.issue438-quick-action:hover {
+  border-color: #12324f;
+  background: #f8fbfc;
+  color: #12324f;
+  box-shadow: 0 6px 16px rgba(18, 50, 79, .08);
+}
+
+.issue438-quick-action strong {
+  font-size: .84rem;
+  font-weight: 950;
+}
+
+.issue438-quick-action span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 780;
+}
+
+@media (max-width: 640px) {
+  .issue438-status-rail {
+    gap: 6px;
+  }
+
+  .issue438-status-chip {
+    min-height: 48px;
+    padding: 8px;
+    font-size: .68rem;
+  }
+
+  .issue438-row {
+    min-height: 74px;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .issue438-row-icon {
+    width: 32px;
+    height: 32px;
+  }
+}

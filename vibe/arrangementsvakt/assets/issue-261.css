@@ -1,0 +1,44 @@
+/* v0.9.10-admin-details-forms-2026-06-08 */
+.admin-create-details > summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.admin-create-state {
+  flex: 0 0 auto;
+  min-height: 22px;
+  padding: 4px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.admin-create-details[data-state="open"] {
+  border-color: #c9e4d9;
+  background: #fff;
+}
+
+.admin-create-details[data-state="open"] .admin-create-state {
+  border-color: #b9dec2;
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.admin-create-details[data-state="closed"] > :not(summary) {
+  display: none !important;
+}
+
+@media (max-width: 380px) {
+  .admin-create-details > summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

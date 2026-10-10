@@ -2,62 +2,459 @@
 <html lang="nb">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Kildebasert førstegangsvurdering av Arrangementsvakt-kandidaten.">
-  <meta name="theme-color" content="#9e2638">
-  <title>Arrangementsvakt · kandidatvurdering — Vibe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#9f1239">
+  <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Arrangementsvakt">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Arrangementsvakt</title>
   <link rel="canonical" href="/vibe/arrangementsvakt/">
   <link rel="stylesheet" href="/vibe/assets/hub.css">
-  <link rel="stylesheet" href="/vibe/arrangementsvakt/style.css">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon-192.svg">
+  <link rel="stylesheet" href="assets/app.css?v=v0.8.9-real-vapid-diagnose-2026-06-07">
+  <link rel="stylesheet" href="assets/issue-178.css">
+  <link rel="stylesheet" href="assets/issue-183.css">
+  <link rel="stylesheet" href="assets/issue-184.css">
+  <link rel="stylesheet" href="assets/issue-187.css?v=v0.9.8-controlled-message-cards-2026-06-08">
+  <link rel="stylesheet" href="assets/issue-191.css">
+  <link rel="stylesheet" href="assets/issue-192.css">
+  <link rel="stylesheet" href="assets/issue-198.css">
+  <link rel="stylesheet" href="assets/issue-239.css?v=v0.9.2-thread-card-left-align-2026-06-08">
+  <link rel="stylesheet" href="assets/issue-249.css?v=v0.9.3-mobile-topbar-pushdiagnose-2026-06-08">
+  <link rel="stylesheet" href="assets/issue-261.css?v=v0.9.10-admin-details-forms-2026-06-08">
+  <link rel="stylesheet" href="assets/issue-268.css?v=v0.9.12-role-visual-cleanup-2026-06-08">
+  <link rel="stylesheet" href="assets/issue-270.css?v=v0.9.13-issue-270-admin-incidents-layout-2026-06-09">
+  <link rel="stylesheet" href="assets/issue-271.css?v=v0.10.0-chat-message-to-incident-2026-06-09">
+  <link rel="stylesheet" href="assets/issue-278.css?v=v0.11.0-incident-type-edit-2026-06-09">
+  <link rel="stylesheet" href="assets/issue-275.css?v=v0.12.2-issue-284-group-read-status-2026-06-09">
+  <link rel="stylesheet" href="assets/issue-387-install-flow.css?v=v0.13.1-install-flow-2026-06-21">
+  <link rel="stylesheet" href="assets/issue-389-push-onboarding.css?v=v0.13.2-issue-450-low-text-2026-06-26">
+  <link rel="stylesheet" href="assets/issue-391-prioritized-home.css?v=v0.14.2-issue-414-prototype-prioritized-home-2026-06-22">
+  <link rel="stylesheet" href="assets/issue-437-app-shell.css?v=v0.16.14-issue-483-admin-label-visibility-2026-06-28">
+  <link rel="stylesheet" href="assets/issue-452-operative-status-chips.css?v=v0.16.7-issue-465-admin-compact-status-2026-06-27">
+  <!-- Hotfix #410: issue-394/395 UI layers are temporarily disabled to restore startup stability.
+  <link rel="stylesheet" href="assets/issue-394-chat-messages.css?v=v0.15.0-issue-394-chat-messages-2026-06-21">
+  <link rel="stylesheet" href="assets/issue-395-incident-feed.css?v=v0.15.1-issue-395-incident-feed-2026-06-21">
+  -->
+  <link rel="stylesheet" href="assets/showcase.css">
 </head>
 <body>
-  <a class="skip-link" href="#assessment">Hopp til vurderingen</a>
-  <header class="site-header">
-    <a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a>
-    <a class="back-link" href="/vibe/">← Alle verktøy</a>
+  <a class="vibe-home" href="/vibe/">← Alle demoer</a>
+  <aside class="demo-local-notice" role="note"><strong>Showcase-demo</strong> · Syntetiske eksempler. Endringer lagres bare i denne nettleseren. <button id="demoReset" type="button">Nullstill all demoaktivitet</button></aside>
+  <header class="topbar">
+    <div>
+      <h1>Arrangementsvakt</h1>
+    </div>
+    <div class="top-actions" aria-label="Toppvalg">
+      <span id="testModeChip" class="chip warn hidden">Testmodus</span>
+      <span id="currentUserLabel" class="current-user-label hidden" aria-live="polite"></span>
+      <span id="pushStatusChip" class="chip push-chip hidden" aria-live="polite">Varsler må slås på</span>
+      <button id="pushToggleButton" hidden class="secondary ghost-action hidden" type="button">Slå på varsler før bruk</button>
+      <button id="pushTestButton" hidden class="secondary ghost-action hidden" type="button" aria-describedby="pushTestHint">Send testvarsel til meg</button>
+      <span id="pushTestHint" class="push-action-hint hidden" aria-live="polite"></span>
+      <button id="logoutButton" class="secondary ghost-action hidden" type="button">Logg ut</button>
+    </div>
   </header>
-  <main id="assessment" class="page-shell">
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">Kandidatvurdering · arrangement</p>
-      <h1 id="page-title">Arrangementsvakt</h1>
-      <p class="intro-copy">Kildens README beskriver en mobilvennlig plattform for koordinering av arrangement, dugnad og hendelser. Denne siden vurderer kandidaten; den er ikke en operativ demo.</p>
+
+  <main id="pageMain">
+    <section id="statusPanel" class="panel"></section>
+
+    <section id="installFlowPanel" class="panel install-flow-panel hidden" aria-labelledby="installFlowTitle" data-install-state="required">
+      <div class="install-flow-copy">
+        <p class="eyebrow">Hjem-skjerm-app</p>
+        <h2 id="installFlowTitle">Installer Arrangementsvakt før bruk</h2>
+        <p id="installFlowText">For at appen skal fungere best under arrangementet, må den legges på Hjem-skjerm. Dette gir rask tilgang, appvisning og bedre støtte for varsler.</p>
+      </div>
+      <div class="install-flow-actions">
+        <button id="openInstallGuideButton" type="button">Vis installasjonssteg</button>
+        <span id="installFlowStatus" class="install-flow-status" aria-live="polite">Installasjon skal gjøres før operativ bruk. Teknisk QA kan fortsatt fortsette i nettleser.</span>
+      </div>
     </section>
 
-    <aside class="fiction-banner" aria-label="Viktig informasjon">
-      <strong>Kun vurdering – ikke til operativ bruk.</strong>
-      <span>Alt innhold, alle roller og eventuelle eksempler her er fiktive. Siden viser ingen reelle arrangementer, personer, vakter eller hendelser.</span>
-    </aside>
-
-    <section class="assessment-grid" aria-label="Kilde og avgrensning">
-      <article class="assessment-card">
-        <p class="card-kicker">Kildebeskrevet formål</p>
-        <h2>Samle koordinering</h2>
-        <p>README omtaler roller for ledelse og medlemmer, arrangement, team, hendelser, kommentarer, meldinger og eksport. Beskrivelsen sier også at løsningen har PIN-innlogging og mobiltilpasset grensesnitt.</p>
-      </article>
-      <article class="assessment-card">
-        <p class="card-kicker">Teknisk overflate</p>
-        <h2>Server og persondata</h2>
-        <p>Appmappen inneholder PHP-endepunkter for blant annet innlogging, brukere, hendelser, meldinger, opplasting og push, samt JSON-lagringskode og klientfiler. Faktisk drift og databehandling er ikke revidert her.</p>
-      </article>
-      <article class="assessment-card">
-        <p class="card-kicker">Trygg avgrensning</p>
-        <h2>Ingen operativ simulering</h2>
-        <p>Vaktplaner, rollehandlinger, hendelsesprioritet og varsling kan påvirke sikkerhet og personvern. Betydningen og gjeldende styringsgrunnlag er ikke tilstrekkelig avklart for å gjenskape slike arbeidsflyter.</p>
-      </article>
+    <section id="setupView" class="panel hidden">
+      <h2>Opprett første Løpsleder</h2>
+      <p>Setup låses automatisk når første Løpsleder er opprettet. PIN vises én gang.</p>
+      <form id="setupForm" class="grid-form">
+        <label>Fullt navn <input name="fullName" autocomplete="name" required></label>
+        <label>Visningsnavn <input name="displayName" autocomplete="nickname"></label>
+        <label>Telefon <input name="phone" autocomplete="tel" inputmode="tel"></label>
+        <button type="submit">Opprett Løpsleder</button>
+      </form>
     </section>
 
-    <section class="source-note" aria-labelledby="scope-title">
-      <h2 id="scope-title">Hva denne vurderingen bygger på</h2>
-      <ul>
-        <li>Kildens <code>apps/arrangementsvakt/README.md</code> oppgir versjon <code>v0.14.1-issue-412-compact-prioritized-home</code>; versjonen er dokumentert i README, ikke bekreftet som aktiv produksjonsversjon.</li>
-        <li>Appmappen inneholder 28 Node-smoketester. README viser kommandoer for et utvalg av testene; ingen kildetester ble kjørt i denne vurderingen.</li>
-        <li>SSoT-mappen inneholder flere versjoner, utkast og filer merket for opprydding. Governance-siden har plassholdere; ett entydig, appspesifikt låst styringsgrunnlag er derfor ikke fastslått.</li>
-        <li>Ingen lisens eller gjenbrukstillatelse ble funnet i de gjennomgåtte appfilene. Kode-, design- og innholdsrettigheter er uavklart.</li>
-      </ul>
+    <section id="loginView" class="panel hidden">
+      <h2>Logg inn</h2>
+      <form id="loginForm" class="pin-form">
+        <label>5-sifret PIN <input name="pin" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required></label>
+        <button type="submit">Logg inn</button>
+      </form>
     </section>
 
-    <p class="assessment-footnote">Bred førstegangsrunde: beholdt som kandidat. Dette er ikke en kurateringsavgjørelse, sikkerhetsrevisjon eller bekreftelse på produksjonsstatus.</p>
+    <section id="testModeView" class="panel test-mode-panel hidden" aria-labelledby="testModeTitle">
+      <h2 id="testModeTitle">Velg testbruker</h2>
+      <p class="test-warning">Testmodus - ikke produksjon.</p>
+      <p id="testActiveEvent" class="test-active-event"></p>
+      <button id="resetTestDataButton" class="secondary" type="button">Rydd testdata</button>
+      <div class="test-user-grid">
+        <section>
+          <h3>Løpsleder</h3>
+          <div id="testRaceLeadUsers" class="test-user-list"></div>
+        </section>
+        <section>
+          <h3>Ledelse</h3>
+          <div id="testLeadershipUsers" class="test-user-list"></div>
+        </section>
+        <section>
+          <h3>Teamledere</h3>
+          <div id="testTeamLeadUsers" class="test-user-list"></div>
+        </section>
+        <section>
+          <h3>Medlemmer</h3>
+          <div id="testMemberUsers" class="test-user-list"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="appView" class="hidden workspace">
+      <section id="pushOnboardingPanel" hidden class="panel push-onboarding-panel hidden" aria-labelledby="pushOnboardingTitle" data-push-state="required">
+        <div class="push-onboarding-copy">
+          <p class="eyebrow">Bruksklar</p>
+          <h2 id="pushOnboardingTitle">Slå på varsler før bruk</h2>
+          <p id="pushOnboardingText">Slå på for nettleservarsler.</p>
+          <span id="pushOnboardingRole" class="push-onboarding-role">Rollebasert.</span>
+        </div>
+        <div class="push-onboarding-actions">
+          <button id="pushOnboardingButton" type="button">Slå på</button>
+          <span id="pushOnboardingStatus" class="push-onboarding-status" aria-live="polite">Badge vises i appen.</span>
+        </div>
+      </section>
+
+      <section id="testModeBanner" class="notice test-mode-banner hidden">
+        <span><strong>Testmodus.</strong> Ikke produksjon.</span><span class="chip dark">Test</span>
+      </section>
+
+      <section class="notice-row" data-tab-panel="overview" aria-label="Operativ status">
+        <div class="notice"><span><strong id="welcomeTitle"></strong><span id="activeEventText"></span></span><span class="chip" id="roleLabel"></span></div>
+      </section>
+
+      <section class="panel overview-panel" data-tab-panel="overview">
+        <div class="panel-head">
+          <div><h2>Oversikt</h2></div>
+        </div>
+        <div id="overviewRows" class="compact-list dense-table teams"></div>
+      </section>
+
+      <nav id="bottomNav" class="bottom-nav" aria-label="Hovednavigasjon"></nav>
+
+      <section id="teamPanel" class="panel hidden" data-tab-panel="teams">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" id="teamPanelEyebrow">Gruppestatus</p>
+            <h2 id="teamPanelTitle">Grupper</h2>
+          </div>
+          <button id="adminShortcutButton" class="secondary hidden" type="button">Gå til admin</button>
+        </div>
+        <div class="overview-grid">
+          <div>
+            <h3>Gruppeoversikt</h3>
+            <div id="teamOverview" class="compact-list"></div>
+          </div>
+          <div id="memberOverviewBlock">
+            <h3 id="memberOverviewTitle">Medlemmer</h3>
+            <label class="member-search" for="memberSearchInput">Søk medlemmer
+              <input id="memberSearchInput" type="search" autocomplete="off" placeholder="Søk">
+            </label>
+            <div id="userOverview" class="compact-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="chatPanel" class="panel hidden" data-tab-panel="chat">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Meldinger</p>
+            <h2>Chat/Meldinger</h2>
+          </div>
+          <button id="refreshMessagesButton" class="secondary" type="button">Oppdater meldinger</button>
+        </div>
+        <div id="messageList" class="message-list" aria-live="polite"></div>
+        <!-- Legacy app.js bootstrap target. issue-183/187/239 replace this DOM with styrte meldinger and trådchat before the chat surface is used. -->
+        <details id="messageComposeDetails" class="message-compose-details hidden" aria-hidden="true" inert data-legacy-chat-compose="true">
+          <summary>Ny melding</summary>
+          <div class="message-compose-grid">
+            <form id="teamMessageForm" class="card-form">
+              <h3>Gruppechat</h3>
+              <label>Gruppe <select name="teamId" required></select></label>
+              <label>Melding <textarea name="body" maxlength="1200" required></textarea></label>
+              <button type="submit">Send til gruppe</button>
+            </form>
+            <form id="directMessageForm" class="card-form hidden">
+              <h3>Direktechat</h3>
+              <label>Mottaker <select name="targetUserId" required></select></label>
+              <label>Melding <textarea name="body" maxlength="1200" required></textarea></label>
+              <button type="submit">Send direkte</button>
+            </form>
+            <form id="broadcastMessageForm" class="card-form hidden">
+              <h3>Fellesmelding</h3>
+              <label>Viktig beskjed <textarea name="body" maxlength="1200" required></textarea></label>
+              <button type="submit">Send til alle</button>
+            </form>
+          </div>
+        </details>
+      </section>
+
+      <section id="adminPanel" class="panel hidden" data-tab-panel="admin">
+        <div class="section-heading admin-heading">
+          <div>
+            <p class="eyebrow"></p>
+            <h2>Administrasjon</h2>
+          </div>
+        </div>
+        <div class="admin-sections">
+          <section class="admin-section" aria-labelledby="adminEventTitle">
+            <div class="admin-section-head">
+              <div>
+                <p class="eyebrow"></p>
+                <h3 id="adminEventTitle">Arrangement</h3>
+              </div>
+            </div>
+            <div id="adminEventList" class="compact-list admin-list"></div>
+            <details class="admin-create-details">
+              <summary>Opprett arrangement</summary>
+              <form id="eventForm" class="card-form">
+                <label>Navn <input name="name" required></label>
+                <button type="submit">Opprett og aktiver</button>
+              </form>
+            </details>
+          </section>
+
+          <section class="admin-section" aria-labelledby="adminTeamTitle">
+            <div class="admin-section-head">
+              <div>
+                <p class="eyebrow"></p>
+                <h3 id="adminTeamTitle">Team</h3>
+              </div>
+            </div>
+            <div id="adminTeamList" class="compact-list admin-list"></div>
+            <details class="admin-create-details">
+              <summary>Opprett team</summary>
+              <form id="teamForm" class="card-form">
+                <label>Navn <input name="name" required></label>
+                <label>Beskrivelse <textarea name="description"></textarea></label>
+                <button type="submit">Opprett team</button>
+              </form>
+            </details>
+          </section>
+
+          <section class="admin-section" aria-labelledby="adminUserTitle">
+            <div class="admin-section-head">
+              <div>
+                <p class="eyebrow"></p>
+                <h3 id="adminUserTitle">Brukere og medlemmer</h3>
+              </div>
+            </div>
+            <div id="adminUserList" class="compact-list admin-list"></div>
+            <details class="admin-create-details">
+              <summary>Opprett bruker</summary>
+              <form id="userForm" class="card-form">
+                <label>Fullt navn <input name="fullName" autocomplete="name" required></label>
+                <label>Visningsnavn <input name="displayName" autocomplete="nickname"></label>
+                <label>Telefon <input name="phone" autocomplete="tel" inputmode="tel"></label>
+                <label>Rolle
+                  <select name="role">
+                    <option value="member">Medlem</option>
+                    <option value="teamLead">Teamleder</option>
+                    <option value="leadership">Ledelse</option>
+                    <option value="raceLead">Øverste Leder/Løpsleder</option>
+                  </select>
+                </label>
+                <label id="leadershipField" class="checkbox"><input name="isLeadership" type="checkbox"> Del av Ledelse</label>
+                <label id="primaryLeaderField" class="checkbox"><input name="isPrimaryLeader" type="checkbox"> Øverste Leder/Løpsleder</label>
+                <label>Team <select name="teamIds" multiple></select></label>
+                <p class="form-hint">Kun én øverste Leder/Løpsleder kan være aktiv samtidig. Teamleder kan også merkes som Ledelse.</p>
+                <button type="submit">Opprett bruker</button>
+              </form>
+            </details>
+          </section>
+
+          <section class="admin-section" aria-labelledby="adminImportTitle">
+            <div class="admin-section-head">
+              <div>
+                <p class="eyebrow"></p>
+                <h3 id="adminImportTitle">Importer medlemmer</h3>
+              </div>
+              <a id="memberImportTemplateLink" class="secondary" href="assets/demo-import-template.csv" download="arrangementsvakt-medlemsimport-mal.xlsx">Last ned XLSX-mal</a>
+            </div>
+            <form id="memberImportForm" class="card-form import-form">
+              <label>Velg XLSX-fil <input name="file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>
+              <div class="import-actions">
+                <button type="submit">Valider import</button>
+                <button id="commitMemberImportButton" class="secondary" type="button" disabled>Importer validerte rader</button>
+              </div>
+            </form>
+            <div id="memberImportSummary" class="import-summary" aria-live="polite"></div>
+            <div id="memberImportPreview" class="compact-list import-preview"></div>
+          </section>
+
+          <section class="admin-section admin-push-section" aria-labelledby="adminPushTitle">
+            <div class="admin-section-head">
+              <div>
+                <p class="eyebrow"></p>
+                <h3 id="adminPushTitle">Push/diagnose</h3>
+              </div>
+            </div>
+            <p class="form-hint">Kompakt pushstatus og pushhandlinger ligger i toppfeltet. Teknisk diagnose for test og feilsøking ligger her.</p>
+            <section id="pushDiagnosticsPanel" class="push-diagnostics-panel hidden" aria-live="polite"></section>
+          </section>
+
+          <section class="admin-section" aria-labelledby="adminExportTitle">
+            <div class="admin-section-head">
+              <div>
+                <p class="eyebrow"></p>
+                <h3 id="adminExportTitle">Eksport</h3>
+              </div>
+            </div>
+            <div class="export-actions" id="exportActions">
+              <a class="secondary" href="?demo-export=csv">Eksporter CSV</a>
+              <a class="secondary" href="?demo-export=json">Eksporter JSON</a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="offlinePanel" class="panel hidden" data-tab-panel="offline">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Lokal kø</p>
+            <h2>Ikke sendt</h2>
+          </div>
+          <button id="retryOfflineButton" class="secondary" type="button">Prøv ikke-sendte på nytt</button>
+        </div>
+        <div id="offlineList" class="offline-list"></div>
+      </section>
+
+      <section id="incidentPanel" class="panel" data-tab-panel="incidents">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Aktiv feed</p>
+            <h2>Hendelser</h2>
+          </div>
+          <div class="summary-pills" id="overviewStats" aria-label="Hendelsesmålinger"></div>
+        </div>
+        <div id="incidentList" class="incident-list"></div>
+      </section>
+    </section>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Statisk, kildebasert vurdering</span></footer>
+
+  <button id="openIncidentModalButton" class="floating-incident-button hidden" type="button" aria-label="Meld hendelse">+ Meld</button>
+
+  <dialog id="incidentDialog" class="incident-dialog" aria-labelledby="incidentDialogTitle">
+    <form id="incidentForm" class="grid-form" method="dialog">
+      <div class="modal-heading full">
+        <div>
+          <p class="eyebrow">Ny hendelse</p>
+          <h2 id="incidentDialogTitle">Meld hendelse</h2>
+        </div>
+        <button id="closeIncidentModalButton" class="secondary icon-button" type="button" aria-label="Lukk hendelsesskjema">×</button>
+      </div>
+      <input name="title" type="hidden">
+      <label>Hendelse
+        <select name="severity" required>
+          <option value="">Velg hendelse</option>
+        </select>
+      </label>
+      <label>Sted <input name="location"></label>
+      <label>Grupper <select name="teamIds" multiple required></select></label>
+      <label class="full">Beskrivelse <textarea name="description" required></textarea></label>
+      <label class="full">Bildevedlegg <input name="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+      <label id="escalateIncidentLabel" class="checkbox full"><input name="escalatedToRaceLead" type="checkbox"> Hev direkte til Løpsleder</label>
+      <div class="modal-actions full">
+        <button type="submit">Send hendelse</button>
+        <button id="cancelIncidentModalButton" class="secondary" type="button">Avbryt</button>
+      </div>
+    </form>
+  </dialog>
+
+
+  <dialog id="detailDialog" class="incident-dialog detail-dialog" aria-labelledby="detailDialogTitle">
+    <div class="modal-heading full">
+      <div>
+        <p id="detailDialogEyebrow" class="eyebrow">Detaljer</p>
+        <h2 id="detailDialogTitle">Detaljer</h2>
+      </div>
+      <button id="closeDetailModalButton" class="secondary icon-button" type="button" aria-label="Lukk detaljkort">×</button>
+    </div>
+    <div id="detailDialogBody" class="detail-dialog-body"></div>
+  </dialog>
+
+
+  <dialog id="installGuideDialog" class="incident-dialog install-guide-dialog" aria-labelledby="installGuideTitle">
+    <div class="modal-heading full">
+      <div>
+        <p class="eyebrow">Hjem-skjerm-app</p>
+        <h2 id="installGuideTitle">Installer Arrangementsvakt før bruk</h2>
+      </div>
+      <button id="closeInstallGuideButton" class="secondary icon-button" type="button" aria-label="Lukk installasjonsveiledning">×</button>
+    </div>
+    <div class="install-guide-body">
+      <p class="install-guide-lead">Legg appen på Hjem-skjerm før operativ bruk. Dette gir rask tilgang, appvisning og bedre støtte for varsler.</p>
+      <section class="install-guide-section" aria-labelledby="installIphoneTitle">
+        <h3 id="installIphoneTitle">iPhone / Safari</h3>
+        <ol>
+          <li>Åpne appen i Safari.</li>
+          <li>Trykk delingsknappen.</li>
+          <li>Velg «Legg til på Hjem-skjerm».</li>
+          <li>Trykk «Legg til».</li>
+        </ol>
+      </section>
+      <section class="install-guide-section" aria-labelledby="installAndroidTitle">
+        <h3 id="installAndroidTitle">Android / Chrome</h3>
+        <ol>
+          <li>Åpne appen i Chrome.</li>
+          <li>Velg «Installer app» dersom knappen vises, eller åpne menyen.</li>
+          <li>Velg «Legg til på startsiden».</li>
+          <li>Bekreft.</li>
+        </ol>
+      </section>
+      <div class="modal-actions">
+        <button id="closeInstallGuideDoneButton" type="button">Lukk</button>
+        <button id="continueBrowserQaButton" class="secondary" type="button">Fortsett i nettleser for test</button>
+      </div>
+    </div>
+  </dialog>
+
+
+  <script src="assets/demo-api.js" defer></script>
+  <script src="assets/app.js" defer></script>
+  <script src="assets/issue-178.js?v=v0.16.7-issue-465-red-fab-2026-06-27" defer></script>
+  <script src="assets/issue-183.js" defer></script>
+  <script src="assets/issue-184.js" defer></script>
+  <script src="assets/issue-187.js?v=v0.9.8-controlled-message-cards-2026-06-08" defer></script>
+  <script src="assets/issue-190.js" defer></script>
+  <script src="assets/issue-191.js" defer></script>
+  <script src="assets/issue-192.js?v=v0.16.13-issue-483-admin-text-cleanup-2026-06-28" defer></script>
+  <script src="assets/issue-193.js?v=v0.16.14-issue-483-admin-label-visibility-2026-06-28" defer></script>
+  <script src="assets/issue-198.js?v=v0.16.14-issue-483-admin-label-visibility-2026-06-28" defer></script>
+  <script src="assets/issue-239.js?v=v0.9.4-chat-reset-team-mapping-2026-06-08" defer></script>
+  <script src="assets/issue-260.js?v=v0.9.9-member-incident-insight-2026-06-08" defer></script>
+  <script src="assets/issue-261.js?v=v0.9.10-admin-details-forms-2026-06-08" defer></script>
+  <script src="assets/issue-268.js?v=v0.9.12-role-visual-cleanup-2026-06-08" defer></script>
+  <script src="assets/issue-270.js?v=v0.16.14-issue-483-admin-label-visibility-2026-06-28" defer></script>
+  <script src="assets/issue-271.js?v=v0.10.1-chat-thread-open-hotfix-2026-06-09" defer></script>
+  <script src="assets/issue-278.js?v=v0.11.0-incident-type-edit-2026-06-09" defer></script>
+  <script src="assets/issue-282.js?v=v0.12.1-issue-282-hotfix-2026-06-09" defer></script>
+  <script src="assets/issue-275.js?v=v0.12.2-issue-284-group-read-status-2026-06-09" defer></script>
+  <script src="assets/issue-290.js?v=v0.12.3-issue-290-team-user-readonly-2026-06-10" defer></script>
+  <script src="assets/issue-291.js?v=v0.12.4-issue-291-team-tab-overview-removal-2026-06-10" defer></script>
+
+  <script src="assets/issue-391-prioritized-home.js?v=v0.14.2-issue-414-prototype-prioritized-home-2026-06-22" defer></script>
+  <script src="assets/issue-437-app-shell.js?v=v0.16.8-issue-467-message-wcag-2026-06-27" defer></script>
+  <script src="assets/issue-452-operative-status-chips.js?v=v0.16.7-issue-465-admin-compact-status-2026-06-27" defer></script>
+  <!-- Hotfix #410: issue-394/395 UI layers are temporarily disabled to restore startup stability.
+  <script src="assets/issue-394-chat-messages.js?v=v0.15.0-issue-394-chat-messages-2026-06-21" defer></script>
+  <script src="assets/issue-395-incident-feed.js?v=v0.15.1-issue-395-incident-feed-2026-06-21" defer></script>
+  -->
 </body>
 </html>

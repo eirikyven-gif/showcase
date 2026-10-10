@@ -1,0 +1,47 @@
+.floating-incident-button.issue497-consistent-fab,
+body[data-issue425-shell] .floating-incident-button.issue497-consistent-fab {
+  position: fixed;
+  right: max(14px, calc((100vw - 430px) / 2 + 18px));
+  bottom: calc(4.95rem + env(safe-area-inset-bottom));
+  z-index: 35;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--danger);
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(181, 59, 52, .34);
+  font-size: .88rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.floating-incident-button.issue497-consistent-fab.hidden,
+body[data-issue425-shell] .floating-incident-button.issue497-consistent-fab.hidden {
+  display: none !important;
+}
+
+.floating-incident-button.issue497-consistent-fab:hover,
+body[data-issue425-shell] .floating-incident-button.issue497-consistent-fab:hover {
+  border-color: #9d2d27;
+  background: #9d2d27;
+}
+
+.floating-incident-button.issue497-consistent-fab:focus-visible {
+  outline: 3px solid rgba(181, 59, 52, .38);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .floating-incident-button.issue497-consistent-fab,
+  body[data-issue425-shell] .floating-incident-button.issue497-consistent-fab {
+    right: 12px;
+    bottom: calc(4.95rem + env(safe-area-inset-bottom));
+  }
+}

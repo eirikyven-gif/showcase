@@ -1,0 +1,346 @@
+:root {
+  --bg: #f6f7f4;
+  --panel: #ffffff;
+  --panel-soft: #f1f4ef;
+  --text: #152019;
+  --muted: #657066;
+  --line: #d9ded5;
+  --line-strong: #c8d0c5;
+  --accent: #206b4f;
+  --accent-dark: #164c39;
+  --accent-soft: #e3f0e9;
+  --danger: #b53b34;
+  --danger-soft: #fde7e5;
+  --warning: #ad6b12;
+  --warning-soft: #fff0d6;
+  --info: #265f9f;
+  --info-soft: #e5eef9;
+  --ok: #206b4f;
+  --ok-soft: #e3f0e9;
+  --radius: 8px;
+  --shadow: 0 10px 30px rgba(25, 34, 28, .08);
+  --shadow-soft: 0 1px 0 rgba(25, 34, 28, .04);
+}
+
+body[data-issue425-shell] {
+  background: var(--bg);
+  letter-spacing: 0;
+}
+
+body[data-issue425-shell] .topbar,
+body[data-issue425-shell] main {
+  width: min(760px, calc(100% - 18px));
+}
+
+body[data-issue425-shell][data-issue425-active-tab="overview"][data-issue414-home] main {
+  width: min(430px, calc(100% - 16px));
+}
+
+body[data-issue425-shell] .topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0 8px;
+}
+
+body[data-issue425-shell][data-issue425-active-tab="overview"][data-issue414-home] .topbar {
+  display: none;
+}
+
+body[data-issue425-shell] .app-shell-brand {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  min-width: 0;
+}
+
+.app-shell-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 950;
+  line-height: 1;
+  box-shadow: 0 10px 24px rgba(32, 107, 79, .18);
+}
+
+.app-shell-title {
+  min-width: 0;
+}
+
+body[data-issue425-shell] .topbar h1 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell-context {
+  overflow: hidden;
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 820;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-issue425-shell] .top-actions {
+  gap: 5px;
+}
+
+body[data-issue425-shell] .current-user-label,
+body[data-issue425-shell] .push-action-hint {
+  display: none;
+}
+
+body[data-issue425-shell] .ghost-action,
+body[data-issue425-shell] .top-actions > button {
+  min-height: 31px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+body[data-issue425-shell] .chip,
+body[data-issue425-shell] .row-chip,
+body[data-issue425-shell] .incident-meta span {
+  min-height: 23px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+body[data-issue425-shell] .panel,
+body[data-issue425-shell] .notice,
+body[data-issue425-shell] .metric,
+body[data-issue425-shell] .summary-pill,
+body[data-issue425-shell] .card-form,
+body[data-issue425-shell] .pin-form,
+body[data-issue425-shell] .empty-state,
+body[data-issue425-shell] .message-compose-details,
+body[data-issue425-shell] .detail-comment {
+  border-radius: var(--radius);
+}
+
+body[data-issue425-shell] .panel {
+  border-color: var(--line);
+  box-shadow: var(--shadow-soft);
+}
+
+body[data-issue425-shell] .section-heading,
+body[data-issue425-shell] .panel-head,
+body[data-issue425-shell] .admin-section-head {
+  gap: 10px;
+  border-color: var(--line);
+}
+
+body[data-issue425-shell] .section-heading h2,
+body[data-issue425-shell] .panel-head h2 {
+  letter-spacing: 0;
+}
+
+body[data-issue425-shell] .compact-list,
+body[data-issue425-shell] .incident-list,
+body[data-issue425-shell] .message-list,
+body[data-issue425-shell] .offline-list {
+  gap: 0;
+}
+
+body[data-issue425-shell] .incident-row,
+body[data-issue425-shell] .compact-row {
+  min-height: 50px;
+  padding: 8px 10px 8px 14px;
+  border-color: var(--line);
+  background: #fff;
+}
+
+body[data-issue425-shell] .incident-row:hover,
+body[data-issue425-shell] .compact-row:hover {
+  background: #f8fbf9;
+}
+
+body[data-issue425-shell] .row-main strong {
+  letter-spacing: 0;
+}
+
+body[data-issue425-shell] .bottom-nav {
+  position: fixed;
+  left: max(10px, calc((100vw - 430px) / 2 + 10px));
+  right: max(10px, calc((100vw - 430px) / 2 + 10px));
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  max-width: 410px;
+  margin: 0 auto;
+  padding: 7px 8px 8px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 14px 34px rgba(22, 32, 34, .18);
+  backdrop-filter: blur(16px);
+}
+
+body[data-issue425-shell] .bottom-nav-button {
+  position: relative;
+  display: grid;
+  flex: 1 1 0;
+  gap: 3px;
+  align-content: center;
+  justify-items: center;
+  min-width: 0;
+  min-height: 43px;
+  padding: 4px 3px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 850;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+body[data-issue425-shell] .bottom-nav-button::before {
+  content: none;
+}
+
+body[data-issue425-shell] .bottom-nav-button[aria-current="page"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px #bdd9cb;
+}
+
+.app-shell-nav-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.app-shell-nav-label {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell-nav-badge {
+  position: absolute;
+  top: 3px;
+  right: 8px;
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  border: 1px solid #f1bbb7;
+  border-radius: 999px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 10px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-issue425-shell] .bottom-nav-button[aria-current="page"] .app-shell-nav-badge {
+  border-color: #bdd9cb;
+  background: #fff;
+  color: var(--accent);
+}
+
+body[data-issue425-shell] .floating-incident-button {
+  right: max(14px, calc((100vw - 430px) / 2 + 18px));
+  bottom: calc(4.95rem + env(safe-area-inset-bottom));
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 16px;
+  border-color: var(--danger);
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(181, 59, 52, .34);
+  font-size: .88rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+body[data-issue425-shell] .floating-incident-button:hover {
+  border-color: #9d2d27;
+  background: #9d2d27;
+}
+
+.app-shell-fab-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+@media (max-width: 760px) {
+  body[data-issue425-shell] .topbar,
+  body[data-issue425-shell] main {
+    width: min(430px, calc(100% - 16px));
+  }
+
+  body[data-issue425-shell] .topbar {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  body[data-issue425-shell] .top-actions {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding-bottom: 2px;
+  }
+
+  body[data-issue425-shell] .top-actions > .chip,
+  body[data-issue425-shell] .top-actions > button {
+    flex: 0 0 auto;
+  }
+
+  body[data-issue425-shell] .bottom-nav-button {
+    min-height: 41px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  body[data-issue425-shell] .bottom-nav {
+    gap: 2px;
+    padding-inline: 5px;
+  }
+
+  body[data-issue425-shell] .bottom-nav-button {
+    font-size: 9.5px;
+  }
+
+  .app-shell-nav-icon {
+    width: 19px;
+    height: 19px;
+  }
+}

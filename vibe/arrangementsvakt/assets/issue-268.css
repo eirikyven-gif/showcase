@@ -1,0 +1,46 @@
+/* v0.9.12-role-visual-cleanup-2026-06-08 */
+
+.floating-incident-button[data-issue-268-mobile-team-hidden="true"] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  #memberOverviewBlock:not(.hidden) #userOverview .compact-row {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "main"
+      "meta"
+      "foot";
+    gap: 6px;
+    align-items: start;
+    min-height: 0;
+  }
+
+  #memberOverviewBlock:not(.hidden) #userOverview .row-main,
+  #memberOverviewBlock:not(.hidden) #userOverview .row-main strong,
+  #memberOverviewBlock:not(.hidden) #userOverview .row-main small,
+  #memberOverviewBlock:not(.hidden) #userOverview .row-foot {
+    min-width: 0;
+    overflow: visible;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+
+  #memberOverviewBlock:not(.hidden) #userOverview .row-meta {
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+
+  #memberOverviewBlock:not(.hidden) #userOverview .row-meta .row-chip {
+    display: inline-flex;
+    white-space: normal;
+    line-height: 1.15;
+  }
+}
+
+@media (max-width: 640px) {
+  #memberOverviewBlock:not(.hidden) #userOverview .compact-row {
+    padding-right: 10px;
+  }
+}

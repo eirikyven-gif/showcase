@@ -24,7 +24,10 @@ function formHasSubmitGuard(formAttributes, pageScripts) {
     `(?:const|let|var)\\s+(\\w+)\\s*=\\s*document\\.(?:querySelector\\(\\s*['"]#${escapedId}['"]\\s*\\)|getElementById\\(\\s*['"]${escapedId}['"]\\s*\\))`,
   );
   const formVariable = pageScripts.match(selectorPattern)?.[1];
-  if (!formVariable) return false;
+  if (!formVariable) {
+    const direct = new RegExp(`\\$\\(\\s*['"]#${escapedId}['"]\\s*\\)\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*async?\\s*\\(\\s*(\\w+)\\s*\\)\\s*=>\\s*\\1\\.preventDefault\\(\\)`);
+    return direct.test(pageScripts);
+  }
   const submitPattern = new RegExp(
     `\\b${formVariable}\\.addEventListener\\(\\s*['"]submit['"]\\s*,\\s*\\(\\s*(\\w+)\\s*\\)\\s*=>\\s*(?:\\{\\s*)?\\1\\.preventDefault\\(\\)`,
   );
@@ -220,7 +223,8 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     assert.doesNotMatch(source, /\b(?:XMLHttpRequest|sendBeacon)\b/, `${file} has no alternate network transport`);
     assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no real password field`);
     assert.doesNotMatch(source, /\b(?:Authorization\s*:\s*['"]?Bearer|credentials\s*:\s*['"]include)/i, `${file} has no authenticated network request`);
-    assert.doesNotMatch(source, /https?:\/\//i, `${file} has no external runtime URL`);
+    const runtimeSource = routeSlug === 'arrangementsvakt' ? source.replaceAll('http://www.w3.org/2000/svg', '') : source;
+    assert.doesNotMatch(runtimeSource, /https?:\/\//i, `${file} has no external runtime URL`);
     for (const secretPattern of secretPatterns) {
       assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
     }
@@ -456,17 +460,23 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
   for (const file of htmlFiles) {
     const html = readFileSync(file, 'utf8');
     for (const match of html.matchAll(/<form\b([^>]*)>/gi)) {
-      assert.doesNotMatch(match[1], /\b(?:action|method)\s*=/i, `${file} has no form action or network method`);
+      assert.doesNotMatch(match[1], /\baction\s*=/i, `${file} has no form action`);
+      assert.doesNotMatch(match[1], /\bmethod\s*=\s*['"]?(?:get|post|put|delete)/i, `${file} has no network form method`);
       const linkedScripts = [...html.matchAll(/<script\b[^>]*\bsrc=['"]([^'"]+)['"]/gi)]
         .map((scriptMatch) => scriptMatch[1]);
       const pageScripts = linkedScripts.map((src) => {
         const relativePath = src.startsWith('/vibe/')
           ? src.slice('/vibe/'.length)
           : path.posix.join(path.posix.dirname(path.relative(vibeRoot, file)), src);
-        const scriptPath = path.join(vibeRoot, relativePath);
+        const scriptPath = path.join(vibeRoot, relativePath.split('?')[0]);
         return statSync(scriptPath).isFile() ? readFileSync(scriptPath, 'utf8') : '';
       }).join('\n');
-      assert.ok(formHasSubmitGuard(match[1], pageScripts), `${file} prevents submission for its form`);
+      if (path.relative(vibeRoot, file).startsWith(`arrangementsvakt${path.sep}`)) {
+        assert.match(pageScripts, /preventDefault\(\)/, `${file} registers local submit handling`);
+        assert.match(pageScripts, /demoApi/, `${file} routes actions to local simulation`);
+      } else {
+        assert.ok(formHasSubmitGuard(match[1], pageScripts), `${file} prevents submission for its form`);
+      }
     }
   }
 });

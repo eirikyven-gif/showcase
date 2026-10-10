@@ -1,0 +1,92 @@
+/* v0.11.0-incident-type-edit-2026-06-09 */
+
+.issue278-type-section {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-soft);
+}
+
+.issue278-type-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.issue278-type-header strong {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.issue278-current-type {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.issue278-type-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+  min-width: 0;
+}
+
+.issue278-type-form label {
+  min-width: 0;
+}
+
+.issue278-type-select {
+  min-width: 0;
+}
+
+.issue278-type-status,
+.issue278-type-readonly {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.issue278-type-status:not(:empty) {
+  padding-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .issue278-type-section {
+    padding: 9px;
+  }
+
+  .issue278-type-header {
+    align-items: flex-start;
+  }
+
+  .issue278-type-form {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .issue278-type-form .secondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .issue278-type-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .issue278-current-type {
+    justify-self: start;
+    white-space: normal;
+    line-height: 1.15;
+  }
+}
