@@ -195,7 +195,7 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
       <button role="tab" id="tab-studenter" aria-selected="false" onclick="showTab('studenter')">Studentoversikt</button>
       <button role="tab" id="tab-vurdering" aria-selected="true" onclick="showTab('vurdering')">Vurdering</button>
       <button role="tab" id="tab-vekting" aria-selected="false" onclick="showTab('vekting')">Vekting</button>
-
+      <button role="tab" id="tab-ki" aria-selected="false" onclick="showTab('ki')">KI-støtte</button>
       <button role="tab" id="tab-eksport" aria-selected="false" onclick="showTab('eksport')">Eksport</button>
     </div>
 
@@ -279,6 +279,30 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
           <div id="weightEditorStatus" class="hint" aria-live="polite"></div>
         </div>
       </div>
+    </div>
+
+    <!-- Kildeappens KI-støtteflate. Eksterne tjenester er erstattet av tydelig lokal simulering. -->
+    <div id="panel-ki" class="tab-panel">
+      <div class="alert info" role="note"><strong>Lokal simulering.</strong> Ingen KI-tjeneste, provider, konto eller nettverkskall er koblet til. «Generer» lager et nøkternt, regelbasert utkast kun fra aktiv rubrikk, registrerte svar, stikkord, indikator og K0-status. Du kan fortsatt kopiere kildeappens promptgrunnlag manuelt; teksten vises før kopiering. Ikke lim inn personopplysninger i eksterne tjenester.</div>
+      <section class="card" aria-labelledby="kiFremoverTitle">
+        <div class="cardHeader"><h2 id="kiFremoverTitle">Fremovermelding (underveis)</h2></div>
+        <p class="hint" id="kiFremoverModeHint">Tilgjengelig mens arbeidet pågår. Utkastet bruker registrerte svar og oppgavetekst.</p>
+        <div class="row"><button class="btn btn-sm btn-primary" id="btnKiFremover" type="button" onclick="genKiFremover()">Generer fremovermelding</button><button class="btn btn-sm" id="btnKiFremoverCopy" type="button" onclick="copyKiFremoverPrompt()">Kopier promptgrunnlag</button></div>
+        <div id="kiFremoverStatus" class="status-banner hidden" role="status" aria-live="polite"></div>
+        <div id="kiFremoverOut" class="hidden" style="margin-top:var(--s3)"><p class="hint">Simulert utkast – rediger før bruk:</p><textarea id="kiFremoverText" aria-label="Rediger fremovermelding" oninput="onKiFremoverEdit()"></textarea><div id="kiFremoverTextStatus" class="hint"></div><button class="btn btn-sm" type="button" onclick="nullstillKiFremover()">Nullstill underveis-tekst</button></div>
+      </section>
+      <section class="card" style="margin-top:var(--s4)" aria-labelledby="kiEndeligTitle">
+        <div class="cardHeader"><h2 id="kiEndeligTitle">Endelig vurdering</h2><span id="kiEndeligBadge" class="badge warn">Krever fullstendig vurdering</span></div>
+        <p id="kiEndeligModeHint" class="hint">Kan først klargjøres når alle ikke-K0-punkt er besvart. Teksten er et utkast, ikke en automatisk vurdering.</p>
+        <div class="row"><button class="btn btn-sm btn-primary" id="btnKiEndelig" type="button" onclick="genKiEndelig()" disabled>Lag lokalt sluttvurderingsutkast</button><button class="btn btn-sm" id="btnKiEndeligCopy" type="button" onclick="copyKiEndeligPrompt()" disabled>Kopier promptgrunnlag</button></div>
+        <div id="kiEndeligStatus" class="status-banner hidden" role="status" aria-live="polite"></div>
+        <div id="kiEndeligOut" class="hidden" style="margin-top:var(--s3)"><p class="hint">Simulert utkast – les og rediger. Det blir ikke lagret som slutttekst før du godkjenner:</p><textarea id="kiEndeligText" aria-label="Rediger sluttvurdering" oninput="onSlutttekstEdit()"></textarea><div class="row"><button class="btn btn-sm" type="button" onclick="copySlutttekst()">Kopier slutttekst</button><button class="btn btn-sm btn-primary" type="button" onclick="godkjennSlutttekst()">Godkjenn som slutttekst</button></div><div id="slutttekstStatus" class="hint" aria-live="polite"></div></div>
+      </section>
+      <section class="card" style="margin-top:var(--s4)" aria-labelledby="kiSettingsTitle"><div class="cardHeader"><h2 id="kiSettingsTitle">Innstillinger</h2></div><p>KI-leverandør, modelltilkobling og API-nøkkelinnstillinger fra kildeappen er fjernet. Her kan du redigere den lokale styringsteksten som inngår i kopiert promptgrunnlag.</p><label class="field" for="globalKiStyring">Lokal styringstekst<textarea id="globalKiStyring" oninput="saveAiSettings()">Skriv som en faglig, nøktern og konkret støtte for faglærer.
+Bruk kun opplysninger som finnes i oppgavetekst, rubrikk, registrerte svar, stikkord, indikatorstøtte og K0-status.
+Ikke legg til nye vurderingskriterier, nye krav, nye kilder eller antakelser som ikke er eksplisitt støttet av grunnlaget.
+Når grunnlaget er tynt eller ufullstendig, skal du si det tydelig og formulere deg forsiktig.
+Fremhev både styrker, mangler og realistiske neste steg på en måte som faglærer kan redigere videre.</textarea></label><button class="btn btn-sm" type="button" onclick="resetKiSettings()">Nullstill lokale innstillinger</button><span id="kiSettingsStatus" class="hint" aria-live="polite"></span></section>
     </div>
 
     <!-- Eksport panel -->
@@ -381,13 +405,12 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
   </div>
 </div>
 
->
-
 <script>
 // ============================================================
 // STATE
 // ============================================================
 const LS_KEY = 'vibe.vurderingsarbeid.demo.v1';
+const DEFAULT_LOCAL_KI_STYRING = `Skriv som en faglig, nøktern og konkret støtte for faglærer.\nBruk kun opplysninger som finnes i oppgavetekst, rubrikk, registrerte svar, stikkord, indikatorstøtte og K0-status.\nIkke legg til nye vurderingskriterier, nye krav, nye kilder eller antakelser som ikke er eksplisitt støttet av grunnlaget.\nNår grunnlaget er tynt eller ufullstendig, skal du si det tydelig og formulere deg forsiktig.\nFremhev både styrker, mangler og realistiske neste steg på en måte som faglærer kan redigere videre.`;
 let state = {
   rubrikk: null,        // {kriterier, globalTerskler, hasK0}
   studenter: [],        // [{id, navn, klasse, notat}] – active kull's students
@@ -461,6 +484,7 @@ function resetDemoData(){
   if(!confirm('Nullstill lokale demoelever, rubrikk, vurderinger og kull på denne enheten?')) return;
   localStorage.removeItem(LS_KEY);
   state = {rubrikk:null,studenter:[],activeStudentId:null,oppgavetekst:null,vurderinger:{},importLog:[],kullId:null,kullNavn:'',otherKulls:[]};
+  document.getElementById('globalKiStyring').value=DEFAULT_LOCAL_KI_STYRING;
   renderAll();
   showStatus('Lokal demo er nullstilt.','ok');
 }
@@ -1321,7 +1345,7 @@ function downloadMal({download=true} = {}){
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(stdData), 'Studenter');
 
   // Oppgavetekst
-  const oppData = [oppgaveHeaders,['markdown','Fiktiv eksempeloppgave','## Oppgave\n\nVurder en fiktiv arbeidsprosess ved hjelp av rubrikken.']];
+  const oppData = [oppgaveHeaders,['markdown','Eksempeloppgave','## Oppgave\n\nSkriv en analyse av...']];
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(oppData), 'Oppgavetekst');
 
   if(download){ XLSX.writeFile(wb, 'vurderingsverktoy_mal.xlsx'); showStatus('Excel-mal lastet ned.','ok'); }
@@ -1348,6 +1372,7 @@ function renderAll(){
   renderKriteriePanel();
   renderWeightEditor();
   renderTopBar();
+  refreshAiActionUi();
   renderStudentNavStatus();
   renderImportkontroll();
   if(document.getElementById('panel-studenter').classList.contains('active')) renderStudentOversikt();
@@ -1738,6 +1763,7 @@ function setSvar(punktId, val){
   renderKriterieNav();
   renderKriteriePanel();
   renderTopBar();
+  refreshAiActionUi();
   renderStudentNavStatus();
 }
 
@@ -1764,7 +1790,13 @@ function setActiveStudent(id){
   renderStudentSelector();
   renderKriterieNav();
   renderKriteriePanel();
+  const currentRecord=id?getVurd(id):{};
+  document.getElementById('kiFremoverText').value=currentRecord.kiFremoverTekst||'';
+  document.getElementById('kiEndeligText').value=currentRecord.slutttekst||'';
+  document.getElementById('kiFremoverOut').classList.toggle('hidden',!currentRecord.kiFremoverTekst);
+  document.getElementById('kiEndeligOut').classList.toggle('hidden',!currentRecord.slutttekst);
   renderTopBar();
+  refreshAiActionUi();
   renderStudentNavStatus();
   const studentPanel = document.getElementById('panel-studenter');
   if(studentPanel && studentPanel.classList.contains('active')){
@@ -1775,11 +1807,85 @@ function setActiveStudent(id){
   if(btnFlytt) btnFlytt.style.display = (id && state.otherKulls.length > 0) ? '' : 'none';
 }
 
-function refreshAiActionUi(){}
+function refreshAiActionUi(){const complete=!!state.activeStudentId&&isComplete(state.activeStudentId);document.getElementById('btnKiEndelig').disabled=!complete;document.getElementById('btnKiEndeligCopy').disabled=!complete;document.getElementById('kiEndeligBadge').textContent=complete?'Vurdering komplett':'Krever fullstendig vurdering';}
 
 // ============================================================
 // EKSPORT
 // ============================================================
+function buildDataPrompt(type){
+  if(!state.rubrikk || !state.activeStudentId) return '';
+  const v=getVurd(state.activeStudentId);
+  const sections=[];
+  if(state.oppgavetekst?.body) sections.push('## Oppgavetekst\n'+state.oppgavetekst.body);
+  const lines=['## Registrerte vurderinger'];
+  for(const k of state.rubrikk.kriterier){
+    lines.push('\n### '+k.tittel+(k.isK0?' (Formelle krav)':''));
+    for(const p of k.punkter){
+      lines.push('- '+p.tekst+': '+(v.svar?.[p.id]||'Ikke besvart'));
+      if(v.stikkordP?.[p.id]) lines.push('  Stikkord: '+v.stikkordP[p.id]);
+    }
+    if(v.stikkordK?.[k.id]) lines.push('Stikkord for kriteriet: '+v.stikkordK[k.id]);
+  }
+  sections.push(lines.join('\n'));
+  sections.push('## Indikatorer\n- Samlet indikator: '+computeSamletIndikator(state.activeStudentId)+'\n- K0-status: '+(computeK0Status(state.activeStudentId)==='ok'?'Oppfylt':'Ikke oppfylt'));
+  sections.push(type==='underveis'?'Lag en kort fremovermelding: hva som er bra så langt, hva som mangler/svekker, konkrete neste steg.':'Lag et vurderingsutkast med helhetsvurdering, styrker, mangler/forbedringsområder, fremovermelding og K0-merknad ved behov.');
+  return sections.join('\n\n');
+}
+function buildAiClipboardText(type){
+  return ['--- SYSTEMPROMPT ---','Du er en faglig støtte for en norsk faglærer som vurderer studentarbeider.\nDu skal kun bruke det vurderingsgrunnlaget som er gitt til deg. Du skal ikke finne på nye kriterier, nye krav eller nytt bevisgrunnlag.\nDu skal ikke fastsette endelig karakter. Du er beslutningsstøtte, ikke dommer.\nAll tekst skal være på norsk.',document.getElementById('globalKiStyring')?.value||DEFAULT_LOCAL_KI_STYRING, '', '--- DATAPROMPT ---',buildDataPrompt(type)].join('\n');
+}
+function openKiPromptModal(text, intro){
+  const escaped=esc(text);
+  const modal=document.createElement('div'); modal.className='modal-backdrop open'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true');
+  modal.innerHTML='<div class="modal"><div class="modal-head"><h2>Promptgrunnlag – kopieres ikke automatisk</h2><button class="btn btn-sm" type="button" data-close>Lukk</button></div><div class="modal-body"><p>'+intro+'</p><textarea aria-label="Promptgrunnlag" readonly style="width:100%;min-height:220px">'+escaped+'</textarea><div class="row"><button class="btn btn-primary" type="button" data-copy>Kopier prompt</button><span class="hint" aria-live="polite"></span></div></div></div>';
+  document.body.appendChild(modal);
+  modal.querySelector('[data-close]').onclick=()=>modal.remove();
+  modal.querySelector('[data-copy]').onclick=async()=>{try{await navigator.clipboard.writeText(text);modal.querySelector('[aria-live]').textContent='Kopiert. Du velger selv om du limer inn teksten et annet sted.';}catch{modal.querySelector('textarea').focus();modal.querySelector('textarea').select();modal.querySelector('[aria-live]').textContent='Kopier teksten manuelt.';}};
+}
+function copyAiPrompt(type){
+  if(!state.activeStudentId || !state.rubrikk) return showStatus('Velg student og last inn rubrikk først.','error');
+  if(type==='endelig'&&!isComplete(state.activeStudentId)) return showStatus('Alle ikke-K0-punkt må besvares først.','error');
+  openKiPromptModal(buildAiClipboardText(type),'Kopieringen sender ikke data fra nettleseren. Promptgrunnlaget kan inneholde importert oppgavetekst, svar og stikkord.');
+}
+function copyKiFremoverPrompt(){copyAiPrompt('underveis');}
+function copyKiEndeligPrompt(){copyAiPrompt('endelig');}
+function localDraft(type){
+  const v=getVurd(state.activeStudentId);
+  const answered=[];
+  const unanswered=[];
+  const notes=[];
+  const formalAnswers=[];
+  for(const k of state.rubrikk.kriterier){
+    for(const p of k.punkter){
+      if(k.isK0){formalAnswers.push(k.tittel+' · '+p.tekst+': '+(v.svar?.[p.id]||'Ikke besvart'));continue;}
+      const answer=v.svar?.[p.id]||'';
+      (answer?answered:unanswered).push({criterion:k.tittel,point:p.tekst,answer});
+      if(v.stikkordP?.[p.id]) notes.push(k.tittel+' · '+p.tekst+': '+v.stikkordP[p.id]);
+    }
+    if(v.stikkordK?.[k.id]) notes.push(k.tittel+': '+v.stikkordK[k.id]);
+  }
+  const task=state.oppgavetekst?.body||'Ingen oppgavetekst er registrert.';
+  const answerFacts=answered.length?answered.map(x=>x.criterion+' · '+x.point+': '+x.answer).join('\n'):'Ingen ordinære svar er registrert.';
+  const noteFacts=notes.length?notes.join('\n'):'Ingen stikkord er registrert.';
+  const context='Oppgavetekst\n'+task+'\n\nRegistrerte svar\n'+answerFacts+'\n\nRegistrerte formelle svar\n'+(formalAnswers.join('\n')||'Ingen K0-punkt registrert.')+'\n\nRegistrerte stikkord\n'+noteFacts+'\n\nSamlet indikator: '+computeSamletIndikator(state.activeStudentId)+'\nK0-status: '+(computeK0Status(state.activeStudentId)==='ok'?'Oppfylt':'Ikke oppfylt');
+  if(type==='underveis'){
+    const todo=unanswered.length?unanswered.map(x=>x.criterion+' · '+x.point).join('\n'):'Ingen ubesvarte ordinære vurderingspunkt.';
+    return ['Hva som er bra så langt','Lokalt registreringsutdrag (ikke en faglig konklusjon):\n'+answerFacts,'Hva som mangler eller svekker','Ubesvart i rubrikken:\n'+todo,'Konkrete neste steg','Gå gjennom ubesvarte punkt og vurder de registrerte svarene/stikkordene opp mot oppgaveteksten.\n\nGrunnlag for manuell gjennomgang\n'+context].join('\n\n');
+  }
+  const missing=unanswered.length?unanswered.map(x=>x.criterion+' · '+x.point+' (ikke besvart)').join('\n'):'Ingen ubesvarte ordinære vurderingspunkt.';
+  return ['Helhetsvurdering','Registrert indikator: '+computeSamletIndikator(state.activeStudentId)+'. Dette er et lokalt strukturutkast, ikke en faglig avgjørelse.','Styrker','Svar som faglærer kan vurdere:\n'+answerFacts,'Mangler og forbedringsområder',missing,'Fremovermelding','Faglærer vurderer registrerte svar og stikkord opp mot oppgaveteksten og dokumenterer videre tilbakemelding.','K0-merknad',computeK0Status(state.activeStudentId)==='ok'?'Formelle krav: oppfylt.':'Formelle krav: ikke oppfylt.','Vurderingsgrunnlag (til kontroll)',context].join('\n\n');
+}
+function setKiStatus(id,text,kind='ok'){const el=document.getElementById(id);el.textContent=text;el.className='status-banner '+kind;el.classList.remove('hidden');}
+function genKiFremover(){if(!state.activeStudentId)return showStatus('Velg student først.','error');const out=localDraft('underveis');const el=document.getElementById('kiFremoverText');el.value=out;getVurd(state.activeStudentId).kiFremoverTekst=out;saveState();document.getElementById('kiFremoverOut').classList.remove('hidden');setKiStatus('kiFremoverStatus','Lokalt simulert strukturutkast opprettet – ingen KI-tjeneste ble kalt.');document.getElementById('kiFremoverTextStatus').textContent='Lagret lokalt for aktiv student.';}
+function genKiEndelig(){if(!state.activeStudentId||!isComplete(state.activeStudentId))return showStatus('Alle ikke-K0-punkt må besvares før sluttvurderingsutkast.','error');document.getElementById('kiEndeligText').value=localDraft('endelig');document.getElementById('kiEndeligOut').classList.remove('hidden');setKiStatus('kiEndeligStatus','Lokalt simulert strukturutkast opprettet – les og rediger før godkjenning.');document.getElementById('slutttekstStatus').textContent='Utkastet er ikke godkjent.';}
+function onKiFremoverEdit(){if(!state.activeStudentId)return;getVurd(state.activeStudentId).kiFremoverTekst=document.getElementById('kiFremoverText').value||null;saveState();document.getElementById('kiFremoverTextStatus').textContent='Redigert og lagret lokalt.';}
+function onSlutttekstEdit(){document.getElementById('slutttekstStatus').textContent='Redigert – ikke godkjent ennå.';}
+function godkjennSlutttekst(){if(!state.activeStudentId)return;getVurd(state.activeStudentId).slutttekst=document.getElementById('kiEndeligText').value;saveState();document.getElementById('slutttekstStatus').textContent='Slutttekst godkjent og lagret lokalt.';}
+function copySlutttekst(){const text=document.getElementById('kiEndeligText').value;if(!text)return;if(!navigator.clipboard?.writeText){showStatus('Kopier teksten manuelt.','warn');return;}navigator.clipboard.writeText(text).then(()=>showStatus('Slutttekst kopiert.','ok')).catch(()=>showStatus('Kopier teksten manuelt.','warn'));}
+function nullstillKiFremover(){if(!state.activeStudentId)return;getVurd(state.activeStudentId).kiFremoverTekst=null;saveState();document.getElementById('kiFremoverText').value='';document.getElementById('kiFremoverOut').classList.add('hidden');}
+function saveAiSettings(){const settings=state.localKiSettings||(state.localKiSettings={});settings.globalKiStyring=document.getElementById('globalKiStyring').value;saveState();}
+function resetKiSettings(){document.getElementById('globalKiStyring').value=DEFAULT_LOCAL_KI_STYRING;saveAiSettings();document.getElementById('kiSettingsStatus').textContent='Lokale innstillinger nullstilt.';}
+
 function exportTekst(){
   if(!state.rubrikk||!state.activeStudentId){showStatus('Velg student og last inn rubrikk.','error');return;}
   const student = state.studenter.find(s=>s.id===state.activeStudentId);
@@ -1825,6 +1931,13 @@ function exportTekst(){
     tekst += '\n';
   }
 
+  if(vurd.kiFremoverTekst){
+    tekst += '--- Fremovermelding underveis ---\n'+vurd.kiFremoverTekst+'\n\n';
+  }
+  if(vurd.slutttekst){
+    tekst += '--- Endelig vurdering (godkjent av faglærer) ---\n'+vurd.slutttekst+'\n\n';
+  }
+
   document.getElementById('eksportTekst').textContent = tekst;
   document.getElementById('eksportPreview').classList.remove('hidden');
   showStatus('Oppsummering generert.','ok');
@@ -1858,12 +1971,13 @@ function closeModal(id){
 // TAB HELPERS
 // ============================================================
 function showTab(name){
-  for(const t of ['studenter','vurdering','vekting','eksport']){
+  for(const t of ['studenter','vurdering','vekting','ki','eksport']){
     document.getElementById('panel-'+t).classList.toggle('active', t===name);
     const btn = document.getElementById('tab-'+t);
     btn.setAttribute('aria-selected', t===name?'true':'false');
   }
   if(name==='studenter') renderStudentOversikt();
+  if(name==='ki') refreshAiActionUi();
 }
 
 function startExcelImportFlow(){
@@ -2562,6 +2676,7 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape') for(const id of [
 // INIT
 // ============================================================
 loadState();
+if(state.localKiSettings?.globalKiStyring) document.getElementById('globalKiStyring').value=state.localKiSettings.globalKiStyring;
 if(!state.rubrikk){
   importFromWorkbook(downloadMal({download:false}), {freshImport:true});
   state.kullNavn = 'Syntetisk eksempelgruppe';
