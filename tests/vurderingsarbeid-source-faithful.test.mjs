@@ -17,7 +17,7 @@ test('assessment route cites exact source commit and replaces prior concept meta
   assert.match(entry.status, /Issue #2 delvis løst/);
   assert.match(entry.scope, /XLSX import/);
   assert.match(entry.sourceApiAuthStoragePrivacy, /localStorage/);
-  assert.equal(read('VERSION').trim(), '0.58.0');
+  assert.equal(read('VERSION').trim(), '0.59.0');
   assert.match(read('vibe/vurderingsarbeid-fagskolen/README.md'), new RegExp(sha));
 });
 
@@ -30,6 +30,8 @@ test('source workflows remain available with synthetic learners and local reset'
   assert.match(html, /Ikke importer ekte studentopplysninger/);
   assert.match(html, /localStorage\.removeItem\(LS_KEY\)/);
   assert.match(html, /localStorage\.setItem\(LS_KEY/);
+  assert.match(html, /student-oversikt-table-scroll/);
+  assert.match(html, /overflow-x:auto/);
   assert.ok(statSync(path.join(root, 'vibe/vurderingsarbeid-fagskolen/assets/xlsx.full.min.js')).isFile());
 });
 

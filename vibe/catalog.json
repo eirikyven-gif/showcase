@@ -722,7 +722,7 @@
       "sourceTests": "Ingen kilde-testkommando identifisert i committen. Showcase-kopien dekkes av tests/vurderingsarbeid-source-faithful.test.mjs og repoets fulle Node-testløp.",
       "sourceApiAuthStoragePrivacy": "Kilden inneholder Gemini/OpenAI/Claude API-kall og API-nøkkelinnstillinger, samt localStorage for datasett og vurderinger. Showcase har fjernet KI, provider-endepunkter, nøkler, auth og serverfunksjoner. Vurderingsendringer lagres kun i localStorage på brukerens enhet; siden varsler om lokal lagring/Excel og har Nullstill demo. Importerte filer behandles lokalt; XLSX-biblioteket er lokalt vendoret.",
       "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse ble identifisert i appmaterialet som ble gjennomgått; rettighetsgrunnlaget for kildekode/UI bør avklares.",
-      "routeState": "Eksisterende /vibe/vurderingsarbeid-fagskolen/ konseptrute erstattes in-place. Task baseline VERSION 0.56.0; rebased on current main VERSION 0.57.0; showcase bump 0.58.0. #2 delvis løst. Isolert PR; ikke merge/deploy."
+      "routeState": "Eksisterende /vibe/vurderingsarbeid-fagskolen/ konseptrute erstattes in-place. Task baseline VERSION 0.56.0; rebased on current main VERSION 0.58.0; showcase bump 0.59.0. #2 delvis løst. Isolert PR; ikke merge/deploy."
     },
     {
       "slug": "gruppegenerator",

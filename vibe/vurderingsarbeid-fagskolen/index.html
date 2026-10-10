@@ -102,7 +102,7 @@ ul.import-list{padding-left:18px;margin:6px 0;}
 ul.import-list li{font-size:14px;margin-bottom:4px;}
 .ai-output{font-size:15px;line-height:1.7;white-space:pre-wrap;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--s3);}
 .student-selector{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-bottom:var(--s4);}
-.student-selector select{min-height:var(--s7);border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 12px;font-size:15px;font-family:var(--font);}
+.student-selector select{min-height:var(--s7);min-width:0;max-width:100%;flex:1 1 240px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 12px;font-size:15px;font-family:var(--font);}
 .student-oversikt-tools{display:flex;gap:var(--s3);align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:var(--s3);}
 .student-oversikt-search{flex:1 1 260px;max-width:420px;margin-bottom:0;}
 .student-oversikt-search .row{justify-content:flex-start;}
@@ -110,6 +110,7 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
 .student-oversikt-filter{flex:1 1 150px;min-width:150px;margin-bottom:0;}
 .student-oversikt-filter-actions{display:flex;align-items:flex-end;margin-bottom:0;}
 .student-oversikt-resultat{margin:0;color:var(--muted);font-size:13px;flex:1 1 100%;}
+.student-oversikt-table-scroll{max-width:100%;overflow-x:auto;}
 @media(max-width:640px){.topbar{gap:var(--s2);}.page{padding:var(--s3);}.student-oversikt-tools{align-items:stretch;}.student-oversikt-search{max-width:none;}.student-oversikt-filters{flex-direction:column;align-items:stretch;}.student-oversikt-filter,.student-oversikt-filter-actions{width:100%;}}
 </style>
 </head>
@@ -2211,7 +2212,12 @@ function renderStudentOversikt(){
   }
   table.appendChild(tbody);
   el.innerHTML = '';
-  el.appendChild(table);
+  const tableScroll = document.createElement('div');
+  tableScroll.className = 'student-oversikt-table-scroll';
+  tableScroll.setAttribute('role', 'region');
+  tableScroll.setAttribute('aria-label', 'Studentoversikt-tabell, rull horisontalt ved behov');
+  tableScroll.appendChild(table);
+  el.appendChild(tableScroll);
 }
 
 function aapneStudent(id){

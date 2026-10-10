@@ -10,12 +10,12 @@ Importer og eksporter rubrikk/datasett som Excel, gi rubrikksvar med kriterievek
 
 Excel-filer leses og skrives i nettleseren. Vurderingsendringer lagres i nettleserens `localStorage` på denne enheten; de sendes ikke til en server. Ikke importer ekte studentopplysninger. «Nullstill demo» fjerner demoens lagrede data. Eldre leverandørnøkkelposter fra tidligere versjoner av denne ruten fjernes ved innlasting.
 
-KI-funksjoner, provider-endepunkter, API-nøkler, autentisering og serverfunksjoner fra kilden er tatt ut. XLSX-biblioteket er bundlet lokalt i `assets/`; ingen CDN eller annen ekstern runtime-ressurs brukes.
+Ikke portert: KI-generering/manuell KI-promptflyt, provider-endepunkter og nøkkelinnstillinger, autentisering, serverfunksjoner og ekstern synkronisering. KI/API-nøkler er tatt helt ut. XLSX-biblioteket er bundlet lokalt i `assets/`; ingen CDN eller annen ekstern runtime-ressurs brukes.
 
 ## QA og deploy
 
-Kjør `node --test tests/vurderingsarbeid-source-faithful.test.mjs` og `node --test tests/*.test.mjs` (103 tester bestod). Chromium/Playwright QA ved 1365px og 375px bekreftet at eksempelrubrikk og to syntetiske elever åpnes, A har 5/5 svar, studentoversikten viser progresjon, oppretting/flytting til kull virker, datasetteksport kan importeres igjen, og Nullstill demo går tilbake til tom tilstand. Mobilvisning har ikke horisontal overflow. Konsollfeil: 0; nettverksforespørsler: side og lokal XLSX-fil, ingen eksterne forespørsler. QA omfatter ikke full WCAG-gjennomgang eller manuell validering av alle mulige Excel-varianter. Endringen løser Issue #2 delvis. Isolert PR; ingen merge eller deploy.
+Kjør `node --test tests/vurderingsarbeid-source-faithful.test.mjs` og `node --test tests/*.test.mjs` (105 tester bestod). Chromium/Playwright QA ved 1365px og 375px bekreftet at eksempelrubrikk og to syntetiske elever åpnes, A har 5/5 svar, studentoversikten filtrerer søk og viser progresjon, individuell vurderingsnullstilling og oppretting/flytting til kull virker, datasetteksport kan importeres igjen, og Nullstill demo går tilbake til tom tilstand. Mobilvisning har ikke horisontal overflow. Konsollfeil: 0; nettverksforespørsler: side og lokal XLSX-fil, ingen eksterne forespørsler. QA omfatter ikke full WCAG-gjennomgang eller manuell validering av alle mulige Excel-varianter. Endringen løser Issue #2 delvis. Isolert PR; ingen merge eller deploy.
 
 ## Kilde og usikkerhet
 
-Tasken startet på showcase v0.56.0; PR-grenen ble rebased på dagens main v0.57.0. SemVer-bumpen er v0.58.0. Kilde-README, `app/vurderingsverktoy.html`, SSoT v0.1.17 og KI-datagrunnlagsnotatet ble lest ved oppgitt SHA. Ingen kildetestkommando ble identifisert. Lisens eller eksplisitt gjenbrukstillatelse ble ikke funnet i gjennomgått appmateriale; rettighetsstatus er uavklart.
+Tasken startet på showcase v0.56.0; PR-grenen ble rebased på dagens main v0.58.0. SemVer-bumpen er v0.59.0. Kilde-README, `app/vurderingsverktoy.html`, SSoT v0.1.17 og KI-datagrunnlagsnotatet ble lest ved oppgitt SHA. Ingen kildetestkommando ble identifisert. Lisens eller eksplisitt gjenbrukstillatelse ble ikke funnet i gjennomgått appmateriale; rettighetsstatus er uavklart.
