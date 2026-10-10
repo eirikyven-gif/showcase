@@ -1,45 +1,33 @@
 <!doctype html>
-<html lang="no">
+<html lang="nb">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#a9283c">
+  <meta name="theme-color" content="#101a24">
   <title>Presentasjonsvisning · Vibe</title>
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#innhold">Hopp til innhold</a>
-  <header class="site-header">
-    <a class="brand" href="/vibe/" aria-label="Vibe – tilbake til oversikten">Vibe<span> / visning</span></a>
-    <a class="header-note" href="/vibe/">Tilbake til oversikten</a>
-  </header>
-  <main id="innhold" class="page-shell">
-    <section class="intro" aria-labelledby="sidetittel">
-      <p class="eyebrow">Presentasjonsvisning · eksempel</p>
-      <h1 id="sidetittel">En liten <span>værstasjon.</span></h1>
-      <p class="intro-copy">Et oppdiktet lysbildesett om hvordan en nabolagsgruppe kan følge med på været. Bruk knappene eller piltastene for å bla.</p>
+  <a class="skip-link" href="#content">Hopp til innhold</a>
+  <header class="site-header"><a class="brand" href="/vibe/">Vibe<span> / visning</span></a><a class="header-note" href="/vibe/">Tilbake til oversikten</a></header>
+  <main id="content" class="shell">
+    <p class="eyebrow">Presentasjonsvisning · lokal demonstrasjon</p>
+    <h1>To visninger, <span>ett lysbildesett.</span></h1>
+    <p class="lede">Utforsk student- og lærervisning, automatisk fremdrift, synkroniseringsstatus, fullskjerm og et tidsstyrt bingoeksempel.</p>
+    <nav class="view-tabs" aria-label="Velg visning"><button type="button" data-view="student" aria-pressed="true">Studentvisning</button><button type="button" data-view="larer" aria-pressed="false">Lærervisning</button></nav>
+    <section class="stage-wrap" aria-label="Presentasjon">
+      <div class="stage-head"><span id="view-label">Studentvisning</span><time id="clock" aria-label="Klokkeslett i Oslo"></time><button id="fullscreen" type="button">Fullskjerm</button></div>
+      <div id="stage" class="stage" role="region" aria-label="Studentvisning" aria-live="polite"></div>
+      <div class="slide-controls"><button id="previous" type="button" aria-label="Forrige lysbilde">Forrige</button><p id="counter" aria-live="polite">Lysbilde 1 av 1</p><button id="next" type="button" aria-label="Neste lysbilde">Neste</button></div>
     </section>
-    <section class="presentation" aria-label="Lysbilder">
-      <div class="slide" id="slide" role="group" aria-roledescription="lysbilde" aria-live="polite" aria-atomic="true" aria-labelledby="slide-title">
-        <p class="slide-kicker" id="slide-kicker">01 · Se etter mønstre</p>
-        <h2 id="slide-title">Været forteller en historie</h2>
-        <p class="slide-copy" id="slide-copy">En enkelt måling er et øyeblikksbilde. Flere målinger over tid gjør det lettere å se hva som forandrer seg.</p>
-        <div class="visual" id="visual" aria-hidden="true">
-          <span class="sun"></span><span class="cloud cloud-one"></span><span class="cloud cloud-two"></span>
-          <span class="rain rain-one"></span><span class="rain rain-two"></span><span class="rain rain-three"></span>
-          <span class="visual-caption">Mål · noter · sammenlign</span>
-        </div>
-      </div>
-      <div class="controls" aria-label="Lysbildekontroller">
-        <button type="button" id="previous" aria-label="Forrige lysbilde">Forrige</button>
-        <p class="counter" id="counter" aria-live="polite">Lysbilde 1 av 3</p>
-        <button type="button" id="next" aria-label="Neste lysbilde">Neste</button>
-      </div>
-      <p class="keyboard-hint">Tastatur: bruk venstre og høyre piltast.</p>
+    <section class="settings panel" aria-labelledby="settings-title"><div><p class="eyebrow">Lokal kontrollflate</p><h2 id="settings-title">Visningsinnstillinger</h2><p>Juster hvor ofte lysbildet byttes og hvor ofte visningen sjekker etter en ny versjon.</p></div>
+      <div class="settings-grid"><label>Bytt lysbilde etter (sekunder)<input id="slide-seconds" type="number" min="5" max="3600" value="30"></label><label>Sjekk etter ny versjon (sekunder)<input id="manifest-seconds" type="number" min="15" max="3600" value="60"></label><button id="save-settings" type="button">Bruk innstillinger</button><button id="reset-settings" type="button" class="secondary">Tilbakestill</button></div>
+      <p id="settings-message" class="notice" aria-live="polite">Innstillingene gjelder bare mens siden er åpen. Ingenting lagres.</p>
     </section>
-    <p class="synthetic-note">Dette er en selvstendig, fiktiv demonstrasjon. Lysbildene er ikke godkjent undervisningsinnhold og er ikke hentet fra kildens presentasjoner.</p>
+    <details class="panel bingo"><summary>Tidsstyrt bingo · prøv en simulert onsdag</summary><p>På onsdager mellom 11:45 og 12:15 viser kilden en nedtelling og deretter bingoflate. Her er den samme tidsstyringen med oppdiktede betalingsdetaljer.</p><button id="bingo-preview" type="button">Start bingoeksempel i 20 sekunder</button><button id="stop-preview" class="secondary" type="button" hidden>Avslutt eksempel</button><span id="preview-status" aria-live="polite"></span></details>
+    <p class="privacy-note"><strong>Demo:</strong> lysbildene og bingodetaljene er syntetiske og ikke godkjent undervisningsinnhold. Produksjonsinnlogging, Google-koblinger, opplastinger, eksterne kall og serverlagring er ikke med.</p>
   </main>
   <footer class="site-footer"><span>Presentasjonsvisning · Vibe</span><a href="/vibe/">Til oversikten</a></footer>
 </body>
