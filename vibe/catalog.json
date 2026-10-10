@@ -170,23 +170,28 @@
     },
     {
       "slug": "wp-l-ringssti",
-      "name": "Plantekasse på papir",
-      "useCase": "Prøv en kort, oppdiktet læringsmodul med forklaring og kontrollspørsmål.",
-      "category": "Utdanning",
+      "name": "WP Læringssti · modulbygger og elevflyt",
+      "useCase": "Bygg en modulbasert læringssti med innholdselementer, og prøv den steg for steg som deltaker.",
+      "category": "Utdanning og læringsverktøy",
       "audience": [
         "Undervisere",
         "Studenter",
-        "Personer som utforsker læringsgrensesnitt"
+        "Personer som lager modulbasert læringsinnhold"
       ],
-      "status": "Beholdt i bred kandidatgjennomgang; original konseptdemo laget. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Offentlig repo WP-l-ringssti: main viser README og ZIP v0.5.6. ZIP-dokumentasjon og pluginfil spriker om quizstatus; tidligere inventar beskriver bredere v0.4.x–0.5.x-status, planlagt WordPress-autentisering og Google Sheet-sync, samt servervalidert quiz. Test- og deploystatus er ikke bekreftet. Se README.",
-      "purpose": "Illustrere en liten læringsflyt med modultekst og quiztilbakemelding.",
-      "demoValue": "Gjør en læringssti med modulstruktur og umiddelbar tilbakemelding konkret i en selvstendig statisk demo.",
-      "simplifications": "Én original, fiktiv modul om å planlegge en plantekasse og ett flervalgs spørsmål. Ingen pluginredigering, WordPress-blokker eller kildeinnhold.",
-      "risk": "Kildeproduktet kan berøre student- og aktivitetsdata; faktisk utrulling og databruk er ikke verifisert, og kildedokumentasjonen spriker. Demoen bruker syntetisk innhold og samler ikke inn studentaktivitet eller persondata.",
-      "scope": "Selvstendig HTML/CSS/JS på /vibe/wp-l-ringssti/. Ingen WordPress/PHP, autentisering, Sheet-sync, API, backend, servervalidert quiz, aktivitetssporing, personlig data, lagring, hemmeligheter eller eksterne forespørsler. Valg finnes kun midlertidig i fanen.",
-      "source": "eirikyven-gif/WP-l-ringssti, offentlig main og ZIP wp-learningsti-mvp_v0.5.6.zip (lest 2026-10-08); versjons- og funksjonsusikkerhet dokumentert i rutens README.",
-      "separation": "WordPress-plugin-kandidaten WP-l-ringssti er separat fra WP-laringssti v0.9-webappen og fra Vibe-demoen laringssti-fagskolen."
+      "status": "Tro funksjonskopi av observerbar v0.5.6-oppførsel; statisk Showcase-demo med syntetiske data. Én app per isolert PR. Issue #2 delvis løst.",
+      "sourceUncertainty": "Kildearkivets README.txt sier at quiz/case ikke finnes i v0.5.6, men PHP og frontend-JavaScript implementerer quiz, case og KI-stubber. Import-masterloggen beskriver modulvis playerflyt ved v0.5.6. Funksjonsgrunnlag følger faktisk arkivkode; spriket er bevart som usikkerhet.",
+      "purpose": "WordPress/Gutenberg-plugin for redigering av læringsstier med moduler, innholdselementer, global tidslinje og tilknyttet media; arkivets frontend har modulvis playerflyt, quiz, case og KI-stubber.",
+      "demoValue": "Lar besøkende gjennomføre en modul og prøve hovedområdene i editoren: moduler, elementtyper, tidslinje og sti-media.",
+      "simplifications": "WordPress-administrasjon og frontend er samlet som to lokale visninger. Eksempelstien er syntetisk. Redigering, modulstatus, quizresultat og utkast er bare i minnet. Media er illustrasjoner; KI-knapper forklarer at tjenesten ikke er tilkoblet.",
+      "risk": "Kilden er WordPress-plugin med autentiserte adminoperasjoner, serverlagring og AJAX. Quizfasit flyttes til klienten i demoen, derfor quiz ikke sikker vurdering. Kildens ZIP-README og implementasjon spriker om quiz/case. Ingen kursdata eller personopplysninger finnes i Showcase-kopien.",
+      "scope": "Selvstendig statisk HTML/CSS/JavaScript på /vibe/wp-l-ringssti/. Ingen eksterne forespørsler, WordPress/PHP, autentisering, cookies, nettleserlagring, serverlagring, API, persondata eller secrets. Alle handlinger er midlertidige i JavaScript-minne.",
+      "source": "eirikyven-gif/WP-l-ringssti, offentlig main, fil wp-learningsti-mvp_v0.5.6.zip; komplett arkiv lest 2026-10-10. Source repo er ikke endret.",
+      "separation": "Denne ruta modellerer WordPress-pluginen WP-l-ringssti fra arkivet v0.5.6. Den er ikke WP-laringssti v0.9-webappen eller den separate showcase-ruta laringssti-fagskolen.",
+      "sourceStack": "WordPress/PHP-plugin med Gutenberg-blokk, JavaScript-admin/editor og statisk frontend-CSS/JS; admin- og quizhandlinger bruker WordPress AJAX.",
+      "sourceTests": "Kilde-ZIP inneholder ingen testfiler eller testoppsett. Showcase har fokusert node:test for rute, funksjonsdekning, personvernflater, responsivitet og katalogmetadata.",
+      "sourceApiAuthStoragePrivacy": "Pluginen registrerer autentisert WP-admin AJAX for lesing/lagring av konfigurasjon og medietagging; quizkontroll bruker AJAX. Admin krever WordPress capabilities og nonce. Pluginen lagrer konfigurasjon server-side og media i WP attachment-meta. Masterloggen beskriver lokal lagring av caseutkast og player-/UI-state. Showcase fjerner alt dette og utfører ingen nettverkskall eller browser persistence.",
+      "rightsUncertainty": "Kilderepoet har ingen lisensfil eller lisensmetadata i gjennomgått innhold. Demoens kode og syntetiske eksempeltekst er skrevet selvstendig; ingen ZIP-kildekode eller mediefiler er kopiert.",
+      "routeState": "Eksisterende unik rute på showcase main 9a2bfb629b39498507458dfa0500961fd55d76db. Denne PR-en erstatter konseptplaceholder med funksjonell statisk kopi; katalogruten beholdes."
     },
     {
       "slug": "ns3424-lab",
