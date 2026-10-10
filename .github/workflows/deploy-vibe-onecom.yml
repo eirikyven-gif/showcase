@@ -26,7 +26,6 @@ jobs:
       ONECOM_HOST: ${{ vars.ONECOM_HOST }}
       ONECOM_USER: ${{ secrets.ONECOM_SSH_USER || vars.ONECOM_USER }}
       ONECOM_SSH_PASSWORD: ${{ secrets.ONECOM_SSH_PASSWORD }}
-      ONECOM_SSH_KEY: ${{ secrets.ONECOM_SSH_KEY }}
       ONECOM_SSH_PORT: ${{ vars.ONECOM_SSH_PORT || '22' }}
       ONECOM_PUBLIC_BASE_URL: ${{ vars.ONECOM_PUBLIC_BASE_URL || 'https://yven.me' }}
       DEPLOY_TARGET_PATH: /customers/3/3/f/yven.me/httpd.www/vibe/
@@ -86,7 +85,7 @@ jobs:
           set -euo pipefail
           [ -n "${ONECOM_HOST:-}" ] || { echo 'Missing ONECOM_HOST repository variable'; exit 1; }
           [ -n "${ONECOM_USER:-}" ] || { echo 'Missing ONECOM_SSH_USER secret or ONECOM_USER variable'; exit 1; }
-          [ -n "${ONECOM_SSH_PASSWORD:-}${ONECOM_SSH_KEY:-}" ] || { echo 'Set ONECOM_SSH_PASSWORD or ONECOM_SSH_KEY'; exit 1; }
+          [ -n "${ONECOM_SSH_PASSWORD:-}" ] || { echo 'Set ONECOM_SSH_PASSWORD'; exit 1; }
 
       - name: Setup SSH
         if: env.DRY_RUN != 'true'
@@ -95,15 +94,8 @@ jobs:
           set -euo pipefail
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          if [ -n "${ONECOM_SSH_KEY:-}" ]; then
-            printf '%s\n' "$ONECOM_SSH_KEY" > ~/.ssh/id_ed25519
-            chmod 600 ~/.ssh/id_ed25519
-            echo 'SSH_AUTH_MODE=key' >> "$GITHUB_ENV"
-          else
-            sudo apt-get update
-            sudo apt-get install -y sshpass
-            echo 'SSH_AUTH_MODE=password' >> "$GITHUB_ENV"
-          fi
+          sudo apt-get update
+          sudo apt-get install -y sshpass
           ssh-keyscan -p "$ONECOM_SSH_PORT" "$ONECOM_HOST" >> ~/.ssh/known_hosts
           test -s ~/.ssh/known_hosts || { echo 'Could not retrieve the one.com SSH host key'; exit 1; }
           chmod 600 ~/.ssh/known_hosts
@@ -114,26 +106,14 @@ jobs:
         run: |
           set -euo pipefail
           run_ssh() {
-            if [ "$SSH_AUTH_MODE" = 'key' ]; then
-              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$1"
-            else
-              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$1"
-            fi
+            SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$1"
           }
           upload_via_ssh() {
-            if [ "$SSH_AUTH_MODE" = 'key' ]; then
-              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "cat > '$2'" < "$1"
-            else
-              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "cat > '$2'" < "$1"
-            fi
+            SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "cat > '$2'" < "$1"
           }
           run_ssh_script() {
             remote_command="bash -s -- '$target' '$stage' '$backup' '$remote_package' '$route_slugs'"
-            if [ "$SSH_AUTH_MODE" = 'key' ]; then
-              ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
-            else
-              SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
-            fi
+            SSHPASS="$ONECOM_SSH_PASSWORD" sshpass -e ssh -p "$ONECOM_SSH_PORT" "$ONECOM_USER@$ONECOM_HOST" "$remote_command"
           }
           route_slugs="$VIBE_ROUTE_SLUGS"
           run_id="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
