@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Prøv en enkel bingorunde med et syntetisk brett.">
+  <meta name="description" content="Utforsk en lokal, syntetisk Bingo-demo med offentlig ukevisning og administrasjon.">
   <title>Bingo · Vibe</title>
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/bingo/bingo.css">
@@ -12,20 +12,55 @@
 <body>
   <a class="skip-link" href="#main">Hopp til innhold</a>
   <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
-  <main id="main" class="bingo-shell">
-    <p class="eyebrow">Et lite spill på papir</p>
-    <h1>Bingo,<br><span>bare for gøy.</span></h1>
-    <p class="lead">Marker rutene etter hvert som tallene ropes opp. Dette er et syntetisk eksempelbrett; ingenting blir lagret.</p>
-    <section class="game" aria-labelledby="board-title">
-      <div class="game-heading"><div><p class="eyebrow">Eksempelrunde · 5 × 5</p><h2 id="board-title">Ditt bingobrett</h2></div><button id="reset" class="reset-button" type="button">Nullstill brettet</button></div>
-      <div class="board" role="group" aria-label="Bingobrett. Velg rutene du har hørt.">
-        <div class="letters" aria-hidden="true"><span>B</span><span>I</span><span>N</span><span>G</span><span>O</span></div>
-        <div id="cells" class="cells"></div>
-      </div>
-      <p id="status" class="status" role="status" aria-live="polite">Velg en rute for å markere den. Midtruten er fri.</p>
+  <main id="main" class="page-shell bingo-shell">
+    <section class="intro bingo-intro" aria-labelledby="page-title">
+      <p class="eyebrow">Spill og arrangement</p>
+      <h1 id="page-title">Ukens <span>Bingo.</span></h1>
+      <p class="intro-copy">En syntetisk forhåndsvisning av Bingo-flyten: ukens publisering, tallbrett, navnebrett og administrasjon av brettverdier.</p>
     </section>
-    <p class="fine-print">Demoen bruker kun et fast eksempelbrett og midlertidige valg i denne fanen.</p>
+
+    <nav class="view-tabs" aria-label="Bingovisning">
+      <button type="button" class="tab is-active" id="public-tab" aria-pressed="true">Offentlig side</button>
+      <button type="button" class="tab" id="admin-tab" aria-pressed="false">Admin-demo</button>
+    </nav>
+
+    <section id="public-view" class="view-panel" aria-labelledby="public-title">
+      <div class="section-heading"><div><p class="eyebrow">Offentlig nedlasting</p><h2 id="public-title">Aktiv uke <span id="week-public"></span></h2></div><span class="status-pill"><span aria-hidden="true">●</span> Eksempelpublisering</span></div>
+      <p class="body-copy">Her vises de to brettene som i en ukentlig publisering. Filene bygges lokalt fra tydelig merkede eksempelverdier og sendes ingen steder.</p>
+      <dl class="publish-meta"><dt>Publisert</dt><dd id="published-at"></dd><dt>Utløper</dt><dd id="expires-at"></dd></dl>
+      <div class="download-grid">
+        <article class="download-card"><div class="card-icon" aria-hidden="true">01</div><div><h3>Tallbrett</h3><p>A4 liggende · B, I, N, G, O · 1–75 · 30 brett</p><button type="button" class="button download-button" data-download="tall">Skriv ut / lagre tallbrett som PDF</button></div></article>
+        <article class="download-card"><div class="card-icon" aria-hidden="true">02</div><div><h3>Navnebrett</h3><p>A4 stående · eksempelnavn fordelt på BINGO · 30 brett</p><button type="button" class="button download-button" data-download="name">Skriv ut / lagre navnebrett som PDF</button></div></article>
+      </div>
+      <p class="privacy-note"><strong>Eksempeldata:</strong> uke, navn, betalingslinjer, QR og logo er syntetiske. PDF-forhåndsvisningen bygges lokalt, uten opplasting. <button type="button" class="text-reset" id="reset-demo-public">Nullstill alle lokale demodata</button></p>
+      <div class="board-section"><div class="section-heading"><div><p class="eyebrow">Utskriftsmal</p><h2>Forhåndsvis brettene</h2></div><button type="button" class="button secondary" id="print-board">Skriv ut / lagre tallbrett som PDF</button></div>
+        <div class="preview-grid" id="public-previews">
+          <article class="preview-card"><div class="preview-title-row"><h3>Tallbrett · A4 liggende</h3><div class="board-controls"><button type="button" class="step-button" data-step="tall" data-delta="-1" aria-label="Forrige tallbrett">←</button><span id="tall-index" aria-live="polite">Brett 1 av 30</span><button type="button" class="step-button" data-step="tall" data-delta="1" aria-label="Neste tallbrett">→</button></div></div><div class="paper paper-landscape" id="public-number-preview" aria-label="Forhåndsvisning av syntetisk tallbrett"></div></article>
+          <article class="preview-card"><div class="preview-title-row"><h3>Navnebrett · A4 stående</h3><div class="board-controls"><button type="button" class="step-button" data-step="name" data-delta="-1" aria-label="Forrige navnebrett">←</button><span id="name-index" aria-live="polite">Brett 1 av 30</span><button type="button" class="step-button" data-step="name" data-delta="1" aria-label="Neste navnebrett">→</button></div></div><div class="paper paper-portrait" id="public-name-preview" aria-label="Forhåndsvisning av syntetisk navnebrett"></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="admin-view" class="view-panel" aria-labelledby="admin-title" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Lokal simulering</p><h2 id="admin-title" tabindex="-1">Bingo-administrasjon</h2></div><span class="status-pill">Demomodus</span></div>
+      <div class="simulation-banner"><strong>Ingen innlogging i denne kopien.</strong> «Åpne admin» simulerer den syntetiske rollen «Bingo-arrangør». Innstillinger lagres bare i denne nettleseren for å bevare arbeidsflyten; de sendes ikke til server.</div>
+      <div id="admin-locked" class="admin-entry"><p>Adminfunksjonene i kilden er adskilt fra offentlig nedlasting. Her kan du prøve de tilsvarende innstillingene med lokale eksempelverdier.</p><button type="button" class="button" id="open-admin">Åpne admin-demo</button></div>
+      <div id="admin-workspace" hidden>
+        <div class="admin-topline"><div><h3>Innstillinger og aktiv uke</h3><p id="admin-summary"></p></div><div class="admin-actions"><button type="button" class="button secondary" id="close-admin">Lukk admin-demo</button><button type="button" class="button danger" id="reset-demo">Nullstill alle demodata</button></div></div>
+        <div class="settings-grid">
+          <section class="settings-card" aria-labelledby="payment-title"><h3 id="payment-title">Betalingstekst</h3><label for="payment-info">Tekst som vises på begge brettene</label><textarea id="payment-info" rows="4" maxlength="240" aria-describedby="payment-help">Syntetisk eksempel: betaling er ikke aktiv.
+Ikke bruk ekte kontonummer eller betalingsopplysninger.</textarea><p id="payment-help" class="field-help">Linjeskift beholdes i forhåndsvisningen. Ikke skriv inn reelle betalingsdetaljer.</p><button type="button" class="button" id="save-settings">Oppdater forhåndsvisning</button></section>
+          <section class="settings-card" aria-labelledby="assets-title"><h3 id="assets-title">Bildeverdier</h3><label for="qr-file">Syntetisk QR-bilde (PNG/JPEG/SVG)</label><input id="qr-file" type="file" accept="image/png,image/jpeg,image/svg+xml"><label for="logo-file">Syntetisk BINGO-logo (PNG/JPEG/SVG)</label><input id="logo-file" type="file" accept="image/png,image/jpeg,image/svg+xml"><p class="field-help">Bilder lagres lokalt i nettleseren og vises i begge malene. Bruk kun syntetiske bilder uten person- eller betalingsopplysninger.</p></section>
+        </div>
+        <div class="generate-card"><div><h3>Ukesgenerering</h3><p>Produksjonskilden bruker Google Apps Script. Denne handlingen lager kun en lokal statuskvittering med syntetiske verdier.</p></div><button type="button" class="button" id="generate-week">Simuler generering av ukens brett</button></div>
+        <p id="admin-message" class="status-message" role="status" aria-live="polite">Endringer vises i forhåndsvisningen med en gang.</p>
+        <div class="board-section"><div class="section-heading"><div><p class="eyebrow">Samme mal for begge brett</p><h2>Forhåndsvisning</h2></div></div>
+          <div class="preview-grid"><article class="preview-card"><div class="preview-title-row"><h3>Navnebrett · A4 stående</h3><div class="board-controls"><button type="button" class="step-button" data-step="name" data-delta="-1" aria-label="Forrige navnebrett">←</button><span id="admin-name-index" aria-live="polite">Brett 1 av 30</span><button type="button" class="step-button" data-step="name" data-delta="1" aria-label="Neste navnebrett">→</button></div></div><div class="paper paper-portrait" id="admin-name-preview" aria-label="Adminforhåndsvisning av navnebrett"></div></article><article class="preview-card"><div class="preview-title-row"><h3>Tallbrett · A4 liggende</h3><div class="board-controls"><button type="button" class="step-button" data-step="tall" data-delta="-1" aria-label="Forrige tallbrett">←</button><span id="admin-tall-index" aria-live="polite">Brett 1 av 30</span><button type="button" class="step-button" data-step="tall" data-delta="1" aria-label="Neste tallbrett">→</button></div></div><div class="paper paper-landscape" id="admin-number-preview" aria-label="Adminforhåndsvisning av tallbrett"></div></article></div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer"><a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a><p>Et syntetisk spill, uten premier eller innsamling.</p></footer>
+  <p class="demo-disclaimer">Vibe-demo · Nettleserlagring er lokal og kan fjernes med «Nullstill alle demodata». Ingen serverlagring, kontoer eller ekte publiseringer.</p>
+  <footer class="site-footer"><a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a><p><a href="/vibe/">Tilbake til Vibe</a></p></footer>
 </body>
 </html>

@@ -19,5 +19,7 @@ test('Bingo assessment records source-side services and keeps the showcase route
   assert.match(app.sourceApiAuthStoragePrivacy, /hemmelig token/);
   assert.match(app.rightsUncertainty, /Ingen lisens/);
   assert.match(app.routeState, /Unik statisk/);
-  assert.doesNotMatch(`${read('vibe/bingo/index.html')}\n${read('vibe/bingo/bingo.js')}`, /fetch\s*\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|https?:\/\//i);
+  const runtime = `${read('vibe/bingo/index.html')}\n${read('vibe/bingo/bingo.js')}`;
+  assert.doesNotMatch(runtime, /fetch\s*\(|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie|https?:\/\//i);
+  assert.match(runtime, /localStorage\.removeItem\(STORE_KEY\)/);
 });
