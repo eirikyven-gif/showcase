@@ -18,4 +18,4 @@ Ingen lisens eller gjenbrukstillatelse fremgår av kildefilene som ble gjennomg�
 
 ## QA og status
 
-Automatiserte kontroller: `node --test tests/ns3424-arkivdemo.test.mjs` og hele CI-settet `node --test tests/*.test.mjs`. Nettleser-QA kontrollerer rutevisning, case-/risikoflyt, quiz og nullstilling dersom Playwright/Chromium er tilgjengelig. Kildens egne tester/CI ble ikke funnet eller kjørt. Endringen øker showcase fra v0.58.0 til v0.59.0. Issue #2 er delvis adressert. PR opprettes for review; ingen merge eller deploy er utført.
+Automatiserte kontroller: `node --test tests/ns3424-arkivdemo.test.mjs` og hele CI-settet `node --test tests/*.test.mjs`. Nettleser-QA kontrollerer rutevisning, case-/risikoflyt, quiz og nullstilling dersom Playwright/Chromium er tilgjengelig. Kildens egne tester/CI ble ikke funnet eller kjørt. PR #92 oppdateres mot showcase main `108b0ab`, fra v0.59.0 til v0.60.0. Issue #2 er delvis adressert. PR #92 er åpen for review; ingen merge eller deploy er utført.

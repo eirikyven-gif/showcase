@@ -261,7 +261,7 @@
       "sourceApiAuthStoragePrivacy": "Kildens HTML inneholder auth/login og utvikler-PIN-flyter, localStorage-identifikatorer/progresjon/feedback-kø, Apps Script/backend-kall og et hardkodet Apps Script feedback-endepunkt. Kildekort viser rapportreferanser. Showcase-kopien utelater alle disse: ingen auth, nettverk, API, server, storage, telemetry, tredjepartsressurser, PII eller secrets. Arbeidsarkdata finnes kun i sideminnet og nullstilles.",
       "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte kildefiler. Offentlige gjenbruksrettigheter er uavklart.",
       "purpose": "Pedagogisk læringsapp om NS 3424 for voksne studenter, med analysenivå, TG/TGIU, KG, sannsynlighet/risiko, observasjoner, tiltak, fem caser og quiz.",
-      "routeState": "Erstatter den generiske to-sceneøvelsen på samme kandidatslug med en kildeinformert NS 3424-læringsdemo. Showcase baseline main `1a2ccee`; VERSION 0.58.0 blir 0.59.0. Issue #2 delvis adressert. PR review; ikke merget eller deployet.",
+      "routeState": "Erstatter den generiske to-sceneøvelsen på samme kandidatslug med en kildeinformert NS 3424-læringsdemo. Showcase baseline main `108b0ab`; VERSION 0.59.0 blir 0.60.0. Issue #2 delvis adressert. PR review; ikke merget eller deployet.",
       "sourceUncertainty": "Repoets README/SPEC/CHANGELOG fastslår appens NS 3424-identitet og funksjonsmål. Faglig samsvar, standardaktualitet og offentlig gjenbruksrett er ikke kontrollert. Kildens konkrete case, rapportnavn, auth, storage og private backend-elementer brukes ikke."
     },
     {
