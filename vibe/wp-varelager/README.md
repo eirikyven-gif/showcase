@@ -10,8 +10,8 @@ Sikkerhetssubstitusjoner: ingen ekte innlogging/roller, konto- eller persondata,
 
 ## Status og QA
 
-Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kontaktvisning og rapportens nested opptelling er implementert lokalt, men må QA-sammenlignes med kilden. Kjente sentrale gap omfatter avtaleformens eksakte arbeidsflyt, CSV/XLSX-kontrakt, delte lister og egne adminvisninger. Derfor er dette ikke en ferdig eller trofast port.
+Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kildearbeidsflytene er implementert lokalt, inkludert separate adminskjermer, avtaler, rapport/opptelling, delingsoppføringer, CSV/XLSX, innstillinger, notater og vedleggsreferanser. Matrisen oppgir sikkerhetsblokker og må verifiseres mot alle kildehandlinger i browser-QA før parity kan vurderes som løst; derfor markeres demoen ikke som fullstendig trofast.
 
-Kontroller: `node --test tests/wp-varelager.test.mjs` dekker proveniens, katalogversjon, seks kildefaner, sikkerhetsgrenser og at åpne gap fortsatt er dokumentert. Full lokal browser-QA, parity-aksept og CI for endelig implementasjon gjenstår. Teststatus må oppdateres etter hver parity-endring.
+Kontroller: `node --test tests/wp-varelager.test.mjs` dekker proveniens, katalogversjon, kildefaner, workflow-handlinger, feltskjemaer og sikkerhetsgrenser. Full lokal browser-QA og CI kjøres på denne revisjonen; parity-aksept gjenstår til matrisens sikkerhetsblokker er bekreftet som eneste gap.
 
 Versjon/katalog: showcase `0.61.0`, 42 katalogoppføringer; versjonen følger rebase etter PR #93. Ikke merge eller deploy før parity-matrisen er lukket og relevante kontroller består.
