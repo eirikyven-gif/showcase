@@ -1,49 +1,77 @@
 <!doctype html>
 <html lang="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f3ed">
-  <title>Vinterlagring Fornes · Vibe-utstilling</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinterlagring – Fornes gård</title>
+  <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-  <header class="masthead">
-    <a class="back" href="/vibe/">← Alle demoer</a>
-    <span class="season">FJORDLI · VINTEROVERSIKT</span>
-    <span class="demo-label">Syntetisk eksempel</span>
-  </header>
-  <main>
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">LAGRING · EKSEMPELTILSTAND</p>
-      <h1 id="page-title">Vinterlagring,<br><span>i korte trekk.</span></h1>
-      <p class="lede">Et lite, oppdiktet glimt av hvordan en lagringsplass kan se ut gjennom vinteren.</p>
-    </section>
-    <section class="overview" aria-labelledby="overview-title">
-      <div class="overview-heading">
-        <div><p class="eyebrow">OVERSIKT 01</p><h2 id="overview-title">Én plass. Én status.</h2></div>
-        <span class="season-chip">VINTER 2026</span>
+  <div class="page-hero">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Fornes gård – Vinterlagring">
+        <svg class="brand-logo" viewBox="0 0 220 88" role="img" aria-labelledby="logoTitle logoDesc">
+          <title id="logoTitle">Fornes gård</title>
+          <desc id="logoDesc">Tekstbasert logo for Fornes gård 1548</desc>
+          <rect x="6" y="6" width="208" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+          <path d="M28 62 C46 44, 60 44, 76 62 C94 42, 112 42, 130 62 C148 42, 166 42, 192 62" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <text x="110" y="35" text-anchor="middle" font-size="23" font-weight="700" letter-spacing="0.02em">Fornes gård</text>
+          <text x="110" y="52" text-anchor="middle" font-size="11" letter-spacing="0.22em">1548</text>
+        </svg>
+        <span><small>Vinterlagring</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Hovedmeny">
+        <a href="registrer/">Registrering</a>
+        <a href="kunde/">Kunde</a>
+        <a href="admin/">Admin</a>
+      </nav>
+    </header>
+
+    <section class="hero-content" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Fornes gård · Vinterlagring</p>
+        <h1 id="page-title">Trygg lagring gjennom vinteren</h1>
+        <p class="lead">Et felles app-grunnlag for registrering, kundevisning og administrasjon av vinterlagring.</p>
       </div>
-      <article class="unit-card" aria-label="Eksempelplass V-04, lagret">
-        <div class="unit-topline"><span class="unit-symbol" aria-hidden="true">V</span><span class="status"><span aria-hidden="true"></span>Lagret</span></div>
-        <p class="unit-type">EKSEMPELPLASS</p>
-        <h3>V-04</h3>
-        <p class="unit-description">En abstrakt enhet på en tørr, skjermet plass.</p>
-        <div class="details">
-          <div><span>Plass</span><strong>Nord · felt 2</strong></div>
-          <div><span>Miljø</span><strong>Stabilt</strong></div>
-          <div><span>Tilstand</span><strong>Vinterklar</strong></div>
-        </div>
-        <div class="progress-label"><span>Sesongforløp</span><span>Vinter</span></div>
-        <div class="progress" role="img" aria-label="Sesongforløpet er i vinterfasen"><span></span></div>
-      </article>
-      <p class="privacy-note"><span aria-hidden="true">✳</span> Dette er en fast eksempelvisning. Alle opplysninger er oppdiktet; ingenting sendes eller lagres.</p>
+      <aside class="hero-card">
+        <p class="eyebrow">Appområder</p>
+        <h2>Én profil – tre behov</h2>
+        <ul>
+          <li>Kunde registrerer én eller flere enheter.</li>
+          <li>Kunde ser status via magisk lenke.</li>
+          <li>Admin følger opp venteliste, betaling og innkjøring.</li>
+        </ul>
+      </aside>
     </section>
-    <aside class="family-note" aria-label="Avgrensning">
-      <span class="family-icon" aria-hidden="true">↗</span>
-      <p><strong>En egen liten skisse</strong><br>Denne demoen overlapper tematisk med Lagerkart Vinter i utstillingen. Mulig tilhørighet i samme produktfamilie er uavklart.</p>
-    </aside>
-    <footer><span>VIBE-UTSTILLING</span><span>Statisk eksempel · ingen konto eller lagring</span></footer>
+  </div>
+
+  <main class="page-main">
+    <section class="section card-grid" aria-label="Velg område">
+      <article class="panel panel-form">
+        <p class="eyebrow">Registrering</p>
+        <h2>Meld inn vinterlagring</h2>
+        <p class="muted">Placeholder for offentlig registrering av kunde og enheter.</p>
+        <a class="btn btn-primary" href="registrer/">Gå til registrering</a>
+      </article>
+      <article class="panel panel-customer">
+        <p class="eyebrow">Kundevisning</p>
+        <h2>Din vinterlagring</h2>
+        <p class="muted">Placeholder for statusvisning via magisk lenke.</p>
+        <a class="btn btn-secondary" href="kunde/">Gå til kundevisning</a>
+      </article>
+      <article class="panel panel-admin">
+        <p class="eyebrow">Admin</p>
+        <h2>Driftsoversikt</h2>
+        <p class="muted">Placeholder for venteliste, kunder, hendelser, eksport og innstillinger.</p>
+        <a class="btn btn-ghost" href="admin/">Gå til admin</a>
+      </article>
+    </section>
   </main>
+
+  <footer class="page-footer">
+    <p>Versjon 0.1.3 · Midlertidig SVG-brandflate brukes frem til original logoasset er tilgjengelig.</p>
+  </footer>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
 </html>

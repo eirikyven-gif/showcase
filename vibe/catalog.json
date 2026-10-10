@@ -679,18 +679,24 @@
     {
       "slug": "vinterlagring-fornes",
       "name": "Vinterlagring Fornes",
-      "useCase": "Se et enkelt, fiktivt eksempel på status for én enhet i vinterlagring.",
+      "useCase": "Utforsk det nåværende, visuelle grunnlaget for registrering, kundevisning og administrasjon av vinterlagring.",
       "category": "Gårdsadministrasjon og lagerstyring",
       "audience": [
         "Lageransvarlige",
         "Gårdsbrukere",
         "Personer som utforsker vinterlagring"
       ],
-      "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
-      "demoValue": "Viser hvordan lagringsstatus, plass og et enkelt miljøsignal kan samles i en oversikt for én oppdiktet enhet.",
-      "simplifications": "Én abstrakt enhet med én fast status: lagret. Ingen navn, kjennemerke, kundeprofil, bevegelser, flere plasser, administrasjon eller redigering.",
-      "risk": "Kildeappen er beskrevet som en innloggingspreget kunde-/adminflyt med e-post, PHP-session og database, og behandler kundeopplysninger. Kildeproduksjon og kildetest er ikke besøkt. Mulig overlapp med produktfamilien Lagerkart Vinter er uavklart; demoene har ulikt, selvstendig omfang. Demoen bruker kun syntetisk innhold og er ikke egnet for operativ lagerstyring.",
-      "scope": "Selvstendig, responsiv /vibe/vinterlagring-fornes/-rute. Kun statisk HTML, CSS og JavaScript; én skrivebeskyttet eksempeltilstand. Ingen skjema for personopplysninger, e-post, database, session, autentisering, API, ekstern ressurs eller lagring."
+      "status": "Beholdt i bred førstegangsvurdering; kildebasert, statisk scaffold-demo. Ingen kuratering eller utsiling.",
+      "demoValue": "Samler kildens tre frontendområder, navigasjon og syntetiske eksempeldata på en direkte tilgjengelig statisk rute.",
+      "simplifications": "Kun kildekodens eksisterende statiske frontendskall er tatt med. Alle navn, kontaktverdier, registreringsverdier, statusrader og statistikk er oppdiktede. Ikke implementerte eller framtidige arbeidsflyter er ikke simulert.",
+      "risk": "Kildens planlagte funksjonelle scope omfatter kundeopplysninger, magiske lenker, admin, database, e-postvarsling og eksport. Disse funksjonene er ikke implementert i kildecommitten og finnes ikke i demoen. Bruk kun som visuell demonstrasjon; aldri legg inn reelle opplysninger.",
+      "scope": "Kildebasert statisk HTML/CSS/JS på /vibe/vinterlagring-fornes/ med de eksisterende sidene for start, registrering, kunde og admin. Ingen server, database, auth, API-kall, e-post, nettleserlagring eller personopplysninger.",
+      "sourceUncertainty": "Kilde kontrollert på main commit a26c5e99183bded5549bcb4c1ebd03cf2973cf90 (2026-10-10). Frontendens registrering-, kunde- og adminflater er placeholders; app.js er tom bortsett fra kommentar. Ingen implementerte registrerings-, kunde-, admin-, auth- eller API-arbeidsflyter finnes i denne revisjonen.",
+      "purpose": "Vise appens eksisterende startside og visuelle placeholders for registrering, kundevisning og administrasjon.",
+      "source": "eirikyven-gif/vinterlagring, main commit a26c5e99183bded5549bcb4c1ebd03cf2973cf90 (2026-10-10). Gjennomgått AGENTS.md, VERSION, docs/ssot/CURRENT_SSOT.md, frontend/index.html, frontend/registrer/index.html, frontend/kunde/index.html, frontend/admin/index.html, frontend/assets/css/app.css, frontend/assets/js/config.js og frontend/assets/js/app.js.",
+      "sourceStack": "Plain HTML, CSS og JavaScript. Kildens app.js inneholder ingen implementert nettleserlogikk; config.js oppgir en API-sti, men ingen kode utfører forespørsler. Ingen eksterne avhengigheter.",
+      "sourceApiAuthStoragePrivacy": "Denne kildeversjonen har ingen autentisering, API-forespørsler, skjemainnsending, e-post eller lagring. config.js inneholder en ubrukt API-sti. Showcase kopierer bare frontend, bruker syntetiske mockverdier og sender eller lagrer ikke data.",
+      "routeState": "Eksisterende /vibe/vinterlagring-fornes/-rute og katalogslug beholdes; routeinnholdet følger den faktiske frontendscaffolden på kildecommitten."
     },
     {
       "slug": "vurderingsarbeid-fagskolen",

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Vinterlagring</title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body class="simple-page admin-page">
+  <div class="page-hero admin-hero">
+    <header class="site-header">
+      <a class="brand" href="../" aria-label="Fornes gård – Vinterlagring">
+        <svg class="brand-logo" viewBox="0 0 220 88" role="img" aria-labelledby="logoTitle logoDesc">
+          <title id="logoTitle">Fornes gård</title>
+          <desc id="logoDesc">Tekstbasert logo for Fornes gård 1548</desc>
+          <rect x="6" y="6" width="208" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+          <path d="M28 62 C46 44, 60 44, 76 62 C94 42, 112 42, 130 62 C148 42, 166 42, 192 62" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <text x="110" y="35" text-anchor="middle" font-size="23" font-weight="700" letter-spacing="0.02em">Fornes gård</text>
+          <text x="110" y="52" text-anchor="middle" font-size="11" letter-spacing="0.22em">1548</text>
+        </svg>
+        <span><small>Vinterlagring</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Hovedmeny">
+        <a href="../registrer/">Registrering</a>
+        <a href="../kunde/">Kunde</a>
+        <a href="./" aria-current="page">Admin</a>
+      </nav>
+    </header>
+
+    <section class="hero-content" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1 id="page-title">Driftsoversikt</h1>
+        <p class="lead">Adminflaten er et statisk shell for planlagte områder. Innlogging, API og reelle handlinger kommer i senere issues.</p>
+      </div>
+      <aside class="hero-card admin-callout">
+        <p class="eyebrow">Planlagte områder</p>
+        <h2>Fra venteliste til eksport</h2>
+        <ul>
+          <li>Enheter, venteliste og kunder.</li>
+          <li>Hendelser, eksport og innstillinger.</li>
+          <li>Godkjenning, fornyelse og arkivering per enhet.</li>
+        </ul>
+      </aside>
+    </section>
+  </div>
+
+  <main class="page-main admin-shell">
+    <nav class="panel admin-section-nav" aria-label="Adminområder">
+      <a href="#dashboard" aria-current="page">Dashboard</a>
+      <a href="#enheter">Enheter</a>
+      <a href="#venteliste">Venteliste</a>
+      <a href="#kunder">Kunder</a>
+      <a href="#hendelser">Hendelser</a>
+      <a href="#eksport">Eksport</a>
+      <a href="#innstillinger">Innstillinger</a>
+    </nav>
+
+    <section class="section admin-summary" id="dashboard" aria-labelledby="dashboard-title">
+      <article class="panel stat-card">
+        <p class="eyebrow">Dashboard</p>
+        <h2 id="dashboard-title">Sesong 2026</h2>
+        <p class="muted">Mockstatus for planlagt adminstartside.</p>
+      </article>
+      <article class="panel stat-card">
+        <span class="stat-number">18</span>
+        <p>Enheter totalt</p>
+      </article>
+      <article class="panel stat-card">
+        <span class="stat-number">5</span>
+        <p>På venteliste</p>
+      </article>
+      <article class="panel stat-card">
+        <span class="stat-number">3</span>
+        <p>Åpne hendelser</p>
+      </article>
+    </section>
+
+    <section class="section admin-preview" id="enheter" aria-labelledby="units-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Enheter</p>
+          <h2 id="units-title">Enhetsoversikt</h2>
+          <p class="muted">Statisk tabellmønster for kommende søk, filtre og detaljvisning.</p>
+        </div>
+        <div class="filter-row" aria-label="Eksempel på filtre">
+          <span>År: 2026</span>
+          <span>Status: Aktiv</span>
+          <span>Betaling: Alle</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Kunde</th>
+              <th>Kontakt</th>
+              <th>Type</th>
+              <th>Skilt</th>
+              <th>Pris</th>
+              <th>Betaling</th>
+              <th>Innkjørt</th>
+              <th>Flagg</th>
+              <th>Handling</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mockkunde Nord</td>
+              <td>mocktelefon</td>
+              <td>Bobil</td>
+              <td>MOCK 1</td>
+              <td>8 200 kr</td>
+              <td><span class="badge badge-unpaid">Ikke betalt</span></td>
+              <td>Ja</td>
+              <td><span class="mini-flag">🔔 1</span></td>
+              <td><button type="button" class="link-button">Detaljer</button></td>
+            </tr>
+            <tr>
+              <td>Mockkunde Sør</td>
+              <td>mockepost</td>
+              <td>MC</td>
+              <td>MOCK 2</td>
+              <td>2 400 kr</td>
+              <td><span class="badge badge-paid">Betalt</span></td>
+              <td>Nei</td>
+              <td><span class="mini-flag">📝</span></td>
+              <td><button type="button" class="link-button">Detaljer</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section admin-area-grid" aria-label="Øvrige adminflater">
+      <article class="panel admin-area-card" id="venteliste">
+        <p class="eyebrow">Venteliste</p>
+        <h2>Godkjenning per enhet</h2>
+        <p class="muted">Plassholder for enheter som venter på godkjenning eller avvisning.</p>
+        <span class="badge badge-wait">5 venter</span>
+      </article>
+      <article class="panel admin-area-card" id="kunder">
+        <p class="eyebrow">Kunder</p>
+        <h2>Kundeoversikt</h2>
+        <p class="muted">Plassholder for kundeliste, kontaktpreferanse og kundedetaljer.</p>
+        <span class="badge badge-neutral">Planlagt</span>
+      </article>
+      <article class="panel admin-area-card" id="hendelser">
+        <p class="eyebrow">Hendelser</p>
+        <h2>Hendelseslogg</h2>
+        <p class="muted">Plassholder for meld-fra-hendelser, årslogg og intern oppfølging.</p>
+        <span class="badge badge-unpaid">3 åpne</span>
+      </article>
+      <article class="panel admin-area-card" id="eksport">
+        <p class="eyebrow">Eksport</p>
+        <h2>CSV og kopi-tabell</h2>
+        <p class="muted">Plassholder for eksport gruppert etter kontaktpreferanse.</p>
+        <span class="badge badge-neutral">Planlagt</span>
+      </article>
+      <article class="panel admin-area-card" id="innstillinger">
+        <p class="eyebrow">Innstillinger</p>
+        <h2>Priser og varsling</h2>
+        <p class="muted">Plassholder for årspriser, MC-sats og adminadresse.</p>
+        <span class="badge badge-neutral">Planlagt</span>
+      </article>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>Versjon 0.1.3 · Adminshell uten innlogging, backend eller datalagring.</p>
+  </footer>
+</body>
+</html>

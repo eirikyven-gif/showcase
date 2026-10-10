@@ -6,48 +6,65 @@ import test from 'node:test';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (file) => readFileSync(path.join(root, file), 'utf8');
-const html = read('vibe/vinterlagring-fornes/index.html');
-const css = read('vibe/vinterlagring-fornes/style.css');
-const readme = read('vibe/vinterlagring-fornes/README.md');
+const route = 'vibe/vinterlagring-fornes/';
+const page = (name) => read(`${route}${name}`);
+const home = page('index.html');
+const registration = page('registrer/index.html');
+const customer = page('kunde/index.html');
+const admin = page('admin/index.html');
+const css = page('assets/css/app.css');
+const js = page('assets/js/app.js');
+const config = page('assets/js/config.js');
+const readme = page('README.md');
 
-test('Vinterlagring is catalogued as a broad-round synthetic demo', () => {
+test('Vinterlagring catalog records source fidelity, scope, and safety', () => {
   const catalog = JSON.parse(read('vibe/catalog.json'));
   const entry = catalog.apps.find((app) => app.slug === 'vinterlagring-fornes');
   assert.ok(entry);
-  for (const field of ['name', 'useCase', 'category', 'status', 'demoValue', 'simplifications', 'risk', 'scope']) {
+  for (const field of ['name', 'useCase', 'category', 'status', 'demoValue', 'simplifications', 'risk', 'scope', 'source', 'sourceStack', 'sourceApiAuthStoragePrivacy']) {
     assert.equal(typeof entry[field], 'string', `${field} is documented`);
     assert.ok(entry[field].length > 0, `${field} is not empty`);
   }
-  assert.ok(entry.audience.length > 0);
-  assert.match(entry.risk, /Lagerkart Vinter/);
-  assert.match(entry.status, /bred førstegangsvurdering/);
+  assert.match(entry.source, /a26c5e99183bded5549bcb4c1ebd03cf2973cf90/);
+  assert.match(entry.scope, /registrer.*kunde.*admin/i);
+  assert.match(entry.risk, /magiske lenker/i);
+  assert.match(entry.sourceApiAuthStoragePrivacy, /syntetiske mockverdier/i);
+  assert.match(readme, /Issue #2 delvis/);
   assert.match(read('VERSION').trim(), /^\d+\.\d+\.\d+$/);
+  assert.equal(read('VERSION').trim(), '0.53.0');
 });
 
-test('demo has one static fictional storage state and no personal data form', () => {
-  assert.match(html, /<html lang="no">/);
-  assert.match(html, /<h3>V-04<\/h3>/);
-  assert.match(html, />Lagret<\/span>/);
-  assert.equal([...html.matchAll(/<article\b/g)].length, 1);
-  assert.doesNotMatch(html, /<form\b|<input\b|<textarea\b|<select\b/i);
-  assert.match(html, /href="\/vibe\/"/);
-  assert.match(readme, /Mulig overlapp med Lagerkart Vinter/);
+test('route retains the source home and three placeholder areas', () => {
+  for (const html of [home, registration, customer, admin]) assert.match(html, /<html lang="no">/);
+  assert.match(home, /href="registrer\/"/);
+  assert.match(home, /href="kunde\/"/);
+  assert.match(home, /href="admin\/"/);
+  assert.match(registration, /Meld inn vinterlagring/);
+  assert.match(registration, /Ingen data sendes eller lagres/);
+  assert.match(customer, /magisk lenke/i);
+  assert.match(admin, /Driftsoversikt/);
+  assert.match(js, /Frontendlogikk kommer i senere issues/);
+  assert.match(config, /apiBasePath: '\/api'/);
+  assert.match(readme, /apiBasePath.*ubrukt/);
 });
 
-test('demo has no scripts, external resources, network, auth, or persistence', () => {
-  assert.doesNotMatch(html, /<script\b|https?:\/\/|\bsrc\s*=/i);
-  assert.doesNotMatch(css, /url\s*\(|https?:\/\//i);
-  const combined = `${html}\n${css}`;
-  assert.doesNotMatch(combined, /\b(?:fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|PHPSESSID|password|email)\b/i);
-  assert.doesNotMatch(combined, /<form\b|<input\b|<textarea\b|<select\b/i);
+test('all displayed mock values are synthetic and no persistence or network behavior is added', () => {
+  const combined = [home, registration, customer, admin, css, js, config].join('\n');
+  assert.match(registration, /mock@eksempel\.invalid/);
+  assert.match(customer, /MOCK 1/);
+  assert.doesNotMatch(combined, /fetch\s*\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|PHPSESSID/i);
+  assert.doesNotMatch(combined, /https?:\/\/|<iframe\b/i);
+  assert.doesNotMatch(combined, /password\s*[:=]|Bearer\s+[A-Za-z0-9._-]+/i);
+  assert.match(readme, /syntetiske eksempelverdier/);
 });
 
-test('page includes semantic landmarks, accessible status, focus, and mobile layout', () => {
-  assert.match(html, /<main>/);
-  assert.match(html, /aria-labelledby="page-title"/);
-  assert.match(html, /aria-label="Eksempelplass V-04, lagret"/);
-  assert.match(html, /role="img" aria-label=/);
+test('local styles and scripts are linked without external dependencies', () => {
+  for (const html of [home, registration, customer, admin]) {
+    assert.match(html, /<main\b/);
+    assert.match(html, /assets\/css\/app\.css/);
+  }
   assert.match(css, /:focus-visible/);
-  assert.match(css, /@media\(max-width:620px\)/);
-  assert.match(css, /prefers-reduced-motion/);
+  assert.match(css, /@media \(max-width: 880px\)/);
+  assert.match(home, /assets\/js\/config\.js/);
+  assert.match(home, /assets\/js\/app\.js/);
 });
