@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntetisk, lokal demonstrasjon av WP Varelager 2.3.0.">
+  <title>WP Varelager · syntetisk demonstrasjon</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/wp-varelager/style.css">
+  <script src="/vibe/wp-varelager/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="topbar"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><nav aria-label="Hurtigvalg"><a href="#portal-tabs">Portal</a><a href="#administrasjon">Administrasjon</a><a class="back-link" href="/vibe/">Alle verktøy</a></nav></header>
+  <main id="main" class="shell">
+    <aside class="demo-notice" aria-label="Syntetiske eksempeldata"><strong>Syntetisk demonstrasjon · ingen live lagerdata</strong><p>Varer, personer, avtaler, koder, steder, vedlegg og beløp er oppdiktede eksempler. Arbeidsflyter og data kjører bare i denne fanen; kun visningsvalget lagres lokalt under kildens `hu_inv_view_mode`-nøkkel. Data forsvinner ved omlasting.</p></aside>
+    <header class="hero"><p class="eyebrow">HELL ULTRA · EKSEMPELLAGER</p><h1>Utstyrslager</h1><p>Utforsk vareoversikt, enheter, utleie, rapporter, delte lister, import/eksport, opptelling og innstillinger.</p></header>
+    <section id="administrasjon" class="admin-shortcuts" aria-label="Lokale skjermer tilsvarende WordPress-administrasjonen"><strong>Administrasjon · syntetisk lokal visning</strong><button type="button" data-admin-view="equipment">Utstyr</button><button type="button" data-admin-view="rental">Utleie</button><button type="button" data-admin-view="settings">Innstillinger</button><span>Ingen WordPress-roller, konto eller database</span></section>
+    <section id="admin-view" aria-live="polite" hidden></section>
+    <section id="portal-tabs" aria-label="Lagerportal">
+      <nav class="tabs" role="tablist" aria-label="Portalområder">
+        <button role="tab" aria-selected="true" data-tab="varer">Utstyr</button><button role="tab" aria-selected="false" data-tab="utleie">Utleie</button><button role="tab" aria-selected="false" data-tab="rapporter">Rapporter</button><button role="tab" aria-selected="false" data-tab="delte">Delte lister</button><button role="tab" aria-selected="false" data-tab="import">Import/eksport</button><button role="tab" aria-selected="false" data-tab="innstillinger">Innstillinger</button>
+      </nav>
+      <section id="view" aria-live="polite"></section>
+    </section>
+    <p class="disclaimer">Selvstendig nettlesersimulering av WP Varelager 2.3.0. Alle eksempelverdier er syntetiske. Ingen WordPress, PHP, konto, server, database eller API er tilkoblet. Kun tabell/galleri-valget bruker kildens hu_inv_view_mode-nøkkel; lagerdata er ikke persistent. Media og delingslenker er av.</p>
+  </main>
+  <footer class="footer"><a href="/vibe/">← Tilbake til Vibe</a><span>WP Varelager · syntetisk demonstrasjon</span></footer>
+  <dialog id="editor-dialog" aria-labelledby="editor-title"><form id="editor-form"><h2 id="editor-title">Rediger</h2><div id="editor-fields"></div><div class="actions"><button type="button" data-close-editor>Avbryt</button><button id="editor-submit" class="primary" type="submit">Lagre i denne fanen</button></div></form></dialog>
+</body>
+</html>

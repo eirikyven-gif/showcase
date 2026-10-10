@@ -872,6 +872,30 @@
       "sourceApiAuthStoragePrivacy": "Kildens app har auth/API-klient og GAS/Sheets-integrasjon. Showcase låser authMode none, bruker kun mockBackend gjennom den interne mock://-interceptoren og CSP connect-src none. CSP tillater kun same-origin script/stil uten inline-kode; bilder/medier/skrifttyper er same-origin eller lokale vedlegg. Mockdatabase i localStorage HUL_MOCK_DB_v1 og visningstilstand i sessionStorage nullstilles med synlig knapp. Ingen produksjonsdata/secrets/API-adresser eller off-origin ressurser følger med.",
       "routeState": "Eksisterende /vibe/hul-lagerstyring/-rute, adskilt fra lagerstyring-hell-ultra, lagerkart-vinter og vinterlagring-fornes. Oppfølgingsfix i PR #93 rebased på showcase main 04a92e6 (VERSION 0.60.0); bumped to 0.60.1. Issue #2 delvis løst. PR åpen; ikke deployet.",
       "rightsUncertainty": "Ingen lisens eller særskilt gjenbrukstillatelse er verifisert i kildens gjennomgåtte filer. Videre offentlig gjenbruk av kildekode, UI og innhold krever rettighetsavklaring."
+    },
+    {
+      "slug": "wp-varelager",
+      "name": "WP Varelager · syntetisk lagerportal",
+      "useCase": "Utforsk en lokal eksempelportal for lageroversikt, syntetiske varer, utleie, rapporter, delte lister, import/eksport og opptelling.",
+      "category": "Lager og administrasjon",
+      "audience": [
+        "Personer som vurderer lagerverktøy",
+        "Lageransvarlige",
+        "Utviklere"
+      ],
+      "status": "Detaljert kildebasert lokal simulator; parity-gjennomgang og browser-QA pågår. Issue #2 er delvis adressert; PR #90 draft.",
+      "source": "eirikyven-gif/Wp-varelager, arkivert repository, main SHA e080136b7b0bc20e1885c9c9456f7143ca170861 (2026-03-07). Plugin-manifestet oppgir v2.3.0. Repoet ble kun lest.",
+      "sourceStack": "WordPress-plugin, PHP 7.4+, shortcode-basert portal, CSS/JavaScript og plugin-eide databasetabeller. Showcase er statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Kildepakken inneholder .github/workflows/build-release.yml og ingen app-testmappe/root testscript ble funnet. Denne simulatoren valideres gjennom showcase Vibe static validation (node --test tests/*.test.mjs), egne WP Varelager-workflowtester og Chromium-scenarier.",
+      "sourceApiAuthStoragePrivacy": "The archived plugin uses WordPress capabilities, database-backed inventory/contacts/rentals, uploaded media, email and public share links. The simulator has no real auth/roles, server/database, person records, private APIs/secrets, binary media, email delivery, or public link/token. Every business record is synthetic and memory-only. CSV is read in-browser and XLSX is generated locally. Only the source-compatible hu_inv_view_mode view preference persists in localStorage.",
+      "rightsUncertainty": "Pluginens hovedfil oppgir GPLv2-or-later; separat lisensfil eller klar lisensavklaring for dokumentasjon/aktiva ble ikke funnet i gjennomgåtte filer. Demoen er skrevet selvstendig og gjenbruker ikke kildekode, aktiva eller spesifikasjonstekst ordrett.",
+      "purpose": "Utforsk den kjørbare WP Varelager-pluginens brukerflater for utstyr, enheter, utleie, rapporter, delte lister, import/eksport og innstillinger; pluginens README og PHP beskriver overordnet funksjon og drift.",
+      "demoValue": "Utfør kildebaserte lokale forløp for søk/filter/gruppering, utstyr og serienummerenheter, detaljer/notater/historikk/vedleggsmetadata, leietakere, avtaleoppretting/redigering/aktivering/retur, rapporter/opptelling, syntetisk delingsoppføring, CSV-import/XLSX-eksport, innstillinger og egne adminskjermer.",
+      "simplifications": "All demo business data is synthetic and memory-only. Source-compatible hu_inv_view_mode preference alone uses localStorage. No real auth/capability control, server/database/account persistence, private people records, private APIs/secrets, media bytes, public share URL/token, or email delivery. Share-link opening and email send are explicitly blocked. Source workflows otherwise follow the runnable plugin UI; source-absent planned features are not added.",
+      "risk": "En lokal arbeidsflyt kan forveksles med en aktivt lagret lagerdatabase eller reell leieavtale. Ingen auth/rollegrenser, persistens, filmedia eller faktiske delingslenker er tilgjengelig. Kildens produksjonsdrift og datapraksis er ikke uavhengig verifisert.",
+      "scope": "Static /vibe/wp-varelager/ local simulator. Only synthetic business records in page memory; the source-compatible display preference uses localStorage. CSV is read locally; XLSX is generated locally. No auth, roles, server/database, business-data persistence, API, cookies/session, private media, secrets, email, public sharing token/link, or external network calls.",
+      "routeState": "New route after PR #93 on main 38518a5466b8a3f9098d916c0f9190c696ffb0d9 (VERSION 0.60.1; 41 catalog routes); PR #90 proposes 0.61.0 minor release. Draft remains open pending complete source parity review, QA and CI. Issue #2 partial; not merged or deployed.",
+      "sourceUncertainty": "Kilde-repoet er arkivert. main SHA e080136b7b0bc20e1885c9c9456f7143ca170861 peker på tree SHA 7506300fcd587546f7772e1cab4d55293bd7b947; siste main-commit legger til v2.3.0 ZIP. Rot-README blob SHA 89ac942d4e21c3a832c46d2feb9f232b5779592b er 18 byte; plugin readme.txt blob SHA f19e0cb81d005748fb3117ed8283f6fcd62226d7 (Stable tag 2.1.0) gir overordnet funksjonsbeskrivelse, mens plugin entrypoint blob SHA efab8c606ffdeb94b01b414ab8a7728f16eb5aca og changelog blob SHA 2c777661911f4c1cb306a84cb6224d5851c31511 dokumenterer v2.3.0. Ingen eksisterende /vibe/wp-varelager/-rute eller katalogslug på showcase main b5e117c. Demoen følger de kjørbare portal-/adminskjermene og arbeidsflytene; sikkerhetskritiske nettverks- og lagringshandlinger er erstattet med syntetiske lokale simuleringer. Parity er fortsatt under kontroll."
     }
   ]
 }
