@@ -35,6 +35,7 @@ Kjør fra showcase-roten:
 
 ```sh
 node --test tests/ukelonn-showcase.test.mjs
+node --test qa/ukelonn-showcase-browser.mjs # manuell Chromium-QA, krever lokalt Playwright og Chromium
 node --test tests/vibe-static.test.mjs
 ```
 
