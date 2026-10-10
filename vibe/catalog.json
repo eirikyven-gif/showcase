@@ -831,7 +831,7 @@
     {
       "slug": "lagerstyring-hell-ultra",
       "name": "Lagerstyring Hell Ultra",
-      "useCase": "Utforsk lageroversikt, varemetadata, lånehistorikk og delte utstyrslister.",
+      "useCase": "Utforsk og administrer syntetisk lager: portalfiltre, varedetaljer og media, utlån og eldre enkeltlån, låntakere, delte lister, pakker, vareliste/quick edit, innstillinger, testdata og XLSX-import/eksport.",
       "category": "Lagerstyring og utlån",
       "audience": [
         "Lageransvarlige",
@@ -841,16 +841,16 @@
       "status": "Funksjonell, lokal showcase-demo med syntetiske data; issue #2 delvis løst.",
       "sourceUncertainty": "Kildens shortcodeportal ligger på en WordPress-side valgt i admin, så portalens permanente side-slug kan ikke utledes. Magic-link rewrite-ruter er entydige. Offentlig main commit inspisert; faktisk produksjonsoppsett og publiserte data ble ikke kontrollert.",
       "purpose": "WordPress-plugin for klubbens lagervarer, metadata, offentlig portal, varedetaljer, utlånshistorikk og delte egendefinerte lister.",
-      "demoValue": "Bevarer søk, status/kategori/plassering/arrangementsfiltre, sortering, gruppering, kort-/tabellvisning, detaljvisning med aktivt utlån/historikk og delt navngitt liste.",
-      "simplifications": "Ingen vareoppretting, utlånshandlinger, opplasting, vedlegg, import/eksport eller WordPress-admin. Lageransvarlig-simulator kan endre varestatus bare i gjeldende sideøkt. Delt liste og URL-ID-er er statiske syntetiske eksempler.",
+      "demoValue": "Bevarer portalens filtrering/sortering/gruppering/kort-tabell, offentlige vare- og listelenker, varemetadata/media/attributter/underenheter, adminens lager CRUD/quick edit, lånegrupper/retur/historikk/legacy-retur, låntakere, lister, pakker, XLSX-maler/import-preview-validering/eksport, innstillinger og testdata. QA er kjørt i nettleser; detaljert dekning/gap føres i PR #94.",
+      "simplifications": "WordPress auth/capabilities/nonces, server/database persistence, magic-link secrets/tokens, ekte kontaktopplysninger, private kildemedier og API-er er fjernet. All state/media/import er lokal for nettleserøkten; roller er UI-simulatorer, data og media er syntetiske eller brukerens lokalt valgte fixtures. XLSX leses/skapes lokalt.",
       "source": "eirikyven-gif/lagerstyring-hell-ultra, offentlig main commit f1f13246677d15de24e84070d8dad74f2a0376ee; plugin templates/public-portal.php, public-item-detail.php, public-list.php; public/class-hul-lager-public.php; includes/class-hul-lager-magic-link.php; assets/css/public.css og assets/js/public.js lest. Kilderepoet er urørt.",
       "sourceStack": "Kilden er en WordPress/PHP-plugin med shortcodeportal, rewrite-baserte magic-lenker, CPT/taksonomier, PHP-renderte maler og JavaScript/CSS. Showcase er statisk HTML/CSS/JavaScript.",
-      "sourceTests": "Ingen egne automatiserte testfiler for offentlig portal ble funnet i kilde-pluginen; kilde-CI lint-er PHP. Kildens CI ble ikke kjørt. Showcase-rutetester dekker rute-/flytmarkører og fravær av eksterne kall/lagring.",
+      "sourceTests": "Direkte sammenlignet med plugin-malene, assets og admin-/includes-klasser ved kilde SHA f1f13246677d15de24e84070d8dad74f2a0376ee. Kildens CI ble ikke kjørt. Showcase har statisk safety-/provenanstest og nettleser-ende-til-ende QA; se PR #94 for dekningsmatrise, kontroller og resterende gap.",
       "sourceApiAuthStoragePrivacy": "Kilden henter publiserte varer via WordPress, bruker WP-rolle/capability-basert admin og oppbevarer vare-/utlåns-/magic-token-data på server. Demoen har ingen WP-auth, API, serverlagring eller tokens. Alle identitets- og lånefelt er oppdiktet. Rollevelgeren er ikke sikkerhetskontroll.",
       "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse ble kontrollert. Demoen gjenskaper observerte arbeidsflyter med selvstendig markup/styling og syntetiske data; juridisk status er uavklart.",
-      "risk": "Kilde-detaljsiden kan vise ansvarlig, verdi og låntaker-/utlånsopplysninger. Demoen har kun syntetiske verdier og viser tydelig demo-merke. Statusendring i rolle-simulatoren kan misforstås som lagret; grensesnittet sier at den kun gjelder sideøkten. Ingen reell lagerdrift bør baseres på demoen.",
+      "risk": "Ingen reell tilgangskontroll, serverlagring, lånebehandling eller publisering. Demoens rollevelger er bare presentasjon; alle forhåndslastede identiteter/kontaktfelt/media er merket syntetiske, og valgte filer forblir lokale i nettleserøkten. Rute til source shortcode-side kan ikke fastslås fordi WP-admin velger siden.",
       "scope": "Isolert `/vibe/lagerstyring-hell-ultra/`-rute. Showcase-rutene `#/item/{id}` og `#/list/{id}` erstatter WordPress magic-linkmønstrene; dette er ikke tokens. Ingen kilde-PII/media/secrets, auth, cookies, nettleserlagring, backend, private services eller nettverkskall.",
-      "routeState": "Ny route på showcase main b5e117c (VERSION 0.56.0); foreslått versjon 0.57.0. Issue #2 delvis løst. Ikke merget eller deployet; WordPress portal-side-slug forblir administratorstyrt og uspesifisert."
+      "routeState": "Isolert route /vibe/lagerstyring-hell-ultra/ på showcase main 0.60.1; draft PR #94 korrigerer den allerede merged route og oppdaterer SemVer til 0.61.0. Issue #2 delvis løst. Ikke merget/deployet. Kildeportalens WP-side-slug er adminstyrt; showcase foreslår /vibe/lagerstyring-hell-ultra/."
     },
     {
       "slug": "hul-lagerstyring",
