@@ -25,6 +25,16 @@
 - The only persistent browser state is the source-compatible `hu_inv_view_mode` display preference; all business records reset on reload.
 - Plan-only features absent from executable UI (bulk actions, partial returns, pricing workflows, share filters/revoke, item deletion) are not represented as source parity.
 
+## Remaining gaps, each security-blocked
+
+- WordPress login, capability/role checks, identity/session state and server flash/redirect behavior; the demo is intentionally unauthenticated and single-tab.
+- Durable server/database state and real account/business records; example changes live only in page memory.
+- Actual attachment upload, image/file bytes, private media URLs and opening private content; only synthetic file metadata is available.
+- Creation/opening of a publicly reachable share URL or token, plus delivery of the optional share email; only the synthetic local list row is recorded.
+- Real contact/person values; contact records and the mailto destination use synthetic values and the reserved `.invalid` domain.
+
+These blocks remove security or external-service behavior, while preserving the local screen, fields, and actions where possible. They are not a declaration of parity. The matrix still needs independent source review for any omitted user-facing interaction. PR #90 remains draft; Issue #2 is partially addressed. Do not mark ready, merge, or deploy before that parity review and complete checks pass.
+
 ## Parity gate and QA
 
-Parity stays **incomplete** until workflow-level browser QA covers every row above and confirms no unlisted source interaction is missing. The remaining gaps are the explicit security blocks in the matrix; visual/functional evidence is still required before deciding whether those are the only gaps. PR #90 remains draft; Issue #2 is partially addressed. Do not mark ready, merge, or deploy before direct source comparison, full tests, browser QA at narrow/wide viewports, and CI pass.
+Workflow-level browser QA has been run at 390px and 1440px for the implemented screens/actions listed above. Automated checks and CI results are tracked in the PR body. Recheck the matrix against the source UI before declaring parity complete.
