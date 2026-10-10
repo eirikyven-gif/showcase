@@ -142,7 +142,7 @@
       "routeState": "Eksisterende /vibe/emnebeskrivelser-editor/-rute får ny funksjonell runtime; ingen slugendring eller rutekollisjon. Showcase SemVer minor bump til v0.42.0.",
       "sourceUncertainty": "Kilden har PIN-fri app/emneside.html og separat PIN-variant med edit-pin-config.js. PIN-fri original ble valgt etter README; ingen PIN-data eller tilgangslås kopieres. SSoT angir v1.8.0, mens kildefilens footer viser v1.8.4. Innholdsrettigheter og faktisk produksjonsbruk er ikke uavhengig verifisert."
     },
-        {
+    {
       "slug": "reservering",
       "name": "Reservering · kundebooking og admin",
       "useCase": "Velg en ledig dato og tid, registrer en syntetisk booking, og utforsk adminflyt for reservasjoner og tilgjengelighet.",
@@ -593,7 +593,7 @@
       "sourceApiAuthStoragePrivacy": "Kilden bruker låste Drive-/Sheets-ID-er, Script Properties med GEMINI_API_KEY, Google Apps Script-tjenester og Gemini API. Showcase fjerner alle kall, nøkler, ID-er, autentisering, filer og serverlagring. Kun oppdiktede eksempler lagres lokalt under vibe.bilag.demo.v1; «Nullstill demo» bekreftes og sletter rader/fremdrift mens loggen bevares.",
       "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse ble identifisert i gjennomgåtte kildefiler. Kildekode er ikke kopiert; UI-tekst, syntetiske eksempler og grensesnitt er skrevet for showcase. Gjenbruksrettigheter bør avklares separat.",
       "purpose": "Kildeappen skanner Google Drive-bilag, leser varelinjer, klassifiserer dem til Løsøre eller Drift i Google Sheets og lar mennesker kontrollere skade-/lagerstatus og flytte rader.",
-      "routeState": "Eksisterende /vibe/bilag/-rute beholdes. Showcase main-baseline 41a49c76eb03a745d934e639b5dbfc606fb8fc7a, VERSION 0.52.0. Denne PR-en oppgraderer bare Bilag-ruten/katalogen, QA-testen og SemVer til 0.53.0; URL og slug er stabile.",
+      "routeState": "Eksisterende /vibe/bilag/-rute beholdes. Showcase main-baseline 65b8f90, VERSION 0.52.0. Denne PR-en oppgraderer bare Bilag-ruten/katalogen, QA-testen og SemVer til 0.53.0; URL og slug er stabile.",
       "sourceUncertainty": "Kilde-repoets main ble undersøkt på commit f32f92ed00d1286e25e9cc7a0454ba1ad8c579eb. Repoet inneholder aktive kildefiler og tester; produksjonsdeploy, faktisk drift og gjenbruksrettigheter er ikke uavhengig verifisert."
     },
     {
@@ -616,18 +616,25 @@
     {
       "slug": "gardsbehov-fornes",
       "name": "Gårdsbehov",
-      "useCase": "Se et syntetisk eksempel på melding, prioritering og oppfølging av et gårdsbehov.",
+      "useCase": "Utforsk syntetisk innmelding, vurdering, tildeling, statusoppfølging og arkiv i Gårdsbehov.",
       "category": "Gårdsdrift",
       "audience": [
         "Gårdsbruk",
         "Driftsansvarlige",
         "Alle som vil utforske en enkel driftsflyt"
       ],
-      "status": "Beholdt i bred førstegangsvurdering; syntetisk statisk demo laget. Ingen kuratering eller utsiling.",
-      "demoValue": "Følg én fiktiv vedlikeholdssak fra melding via prioriteringsgrunnlag til mulig neste steg.",
-      "simplifications": "Én oppdiktet sak, ett fiktivt sted og eksempelroller. Ingen saksregistrering, vedlegg, meldinger, tildeling, e-post, autentisering, API, database eller faktisk statusendring.",
-      "risk": "Kilden håndterer privat driftsinformasjon og kan inneholde personopplysninger og HMS-informasjon. Risikoen i demoen er lavere fordi alt innhold er laget som syntetisk eksempel uten identifiserende detaljer eller innsending. Kildens system må sikkerhetsvurderes separat før eventuell operativ bruk.",
-      "scope": "Responsiv, statisk, skrivebeskyttet visning av én eksempelmelding, prioriteringsfaktorer og hendelsesforløp. Ingen nettleser- eller serverlagring, eksterne kall, opplastinger eller brukerinput."
+      "status": "Verifisert kildebasert arbeidsflytdemo med syntetiske data. Issue #2 delvis løst.",
+      "demoValue": "Interaktiv kildebasert demo av syntetisk innmelding med kontekst/type/prioritet, Mine saker, fellesoversikt med søk/prioritetsfilter, simulerte roller, tildeling, statusoverganger, hendelseslogg, lukking og arkiv.",
+      "simplifications": "All identitet, autorisasjon, sessions, API, database, privat lagring, e-post, tokens, offentlige lenker og faktisk fil-/bildehåndtering fjernet. Kun faste, syntetiske skjemaalternativer; ingen personfelt, fritekst, bildeinput eller ekte kontekst-/brukerdata. Rollevelger er kosmetisk. Data beholdes bare i browser localStorage og kan nullstilles synlig.",
+      "risk": "Kildens faktiske auth, drift, personvern og tilgangsmodell er ikke revidert. Klientbasert rollepåvirkning er ikke sikkerhet; lokal hendelseslogg er ikke revisjonslogg. Ingen reelle data eller bilder skal legges inn. Kildebruk/tillatelser og produksjonsdeploy er ikke vurdert.",
+      "scope": "Eksisterende /vibe/gardsbehov-fornes/ oppgradert som statisk syntetisk simulering. Lokalt simulerer kjerneflyt for innmelding, vurdering, tildeling, status, append-only hendelser, filtre og arkiv. Ingen auth, API, server, ekstern tjeneste, reelle data eller personfelt. localStorage brukes kun til oppdiktede saker med synlig full reset.",
+      "source": "eirikyven-gif/apps-fornes-gard/apps/gardsbehov, offentlig main commit 90014358fb3d70e89265b2b30d38e9376a6927b2 (lest 2026-10-10); appversjon 0.20.1. Kilde kun lest.",
+      "sourceStack": "Kilden bruker HTML/CSS/JavaScript, PHP API-er, MariaDB, appspesifikk innlogging/session og privat fillager. Showcase-kopien er statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Kilden definerer PHP-, Node-, Python-, HTTP-, database- og artifact-tester i apps/gardsbehov/tests og CI. Kildetestene ble ikke kjørt; showcase-kontroller og CI kjøres separat.",
+      "sourceApiAuthStoragePrivacy": "Kilden har appinnlogging, magisk innlogging/statuslenke, serverautorisasjon, MariaDB, private vedlegg, e-post-outbox og offentlige API-er. Showcase fjerner auth/session/autorisasjon, server-/database-/fil-lagring, API, e-post, tokens, bilder/opplasting og eksterne kall. Rollevelger simulerer kun UI og gir ingen tilgangskontroll. Bare syntetiske saker lagres i localStorage; synlig nullstillingsknapp fjerner demoens ene nøkkel. Ingen PII eller fritekst.",
+      "purpose": "Kildeappen registrerer og følger opp gårdsbehov med konsekvens-/hast-/HMS-prioritet, Mine saker, scope-avgrenset fellesoversikt, tildeling, notater, status, lukking og arkiv. Den har også offentlig innmelding/statuslenker, vedlegg, e-post og administrasjon.",
+      "routeState": "Eksisterende unik /vibe/gardsbehov-fornes/ og slug beholdt. Baseline showcase main 65b8f90, VERSION 0.53.0; foreslått 0.54.0. Endrer ruten, katalogoppføringen og VERSION.",
+      "sourceUncertainty": "Kilde-README v0.20.1 og frontend er lest; kildekodetester og produksjonssystem er ikke kjørt/revidert. Demoen dekker ikke alle funksjoner i kildeappen, særlig autentisering, offentlige statuslenker, bildeeditor, e-post eller administrasjon."
     },
     {
       "slug": "kornseddel",
