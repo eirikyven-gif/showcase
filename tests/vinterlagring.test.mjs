@@ -31,7 +31,7 @@ test('Vinterlagring catalog records source fidelity, scope, and safety', () => {
   assert.match(entry.sourceApiAuthStoragePrivacy, /syntetiske mockverdier/i);
   assert.match(readme, /Issue #2 delvis/);
   assert.match(read('VERSION').trim(), /^\d+\.\d+\.\d+$/);
-  assert.equal(read('VERSION').trim(), '0.59.0');
+  assert.equal(read('VERSION').trim(), '0.60.0');
 });
 
 test('route retains the source home and three placeholder areas', () => {

@@ -242,19 +242,27 @@
     },
     {
       "slug": "ns3424-arkivdemo",
-      "name": "Byggobservasjoner – arkivkandidat",
-      "useCase": "Øv på å skille observerbare forhold fra antakelser i to oppdiktede bygningsscener.",
+      "name": "NS 3424 · arkivert læringsapp",
+      "useCase": "Utforsk analysenivåer, TG/TGIU, konsekvens, risiko og syntetiske case i en pedagogisk NS 3424-læringsdemo.",
       "category": "Utdanning",
       "audience": [
         "Studenter",
         "Undervisere",
         "Nybegynnere innen byggforvaltning"
       ],
-      "status": "Kandidat fra arkivert ns3456-app beholdt i bred førstegangsvurdering. Arkivert kilde og rettigheter er ikke verifisert. Ruten er en ny, generisk øvelse, ikke kildeimplementasjonen.",
-      "demoValue": "En faktasorteringsøvelse med tilbakemelding, som skiller seg fra ns3424-labs enkeltscenario og prioriteringsspørsmål. Overlappet i tema og målgruppe er betydelig.",
-      "simplifications": "To korte, fiktive scener og forhåndsskrevne observasjoner. Ingen standardmetode, tilstandsgrader, faglig poengsetting eller vurdering av faktiske bygg.",
-      "risk": "Kildeinventar opplyser én HTML-fil med React/CDN, localStorage, blank Apps Script-endepunkt og demopinkode som ikke er reell autentisering. Koden ble ikke endret og eksterne endepunkter ble ikke besøkt. Kildens rettigheter er uavklart. Demoen er tydelig merket som generisk og uoffisiell.",
-      "scope": "Original statisk HTML/CSS/JS under /vibe/ns3424-arkivdemo/. Kun syntetisk tekst. Ingen CDN, React, API, Apps Script, nettverkskall, lagring, autentisering, input for fritekst, virkelige bygg, personer, PII eller hemmeligheter."
+      "status": "Faithful showcase-kopi av arkivert app-fdvu-ns3424, basert på kilde-SHA 5c58678269fb2c24d83af8afedeb65c8878732ff. Issue #2 delvis adressert. PR til review; ikke merget eller deployet.",
+      "demoValue": "Åtte læringsdeler, skalaer og risikoforklaring, prosess-akkordioner, fem casearbeidsark med TG-feedback og KG/sannsynlighetsvisning, samt ti quizspørsmål med poeng, progresjon og reset.",
+      "simplifications": "Fem case-ID-er og alle bygningsdetaljer/observasjoner er skrevet på nytt og merket syntetiske. Læringsdelene, analysenivåer, grader, risiko, arbeidsark, tiltak, quiz og navigasjonsflyt er beholdt; casearbeidsarkene er statiske klientøvelser uten fasitvalidering fra backend. Risikoutregningen KG × sannsynlighet er uttrykkelig forenklet. Ingen kildeauth, devmodus, innlogging, backend, lagring, rapportkort eller eksternt innhold.",
+      "risk": "Standardpåstander og grader er ikke faglig kontrollert og kan være feil eller utdaterte. Ikke bruk demoen som profesjonell vurdering eller til virkelige bygg-, sikkerhets-, vedlikeholds- eller investeringsbeslutninger. Gjenbruksrettigheter er uavklart. Kildens HTML inneholder et Apps Script-endepunkt samt auth- og lagringskode; dette er ikke tatt med.",
+      "scope": "Statisk `/vibe/ns3424-arkivdemo/`. Syntetiske SYN-01–SYN-05 case. Ingen auth, nettverk/API, server, CDN, storage, cookies, telemetry, PII eller secrets. Reset nullstiller arbeidsark, grader, risikovalg, quiz, akkordioner og navigasjon.",
+      "source": "eirikyven-gif/ns3456, arkivert, commit 5c58678269fb2c24d83af8afedeb65c8878732ff; source tree 142c31e21eb1afe5f10eeee23f3d8cb145209745. README/SPEC identifiserer app-fdvu-ns3424. Kilde kun lest; ikke endret.",
+      "sourceStack": "Kilden er én HTML-fil med React/Babel, Tailwind og Marked via eksterne CDN-er. Showcase-ruten er én statisk HTML/CSS/JavaScript-fil uten eksterne runtime-ressurser.",
+      "sourceTests": "Kilde-README, SPEC, ROADMAP, CONTRIBUTING og CHANGELOG kontrollert på kilde-SHA. Ingen kilde-test- eller byggkommando dokumentert. Showcase-test kjøres med node --test tests/ns3424-arkivdemo.test.mjs og CI med node --test tests/*.test.mjs; nettleser-QA forsøkes med tilgjengelig Playwright/Chromium.",
+      "sourceApiAuthStoragePrivacy": "Kildens HTML inneholder auth/login og utvikler-PIN-flyter, localStorage-identifikatorer/progresjon/feedback-kø, Apps Script/backend-kall og et hardkodet Apps Script feedback-endepunkt. Kildekort viser rapportreferanser. Showcase-kopien utelater alle disse: ingen auth, nettverk, API, server, storage, telemetry, tredjepartsressurser, PII eller secrets. Arbeidsarkdata finnes kun i sideminnet og nullstilles.",
+      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte kildefiler. Offentlige gjenbruksrettigheter er uavklart.",
+      "purpose": "Pedagogisk læringsapp om NS 3424 for voksne studenter, med analysenivå, TG/TGIU, KG, sannsynlighet/risiko, observasjoner, tiltak, fem caser og quiz.",
+      "routeState": "Erstatter den generiske to-sceneøvelsen på samme kandidatslug med en kildeinformert NS 3424-læringsdemo. Showcase baseline main `108b0ab`; VERSION 0.59.0 blir 0.60.0. Issue #2 delvis adressert. PR review; ikke merget eller deployet.",
+      "sourceUncertainty": "Repoets README/SPEC/CHANGELOG fastslår appens NS 3424-identitet og funksjonsmål. Faglig samsvar, standardaktualitet og offentlig gjenbruksrett er ikke kontrollert. Kildens konkrete case, rapportnavn, auth, storage og private backend-elementer brukes ikke."
     },
     {
       "slug": "analog-synthesizer",
