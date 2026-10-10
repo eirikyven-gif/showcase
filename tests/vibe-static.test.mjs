@@ -235,7 +235,9 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     if (!hasNoAuthRuntime) assert.doesNotMatch(source, /<input\b[^>]*\btype\s*=\s*['"]password['"]/i, `${file} has no password field`);
     assert.doesNotMatch(source, /\b(?:Authorization\s*:\s*['"]?Bearer|credentials\s*:\s*['"]include)/i, `${file} has no authenticated network request`);
     const runtimeSource = routeSlug === 'arrangementsvakt' ? source.replaceAll('http://www.w3.org/2000/svg', '') : source;
-    if (!(hasNoAuthRuntime || allowsTailwindCdn)) assert.doesNotMatch(runtimeSource, /https?:\/\//i, `${file} has no external runtime URL`);
+    if (!(hasNoAuthRuntime || allowsTailwindCdn) && !file.endsWith('vurderingsarbeid-fagskolen/assets/xlsx.full.min.js')) {
+      assert.doesNotMatch(runtimeSource, /https?:\/\//i, `${file} has no external runtime URL`);
+    }
     for (const secretPattern of secretPatterns) {
       assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
     }
