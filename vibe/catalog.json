@@ -534,11 +534,19 @@
         "Vurderingsteam",
         "Studieplanleggere"
       ],
-      "status": "Beholdt i bred førstegangsvurdering; statisk demo laget. Ingen kuratering eller utsiling.",
-      "demoValue": "Se en fiktiv vurderingsøvelse gjennom forberedelse, observasjon, drøfting og oppfølging.",
-      "simplifications": "Én oppdiktet yrkesfaglig situasjon og fire tekstbaserte stopp. Ingen kildetekster, media, dokumenter eller læringsdata.",
-      "risk": "Lav for demoen: ingen personopplysninger eller innsamling. Kildens eksterne medier og innholdsrettigheter er ikke overført; senere kuratering bør avklare rettigheter for enhver eventuell bruk av kildemateriale.",
-      "scope": "Responsiv, statisk lesestøtte med tastaturbetjente fasetrinn. Ingen fritekst, svarinnsending, lagring, konto, server eller eksterne kall."
+      "status": "Beholdt i bred førstegangsvurdering; kildefaithful, lokal showcase-kopi utarbeidet. Issue #2 er delvis løst; ingen merge eller deploy.",
+      "sourceUncertainty": "Kilde eirikyven-gif/apps-fagskolen/apps/vurderingspraksis lest skrivebeskyttet på main commit 92379f1108ec71013a06c4e5976a6fe79de81a3e (2026-10-10). README viser v0.11.18; appspesifikk låst SSoT er v0.49. Se kilde-QA for utestående manuelle kontroller.",
+      "purpose": "Støtt forberedelse, kollegial workshopdrøfting og videre oppfølging av sammenhengen mellom læringsutbytte, aktiviteter, arbeidskrav og vurdering.",
+      "demoValue": "Kildebasert arbeidsflyt med fire områder, ni flytskjemaemner, læringsstier, begrepsliste, dagplan, dialoger, snarveimeny og tema.",
+      "simplifications": "Beholder klientflyt og kildeavledet fagstruktur. Funn fra faktiske workshopdeltakere erstattes med oppdiktede eksempler; institusjon og dato fjernes. Drive-filer, presentasjon, eksterne referanser og videoer fjernes. Ingen innlogging, server eller svarfunksjon. localStorage brukes bare for tema og vist flytskjema; synlig personverntekst og nullstillingsknapp er med.",
+      "risk": "Ingen innsending eller personopplysninger i demoen. To lokale visningsnøkler vedvarer på enheten til reset eller nettleserdata slettes. Kildens innholds-/designrettigheter er ikke uavhengig avklart.",
+      "scope": "Responsiv statisk rute med kildebaserte arbeidsområder, flytskjema, læringsstier, ordliste, tastatur/dialognavigasjon og tema. Bare route-spesifikk localStorage for visning. Ingen nettverkskall, eksterne ressurser, cookies, konto, API, server eller brukerinput.",
+      "source": "eirikyven-gif/apps-fagskolen/apps/vurderingspraksis, privat kildekode lest skrivebeskyttet via autentisert lesetilgang, main commit 92379f1108ec71013a06c4e5976a6fe79de81a3e; gjennomgått README, SSoT, QA, HTML, CSS, JS og tester.",
+      "sourceStack": "Kilden er statisk HTML/CSS/JavaScript med lokale fontfiler. Ingen server- eller innloggingskode i denne appmappen. Showcase-ruten er statisk HTML/CSS/JS.",
+      "sourceTests": "Kilden oppgir Python-kontroller og Playwright/Chromium-kontroller i `tests/`; de er ikke kjørt mot kildekopien her. Showcase-kontroller og CI kjøres på isolert PR-branch.",
+      "sourceApiAuthStoragePrivacy": "Kilden samler ikke inn deltakersvar. Den bruker localStorage for tema og hvilke dagflytskjema som er vist, og har eksterne dokument-/videoressurser. Showcase fjerner eksterne URL-er og embeds, og gir synlig reset for sine to lokale visningsnøkler. Ingen login/API/server.",
+      "rightsUncertainty": "Kildeinnhold og visuell utforming er kopiert etter eksplisitt brukeroppdrag. Lisens for bredere redistribusjon av appinnholdet er ikke uavhengig avklart; Inter-fontens OFL-lisens følger med.",
+      "routeState": "Eksisterende `/vibe/vurderingspraksis/`-rute beholdt og konseptdemo erstattet på samme slug; én katalogoppføring og én direkte statisk rute. Issue #2 er delvis løst, PR venter review, ingen deploy. Showcase SemVer er oppdatert fra v0.49.0 til v0.50.0."
     },
     {
       "slug": "larebot",
