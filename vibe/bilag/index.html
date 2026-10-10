@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En syntetisk skisse av dokumentoversikt og sorteringsstatus for gårdsadministrasjon. Ingen dokumenter håndteres.">
-  <title>Bilag — Vibe</title>
+  <meta name="description" content="En lokal og syntetisk demonstrasjon av bilagssortering, manuell kontroll og kjøringslogg.">
+  <title>Bilagssortering · Vibe</title>
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/bilag/style.css">
   <script src="/vibe/bilag/app.js" defer></script>
@@ -14,22 +14,30 @@
   <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
   <main id="main" class="page-shell">
     <section class="intro" aria-labelledby="title">
-      <p class="eyebrow">Bilag · konseptskisse</p>
-      <h1 id="title">En ryddig <span>bilagsflyt.</span></h1>
-      <p class="lead">Se hvordan en enkel oversikt kan gjøre det lettere å sortere dokumenter i gårdsadministrasjonen.</p>
-      <aside class="notice" role="note"><strong>Kun syntetisk visning.</strong> Dette er oppdiktede filnavn og metadata. Ingen dokumenter lastes opp, åpnes, flyttes eller sendes. Bruk aldri virkelige opplysninger her.</aside>
+      <p class="eyebrow">Bilagssortering · interaktiv demonstrasjon</p>
+      <h1 id="title">Fra bilag til <span>kontrollerbar oversikt.</span></h1>
+      <p class="lead">Prøv kildeappens arbeidsflyt med en syntetisk kø, varelinjer i Løsøre og Drift, menneskelig kontroll, gjenopptak og kjøringslogg.</p>
+      <aside class="notice" role="note"><strong>Demomodus:</strong> Alle filnavn, varer, datoer og beløp er oppdiktet. Ingen filer åpnes eller sendes til en tjeneste. Tilstand lagres kun lokalt i denne nettleseren; bruk aldri ekte bilags- eller personopplysninger. «Nullstill demo» sletter de lokale eksempeldataene.</aside>
     </section>
-    <section class="overview" aria-labelledby="overview-title">
-      <div class="overview-heading"><div><p class="eyebrow">Eksempeloversikt</p><h2 id="overview-title">Dokumenter til sortering</h2></div><span class="count">3 eksempler</span></div>
-      <div class="table-wrap"><table><caption class="visually-hidden">Fiktive dokumentnavn og sorteringsstatus</caption><thead><tr><th scope="col">Fiktivt filnavn</th><th scope="col">Type</th><th scope="col">Dato</th><th scope="col">Status</th><th scope="col">Eksempelmappe</th><th scope="col">Handling</th></tr></thead><tbody>
-        <tr><th scope="row"><span class="file-icon" aria-hidden="true">PDF</span><span>eksempel_faktura_001.pdf</span></th><td>Faktura</td><td>12.09.2026</td><td><span class="status status-new" data-status="Ny">Ny</span></td><td data-folder>Til sortering</td><td><button type="button" class="sort-button">Sorter eksempel</button></td></tr>
-        <tr><th scope="row"><span class="file-icon" aria-hidden="true">PDF</span><span>eksempel_kvittering_002.pdf</span></th><td>Kvittering</td><td>08.09.2026</td><td><span class="status status-new" data-status="Ny">Ny</span></td><td data-folder>Til sortering</td><td><button type="button" class="sort-button">Sorter eksempel</button></td></tr>
-        <tr><th scope="row"><span class="file-icon" aria-hidden="true">PDF</span><span>eksempel_service_003.pdf</span></th><td>Service</td><td>02.09.2026</td><td><span class="status status-new" data-status="Ny">Ny</span></td><td data-folder>Til sortering</td><td><button type="button" class="sort-button">Sorter eksempel</button></td></tr>
-      </tbody></table></div>
-      <p id="status-message" class="status-message" role="status" aria-live="polite">Alle radene er fiktive eksempler. Knappene endrer bare teksten på denne siden.</p>
+
+    <section class="control-panel" aria-labelledby="control-title">
+      <div><p class="eyebrow">Køstyring</p><h2 id="control-title">Start eller fortsett sortering</h2><p id="run-state" class="run-state" role="status" aria-live="polite">Klar · syntetisk kø</p></div>
+      <div class="controls"><button id="start-run" class="primary" type="button">Start / fortsett</button><button id="stop-run" type="button">Stopp sortering</button><button id="reset-demo" class="quiet" type="button">Nullstill demo</button></div>
+      <p class="control-note">Køen behandles i små, synlige batcher. Stopp beholder fremdrift og rader; start fortsetter fra første uferdige eksempel.</p>
     </section>
-    <section class="steps" aria-labelledby="steps-title"><p class="eyebrow">Mulig arbeidsflyt</p><h2 id="steps-title">Fra oversikt til orden</h2><ol><li><span>01</span><div><strong>Se hva som venter</strong><p>En samlet kø gir oversikt over dokumenter som trenger oppfølging.</p></div></li><li><span>02</span><div><strong>Kontroller kategori og dato</strong><p>En tydelig kategori kan hjelpe med å finne riktig plassering.</p></div></li><li><span>03</span><div><strong>Marker sortering</strong><p>En status viser hva som er behandlet i arbeidsflyten.</p></div></li></ol><p class="disclaimer">Dette er kun et konsept for arbeidsflyt. Demoen flytter eller behandler ingen filer og gir ikke regnskapsråd.</p></section>
+
+    <section class="work-area" aria-label="Sorteringsresultater">
+      <section class="sheet" aria-labelledby="losore-title"><div class="sheet-head"><div><p class="eyebrow">Arbeidsfane</p><h2 id="losore-title">Løsøre</h2></div><span id="losore-count" class="count">0 varelinjer</span></div><p class="sheet-help">Fysiske varer og varer til manuell kontroll. Marker «Flytt (X)» og velg Flytt markerte for å sende en rad til Drift.</p><div class="table-wrap"><table><caption class="visually-hidden">Syntetiske varelinjer i Løsøre</caption><thead><tr><th>Omfattes (X)</th><th>Omfattes ikke (X)</th><th>Flytt (X)</th><th>Dato</th><th>Leverandør</th><th>Vare/produkt</th><th>Antall</th><th>Kostnad eks. mva.</th><th>Kategori</th><th>Hvorfor</th></tr></thead><tbody id="losore-rows"></tbody></table></div><button class="move-button" data-move="losore" type="button">Flytt markerte til Drift</button></section>
+      <section class="sheet" aria-labelledby="drift-title"><div class="sheet-head"><div><p class="eyebrow">Arbeidsfane</p><h2 id="drift-title">Drift</h2></div><span id="drift-count" class="count">0 varelinjer</span></div><p class="sheet-help">Arbeid, tjenester og andre driftskostnader. Bruk X-feltene bare som illustrasjon av manuell menneskelig vurdering.</p><div class="table-wrap"><table><caption class="visually-hidden">Syntetiske varelinjer i Drift</caption><thead><tr><th>Omfattes (X)</th><th>Omfattes ikke (X)</th><th>Flytt (X)</th><th>Dato</th><th>Leverandør</th><th>Vare/produkt</th><th>Antall</th><th>Kostnad eks. mva.</th><th>Kategori</th><th>Hvorfor</th></tr></thead><tbody id="drift-rows"></tbody></table></div><button class="move-button" data-move="drift" type="button">Flytt markerte til Løsøre</button></section>
+    </section>
+
+    <section class="queue" aria-labelledby="queue-title"><div class="section-head"><div><p class="eyebrow">Kildemappe · syntetisk</p><h2 id="queue-title">Bilag i sorteringskø</h2></div><span id="queue-count" class="count">0 gjenstår</span></div><p class="sheet-help">Demonstrasjonen viser kildeappens gjenopptak og deduplisering uten filtilgang: status og eksempelrader finnes bare i nettleseren.</p><div class="table-wrap"><table><caption class="visually-hidden">Fiktive bilag og behandlingsstatus</caption><thead><tr><th>Eksempelfil</th><th>Type</th><th>Dato</th><th>Status</th><th>Resultat</th></tr></thead><tbody id="queue-rows"></tbody></table></div></section>
+
+    <section class="log" aria-labelledby="log-title"><div class="section-head"><div><p class="eyebrow">Append-only i kilden</p><h2 id="log-title">Kjøringslogg</h2></div><span class="count">Demo</span></div><p class="sheet-help">Kilden fører start, fullført, stoppet og feil per kjøring, og bevarer loggen ved full nullstilling. Her legges syntetiske logglinjer til ved handlinger.</p><div class="table-wrap"><table><caption class="visually-hidden">Syntetisk kjøringslogg</caption><thead><tr><th>Dato</th><th>Tidspunkt</th><th>Bilag gjennomgått</th><th>Nye varer – Løsøre</th><th>Nye varer – Drift</th><th>Feil</th><th>Status</th></tr></thead><tbody id="log-rows"></tbody></table></div></section>
+
+    <aside class="human-note"><strong>Vurdering forbeholdt mennesker.</strong> I kildeappen fyller ikke KI eller skript ut om varen var på lager, til stede, eid eller omfattet av skade. X-feltene er tomme i nye rader og avgjøres av en person.</aside>
+    <p id="live-message" class="status-message" role="status" aria-live="polite">Klar. Alle synlige data er syntetiske.</p>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En statisk skisse med fiktive eksempler</span></footer>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Statisk klientdemo · syntetiske data</span></footer>
 </body>
 </html>

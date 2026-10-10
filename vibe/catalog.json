@@ -1,4 +1,4 @@
-{
+    {
   "apps": [
     {
       "slug": "fagquizer",
@@ -142,7 +142,7 @@
       "routeState": "Eksisterende /vibe/emnebeskrivelser-editor/-rute får ny funksjonell runtime; ingen slugendring eller rutekollisjon. Showcase SemVer minor bump til v0.42.0.",
       "sourceUncertainty": "Kilden har PIN-fri app/emneside.html og separat PIN-variant med edit-pin-config.js. PIN-fri original ble valgt etter README; ingen PIN-data eller tilgangslås kopieres. SSoT angir v1.8.0, mens kildefilens footer viser v1.8.4. Innholdsrettigheter og faktisk produksjonsbruk er ikke uavhengig verifisert."
     },
-        {
+    {
       "slug": "reservering",
       "name": "Reservering · kundebooking og admin",
       "useCase": "Velg en ledig dato og tid, registrer en syntetisk booking, og utforsk adminflyt for reservasjoner og tilgjengelighet.",
@@ -574,19 +574,27 @@
     },
     {
       "slug": "bilag",
-      "name": "Bilag",
-      "useCase": "Få oversikt over fiktive bilag og prøv en enkel sorteringsstatus for gårdsadministrasjon.",
+      "name": "Bilagssortering · lokal arbeidsflytdemo",
+      "useCase": "Prøv en syntetisk bilagskø med gjenopptak, sortering til Løsøre og Drift, menneskelig kontroll, manuell flytting og kjøringslogg.",
       "category": "Gårdsadministrasjon og dokumentflyt",
       "audience": [
         "Gårdsbrukere",
         "Regnskapsmedarbeidere",
         "Dokumentansvarlige"
       ],
-      "status": "Beholdt i bred førstegangsvurdering; statisk konseptdemo laget. Ingen kuratering eller utsiling.",
-      "demoValue": "Viser hvordan fiktive filnavn, kategorier, datoer og statuser kan gi oversikt over en enkel bilagsflyt.",
-      "simplifications": "Tre syntetiske rader. Handlingen endrer bare status- og mappetekst i DOM; ingen dokumenter eller filoperasjoner.",
-      "risk": "Bilagsflyt kan omfatte økonomiske og personlige opplysninger. Kildens faktiske databehandling kunne ikke verifiseres; demoen bruker bare fiktive data og har ingen opplasting, autentisering, lagring eller integrasjon.",
-      "scope": "Kun statisk /vibe/bilag/-rute med syntetisk innhold. Ingen dokumenter, opplasting/nedlasting, Drive/webhook, eksterne kall, PII, hemmeligheter, konto eller lagring."
+      "status": "Beholdt i bred førstegangsvurdering; kildeundersøkt, funksjonell og lokal showcase-kopi av forsikring-bilag. Ingen kuratering eller utsiling.",
+      "demoValue": "Viser køstart/gjenopptak, batchbehandling av syntetiske eksempler, to arbeidsfaner, manuelle X-felt, radflytting med duplikatkonfliktbevaring, stopp og videreføring, kjøringslogg samt bekreftet nullstilling som bevarer loggen.",
+      "simplifications": "Fast syntetisk innhold erstatter Drive-lesing, filvalidering, OCR/Gemini, dokumentbevis- og beløpsvalidering, SHA-256/fakturadublettkontroll og Google Sheets-skriving. Lokal nettlesertilstand simulerer gjenopptak og nullstilling; ingen kildeintegrasjon eller KI avgjør data.",
+      "risk": "Demoen er ikke et regnskapsverktøy og validerer ikke bilag. Ikke bruk virkelige økonomi- eller personopplysninger. Lokal lagring kan bli liggende i nettleseren inntil «Nullstill demo» eller nettleserens nettstedslagring tømmes. Kildens eksterne drift, tilgang og produksjonsdata er ikke uavhengig revidert.",
+      "scope": "Statisk /vibe/bilag/-rute med fire fiktive eksempler. Ingen nettverkskall, Drive, Sheets, Gemini, opplasting/nedlasting, auth, cookies, serverlagring, PII eller hemmeligheter. localStorage under vibe.bilag.demo.v1 inneholder bare syntetisk kø, resultatlinjer og logg; bekreftet nullstilling gjenoppretter eksemplene og bevarer loggen.",
+      "source": "eirikyven-gif/forsikring-bilag, offentlig main commit f32f92ed00d1286e25e9cc7a0454ba1ad8c579eb (2026-08-17). Aktiv app: app/bilagsregister.gs og app/bilagsregister-core.gs; README, app/README.md og docs/bilagssortering.md gjennomgått. Kilderepoet er kun lest og ikke endret.",
+      "sourceStack": "Kilden er Google Apps Script for Google Drive/Sheets med Gemini REST-kall. Showcase-ruten er statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Kilden definerer node --test tests/*.test.js med Google-tjenestemocker. Showcase QA kjører rutespesifikk test, JavaScript-syntakskontroll, git diff --check og CI. Ingen Apps Script-/Google-integrasjon kjøres.",
+      "sourceApiAuthStoragePrivacy": "Kilden bruker låste Drive-/Sheets-ID-er, Script Properties med GEMINI_API_KEY, Google Apps Script-tjenester og Gemini API. Showcase fjerner alle kall, nøkler, ID-er, autentisering, filer og serverlagring. Kun oppdiktede eksempler lagres lokalt under vibe.bilag.demo.v1; «Nullstill demo» bekreftes og sletter rader/fremdrift mens loggen bevares.",
+      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse ble identifisert i gjennomgåtte kildefiler. Kildekode er ikke kopiert; UI-tekst, syntetiske eksempler og grensesnitt er skrevet for showcase. Gjenbruksrettigheter bør avklares separat.",
+      "purpose": "Kildeappen skanner Google Drive-bilag, leser varelinjer, klassifiserer dem til Løsøre eller Drift i Google Sheets og lar mennesker kontrollere skade-/lagerstatus og flytte rader.",
+      "routeState": "Eksisterende /vibe/bilag/-rute beholdes. Showcase main-baseline 41a49c76eb03a745d934e639b5dbfc606fb8fc7a, VERSION 0.52.0. Denne PR-en oppgraderer bare Bilag-ruten/katalogen, QA-testen og SemVer til 0.53.0; URL og slug er stabile.",
+      "sourceUncertainty": "Kilde-repoets main ble undersøkt på commit f32f92ed00d1286e25e9cc7a0454ba1ad8c579eb. Repoet inneholder aktive kildefiler og tester; produksjonsdeploy, faktisk drift og gjenbruksrettigheter er ikke uavhengig verifisert."
     },
     {
       "slug": "bilag-v5",
