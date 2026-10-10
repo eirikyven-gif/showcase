@@ -19,7 +19,25 @@
     media: [{ id: 1, title: 'Ruteplan · eksempelillustrasjon', icon: '▦', linked: true }, { id: 2, title: 'Plantekort · syntetisk eksempel', icon: '✿', linked: true }, { id: 3, title: 'Tidslinje · eksempelgrafikk', icon: '◷', linked: false }],
     activeModule: 0, step: 0, overview: true, completed: [], draft: '', quizChoice: [], feedback: '', feedbackState: '', tab: 'modules'
   });
-  let state = seed();
+  const storageKey = 'vibe-wp-l-ringssti-demo-v1';
+  function loadState() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (stored && Array.isArray(stored.modules) && Array.isArray(stored.timeline) && Array.isArray(stored.media) && Array.isArray(stored.completed)) {
+        return { ...seed(), ...stored };
+      }
+    } catch {}
+    return seed();
+  }
+  let state = loadState();
+  function persistState() {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    } catch {
+      const status = document.querySelector('#storage-status');
+      if (status) status.textContent = 'Nettleseren kunne ikke lagre lokalt. Demoen virker til fanen lukkes.';
+    }
+  }
   const pathRoot = document.querySelector('#learning-path');
   const editorRoot = document.querySelector('#editor-panel');
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -109,6 +127,7 @@
 
   document.addEventListener('click', (event) => {
     const target = event.target.closest('[data-action]'); if (!target) return;
+    if (target.dataset.action === 'reset-demo') { localStorage.removeItem(storageKey); location.reload(); return; }
     const action = target.dataset.action, mi = Number(target.dataset.mi), ei = Number(target.dataset.ei), ix = Number(target.dataset.index);
     if (action === 'open-module') { state.activeModule = ix; state.overview = false; resetStepState(); renderPath(); focusStep(); }
     else if (action === 'previous') { state.step = Math.max(0, state.step - 1); state.quizChoice = []; state.feedback = ''; renderPath(); focusStep(); }
@@ -122,7 +141,7 @@
       else if (selected.length === quiz.correct.length && selected.every(value => quiz.correct.includes(value))) { state.feedback = quiz.feedbackCorrect; state.feedbackState = 'good'; const key = state.activeModule + ':' + state.step; if (!state.completed.includes(key)) state.completed.push(key); }
       else { state.feedback = quiz.feedbackWrong; state.feedbackState = 'bad'; }
       renderPath(); document.querySelector('.quiz-feedback')?.focus();
-    } else if (action === 'save-draft') { state.draft = document.querySelector('#case-draft').value; document.querySelector('#draft-status').textContent = 'Utkast lagret midlertidig i denne fanen.'; }
+    } else if (action === 'save-draft') { state.draft = document.querySelector('#case-draft').value; document.querySelector('#draft-status').textContent = 'Utkast lagret lokalt i denne nettleseren.'; }
     else if (action === 'clear-draft') { state.draft = ''; renderPath(); document.querySelector('#case-draft').focus(); }
     else if (action === 'ai-quiz') openDialog('Dypdykk (KI)', 'Denne kildeknappen er en stub uten tilkoblet backend. I demoen sendes ingen svar videre.');
     else if (action === 'ai-case') openDialog('KI-sensor', 'Dette er en kilde-stub som ikke er koblet til backend. Utkastet vurderes ikke og forlater ikke nettleserfanen.');
@@ -140,10 +159,12 @@
     else if (action === 'add-level') { state.modules[mi].elements[ei].levels.push({ label: `Nivå ${state.modules[mi].elements[ei].levels.length + 1}`, items: ['Nytt punkt'] }); renderEditor(); }
     else if (action === 'add-event') { state.timeline.push({ date: 'Nytt steg', label: 'Ny hendelse', description: 'Syntetisk eksempel.', tags: [] }); renderEditor(); }
     else if (action === 'remove-event') { state.timeline.splice(ix, 1); renderEditor(); }
+    persistState();
   });
   document.addEventListener('input', (event) => {
-    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.type === 'checkbox' ? event.target.checked : event.target.value); }
-    if (event.target.matches('input[name="quiz"]')) { const value = Number(event.target.value); if (event.target.type === 'radio') state.quizChoice = [value]; else if (event.target.checked) state.quizChoice.push(value); else state.quizChoice = state.quizChoice.filter(item => item !== value); }
+    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.type === 'checkbox' ? event.target.checked : event.target.value); persistState(); }
+    if (event.target.matches('#case-draft')) { state.draft = event.target.value; persistState(); }
+    if (event.target.matches('input[name="quiz"]')) { const value = Number(event.target.value); if (event.target.type === 'radio') state.quizChoice = [value]; else if (event.target.checked) state.quizChoice.push(value); else state.quizChoice = state.quizChoice.filter(item => item !== value); persistState(); }
   });
   document.addEventListener('change', (event) => {
     if (event.target.matches('[data-add-type]')) event.target.dataset.selectedType = event.target.value;
@@ -151,6 +172,7 @@
     if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.value); }
     if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.value); }
     if (event.target.matches('[data-media]')) state.media[Number(event.target.dataset.media)].linked = event.target.checked;
+    if (event.target.matches('[data-correct], [data-media], [data-bind]')) persistState();
   });
   document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => {
     const edit = button.dataset.view === 'edit'; document.querySelectorAll('[data-view]').forEach(item => { item.classList.toggle('is-active', item === button); item.setAttribute('aria-pressed', item === button ? 'true' : 'false'); });

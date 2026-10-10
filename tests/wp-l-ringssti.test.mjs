@@ -29,12 +29,19 @@ test('demo preserves the source player and editor feature families with syntheti
   assert.match(docs, /syntetiske/i);
 });
 
-test('all transient demo actions stay in memory without requests, cookies, or browser persistence', () => {
-  assert.match(js, /let state = seed\(\)/);
-  assert.doesNotMatch(`${html}\n${js}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|navigator\.sendBeacon)\b/i);
+test('demo persistence is local-only, resettable, and has no network or cookies', () => {
+  assert.match(js, /let state = loadState\(\)/);
+  assert.match(js, /localStorage\.getItem\(storageKey\)/);
+  assert.match(js, /localStorage\.setItem\(storageKey/);
+  assert.match(js, /localStorage\.removeItem\(storageKey\)/);
+  assert.match(html, /data-action="reset-demo"/);
+  assert.match(js, /action === 'reset-demo'/);
+  assert.match(html, /Alt innhold og all fremdrift lagres bare lokalt/);
+  assert.doesNotMatch(`${html}\n${js}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie|navigator\.sendBeacon)\b/i);
   assert.doesNotMatch(`${html}\n${js}`, /https?:\/\//i);
   assert.match(js, /document\.addEventListener\('click'/);
-  assert.match(docs, /Oppdatering nullstiller alt/);
+  assert.match(docs, /Nullstill demo/);
+  assert.match(docs, /localStorage/);
 });
 
 test('interactive controls have visible keyboard focus and the layout adapts to mobile', () => {

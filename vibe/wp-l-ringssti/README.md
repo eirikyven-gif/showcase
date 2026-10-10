@@ -15,13 +15,13 @@ En statisk, funksjonell demonstrasjon av WordPress-pluginen WP Læringssti v0.5.
 - Ett innholdselement om gangen med Forrige/Neste, fremdrift, fullføring og retur til oversikten. Neste på quiz blir tilgjengelig etter riktig svar.
 - Faktaboksrader, accordion, hirarki, globale tidslinjeelementer og tekst.
 - Quiz med radio-/flervalg, tilbakemelding ved rett/feil, og Dypdykk (KI)-stub etter riktig svar.
-- Caseoppgavetekst, leveransekrav, utkast med midlertidig lagre/slette og KI-sensor-stub.
+- Caseoppgavetekst, leveransekrav, lokalt lagret utkast med lagre/slette og KI-sensor-stub.
 - Redigeringsområder for moduler/elementer, global tidslinje og sti-media; modul-/elementrekkefølge, quizvalg/riktige svar, innholdsredigering og lokale redigeringshandlinger.
 
 ## Bevisste demoavgrensninger
 
 - Alle navn, moduler, tekst, tidslinjer og medier er tydelig syntetiske. Ingen personopplysninger eller privat tjenestedata brukes.
-- Redigerings- og elevfunksjoner er lokale i fanens minne. Oppdatering nullstiller alt; ingenting sendes, cookies eller nettleserlagring brukes ikke.
+- Redigeringsvalg, læringsfremdrift og caseutkast lagres i nettleserens `localStorage`, som en lokal simulering av kildefunksjonene. Data sendes ikke til en server. «Nullstill demo» sletter den lokale demoen og går tilbake til syntetiske eksempeldata.
 - Quiz vurderes lokalt i nettleseren. Riktig svar er dermed synlig i kildefilene og har ingen sikkerhets- eller vurderingsverdi.
 - «Dypdykk (KI)» og «KI-sensor» åpner forklarende dialoger, men kaller ikke en KI-tjeneste. Sti-media er illustrasjoner, ikke WordPress-attachments.
 - WordPress/Gutenberg-blokk, posttype, roller og capability-kontroller, serverlagring, AJAX, servervalidert fasit, mediebibliotek og eventuell produksjonsintegrasjon er ikke med.
