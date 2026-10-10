@@ -232,7 +232,7 @@ test('catalog and demo runtime have no browser persistence, login fields, recogn
     for (const secretPattern of secretPatterns) {
       assert.doesNotMatch(source, secretPattern, `${file} has no recognizable secret pattern`);
     }
-    if (file.endsWith('.js') && file !== hubScript) {
+    if (file.endsWith('.js') && file !== hubScript && routeSlug !== 'ukelonn') {
       assert.doesNotMatch(source, /\bfetch\s*\(/, `${file} makes no API/network call`);
     }
   }
@@ -281,10 +281,11 @@ test('Nedtelling e-post preserves signature generation in isolated local storage
   assert.match(read('vibe/nedtelling-epost/README.md'), /Kilde-HTML-en har ingen separat adminflate/i);
 });
 
-test('Ukelønn is a distinct synthetic adult-only static candidate route', () => {
+test('Ukelønn is a source-faithful synthetic demo with explicitly local persistence', () => {
   const app = catalog.apps.find((entry) => entry.slug === 'ukelonn');
   const html = read('vibe/ukelonn/index.html');
-  const css = read('vibe/ukelonn/style.css');
+  const css = read('vibe/ukelonn/assets/ukelonn.css');
+  const runtime = read('vibe/ukelonn/assets/demo-api.js');
   const docs = read('vibe/ukelonn/README.md');
 
   assert.ok(app, 'Ukelønn remains in the broad candidate catalog');
@@ -292,19 +293,20 @@ test('Ukelønn is a distinct synthetic adult-only static candidate route', () =>
     assert.equal(typeof app[field], 'string', `Ukelønn records ${field}`);
     assert.ok(app[field].trim(), `Ukelønn ${field} is documented`);
   }
-  assert.match(app.status, /Beholdt i bred førstegangsrunde/);
+  assert.match(app.status, /Kvalitetskorreksjon/);
   assert.match(app.source, /apps\/ukelonn.*0\.17\.0/);
-  assert.match(app.routeState, /Ny separat rute/);
-  assert.match(html, /href="\/vibe\/ukelonn\/"/);
+  assert.match(app.routeState, /eksisterende/i);
+  assert.match(html, /href="registrer\/"/);
   assert.match(html, /href="\/vibe\/"/);
-  assert.match(html, /Syntetisk eksempel · voksne/);
+  assert.match(html, /syntetiske demo-data/i);
   assert.match(html, /Voksen A/);
-  assert.match(html, /Voksen B/);
-  assert.match(html, /Ikke skriv inn opplysninger om barn/);
-  assert.doesNotMatch(html, /<input\b|<form\b|<script[^>]+src="https?:/i);
-  assert.match(css, /@media\(max-width:700px\)/);
-  assert.match(docs, /Kildecheckoutet er kun lest/);
-  assert.match(docs, /Issue #2:\*\* Delvis fremdrift/);
+  assert.doesNotMatch(html, /type="password"|name="pin"|<script[^>]+src="https?:/i);
+  assert.match(css, /\.demo-notice/);
+  assert.match(runtime, /localStorage\.setItem/);
+  assert.match(runtime, /localStorage\.removeItem\(key\)/);
+  assert.match(runtime, /window\.fetch\s*=\s*async/);
+  assert.match(docs, /SSoT-presisering – Ukelønn v0\.14 LÅST/);
+  assert.match(docs, /Nullstill alle demoendringer/);
 });
 
 test('Stoppeklokke candidate assessment is complete and retained in the broad review', () => {
@@ -479,6 +481,9 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
       if (path.relative(vibeRoot, file).startsWith(`arrangementsvakt${path.sep}`)) {
         assert.match(pageScripts, /preventDefault\(\)/, `${file} registers local submit handling`);
         assert.match(pageScripts, /demoApi/, `${file} routes actions to local simulation`);
+      } else if (file.includes(`${path.sep}ukelonn${path.sep}`)) {
+        assert.match(pageScripts, /addEventListener\(['"]submit['"]/i, `${file} handles forms in browser JavaScript`);
+        assert.match(pageScripts, /preventDefault\(\)/, `${file} prevents browser form navigation`);
       } else {
         assert.ok(formHasSubmitGuard(match[1], pageScripts), `${file} prevents submission for its form`);
       }

@@ -365,25 +365,25 @@
     {
       "slug": "ukelonn",
       "name": "Ukelønn",
-      "useCase": "Utforsk en fiktiv ukeoversikt med oppgaver og illustrative beløp for voksne familiemedlemmer.",
+      "useCase": "Registrer gjøremål, følg ukentlig opptjening og utforsk forslag, historikk og utbetalingsflyt med syntetiske demo-brukere.",
       "category": "Familieøkonomi og oppgaveoversikt",
       "audience": [
         "Voksne familiemedlemmer",
         "Personer som utforsker oppgaveoversikter"
       ],
-      "status": "Beholdt i bred førstegangsrunde; original statisk demo laget. Kildeversjon 0.17.0 er ikke live QA-verifisert. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Kilde-README oppgir versjon 0.17.0, men sier at denne versjonen ikke er deployet eller live QA-verifisert. Lisens/gjenbrukstillatelse ble ikke funnet i inspiserte kildefiler; faktisk produksjonsstatus og bruk er uavklart.",
-      "purpose": "Illustrere en oversikt over avtalte gjøremål, status og ukentlig beløpsgrunnlag.",
-      "demoValue": "Gjør oppgaver, fremdrift og illustrative summer synlige i en responsiv statisk oversikt.",
-      "simplifications": "To generiske voksne, en fiktiv uke og syntetiske oppgaver/beløp. Ingen redigering, registrering, godkjenning, bilder, periodevalg eller oppgjør.",
-      "risk": "Kilden kan behandle brukeridentiteter, PIN/passord-hasher, sesjoner, oppgave- og betalingshistorikk og vedlegg/bilder. Ingen slike data eller kildematerialer er kopiert. Demoen etterspør ikke opplysninger om barn eller andre virkelige personer.",
-      "scope": "Original statisk HTML/CSS på /vibe/ukelonn/. Ingen input, konto, auth, API, server, nettverkskall, cookies, lagring, opplasting, PII eller betaling.",
-      "source": "eirikyven-gif/diverse-apper/apps/ukelonn, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530 (lest 2026-10-08); version.json oppgir 0.17.0. Kilde read-only.",
+      "status": "Kvalitetskorreksjon: kildeappens bruker- og adminarbeidsflyter er kopiert til en lokal, syntetisk demo. Ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Kilde-README oppgir versjon 0.17.0, ikke deployet/live QA-verifisert. Kildens brukerrettede HTML/CSS/JavaScript er gjennomgått; produksjonsstatus/bruk utenfor README er uavklart. Låst appgrunnlag er SSoT-presisering Ukelønn v0.14.",
+      "purpose": "Beholde Ukelønns kildefunksjoner for gjøremålsregistrering, adminbehandling, periodehistorikk og ukentlig beløpsoversikt som en offentlig demo.",
+      "demoValue": "Utforsk sammenhengende bruker- og adminflyt: registrering og redigering, forespørsler, historikk, perioder og betalinger.",
+      "simplifications": "Innlogging erstattet med rollevalg for Voksen A, Voksen B og demo-admin. PHP API/serverlagring erstattet med lokal nettlesersimulering; endringer lagres lokalt til full reset. Oppgaver, beløp, historikk og personer er syntetiske. Bildevedlegg bare simulert; filinnhold leses ikke videre, lagres ikke eller sendes. Excel-mal er statisk, tom; XLSX-import leses i nettleseren og endringer lagres lokalt. Ingen e-post/SMS eller private tjenester.",
+      "risk": "Kilden kan behandle navn, PIN/passord, sesjoner, betalingshistorikk og vedlegg/bilder. Demoaktivitet blir i nettleserens localStorage; besøkende varsles om å bruke syntetiske data, og full nullstilling er synlig. Ingen autentisering, cookies, serverlagring, identifiserende kildeopplysninger, hemmeligheter eller live/private API-data.",
+      "scope": "Kildebasert statisk HTML/CSS/JS under /vibe/ukelonn/ med nettleserbasert API-simulering og localStorage for arbeidsflyten. Ingen serverkall fra appens fetch-funksjoner; ingen auth/cookies/serverlagring. Synlig full reset fjerner demoens localStorage-nøkkel.",
+      "source": "eirikyven-gif/diverse-apper/apps/ukelonn, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530; version.json oppgir v0.17.0. Låst app-SSoT: Notion SSoT-presisering Ukelønn v0.14 LÅST.",
       "sourceStack": "Kilde: HTML/CSS/vanilla JavaScript, same-origin PHP/JSON API-er og privat filbasert JSON-lagring ifølge kildearkitektur.",
-      "sourceTests": "Kilde-README dokumenterer Node UI-kontrakter, PHP-sesjonskontrakt og manuell deploysmoke; kildeversjonen er oppgitt som ikke deployet/live QA-verifisert. Kildetestene ble ikke kjørt for showcase.",
-      "sourceApiAuthStoragePrivacy": "Kilden dokumenterer auth, oppgave-, registrerings-, forslag-, utbetalings-, historikk- og vedleggs-API-er, separate admin-/brukerinnlogginger, PHP-sesjonscookies og privat JSON-lagring. Detaljer og usikkerhet er ført i rutens README.",
-      "rightsUncertainty": "Kilde-rettigheter og tillatelse til gjenbruk er ikke bekreftet. Demoen er selvstendig og gjenbruker ingen kildekode, UI eller innhold.",
-      "routeState": "Ny separat rute; skilt fra den eksisterende månedsoversikten inntekter-kostnader."
+      "sourceTests": "Kilde-README dokumenterer Node Playwright UI-kontrakter og PHP-sesjons/backendkontrakter. UI-kontraktene dekker modaler, tastatur/fokus, kompakte tabeller, mobil/historikk og Excel-mal. Showcase har egne statiske/API-simuleringskontroller.",
+      "sourceApiAuthStoragePrivacy": "Kilden dokumenterer auth, gjøremåls-, registrerings-, forslag-, utbetalings-, historikk-, vedleggs- og admin-API-er; PHP-sesjoner; separate bruker/adminroller; privat JSON-data/vedlegg; e-post/SMS-integrasjoner. I demoen erstattes de med syntetiske lokale simuleringer.",
+      "rightsUncertainty": "Kildens lisensfelt ble ikke funnet i repoet. Showcase-kopien er laget innenfor Eiriks uttrykkelige oppdrag om en tro kopi i eget showcase-repo; kilderepoet endres ikke.",
+      "routeState": "Kvalitetskorreksjon av eksisterende /vibe/ukelonn/ oppføring; alle kildeappens sentrale sider har direkteruter."
     },
     {
       "slug": "ticker",

@@ -1,0 +1,17 @@
+{
+  "name": "Ukelønn",
+  "short_name": "Ukelønn",
+  "start_url": "/vibe/ukelonn/",
+  "scope": "/vibe/ukelonn/",
+  "display": "standalone",
+  "background_color": "#faf3f1",
+  "theme_color": "#8b2f23",
+  "icons": [
+    {
+      "src": "/vibe/ukelonn/assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
