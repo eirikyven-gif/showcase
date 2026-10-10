@@ -1,22 +1,30 @@
 <!doctype html>
 <html lang="no">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Syntetisk, lokal lagerportal som demonstrerer funksjonene i WP Varelager.">
-  <title>WP Varelager · syntetisk demo</title>
-  <link rel="stylesheet" href="/vibe/assets/hub.css"><link rel="stylesheet" href="/vibe/wp-varelager/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntetisk, lokal demonstrasjon av WP Varelager 2.3.0.">
+  <title>WP Varelager · syntetisk demonstrasjon</title>
+  <link rel="stylesheet" href="/vibe/assets/hub.css">
+  <link rel="stylesheet" href="/vibe/wp-varelager/style.css">
   <script src="/vibe/wp-varelager/app.js" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Hopp til innhold</a>
-<header class="topbar"><a class="brand" href="/vibe/">vibe<span>.</span></a><nav aria-label="Hurtigvalg"><a href="#varer">Varer</a><a href="#utleie">Utleie</a><a class="back-link" href="/vibe/">Alle verktøy</a></nav></header>
-<main id="main" class="shell">
-  <div class="notice"><strong>Syntetisk demonstrasjon · ingen live lagerdata</strong><p>Alle varer, steder, avtaler og beløp på siden er oppdiktede eksempler. Endringer lever bare i denne fanen og forsvinner når siden lastes på nytt.</p></div>
-  <header class="hero"><p class="eyebrow">HELL ULTRA · EKSEMPELLAGER</p><h1>Utstyrslager</h1><p>En lokal demonstrasjon av lageroversikt, enheter, utleie, rapporter, delte lister, import/eksport, opptelling og innstillinger.</p></header>
-  <div class="toolbar"><label for="search">Søk i utstyr</label><input id="search" type="search" placeholder="Navn eller SKU"><button id="add-item" class="primary" type="button">+ Legg til utstyr</button></div>
-  <nav class="tabs" aria-label="Lagerportal" role="tablist"><button role="tab" aria-selected="true" data-tab="varer">Utstyr</button><button role="tab" data-tab="utleie">Utleie</button><button role="tab" data-tab="rapporter">Rapporter</button><button role="tab" data-tab="delte">Delte lister</button><button role="tab" data-tab="import">Import/eksport</button><button role="tab" data-tab="opptelling">Lageropptelling</button><button role="tab" data-tab="innstillinger">Innstillinger</button></nav>
-  <section id="view" aria-live="polite"></section>
-  <p class="disclaimer">Selvstendig statisk demonstrasjon inspirert av WP Varelager 2.3.0. WordPress, innlogging, roller, database, delbare lenker, vedlegg, import/eksport, revisjonshistorikk og serverfunksjoner er ikke tilkoblet. Ingen data lagres.</p>
-</main><footer class="footer"><a href="/vibe/">← Tilbake til Vibe</a><span>WP Varelager · syntetiske eksempeldata</span></footer>
-<dialog id="item-dialog"><form method="dialog" id="item-form"><h2 id="dialog-title">Legg til utstyr</h2><label>Navn<input name="name" required></label><label>SKU / internkode<input name="sku" required></label><label>Kategori<select name="category"><option>Bekledning</option><option>Sikkerhet</option><option>Start/mål</option><option>Diverse</option></select></label><label>Antall<input name="qty" type="number" min="0" value="1"></label><label>Plassering<input name="location" value="Hovedlager"></label><label>Estimert verdi per enhet (NOK)<input name="value" type="number" min="0" value="0"></label><div class="actions"><button value="cancel">Avbryt</button><button id="save-item" class="primary" value="default">Lagre i denne fanen</button></div></form></dialog>
-</body></html>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+  <header class="topbar"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><nav aria-label="Hurtigvalg"><a href="#portal-tabs">Portal</a><a href="#administrasjon">Administrasjon</a><a class="back-link" href="/vibe/">Alle verktøy</a></nav></header>
+  <main id="main" class="shell">
+    <aside class="demo-notice" aria-label="Syntetiske eksempeldata"><strong>Syntetisk demonstrasjon · ingen live lagerdata</strong><p>Varer, personer, avtaler, koder, steder, vedlegg og beløp er oppdiktede eksempler. Arbeidsflyter kjører bare i denne fanen; ingenting lastes opp eller lagres ved omlasting.</p></aside>
+    <header class="hero"><p class="eyebrow">HELL ULTRA · EKSEMPELLAGER</p><h1>Utstyrslager</h1><p>Utforsk vareoversikt, enheter, utleie, rapporter, delte lister, import/eksport, opptelling og innstillinger.</p></header>
+    <section id="administrasjon" class="admin-shortcuts" aria-label="Administrative snarveier"><strong>Administrasjonsmeny</strong><button type="button" data-admin-view="varer">Utstyr</button><button type="button" data-admin-view="utleie">Utleie</button><button type="button" data-admin-view="innstillinger">Innstillinger</button><span>Samme lokale demoarbeidsflyter · ingen roller eller konto</span></section>
+    <section id="portal-tabs" aria-label="Lagerportal">
+      <nav class="tabs" role="tablist" aria-label="Portalområder">
+        <button role="tab" aria-selected="true" data-tab="varer">Utstyr</button><button role="tab" aria-selected="false" data-tab="utleie">Utleie</button><button role="tab" aria-selected="false" data-tab="rapporter">Rapporter</button><button role="tab" aria-selected="false" data-tab="delte">Delte lister</button><button role="tab" aria-selected="false" data-tab="import">Import/eksport</button><button role="tab" aria-selected="false" data-tab="opptelling">Lageropptelling</button><button role="tab" aria-selected="false" data-tab="innstillinger">Innstillinger</button>
+      </nav>
+      <section id="view" aria-live="polite"></section>
+    </section>
+    <p class="disclaimer">Selvstendig nettlesersimulering av WP Varelager 2.3.0. Alle eksempelverdier er syntetiske. Ingen WordPress, PHP, konto, server, database, persistent lagring, API, privat media eller ekte delingslenke er tilkoblet.</p>
+  </main>
+  <footer class="footer"><a href="/vibe/">← Tilbake til Vibe</a><span>WP Varelager · syntetisk demonstrasjon</span></footer>
+  <dialog id="editor-dialog" aria-labelledby="editor-title"><form id="editor-form"><h2 id="editor-title">Rediger</h2><div id="editor-fields"></div><div class="actions"><button type="button" data-close-editor>Avbryt</button><button id="editor-submit" class="primary" type="submit">Lagre i denne fanen</button></div></form></dialog>
+</body>
+</html>

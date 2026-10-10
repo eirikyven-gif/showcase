@@ -1,35 +1,44 @@
-# WP Varelager · kildevurdering og syntetisk simulator
+# WP Varelager · lokal funksjonssimulering
 
-**Issue #2:** Delvis fremdrift gjennom en isolert kandidatvurdering. Dette lukker ikke Issue #2 og er ikke en full port eller utrulling.
+**Issue #2:** Delvis fremdrift. Dette er en isolert demonstrasjon på `/vibe/wp-varelager/`, ikke en utrulling eller full WordPress-port. PR #90 skal forbli draft fram til kildearbeidsflytene og QA er gjennomgått.
 
 ## Kildebelegg
 
-- **Arkivstatus:** `eirikyven-gif/Wp-varelager` er arkivert. Ingen filer i kilderepoet er endret.
-- **Kildeversjon:** `main` SHA `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree SHA `7506300fcd587546f7772e1cab4d55293bd7b947`. Committen 2026-03-07 legger til versjonspakka `wp-varelager_v2.3.0.zip`; pluginens entrypoint oppgir v2.3.0.
-- **Kontrollerte blobs:** rot-README `89ac942d4e21c3a832c46d2feb9f232b5779592b` (18 byte); plugin entrypoint `efab8c606ffdeb94b01b414ab8a7728f16eb5aca`; kravspesifikasjon `28d9af847296819f89947ec6b83ac7e01def8853`; changelog `2c777661911f4c1cb306a84cb6224d5851c31511`.
-- **Funksjonell kilde:** PHP-pluginen registrerer shortcode `[hu_inventory_portal]`, WordPress capabilities, installasjon og plugin-klasser. Kravspecen og changeloggen beskriver varer og unike enheter, kategorier, status/plassering, verdi, vedlegg, notater/instrukser, utleie/retur, rapporter, magiske leselenker, CSV/XLSX, bulk, oppstart, metadata og lageropptelling. Changeloggen for 2.3.0 beskriver detaljer for varer/enheter, vedlegg, notater og historikk.
-- **Kildeteststatus:** Repositoriets workflow `build-release.yml` finnes. Ingen testmappe eller root testscript ble identifisert i den inspiserte trestrukturen; kildekode er ikke kjørt i WordPress-miljø.
-- **Sammenligning med showcase:** På showcase main `b5e117c` var `/vibe/wp-varelager/` og katalogslug `wp-varelager` fraværende. Navnelikhet er altså ikke brukt som bevis for en tidligere kildekobling.
-- **Rettigheter:** Plugin-entrypoint oppgir GPLv2-or-later. Separat lisensfil ble ikke funnet i den gjennomgåtte trestrukturen. Demoen gjenbruker ikke PHP, kildeaktiva eller ordrett kildetekst.
+- `eirikyven-gif/Wp-varelager` er arkivert. Kilderepoet er ikke endret.
+- Inspisert kilde `main`: commit `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree `7506300fcd587546f7772e1cab4d55293bd7b947`.
+- Plugin-entrypoint blob: `efab8c606ffdeb94b01b414ab8a7728f16eb5aca`. Changelog blob: `2c777661911f4c1cb306a84cb6224d5851c31511`. Rot-README er bare 18 byte (`89ac942d4e21c3a832c46d2feb9f232b5779592b`); pluginens `readme.txt` og PHP-implementasjon/Portal_Shortcode ble derfor også inspisert. Koden implementerer en funksjonell WordPress-plugin; slug-likhet ble ikke brukt som bevis for slektskap.
+- Showcase-baseline `b5e117cfe6d08f94ed9128523a854218b9d03009` hadde verken denne ruten eller katalogoppføringen.
+- Kildens portal har sju områder: Utstyr, Utleie, Rapporter, Delte lister, Import/eksport, Lageropptelling og Innstillinger. Kilden har også speilede admin-sider for utstyr, utleie og innstillinger.
 
-## Demoens funksjoner og grenser
+## Dekning i demoen
 
-Ruten viser syntetiske eksempelvarer. Søk, legg til, rediger, slett, juster lagerantall, vis verdioversikt og sammenlign opptalt antall fungerer lokalt i sidens minne. De syv portalområdene fra kildens changelog er representert som faner.
+| Kildeområde | Lokalt representert funksjon |
+| --- | --- |
+| Utstyr | Søk, kategori/status/plassering/løp-filter, gruppering, tabell/galleri, vare CRUD, bulkstatus/-plassering/-notat, eksport og lagerjustering. Varedetaljer viser verdier, løp, instruks, egenskaper og historikk. |
+| Enheter | Serienummer, status, plassering, tilstand, CRUD, detaljvisning, notater, vedleggsreferanser og historikk. |
+| Utleie | Leietaker CRUD og syntetisk mailto, avtaleveiviser, linjer, kladdredigering, aktivering, utlånsantall, retur og returmerknad. |
+| Rapporter | Oppsummeringer per kategori, status og plassering, verdier og aktive avtaler. |
+| Delte lister | Filter, forhåndsvisning, opprettelse og tilbakekalling av lokale demoposter. Ingen offentlig lenke eller token opprettes. |
+| Import/eksport | Lokal CSV-import, syntetisk CSV-mal og XLSX-nedlasting laget i nettleseren. Importen validerer obligatoriske SKU/navn og oppdaterer matchende SKU. |
+| Lageropptelling | Registrer opptalt antall, differanse, årsak og lokal historikk. |
+| Innstillinger | Førstegangsoppsett, kategorier, plasseringer, statuser, løp, vedleggskategorier og egendefinerte metadatafelt med CRUD. In-use-sjekker hindrer enkelte ugyldige slettinger. |
+| Admin-snarveier | Åpner de lokale Utstyr-, Utleie- og Innstillinger-visningene. |
 
-Dette er en avgrenset simulator, ikke full funksjonsparitet. Utleie/retur, delte lister og eksport er kun visuelle eksempler. Unike enheter, vedlegg, notater, revisjonshistorikk, full import/eksport, bulkhandlinger, oppstartveiviser, rolleadministrasjon og redigering av innstillinger er ikke implementert. Kildens nøyaktige UI-tekster er ikke kopiert; kildens README er nesten tom, og spesifikasjonens UI er ikke identisk med et komplett kjørbart grensesnitt.
+Handlinger endrer bare JavaScript-data i sidens minne. Eksempeldata er oppdiktede og merket syntetiske; endringer forsvinner ved omlasting. Kildens funksjonstekster og felter er representert på norsk der det er relevant, men denne demoen er ikke en bit-for-bit gjengivelse av pluginens WordPress-grensesnitt.
 
-Alle varer, koder, antall, steder, arrangører og beløp er oppdiktede og merket som syntetiske eksempler. En eventuell lokal CRUD-endring forsvinner ved omlasting.
+## Avgrensninger og sikkerhet
 
-## Sikkerhet og personvern
+- Ingen WordPress-runtime, kontoer, autentisering, roller eller tilgangskontroll. Innlogging og capability-administrasjon er ikke eksponert som lokale flows.
+- Ingen server, database, browser persistence, API, private API-er eller hemmeligheter.
+- Ingen opplasting eller lagring av privat media. Vedlegg er lokale syntetiske filnavn/-referanser; «Vis» viser metadata, ikke filinnhold.
+- Delte lister er lokale eksempler uten magic link, URL, token eller ekstern lesetilgang.
+- Kontaktopplysninger er syntetiske; e-post bruker `.invalid`, telefon og adresse er tydelig fiktive. Mailto åpner ingen reell mottaker.
+- CSV leses kun lokalt i nettleseren. Eksportfilen består av syntetiske eksempeldata.
 
-- Ingen WordPress-runtime, PHP, database, API, autentisering, roller, delingstokener eller session.
-- Ingen ekte navn, e-post, telefon, kundedata, lokasjoner eller kildens inventar.
-- Ingen opplasting, vedleggsbehandling, nettverksforespørsler eller persistent browser/serverlagring.
-- Ingen kildehemmeligheter eller privat API-er.
+## QA, risiko og levering
 
-## QA, risiko og utrulling
-
-- **QA:** GitHub Actions `Vibe static validation` kjører `node --test tests/*.test.mjs`. Se CI for PR-en; lokale statiske kontroller kjøres før PR-opprettelse.
-- **Risiko:** Hovedrisiko er å forveksle visuelle eksempler med fungerende WordPress-arbeidsflyter eller full kildeparitet. Ingen produksjonsdrift eller databehandling er uavhengig verifisert. Rettighetsgrunnlaget for andre kildeartefakter er uavklart.
-- **Versjon:** Showcase VERSION følger repository SemVer; denne isolerte ruten er en patch/minor-endring uten produksjonsløfte.
-- **Deploy:** Ikke deployet. PR skal ikke merges eller deployes som del av dette arbeidet. Etter eventuell senere godkjenning må direkte `/vibe/wp-varelager/`-rute, refresh og katalogruting kontrolleres.
+- Automatiske kontroller: `node --test tests/wp-varelager.test.mjs` og repository CI `node --test tests/*.test.mjs`.
+- Manuell browser-QA: direkte rute og refresh ved 390px og 1440px; vare/enhetsdetaljer, notat, leieavtale fra kladd til aktiv og retur, kontakt CRUD, opprett delingsdemopost, CSV-import, XLSX-nedlasting, lageropptelling og innstillings-CRUD. Kontrollerte horisontal overflow, JavaScript-feil og uventede eksterne forespørsler. XLSX-arkivet ble også kontrollert med `unzip -t`.
+- Risiko: en lokal simulering kan se ut som ekte flerbrukerfunksjon; UI-et varsler derfor at data er midlertidige og at lenker/media ikke opprettes. WordPress-integrasjon, tilgangskontroll og faktisk filbehandling må vurderes separat dersom en senere port ønskes.
+- Showcase-katalog og SemVer er oppdatert i PR-grenen; versjonsrebasering er utsatt til de andre pågående merge-endringene er landet.
+- Ikke deployet og skal ikke merges eller deployes gjennom denne oppgaven. Issue #2 forblir delvis løst.
