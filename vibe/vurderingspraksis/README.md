@@ -1,30 +1,28 @@
-# Vurderingspraksis · første vurdering og demo
+# Vurderingspraksis
 
-## Katalogmetadata
+Source-faithful, local-only showcase copy of `eirikyven-gif/apps-fagskolen/apps/vurderingspraksis` at commit `92379f1108ec71013a06c4e5976a6fe79de81a3e`.
 
-- **Bruksområde:** Utforsk et syntetisk eksempel på sammenheng mellom læringsmål, observasjoner og vurdering.
-- **Kategori:** Utdanning.
-- **Målgruppe:** Faglærere, vurderingsteam og studieplanleggere.
-- **Status:** Beholdt i bred førstegangsvurdering; statisk demo laget. Ingen kuratering eller utsiling er gjort.
-- **Foreslått slug/rute:** `vurderingspraksis` · `/vibe/vurderingspraksis/`.
-- **Demoens verdi:** Viser hvordan mål, oppgave, observerbare spor, faglig drøfting og tilbakemelding kan henge sammen i en kort workshopøvelse.
-- **Forenklinger:** Én nyskrevet, oppdiktet situasjon om overlevering av arbeidsstasjon. Fire korte steg med refleksjonsspørsmål; ingen av kildens tekster, dokumenter, flytskjemaer, medier eller visuelle ressurser er kopiert.
-- **Risiko:** Lav for denne demoen. Den inneholder ingen reelle deltakere, vurderingsdata eller svarfelt. Kildens eksterne Drive- og YouTube-ressurser og rettigheter til innhold er ikke overført. Eventuell framtidig bruk av kildeinnhold må vurderes separat.
-- **Omfang:** Responsiv, statisk lesestøtte med klikk- og tastaturbetjente fasetrinn. Ingen skriving, lagring, innlogging, server eller tredjepartskall.
+The route retains the source's four work areas, phase guidance, nine-topic flowchart, learning paths and accordion material, glossary, day plan, responsive shortcut menu, modal navigation, keyboard handling, and light/dark appearance. Source participant findings are replaced with invented examples. Institution and workshop date identifiers are removed. Source Drive files, presentations, public references, videos/embeds and all external URLs/calls are not included; unavailable resources are clearly labeled. No source response capture, login, server, private API, or data storage exists.
 
-## Personvern og sikkerhet
+The page stores only the selected appearance and which day flowcharts have been shown, in two route-specific `localStorage` keys. This is disclosed on the page. **Nullstill lokale valg** removes both keys and reloads the page. Do not enter or store real participant/student information; there are no input fields.
 
-- Alt eksempelinnhold er oppdiktet og skrevet særskilt for denne siden.
-- Ingen eksterne URL-er, fonter, bilder, medier, API-er eller nettverkskall.
-- Ingen innlogging, identifikatorer, personopplysninger, svarinnsending eller analyse.
-- Ingen `localStorage`, `sessionStorage`, IndexedDB, cookies eller serverlagring; fasen finnes bare i sidens minne.
-- Dette er en demonstrasjon av vurderingsdrøfting, ikke en vurderingsfasit eller offisiell veiledning.
+## Privacy and safety
 
-## Test og QA
+- All displayed participant-style examples are synthetic.
+- No external network calls, external resources, login, server, cookies, or response collection.
+- Local storage is limited to display preference and flowchart-first-show state, with an on-page reset control.
+- This is a demonstration, not official institutional guidance or a grading rubric.
+- The source carries institution-specific content and external materials; those materials and source URLs are omitted. Rights for broader redistribution of the source content have not been independently established.
 
-- Kjør `node --test tests/vibe-static.test.mjs` og `node --check vibe/vurderingspraksis/app.js`.
-- Kontroller HTTP-direkterute, hubkort, mobilbredde, tastaturbetjening med piltaster/Home/End, fokusmarkering og fasestatus.
-- Bekreft at nettverksforespørsler bare gjelder statiske filer fra samme nettsted, og at valgt fase nullstilles ved ny innlasting.
-- Første visuelle Chromium-kontroll og ekstern deploykontroll skal dokumenteres i PR når de faktisk er utført.
+## QA
 
-Issue #2 omtales som delvis løst. Ruten inngår fortsatt i den brede kandidatrunden; ingen kuratering eller utsiling er gjort.
+Run from repository root:
+
+```sh
+node --test tests/vurderingspraksis.test.mjs tests/vibe-static.test.mjs
+node --check vibe/vurderingspraksis/app.js
+node --check vibe/vurderingspraksis/content.js
+node --check vibe/vurderingspraksis/appearance.js
+```
+
+Validation completed: `node --test tests/*.test.mjs` (87 passed), three `node --check` commands, catalog JSON parse, `git diff --check`, deployment workflow catalog/local-asset validation, and local HTTP 200 checks for the route and its JS/CSS/font assets. Chromium is unavailable in this environment, so visual, interactive browser, assistive-technology, physical-device and external deployment checks remain outstanding. No deployment has occurred.
