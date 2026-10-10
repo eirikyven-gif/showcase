@@ -329,13 +329,19 @@
       "audience": [
         "Alle som vil holde oversikt over en kort økt eller pause"
       ],
-      "status": "Beholdt som kandidat i bred førstegangsvurdering; original syntetisk demo. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Offentlig eirikyven-gif/diverse-apper/apps/timer lest 2026-10-08 på commit 0900ffe. README oppgir v1.2.0 og manuelle testpunkter, men ingen automatisert testkommando; deploy er ikke bekreftet. Se rute-README for kilde- og statusdetaljer.",
-      "purpose": "Gi en enkel nedtelling for arbeidsøkter eller pauser.",
-      "demoValue": "Gjør varighet, start, pause, fortsettelse og ferdigstatus umiddelbart utforskbare uten oppsett.",
-      "simplifications": "Original, frittstående timer med syntetisk 60-sekunders eksempel. Ingen kilde-UI, portalintegrasjon, lyd/varsling, historikk eller bakgrunnsplanlegging.",
-      "risk": "Lav for demoen. Bakgrunnsfaner kan forsinke oppdatering, og den generiske timeren må ikke forveksles med verifisert kildeutrulling.",
-      "scope": "Responsiv statisk HTML/CSS/JS på /vibe/timer/. Kun minnetilstand i fanen. Ingen konto, API, backend, lagring, persondata, hemmeligheter eller eksterne kall."
+      "status": "Tro, isolert Showcase-kopi av Timer v1.2.0; appfunksjonene er bevart. Issue #2 delvis løst; ingen kuratering eller utsiling.",
+      "sourceUncertainty": "Offentlig eirikyven-gif/diverse-apper/apps/timer, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530. README oppgir v1.2.0 og manuelle testpunkter, men ingen automatisert testkommando. README angir deploysti, men faktisk produksjonsstatus er ikke verifisert. Se rute-README for detaljer.",
+      "purpose": "Nedtellingstimer med sekundfelt, start, pause/fortsett, nullstilling og tydelig ferdigstatus.",
+      "demoValue": "Gjenskaper hele den lille timerflyten: 60 sekunders startverdi, sekundjustering, løpende nedtelling, pause/fortsett, nullstilling til valgt varighet og ferdigtilstand.",
+      "simplifications": "Ingen appfunksjon eller workflow er tatt bort. Showcase-ramme og egne stilfiler erstatter kildeappens portal- og delte UI-avhengigheter.",
+      "risk": "Timerens oppdateringer kan forsinkes når nettleserfanen er i bakgrunnen. Ingen personvern- eller backend-risiko observert i den isolerte demoen. Gjenbrukstillatelse er ikke dokumentert.",
+      "scope": "Statisk, isolert /vibe/timer/ kopi. Timer- og feltverdi finnes kun i minnet i fanen; innlasting nullstiller alt. Ingen innlogging, API, server, nettverkskall, localStorage, cookies, personopplysninger, hemmeligheter, live/private data eller simulert ekstern tjeneste.",
+      "source": "eirikyven-gif/diverse-apper/apps/timer, offentlig main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530. Kilde kun lest; ikke endret.",
+      "sourceStack": "Kilden bruker HTML/JavaScript og lokale delte ui.css/ui.js-filer. Showcase-kopien bruker statisk HTML, CSS og JavaScript.",
+      "sourceTests": "Kilde-README oppgir manuelle testpunkter for start, pause/fortsett og nullstilling; ingen automatisert testkommando eller resultat er oppgitt. Showcase-test kjøres i dette repoet.",
+      "sourceApiAuthStoragePrivacy": "Gjennomgått kilde-HTML/JS viser ingen API, autentisering, nettleserlagring, personopplysninger, hemmeligheter eller private tjenestedata. Kopien har ingen nettverkskall eller lagring.",
+      "rightsUncertainty": "Ingen lisens- eller gjenbrukserklæring er dokumentert i appens README eller appfiler; rettighetsgrunnlaget er uavklart.",
+      "routeState": "Eksisterende /vibe/timer/ rute erstattet med tro kopi; slug og direkte URL er uendret. Baseline main 2faa43876f10cc425d7afc3ee3ac04ac518c709e."
     },
     {
       "slug": "inntekter-kostnader",

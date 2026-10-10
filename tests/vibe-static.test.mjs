@@ -324,7 +324,7 @@ test('Stoppeklokke candidate assessment is complete and retained in the broad re
   assert.match(readme, /Deployment and live-host QA have not been performed/i);
 });
 
-test('Timer candidate has source assessment, synthetic scope, and accessible memory-only controls', () => {
+test('Timer faithful copy has source assessment, source controls, and accessible memory-only behavior', () => {
   const html = read('vibe/timer/index.html');
   const script = read('vibe/timer/app.js');
   const css = read('vibe/timer/style.css');
@@ -338,16 +338,17 @@ test('Timer candidate has source assessment, synthetic scope, and accessible mem
   }
   assert.match(html, /href="\/vibe\/timer\/"/, 'route declares its canonical URL');
   assert.match(html, /href="\/vibe\/"/g, 'route links back to the hub');
-  assert.match(html, /Syntetisk eksempel/i, 'timer preset is marked synthetic');
+  assert.match(html, /Timer v1\.2\.0/, 'copied app version is identified');
   assert.match(html, /role="status"[^>]*aria-live="polite"/, 'status is announced accessibly');
-  assert.match(html, /type="number"[^>]*min="1"[^>]*max="5999999"/, 'duration has explicit bounds');
-  assert.match(script, /Number\.isSafeInteger/, 'duration is validated as an integer');
-  assert.match(script, /window\.setInterval/, 'timer is local browser behavior');
-  assert.match(script, /SAMPLE_SECONDS\s*=\s*60/, 'reset restores the synthetic example');
+  assert.match(html, /id="secs"[^>]*type="number"[^>]*min="1"[^>]*value="60"/, 'source duration input is preserved');
+  for (const id of ['start', 'pause', 'reset']) assert.match(html, new RegExp(`id="${id}"`), `${id} control is present`);
+  assert.match(script, /setInterval\(render, 200\)/, 'source countdown tick is preserved');
+  assert.match(script, /remainingMs = getConfiguredMs\(\)/, 'reset returns to the currently configured duration');
+  assert.doesNotMatch(script, /localStorage|sessionStorage|indexedDB|fetch\s*\(/, 'timer uses no storage or network');
   assert.match(css, /:focus-within|:focus-visible/, 'keyboard focus is visible');
   assert.match(css, /@media\s*\(max-width:/, 'layout adapts to small screens');
-  assert.match(docs, /ingen testkommando eller automatisert testresultat/i, 'source test uncertainty is recorded');
-  assert.match(docs, /Skjermleser ble ikke kontrollert manuelt/i, 'manual QA status is explicit');
+  assert.match(docs, /ingen automatiserte tester/i, 'source test uncertainty is recorded');
+  assert.match(docs, /Kildeappen lagrer ikke timerverdien/i, 'source privacy behavior is explicit');
 });
 
 test('HTML-only app routes are valid deployment targets', () => {
