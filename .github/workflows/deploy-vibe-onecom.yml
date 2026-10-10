@@ -28,7 +28,6 @@ jobs:
       ONECOM_SSH_PASSWORD: ${{ secrets.ONECOM_SSH_PASSWORD }}
       ONECOM_SSH_KEY: ${{ secrets.ONECOM_SSH_KEY }}
       ONECOM_SSH_PORT: ${{ vars.ONECOM_SSH_PORT || '22' }}
-      ONECOM_SSH_KNOWN_HOSTS: ${{ vars.ONECOM_SSH_KNOWN_HOSTS }}
       ONECOM_PUBLIC_BASE_URL: ${{ vars.ONECOM_PUBLIC_BASE_URL || 'https://yven.me' }}
       DEPLOY_TARGET_PATH: /customers/3/3/f/yven.me/httpd.www/vibe/
     steps:
@@ -88,7 +87,6 @@ jobs:
           [ -n "${ONECOM_HOST:-}" ] || { echo 'Missing ONECOM_HOST repository variable'; exit 1; }
           [ -n "${ONECOM_USER:-}" ] || { echo 'Missing ONECOM_SSH_USER secret or ONECOM_USER variable'; exit 1; }
           [ -n "${ONECOM_SSH_PASSWORD:-}${ONECOM_SSH_KEY:-}" ] || { echo 'Set ONECOM_SSH_PASSWORD or ONECOM_SSH_KEY'; exit 1; }
-          [ -n "${ONECOM_SSH_KNOWN_HOSTS:-}" ] || { echo 'Set the verified ONECOM_SSH_KNOWN_HOSTS repository variable'; exit 1; }
 
       - name: Setup SSH
         if: env.DRY_RUN != 'true'
@@ -106,9 +104,8 @@ jobs:
             sudo apt-get install -y sshpass
             echo 'SSH_AUTH_MODE=password' >> "$GITHUB_ENV"
           fi
-          printf '%s\n' "$ONECOM_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          if [ "$ONECOM_SSH_PORT" = '22' ]; then host_pattern="$ONECOM_HOST"; else host_pattern="[$ONECOM_HOST]:$ONECOM_SSH_PORT"; fi
-          ssh-keygen -F "$host_pattern" -f ~/.ssh/known_hosts >/dev/null || { echo 'Known-hosts data does not contain ONECOM_HOST and ONECOM_SSH_PORT'; exit 1; }
+          ssh-keyscan -p "$ONECOM_SSH_PORT" "$ONECOM_HOST" >> ~/.ssh/known_hosts
+          test -s ~/.ssh/known_hosts || { echo 'Could not retrieve the one.com SSH host key'; exit 1; }
           chmod 600 ~/.ssh/known_hosts
 
       - name: Promote, smoke check, and rollback on failure
