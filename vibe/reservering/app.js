@@ -17,15 +17,38 @@
     const date = addDays(new Date(), offset);
     if (date.getDay() !== 0 && date.getDay() !== 6) dayAvailability[dateKey(date)] = 'available';
   }
-  const blocked = [{ start: makeFutureDay(1, 6), end: makeFutureDay(1, 6), label: 'Demo – helg' }, { start: makeFutureDay(1, 0), end: makeFutureDay(1, 0), label: 'Demo – helg' }];
+  const storageKey = 'vibe-reservering-demo-v1';
+  const seedBlocked = [{ start: makeFutureDay(1, 6), end: makeFutureDay(1, 6), label: 'Demo – helg' }, { start: makeFutureDay(1, 0), end: makeFutureDay(1, 0), label: 'Demo – helg' }];
   const scheduleSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
-  const weekly = weekdays.map((name, index) => ({ name, enabled: index < 5, slots: index < 5 ? [...scheduleSlots] : [] }));
-  const reservations = [
+  const seedWeekly = weekdays.map((name, index) => ({ name, enabled: index < 5, slots: index < 5 ? [...scheduleSlots] : [] }));
+  const seedReservations = [
     { id: 'demo-101', date: makeFutureDay(1, 1), time: '09:00', name: 'Demakunde Alfa', phone: '00000001', email: 'alfa@example.invalid', note: 'Syntetisk eksempel', status: 'active' },
     { id: 'demo-102', date: makeFutureDay(1, 2), time: '11:00', name: 'Demakunde Beta', phone: '00000002', email: 'beta@example.invalid', note: '', status: 'active' },
     { id: 'demo-103', date: makeFutureDay(-10, 3), time: '14:00', name: 'Demakunde Gamma', phone: '00000003', email: 'gamma@example.invalid', note: '', status: 'active' },
     { id: 'demo-104', date: makeFutureDay(-20, 4), time: '10:00', name: 'Demakunde Delta', phone: '00000004', email: 'delta@example.invalid', note: '', status: 'cancelled' }
   ];
+  const syntheticNames = ['Demakunde Eksempel', 'Demakunde Alfa', 'Demakunde Beta', 'Demakunde Gamma', 'Demakunde Delta', 'Demakunde Ny'];
+  const syntheticEmails = ['kunde@example.invalid', 'alfa@example.invalid', 'beta@example.invalid', 'gamma@example.invalid', 'delta@example.invalid', 'ny@example.invalid'];
+  const syntheticNotes = ['', 'Syntetisk eksempel', 'Demo – eksempelmerknad', 'Demo – oppfølging'];
+  const syntheticText = (value) => ['', 'Demo – helg', 'Demo – stengt', 'Syntetisk eksempel'].includes(value);
+  const validReservation = (item) => item && typeof item.id === 'string' && /^demo-[a-z0-9-]+$/i.test(item.id) && /^\d{4}-\d{2}-\d{2}$/.test(item.date) && slotLabels.includes(item.time) && syntheticNames.includes(item.name) && /^000000\d{2,}$/.test(item.phone) && syntheticEmails.includes(item.email) && syntheticNotes.includes(item.note) && ['active', 'cancelled'].includes(item.status);
+  function readDemoState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey));
+      if (saved?.version !== 1 || !Array.isArray(saved.reservations) || !saved.reservations.every(validReservation) || !Array.isArray(saved.blocked) || !saved.blocked.every((range) => /^\d{4}-\d{2}-\d{2}$/.test(range.start) && /^\d{4}-\d{2}-\d{2}$/.test(range.end) && range.start <= range.end && syntheticText(range.label)) || !Array.isArray(saved.weekly) || saved.weekly.length !== weekdays.length || !saved.weekly.every((day, index) => day.name === weekdays[index] && typeof day.enabled === 'boolean' && Array.isArray(day.slots) && day.slots.every((time) => scheduleSlots.includes(time))) || !['admin@example.invalid', 'notify@example.invalid'].includes(saved.adminEmail) || !['editor', 'administrator'].includes(saved.demoRole)) return null;
+      return saved;
+    } catch { return null; }
+  }
+  const restored = readDemoState();
+  let blocked = restored ? restored.blocked : structuredClone(seedBlocked);
+  let weekly = restored ? restored.weekly : structuredClone(seedWeekly);
+  let reservations = restored ? restored.reservations : structuredClone(seedReservations);
+  let adminEmail = restored?.adminEmail || 'admin@example.invalid';
+  let demoRole = restored?.demoRole || 'editor';
+  function saveDemoState() {
+    try { localStorage.setItem(storageKey, JSON.stringify({ version: 1, reservations, blocked, weekly, adminEmail, demoRole })); }
+    catch { $('#booking-message').textContent = 'Nettleseren kunne ikke lagre lokalt. Demoen fungerer til siden lukkes.'; }
+  }
   let selectedDate = '';
   let selectedTime = '';
   let currentReservationId = '';
@@ -33,6 +56,9 @@
 
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
+  $('#reset-demo').addEventListener('click', () => { try { localStorage.removeItem(storageKey); } catch {} window.location.reload(); });
+  $('#admin-email').value = adminEmail;
+  $('#demo-role').value = demoRole;
 
   function setView(view) {
     $('#booking-view').classList.toggle('hidden', view !== 'booking');
@@ -119,19 +145,21 @@
     let firstInvalid = null;
     const invalid = (selector, errorSelector, message) => { const field = $(selector); field.setAttribute('aria-invalid', 'true'); $(errorSelector).textContent = message; firstInvalid ||= field; };
     if (!selectedDate || !selectedTime) { $('#booking-message').textContent = 'Velg en ledig dato og et tidspunkt før du fortsetter.'; $('#calendar').scrollIntoView({ block: 'nearest' }); return; }
-    if (!/^(?:Demo|Demakunde)\b/i.test(name)) invalid('#customer-name', '#name-error', 'Bruk et syntetisk navn som begynner med «Demakunde».');
+    if (!syntheticNames.includes(name)) invalid('#customer-name', '#name-error', 'Velg et av de forhåndsdefinerte Demakunde-eksemplene.');
     if (!/^000000\d{2,}$/.test(phone.replace(/\D/g, ''))) invalid('#customer-phone', '#phone-error', 'Bruk et demanummer som begynner med 000000.');
-    if (!/^[^\s@]+@[^\s@]+\.invalid$/i.test(email)) invalid('#customer-email', '#email-error', 'Bruk en syntetisk e-postadresse som slutter på .invalid.');
+    if (!syntheticEmails.includes(email)) invalid('#customer-email', '#email-error', 'Bruk en av de forhåndsdefinerte example.invalid-adressene.');
+    if (!syntheticNotes.includes($('#customer-note').value.trim())) { $('#customer-note').setAttribute('aria-invalid', 'true'); $('#booking-message').textContent = 'Bruk bare tom merknad eller en forhåndsdefinert syntetisk merknad.'; $('#customer-note').focus(); return; }
     if (firstInvalid) { firstInvalid.focus(); $('#booking-message').textContent = 'Kontroller feltene som er markert.'; return; }
     if (!$('#terms').checked) { $('#booking-message').textContent = 'Godta vilkårene for å prøve bekreftelsen.'; $('#terms').focus(); return; }
     const item = { id: `demo-${Date.now()}`, date: selectedDate, time: selectedTime, name, phone, email, note: $('#customer-note').value.trim(), status: 'active' };
     reservations.push(item);
+    saveDemoState();
     currentReservationId = item.id;
     $('#confirmation-title').textContent = 'Reservasjonen er registrert i demoen';
     $('#confirmation-copy').textContent = `${fmtDate(item.date)} kl. ${item.time} er lagt til i den lokale demoen for ${item.name}.`;
     $('#cancel-booking').classList.remove('hidden');
     $('#confirmation').classList.remove('hidden');
-    $('#booking-message').textContent = 'Demoreservasjonen er opprettet bare i minnet på denne siden.';
+    $('#booking-message').textContent = 'Demoreservasjonen er lagret lokalt i denne nettleseren.';
     $('#confirmation').focus(); renderCalendar(); renderTimes(); renderReservations();
   });
   $('#reset-booking').addEventListener('click', () => {
@@ -143,8 +171,9 @@
     if (!item || item.status !== 'active') return;
     if (!window.confirm('Avbestille denne syntetiske demoreservasjonen lokalt? Ingen lenke eller e-post brukes.')) return;
     item.status = 'cancelled';
+    saveDemoState();
     $('#confirmation-title').textContent = 'Demoreservasjonen er kansellert';
-    $('#confirmation-copy').textContent = `${fmtDate(item.date)} kl. ${item.time} er nå markert som kansellert bare i denne økten.`;
+    $('#confirmation-copy').textContent = `${fmtDate(item.date)} kl. ${item.time} er nå markert som kansellert lokalt.`;
     $('#cancel-booking').classList.add('hidden');
     $('#booking-message').textContent = 'Kansellering simulert lokalt. Ingen e-post ble sendt.';
     renderCalendar(); renderTimes(); renderReservations(); updateSummary();
@@ -185,7 +214,7 @@
     $$('[data-edit]').forEach((button) => button.addEventListener('click', () => openReservationDialog(button.dataset.edit)));
     $$('[data-delete]').forEach((button) => button.addEventListener('click', () => {
       const item = reservations.find((reservation) => reservation.id === button.dataset.delete);
-      if (item && window.confirm(`Slette den syntetiske demoposten «${item.name}» fra denne økten?`)) { reservations.splice(reservations.indexOf(item), 1); renderReservations(); $('#admin-message').textContent = 'Demoposten er slettet fra minnet.'; renderCalendar(); }
+      if (item && window.confirm(`Slette den syntetiske demoposten «${item.name}» lokalt?`)) { reservations.splice(reservations.indexOf(item), 1); saveDemoState(); renderReservations(); $('#admin-message').textContent = 'Demoposten er slettet lokalt.'; renderCalendar(); }
     }));
   }
   $('#reservation-search').addEventListener('input', renderReservations);
@@ -212,18 +241,18 @@
     event.preventDefault();
     const id = $('#edit-id').value;
     const value = { id: id || `demo-${Date.now()}`, name: $('#edit-name').value.trim(), phone: $('#edit-phone').value.trim(), email: $('#edit-email').value.trim(), date: $('#edit-date').value, time: $('#edit-time').value, status: $('#edit-status').value, note: $('#edit-note').value.trim() };
-    if (!/^(?:Demo|Demakunde)\b/i.test(value.name) || !/^000000\d{2,}$/.test(value.phone.replace(/\D/g, '')) || !value.date || !value.time || !/\.invalid$/i.test(value.email)) { $('#admin-message').textContent = 'Bruk Demakunde-navn, dematelefon som begynner med 000000 og e-post som slutter på .invalid.'; return; }
+    if (!syntheticNames.includes(value.name) || !/^000000\d{2,}$/.test(value.phone.replace(/\D/g, '')) || !value.date || !slotLabels.includes(value.time) || !syntheticEmails.includes(value.email) || !syntheticNotes.includes(value.note)) { $('#admin-message').textContent = 'Bruk bare forhåndsdefinerte syntetiske kundeverdier.'; return; }
     if (id) Object.assign(reservations.find((item) => item.id === id), value); else reservations.push(value);
-    $('#reservation-dialog').close(); renderReservations(); renderCalendar(); $('#admin-message').textContent = 'Demoreservasjonen er oppdatert i minnet.';
+    saveDemoState(); $('#reservation-dialog').close(); renderReservations(); renderCalendar(); $('#admin-message').textContent = 'Demoreservasjonen er lagret lokalt.';
   });
-  $('#demo-role').addEventListener('change', () => { $('#admin-message').textContent = `Viser eksempeltilgang for ${$('#demo-role').selectedOptions[0].textContent.toLocaleLowerCase('nb-NO')}. Dette er ikke autentisering.`; });
+  $('#demo-role').addEventListener('change', () => { demoRole = $('#demo-role').value; saveDemoState(); $('#admin-message').textContent = `Viser eksempeltilgang for ${$('#demo-role').selectedOptions[0].textContent.toLocaleLowerCase('nb-NO')}. Dette er ikke autentisering.`; });
 
   function renderWeeklyHours() {
     $('#weekly-hours').innerHTML = weekly.map((day, index) => `<fieldset class="weekday-setting"><legend>${day.name}</legend><label class="day-open"><input type="checkbox" data-day-enabled="${index}" ${day.enabled ? 'checked' : ''}> Åpen</label><div class="slot-checks" aria-label="Tilgjengelige tider ${day.name}">${scheduleSlots.map((time) => `<label><input type="checkbox" data-day-slot="${index}" value="${time}" ${day.slots.includes(time) ? 'checked' : ''}> ${time}</label>`).join('')}</div></fieldset>`).join('');
     const changed = () => {
       if (selectedDate && dayStatus(selectedDate) !== 'available') { selectedDate = ''; selectedTime = ''; }
       else if (selectedTime && selectedDate && !weekly[(new Date(`${selectedDate}T12:00:00`).getDay() + 6) % 7].slots.includes(selectedTime)) selectedTime = '';
-      $('#availability-message').textContent = 'Ukentlig tilgjengelighet oppdatert i minnet.'; renderCalendar(); renderTimes(); updateSummary();
+      saveDemoState(); $('#availability-message').textContent = 'Ukentlig tilgjengelighet lagret lokalt.'; renderCalendar(); renderTimes(); updateSummary();
     };
     $$('[data-day-enabled]').forEach((input) => input.addEventListener('change', () => { weekly[Number(input.dataset.dayEnabled)].enabled = input.checked; changed(); }));
     $$('[data-day-slot]').forEach((input) => input.addEventListener('change', () => { const day = weekly[Number(input.dataset.daySlot)]; day.slots = input.checked ? [...new Set([...day.slots, input.value])].sort() : day.slots.filter((time) => time !== input.value); changed(); }));
@@ -232,14 +261,15 @@
   blockoutForm.addEventListener('submit', (event) => {
     event.preventDefault(); const start = $('#blockout-start').value; const end = $('#blockout-end').value; const label = $('#blockout-label').value.trim();
     if (!start || !end || start > end || !label) { $('#availability-message').textContent = 'Velg en gyldig dato eller periode.'; return; }
-    blocked.push({ start, end, label }); renderBlockouts(); renderCalendar(); $('#availability-message').textContent = 'Perioden er blokkert i den lokale demosesesjonen.'; event.currentTarget.reset(); $('#blockout-label').value = 'Demo – stengt';
+    if (!syntheticText(label)) { $('#availability-message').textContent = 'Beskrivelsen må være tom eller begynne med Demo eller Syntetisk.'; return; }
+    blocked.push({ start, end, label }); saveDemoState(); renderBlockouts(); renderCalendar(); $('#availability-message').textContent = 'Perioden er blokkert lokalt.'; event.currentTarget.reset(); $('#blockout-label').value = 'Demo – stengt';
   });
   function renderBlockouts() {
     $('#blockout-list').innerHTML = blocked.map((range, index) => `<li>${escapeHtml(fmtDate(range.start))}${range.end !== range.start ? ` – ${escapeHtml(fmtDate(range.end))}` : ''} · ${escapeHtml(range.label)} <button type="button" class="button secondary" data-unblock="${index}">Fjern blokkering</button></li>`).join('');
-    $$('[data-unblock]').forEach((button) => button.addEventListener('click', () => { blocked.splice(Number(button.dataset.unblock), 1); renderBlockouts(); renderCalendar(); $('#availability-message').textContent = 'Blokkeringen er fjernet fra minnet.'; }));
+    $$('[data-unblock]').forEach((button) => button.addEventListener('click', () => { blocked.splice(Number(button.dataset.unblock), 1); saveDemoState(); renderBlockouts(); renderCalendar(); $('#availability-message').textContent = 'Blokkeringen er fjernet lokalt.'; }));
   }
   const settingsForm = document.querySelector('#settings-form');
-  settingsForm.addEventListener('submit', (event) => { event.preventDefault(); const email = $('#admin-email').value; $('#settings-message').textContent = email.endsWith('.invalid') ? 'Demoadressen er satt for denne økten. Ingen e-post sendes.' : 'Bruk en syntetisk adresse som slutter på .invalid.'; });
+  settingsForm.addEventListener('submit', (event) => { event.preventDefault(); const email = $('#admin-email').value; if (!/^[^\s@]+@[^\s@]+\.invalid$/i.test(email)) { $('#settings-message').textContent = 'Bruk en syntetisk adresse som slutter på .invalid.'; return; } adminEmail = email; saveDemoState(); $('#settings-message').textContent = 'Demoadressen er lagret lokalt. Ingen e-post sendes.'; });
 
   renderCalendar(); renderTimes(); updateSummary(); renderReservations(); renderWeeklyHours(); renderBlockouts();
 })();

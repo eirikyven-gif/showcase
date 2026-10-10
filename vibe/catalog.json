@@ -154,17 +154,17 @@
       ],
       "status": "Beholdt i bred førstegangsrunde; troverdig interaktiv showcase-kopi med syntetiske data. Ingen kuratering eller utsiling.",
       "demoValue": "Demonstrerer kundens bestillingsflyt og adminens håndtering av reservasjoner, åpningstider, blokkeringer og e-postinnstillinger.",
-      "simplifications": "WordPress-kjøring, reell tilgangskontroll, database, e-post, personlige kanselleringslenker og servergenerert ICS er erstattet av lokal JavaScript i minnet. CSV og ICS lages som lokale nedlastinger. Demoroller er ikke autentisering.",
-      "risk": "Originalen behandler navn, telefon, e-post, merknader, kanselleringstoken og reservasjonshistorikk. Showcase må bare bruke tydelig syntetiske verdier; skjema og administrasjonsendringer finnes kun i minnet og forsvinner ved refresh. Produksjonsbruk og retensjon i kilden er ikke verifisert.",
+      "simplifications": "WordPress-kjøring, reell tilgangskontroll, database, e-post, personlige kanselleringslenker og servergenerert ICS er erstattet av lokal JavaScript og syntetisk localStorage-tilstand. CSV og ICS lages som lokale nedlastinger. Demoroller er ikke autentisering.",
+      "risk": "Originalen behandler navn, telefon, e-post, merknader, kanselleringstoken og reservasjonshistorikk. Showcase må bare bruke tydelig syntetiske verdier; syntetiske skjema- og administrasjonsendringer lagres bare i nettleserens localStorage; synlig én-klikk-nullstilling gjenoppretter seed-dataene. Produksjonsbruk og retensjon i kilden er ikke verifisert.",
       "purpose": "WordPress-plugin for kundebooking og administrasjon av reservasjoner.",
       "sourceUncertainty": "Kildens dokumentasjon oppgir aktiv plugin og funksjoner. Faktisk produksjonsbruk, datapraksis og retensjon er ikke uavhengig kontrollert.",
       "source": "eirikyven-gif/Wp-Reservering, offentlig main commit 387180a0768f0bcc5c8a7c0d0d7ccd32817e8f6e, gjennomgått skrivebeskyttet; kilde-repoet er ikke endret.",
       "sourceStack": "WordPress/PHP-plugin med JavaScript-bookingwidget, Tailwind CSS, WP-databasetabell og options. Admin benytter WordPress capabilities/nonces; e-post via wp_mail; kalenderfil ICS.",
       "sourceTests": "Ingen testmappe eller testkode funnet. package.json har build/dev-skript, men ikke testskript. Kildens manuelle QA-dokumentasjon ble lest, ikke kjørt.",
-      "sourceApiAuthStoragePrivacy": "Kundens navn, telefon, e-post, merknad og tokenhash lagres i WordPress-database. Tilgjengelighet og admininnstillinger ligger i WP options. Admin krever WP-roller/capabilities og nonce. Kilden sender e-post og tilbyr tokenlenke og ICS. Showcase-ruten har ingen API, auth, cookies, server-/nettleserlagring eller eksterne kall.",
+      "sourceApiAuthStoragePrivacy": "Kundens navn, telefon, e-post, merknad og tokenhash lagres i WordPress-database. Tilgjengelighet og admininnstillinger ligger i WP options. Admin krever WP-roller/capabilities og nonce. Kilden sender e-post og tilbyr tokenlenke og ICS. Showcase-ruten har ingen API, auth, cookies, serverlagring eller eksterne kall; den lagrer kun syntetisk demotilstand i localStorage med synlig nullstilling.",
       "rightsUncertainty": "Kildens readme.txt erklærer GPL-2.0-or-later. Funksjonsflyt og innholdsstruktur er gjenskapt i selvstendig HTML/CSS/JS; ingen kundeopplysninger, hemmeligheter, merkevaregrafikk eller kildedata er kopiert.",
       "routeState": "Den eksisterende unike /vibe/reservering/-ruten er beholdt og oppgradert; katalogkontrakten og slug er uendret.",
-      "scope": "Isolert statisk HTML/CSS/JS i /vibe/reservering/. Kundebooking, lokale demaroller, adminoversikt, søk/filter, redigering/sletting/eksport, åpningstider, blokkering og admin-epostinnstilling. Ingen serverkall, auth, cookies, ekstern API, browser persistence, persondata eller secrets."
+      "scope": "Isolert statisk HTML/CSS/JS i /vibe/reservering/. Kundebooking, lokale demaroller, adminoversikt, søk/filter, redigering/sletting/eksport, åpningstider, blokkering og admin-epostinnstilling. Ingen serverkall, auth, cookies, ekstern API eller serverlagring. Kun forhåndsdefinerte syntetiske verdier i localStorage, med synlig én-klikk-nullstilling; ingen persondata eller secrets."
     },
     {
       "slug": "backyard-stats",
