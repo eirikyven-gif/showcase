@@ -10,6 +10,8 @@ const readme = read('vibe/wp-varelager/README.md');
 const catalog = JSON.parse(read('vibe/catalog.json'));
 
 test('WP Varelager provenance pins the archived functional plugin and new route', () => {
+  assert.equal(read('VERSION').trim(), '0.61.0');
+  assert.equal(catalog.apps.length, 42);
   const app = catalog.apps.find(item => item.slug === 'wp-varelager');
   assert.ok(app);
   assert.match(app.source, /e080136b7b0bc20e1885c9c9456f7143ca170861/);

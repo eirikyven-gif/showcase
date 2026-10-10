@@ -40,5 +40,5 @@ Handlinger endrer bare JavaScript-data i sidens minne. Eksempeldata er oppdikted
 - Automatiske kontroller: `node --test tests/wp-varelager.test.mjs` og repository CI `node --test tests/*.test.mjs`.
 - Manuell browser-QA: direkte rute og refresh ved 390px og 1440px; vare/enhetsdetaljer, notat, leieavtale fra kladd til aktiv og retur, kontakt CRUD, opprett delingsdemopost, CSV-import, XLSX-nedlasting, lageropptelling og innstillings-CRUD. Kontrollerte horisontal overflow, JavaScript-feil og uventede eksterne forespørsler. XLSX-arkivet ble også kontrollert med `unzip -t`.
 - Risiko: en lokal simulering kan se ut som ekte flerbrukerfunksjon; UI-et varsler derfor at data er midlertidige og at lenker/media ikke opprettes. WordPress-integrasjon, tilgangskontroll og faktisk filbehandling må vurderes separat dersom en senere port ønskes.
-- Showcase-katalog og SemVer er oppdatert i PR-grenen; versjonsrebasering er utsatt til de andre pågående merge-endringene er landet.
+- Rebasert på main `38518a5` etter PR #93. Showcase VERSION og nøyaktige testforventninger er `0.61.0`, en minor-bump fra `0.60.1` for den nye ruten; katalogen har 42 ruter. SemVer-rebaseringen er fullført.
 - Ikke deployet og skal ikke merges eller deployes gjennom denne oppgaven. Issue #2 forblir delvis løst.
