@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="nb">
+<html lang="no">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Utforsk hvordan oppdiktede værverdier kan bli til et lokalt lydbilde.">
-  <meta name="theme-color" content="#9e2638">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Soundscape gjør syntetiske værverdier om til et kontinuerlig, generativt lydbilde.">
+  <meta name="theme-color" content="#071915">
+  <title>Soundscape – været som lyd · Vibe</title>
   <link rel="icon" href="/vibe/soundscape/icon.svg" type="image/svg+xml">
-  <title>Soundscape – vær som lyd · Vibe</title>
   <link rel="canonical" href="/vibe/soundscape/">
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/soundscape/style.css">
@@ -14,27 +14,28 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Hopp til innhold</a>
-  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
-  <main id="main" class="page-shell">
-    <section class="intro" aria-labelledby="title">
-      <p class="eyebrow">Lydskisse · syntetiske eksempelverdier</p>
-      <h1 id="title">Været får <span>en tone.</span></h1>
-      <p class="intro-copy">Temperaturen styrer tonehøyden i den lokale lyden. Vindverdien endrer bare indikatoren under – den påvirker ikke lyden. Begge eksempelverdiene er oppdiktet og endres bare her i fanen.</p>
+  <header class="topbar"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><nav aria-label="Hurtigvalg"><a href="#forhold">Forhold</a><a href="#lydmodell">Lydmodell</a><a href="#parameterlab">Parameterlab</a><a class="back-link" href="/vibe/">Alle verktøy</a></nav></header>
+  <main id="main" class="shell">
+    <aside class="demo-banner" aria-label="Datakildestatus"><span class="demo-icon" aria-hidden="true">◉</span><div><strong>Simulert visning · ingen livekilder</strong><p>Alle målinger, stedsetiketter og historikk er syntetiske eksempler. Profilen autosaves bare lokalt i denne nettleseren.</p></div><span class="status-pill" id="mode-status">SIMULERING</span></aside>
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-copy"><p class="eyebrow">Levende værbilde <span class="pulse" aria-hidden="true"></span></p><h1 id="title">Været har <em>en stemme.</em></h1><p class="lede">Temperatur, vind, regn, luft, skyer og lys former et sammenhengende lydbilde. Vær og solsyklus er syntetiske demonstrasjonsdata.</p>
+        <div class="headline-reading"><strong id="hero-temp">12</strong><span>°C</span><div><b id="hero-condition">Oppholdsvær</b><small>Syntetisk eksempel · ikke en måling</small></div></div>
+        <div class="player panel"><div class="player-heading"><div><span class="eyebrow">LYDAVSPILLING</span><p id="audio-status" role="status" aria-live="polite">Venter på at du starter</p></div><div class="wave" id="wave" role="img" aria-label="Lydbildet er stoppet"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="player-actions"><button class="button primary" type="button" id="play">▶ <span>Start lydbildet</span></button><button class="button" id="mute" type="button" aria-pressed="false">Demp</button><button class="button danger" id="stop" type="button">■ Stopp</button></div><label class="volume-label" for="volume">Lokalt volum <output id="volume-out">42 %</output></label><input id="volume" type="range" min="0" max="70" value="42"><p class="fine-print">Nettleseren starter lyd først etter et trykk. Masterutgangen er begrenset av en lokal sikkerhetsgrense.</p></div>
+      </div>
+      <figure class="atmosphere"><canvas id="sky" aria-hidden="true"></canvas><div class="sky-labels"><span id="clock-label">12:00 · syntetisk døgnfase</span><span id="season-label">Sommer</span></div><div class="sky-scene"><strong id="scene-condition">Oppholdsvær</strong><span>Eksempelområde · syntetisk</span></div><div class="sky-bottom"><span class="sim-tag">● SIMULERT</span><span>Oppdatert nå · lokal demo</span></div><figcaption class="sr-only">Dekorativ illustrasjon av syntetisk vær- og soltilstand.</figcaption></figure>
     </section>
-    <aside class="notice" aria-label="Datamerking"><strong>Demo, ikke målinger</strong><span>Ingen værstasjon eller værtjeneste er koblet til.</span></aside>
-    <section class="weather-grid" aria-label="Syntetiske værverdier">
-      <article class="weather-card"><span>Temperatur</span><strong><output id="temp-value" for="temperature">14</output> °C</strong><label for="temperature">Juster temperatur</label><input id="temperature" type="range" min="-5" max="30" value="14"><small>Kunstig eksempelverdi</small></article>
-      <article class="weather-card"><span>Vind</span><strong><output id="wind-value" for="wind">6</output> m/s</strong><label for="wind">Juster vindstyrke</label><input id="wind" type="range" min="0" max="20" value="6"><small>Kunstig eksempelverdi</small></article>
+    <section id="forhold" class="section"><div class="section-head"><div><p class="eyebrow">DATA OG SIGNALER</p><h2>Forholdene som former lyden</h2><p>Se alle eksempelsignalene. Scenarioer og kontrollflaten påvirker scenen, signaloversikten og lydparametere.</p></div><div class="legend"><span>● Syntetisk sensor</span><span>● Syntetisk prognose</span><span>● Avledet</span></div></div><div id="signal-grid" class="signal-grid"></div></section>
+    <section id="lydmodell" class="section model-panel"><div><p class="eyebrow">AKTIV LYDMODELL</p><h2>Slik høres været nå</h2><p>Flere værsignaler former samme klangfamilie gjennom profilens parameterkoblinger.</p><div class="scenario-row"><label for="scenario">Værscenario</label><select id="scenario"><option value="baseline">Normalvær</option><option value="rain">Regnbyge</option><option value="wind">Vindkast</option><option value="cold">Kald og klar natt</option><option value="sunrise">Soloppgang</option><option value="polar">Midnattssol</option></select><button class="button" id="apply-scenario" type="button">Bruk scenario</button></div></div><div id="influence-list" class="influences"></div></section>
+    <section class="section"><details class="data-details"><summary>Tilgjengelig dataoversikt · vis syntetiske verdier som tabell</summary><div class="table-scroll" tabindex="0"><table><caption>Syntetisk snapshot av alle vær- og tidssignaler. Ingen felt representerer live data.</caption><thead><tr><th scope="col">Signal</th><th scope="col">Verdi</th><th scope="col">Kilde (simulert)</th><th scope="col">Status</th></tr></thead><tbody id="signal-table"></tbody></table></div></details></section>
+    <section id="parameterlab" class="section lab-section"><div class="section-head"><div><p class="eyebrow">PARAMETERLAB · LOKAL SIMULERING</p><h2>Utforsk signaler og lydmål</h2><p>Kildeappens adminstyrte parameterarbeidsflate er gjenskapt som en lokal demo. Endringer autosaves i nettleseren og kan fjernes med full nullstilling.</p></div><span class="local-badge">Demobruker · lokal profil</span></div><div class="lab-status"><strong>Standardprofil – syntetisk fixture</strong><span id="revision">Lokalt i denne nettleseren · revisjon 1</span><span>Autosave lokal profil · ikke sendt til server</span><button class="button" id="reset" type="button">Full nullstilling</button></div>
+      <div class="admin-groups"><details open><summary>Datakilder <span class="group-meta">Netatmo / MET / NILU · syntetisk</span></summary><div class="group-content"><p>Produksjonen bruker Netatmo som primær livekilde og MET for skydekke og soldata. I denne kopien kan du velge syntetisk kildeprofil og justere eksempelfeltene uten tilkobling.</p><label for="source-profile">Simulert datakilde</label><select id="source-profile"><option>Stasjonseksempel A · syntetisk</option><option>MET prognose · syntetisk</option><option>Manuell simulering</option></select><p class="source-state">● Tilkoblet (simulert) <button class="text-button" id="refresh-sources" type="button">Hent kilder</button> <button class="text-button" id="disconnect" type="button">Koble fra</button></p></div></details>
+      <details><summary>Simulering og signaler <span class="group-meta">9 faggrupper · 45 signaler</span></summary><div class="group-content"><p>Velg scenarier eller finjuster alle publiserte signalgrupper. Syntetiske signaler endrer den lokale previewen.</p><div id="signal-editor" class="editor-grid"></div></div></details>
+      <details><summary>Parameterkoblinger <span class="group-meta">45 signaler → 43 lydmål</span></summary><div class="group-content"><p>Koblinger oversetter kildeområder til lydmål. Kontroller profilens hovedområder nedenfor; andre mappingrader vises som lesbar katalog.</p><div id="target-editor" class="target-grid"></div><details class="mapping-catalog"><summary>Se representativ katalog med aktive koblinger</summary><div id="mapping-list" class="mapping-list"></div></details></div></details>
+      <details><summary>Kontroll og historikk <span class="group-meta">Demo · lokalt</span></summary><div class="group-content control-grid"><div><h3>Profil, roller og revisjon</h3><p>Demobrukere og roller (syntetisk). Ingen kontopålogging:</p><label class="role-label" for="demo-role">Demobruker</label><select id="demo-role"><option value="editor">Lydkurator · redaktør</option><option value="admin">Driftsansvarlig · admin</option><option value="viewer">Lytter · observatør</option></select><p id="role-status" role="status">Demorolle: redaktør · lokal simulering</p><p id="history-copy">Endringer autosaves lokalt i denne nettleseren, ikke på server.</p><p>Aktiv revisjon øker ved hver lokal profilendring.</p><button class="button" id="save-snapshot" type="button">Lagre profilversjon</button> <button class="button" id="rollback-snapshot" type="button" disabled>Rull tilbake siste versjon</button><button class="button" id="restore-profile" type="button">Gjenopprett standardprofil</button> <button class="button" id="reset-all" type="button">Slett all Soundscape-demotilstand</button></div><div><h3>Scenariohistorikk · 24 timer</h3><p>Syntetisk tidsserie. Ingen ekte værhistorikk.</p><div class="history-bars" id="history" aria-label="Syntetisk værhistorikk siste 24 timer"></div><button class="button" id="clear-history" type="button">Nullstill historikk</button></div><div><h3>Personvern</h3><p>Lokal profil lagres kun på denne enheten. Delte profiler, ekte brukere, autentisering, OAuth, runtime og serverhistorikk finnes ikke i demoen. Full nullstilling fjerner profil og versjonerte snapshots.</p></div></div></details></div>
     </section>
-    <section class="sound-panel" aria-labelledby="sound-title">
-      <div class="sound-copy"><p class="eyebrow">Nettleserlyd</p><h2 id="sound-title">Lytt til skissen</h2><p id="status" role="status" aria-live="polite">Lyden er av. Start når du er klar.</p></div>
-      <div class="sound-controls"><button id="toggle" class="primary-button" type="button">Start lyd</button><label for="volume">Volum</label><input id="volume" type="range" min="0" max="30" value="12"><output id="volume-value" for="volume">12 %</output></div>
-      <p class="meter-label">Vindindikator · visuell effekt, påvirker ikke lyden</p>
-      <div class="meter" aria-hidden="true"><span id="tone-indicator"></span></div>
-      <p class="privacy-note">Lyden lages lokalt med Web Audio etter at du trykker Start. Ingen lyd eller innstillinger lagres eller sendes.</p>
-    </section>
-    <p class="disclaimer">Dette er en forenklet, original konseptdemo. Den er ikke en værmelding eller kopi av kildeappen.</p>
+    <p class="disclaimer">Dette er en statisk og selvstendig demo av Soundscape v0.8.0. Værdata, sted, status, profil, revisjoner og historikk er syntetiske. OAuth, ekte innlogging, MET/Netatmo/NILU-kall, PWA-cache og serversynkronisering er ikke aktivert.</p>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>En liten lydskisse med oppdiktede verdier.</span></footer>
+  <footer class="footer"><a href="/vibe/">← Tilbake til Vibe</a><span>Soundscape · vær som lyd · syntetisk demonstrasjon</span><span>Kildearkitektur omtaler Netatmo, MET og NILU</span></footer>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" data-dialog-close type="button" aria-label="Lukk hjelp">×</button><p class="eyebrow">SOUNDscape · HJELP</p><h2 id="help-title">Parameterhjelp</h2><p id="help-copy"></p><p id="help-range" class="fine-print"></p><button class="button primary" data-dialog-close type="button">Ferdig</button></dialog>
 </body>
 </html>

@@ -1,41 +1,47 @@
-# Soundscape · kildevurdering og konseptdemo
+# Soundscape · statisk Vibe-kopi
 
-**Issue #2:** Delvis løst av dette isolerte kandidatbidraget. Dette er ikke en full port eller produksjonsutrulling.
+**Issue #2:** Delvis løst. Dette er en statisk, lokalt fungerende kopi av Soundscape på `/vibe/soundscape/`, ikke kildeappens produksjonsruntime.
 
-## Katalogmetadata
+## Kilde og krav
 
-- **Navn:** Soundscape · vær som lyd.
-- **Bruksområde:** Utforsk en forenklet vær- og lydskisse med tydelig avgrenset temperatur-/tone-interaksjon.
-- **Kategori:** Musikk og eksperimentering.
-- **Målgruppe:** Lydinteresserte, musikere og personer som utforsker værvisualisering.
-- **Status:** Beholdt i bred førstegangsrunde. Original, forenklet demo; ingen kuratering eller utsiling er gjort.
-- **Foreslått slug/rute:** `soundscape` · `/vibe/soundscape/`.
-- **Demoens verdi:** Syntetisk temperatur justerer tonehøyden i en lokal Web Audio-tone. Syntetisk vind justerer bare en visuell indikator og påvirker ikke lyden.
-- **Forenklinger:** Én oscillator, én volumkontroll og syntetisk temperatur/vind. Ingen livevær, solsyklus, luftmålinger, admin, parametereditor, profiler eller generativ flerstemthet.
-- **Risiko:** Kilden har en betydelig server- og personvernflate (admin, OAuth, stasjonsdata og historikk) som demoen utelater. Demoen er ikke en værmelding eller fullgod gjengivelse av kildeproduktet. Lyd spilles kun etter eksplisitt brukerhandling.
-- **Omfang:** Isolert, statisk rute. Web Audio og eksempelverdier finnes bare i fanens minne. Ingen nettverksforespørsler, browserlagring, konto, API, autentisering, opplasting eller serverfunksjon.
-- **Kilderettigheter:** Kilderepoet inneholder ingen identifisert lisens i gjennomgåtte appfiler. Rettigheter til kildekode, visuell utforming og innhold er uavklart. Showcase-demoen er implementert selvstendig uten kopierte kildefiler, tekst, grafikk eller kode.
+- **Kilde:** `eirikyven-gif/diverse-apper/apps/soundscape`, kildecommit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`, appversjon 0.8.0.
+- **Lest:** appens README, offentlige visnings-HTML, adminflate, standard-runtime-fixture, modell- og testkontrakter, samt styringsdokumentet og låst SSoT v0.1 med presiseringer i Notion. Kilderepoet ble bare lest.
+- **Kravgrunnlag:** Den offentlige flaten viser forståelige vær-/luft-/solsignaler og genererer et kontinuerlig lydbilde fra Web Audio. Adminarbeidsflaten grupperer datakilder, simulering/signaler, parameterkoblinger og kontroll/historikk. Kilden definerer 45 signaler i ni faggrupper og 43 lydmål.
+- **Kildens dokumenterte stack:** HTML, CSS, JavaScript-moduler, Web Audio/AudioWorklet, service worker/PWA og PHP API. Kildens pakken definerer `npm run check` og `npm test`; ni testfiler er oppført. Kildens testpakke ble ikke kjørt her, siden kilderepoet ikke ble endret eller hentet inn lokalt.
 
-## Kildebelegg og usikkerhet
+## Funksjoner i kopien
 
-- **Kilde og versjon:** `eirikyven-gif/diverse-apper/apps/soundscape`, `main` commit `0900ffe48fa92dcefae1c6d0bbee8e0d02eec530`, kontrollert 2026-10-09. Kildens README og `package.json` oppgir v0.8.0. Kilde-repoet ble bare klonet og lest.
-- **Formål og status:** Kildens Notion-governance og låste SSoT beskriver en autonom offentlig vær-til-generativ-lyd-installasjon med eksakte liveverdier, Netatmo som primær datakilde, MET som fallback/leverandør for andre felt, og en separat autentisert admin som styrer sentral servertilstand. README beskriver også en PWA-pilot, med fysisk iPhone-bakgrunnstest som fortsatt produksjonsport. Faktisk produksjonsstatus er ikke uavhengig bekreftet. Kandidatens governance-rad er oppgitt her: [Soundscape](https://app.notion.com/p/3f3ba9485bce8140bdfddcb578987c83).
-- **Stack:** HTML, CSS, JavaScript-moduler, Web Audio/AudioWorklet, service worker/PWA og PHP API. Admin- og runtime-kontrakter ligger i `assets/`, `api/`, `index.html`, `admin.html` og `service-worker.js`.
-- **Tester:** Kildens `package.json` definerer `check` med `node --check` for runtime-skript og `test` med `node --test tests/*.test.mjs`. Ni testfiler finnes. Testene ble ikke kjørt som del av denne kildevurderingen.
-- **API, auth og lagring:** Kilden dokumenterer Netatmo OAuth og MET-data hentet server-side, admininnlogging/-sesjon, sentral konfigurasjon/revisjon og serversidig datalagring. README sier at koordinater og OAuth-hemmeligheter/tokens håndteres server-side, mens værdata caches. Nettleserlagring brukes av kildens PWA-pilot; serverruntime er sannhetskilde for delte profiler. Demoen avslører eller kaller ingen kildeendepunkter. Dette er kildebeskrivelse, ikke uavhengig produksjonsrevisjon.
-- **Personvern:** Kildeappen kan behandle Netatmo-stasjonsdata, koordinater, autentiserings-/OAuth-data, adminendringer og runtimehistorikk. Den faktiske driftskonfigurasjonen, brukerne, retention og behandling er ikke kontrollert. Ingen slik data eller mekanisme er tatt med i demoen.
-- **Audience og status:** README beskriver offentlig lytteflate og admin for konfigurering. Reell brukermasse og aktiv utrulling er ikke bekreftet.
-- **Rute:** `/vibe/soundscape/` og sluggen er kontrollert unike mot katalogen på showcase `main` `68a4396c7455ddeef8824eb0a65f41acf351c988` (31 ruter). Dette er en ny rute.
+- Offentlig lytteside med værscene, syntetiske måleverdier, scenarier, påvirkningsoversikt, tilgjengelig datatabell, start/stopp/demp og volumkontroll.
+- Web Audio lager lokal, kontinuerlig synth-/noise-lyd. Temperatur påvirker tonehøyde, skydekke filter, nedbør/noise og vind LFO/stereoplassering. Lydmotoren er en forenklet syntese av kildeappens generative motor.
+- Simuleringsvalg for normalvær, regnbyge, vindkast, kald natt, soloppgang og midnattssol. Endringer oppdaterer scene, verdier og lydpreview.
+- Parameterlab med de fire kildeområdene, alle ni signalgrupper, 45 signaloppføringer, 43 lydmål og representativ Mapping-katalog. Numeriske kontroller, enumvalg, på/av-kontroller og hjelp er lokale.
+- Kontrollflate viser syntetisk bruker/rolle og simulert kildestatus. «Hent kilder», «Koble fra», revisjon og autosave gir lokal demorespons; ingen kilde, bruker eller rolle godkjennes reelt.
+- Scenariohistorikken er merket syntetisk og genereres i nettleseren. Den er ikke kildens live- eller målte 24-timershistorikk.
 
-## Sikkerhets- og personvernkontroller
+## Data, lokal lagring og sikkerhetsgrenser
 
-- Ingen eksterne URL-er, API-kall, auth, OAuth, konto, cookies eller session-logikk.
-- Ingen browser- eller serverlagring; ingen opplasting eller personopplysninger.
-- Ingen hemmeligheter, kildeverdier eller kildeaktiva.
-- Web Audio opprettes først etter «Start lyd». «Stopp lyd» suspenderer lokal AudioContext.
-- Tastaturbetjente native knapper/skyvere, synlige labels, fokusstil fra Vibe-huben og støtte for redusert bevegelse.
-- Direkterute, kanonisk URL og lenke tilbake til huben er med.
+- Alle verdier, tidsstempler, steder, roller, kilde-/tilkoblingsstatuser og historikk er syntetiske fixtures. CO₂ og AQI er separate felt.
+- Ingen `fetch`, XHR, WebSocket, EventSource, API-/PHP-endepunkt, OAuth, konto, reell innlogging, cookie eller serverlagring. Demoen inneholder ingen service worker eller PWA-cache.
+- Kildeappens aktive profil-/simulatorkontroller autosaves til `localStorage` under én nøkkel (`vibe.soundscape.demo.v1`). Bare syntetiske signalverdier, parametervalg og scenariotekst lagres lokalt på denne enheten; de sendes ikke til server.
+- **Full nullstilling** fjerner denne nøkkelen og gjenoppretter syntetisk standardprofil, parametere og historikk. Nettleserens vanlige lagringsinnstillinger kan også slette nettsteddata.
+- Lyd opprettes først etter en eksplisitt Start-handling, går gjennom en dynamisk nivåbegrensning og er kun lokal. «Stopp» suspenderer lydkonteksten.
+- Kildeens ekte Netatmo OAuth, MET/NILU-data, koordinater, adminautentisering, roller/rettigheter, delte profiler, serverrevisjoner, live klientoppdatering, secrets og serverhistorikk er fjernet eller lokalt simulert. Ingen kildens private data eller hemmeligheter følger med.
 
-## Begrensninger
+## Usikkerhet og avgrensning
 
-Demoens lyd er én enkel oscillator: temperatur justerer tonehøyden; vind justerer bare den visuelle indikatoren og påvirker ikke lyden. Værverdiene er syntetiske; de er verken liveverdier eller en trofast avbildning av kildeverdiene. Tonejusteringen representerer ikke kildens signal-/parameterkoblinger eller produksjonslydmotor. Dette skiller seg med vilje fra SSoT-ens autonome offentlige installasjon med konkrete liveverdier og sentral, adminstyrt runtime. Ingen kildeendepunkter eller kildeinnhold gjengis i demoen. Rettighetsgrunnlaget for kildeappen er uavklart.
+- Styringsdokumentet og SSoT er versjonert og siste Notion-redigering som ble lest er 2026-07-25; faktisk produksjonsstatus etter den datoen er ikke kontrollert.
+- Kilden beskriver privat admin, Netatmo OAuth, serverautoritative revisjoner, MET/NILU og PWA. Disse produksjonsfunksjonene kan ikke utføres trygt i en offentlig statisk kopi og er derfor simulert.
+- Demoens lydmodell følger signal→parameter-prinsippet, men er ikke bit-/klangidentisk DSP-port av kildeappens `audio-engine.js`. Ingen kildekode, API-respons, profil-ID, bruker eller hemmelighet er kopiert.
+- Gjenbruksrettigheter til kildeappens kode, utforming og tekst er ikke dokumentert i de gjennomgåtte appfilene. Showcase-implementasjonen er selvstendig.
+
+## Kjør og QA
+
+Ruten er statiske filer uten byggsteg. Fra repo-roten kan den åpnes på `/vibe/soundscape/` under en HTTP-server. Direkterute/refresh er støttet. Nødvendige fonter, ikoner, stilark og skript er lokale showcase-ressurser.
+
+Fokuserte tester finnes i `tests/soundscape.test.mjs`. Repoets CI kjører alle tester med:
+
+```sh
+node --test tests/*.test.mjs
+```
+
+Build: ikke aktuelt, ingen byggeverktøykjede. Lint: ingen felles linter konfigurert; JavaScript kontrolleres med `node --check`. Manuell nettleser-/skjermleser-QA-status føres i PR-beskrivelsen.

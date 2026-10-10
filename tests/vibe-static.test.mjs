@@ -62,7 +62,7 @@ test('catalog fields are complete and slugs are unique, stable route segments', 
   }
 });
 
-test('Soundscape assessment and illustrative route are isolated, synthetic, and local-only', () => {
+test('Soundscape keeps its full synthetic route, local profile, and isolated controls', () => {
   const app = catalog.apps.find((entry) => entry.slug === 'soundscape');
   const html = read('vibe/soundscape/index.html');
   const script = read('vibe/soundscape/app.js');
@@ -77,28 +77,32 @@ test('Soundscape assessment and illustrative route are isolated, synthetic, and 
   }
   assert.match(app.source, /v0\.8\.0/);
   assert.match(app.purpose, /SSoT/);
-  assert.match(app.simplifications, /oppdiktede.*livevær.*mappinger/i);
+  assert.match(app.simplifications, /syntetisk runtime/i);
   assert.match(app.rightsUncertainty, /uavklart/i);
-  assert.match(app.routeState, /31 katalogruter/);
-  assert.match(docs, /autonom offentlig vær-til-generativ-lyd-installasjon/);
-  assert.match(docs, /verken liveverdier/);
-  assert.match(docs, /rettighetene er uavklart|rettigheter.*uavklart/i);
+  assert.match(app.routeState, /Eksisterende \/vibe\/soundscape/);
+  assert.match(docs, /ikke kildeappens produksjonsruntime/);
+  assert.match(docs, /ikke kildens live- eller målte 24-timershistorikk/);
+  assert.match(docs, /gjenbruksrettigheter.*ikke dokumentert/i);
   assert.match(html, /href="\/vibe\/soundscape\/"/);
   assert.match(html, /href="\/vibe\/"/);
-  assert.match(html, /id="temperature"[^>]*type="range"/);
-  assert.match(html, /id="wind"[^>]*type="range"/);
-  assert.match(html, /syntetiske eksempelverdier/i);
-  assert.match(html, /temperaturen styrer tonehøyden/i);
-  assert.match(html, /vindverdien endrer bare indikatoren.*påvirker ikke lyden/i);
-  assert.match(html, /Vindindikator · visuell effekt, påvirker ikke lyden/);
-  assert.match(docs, /vind justerer bare en visuell indikator og påvirker ikke lyden/i);
-  assert.match(html, /<label for="temperature"/);
-  assert.match(html, /<label for="wind"/);
-  assert.match(html, /<button id="toggle"[^>]*type="button"/);
+  assert.match(html, /45 signaler/);
+  assert.match(html, /43 lydmål/);
+  assert.match(html, /id="demo-role"/);
+  assert.match(html, /id="save-snapshot"/);
+  assert.match(html, /id="rollback-snapshot"/);
+  assert.match(html, /id="reset-all"/);
+  assert.match(html, /syntetiske demonstrasjonsdata/i);
+  assert.match(html, /profilen autosaves bare lokalt/i);
+  assert.match(docs, /full nullstilling/i);
+  assert.match(docs, /localStorage/);
+  assert.match(html, /<button(?=[^>]*\bid="play")(?=[^>]*\btype="button")[^>]*>/);
   assert.match(html, /role="status" aria-live="polite"/);
   assert.match(script, /window\.AudioContext/);
-  assert.match(script, /audioContext\.suspend\(\)/);
-  assert.doesNotMatch(`${html}\n${script}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|credentials\s*:)/i);
+  assert.match(script, /audio\.ctx\.suspend\(\)/);
+  assert.match(script, /localStorage\.setItem\(STORAGE_KEY/);
+  assert.match(script, /localStorage\.removeItem\(STORAGE_KEY\)/);
+  assert.doesNotMatch(`${html}\n${script}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie|credentials\s*:)/i);
+  assert.match(script, /localStorage\.setItem\(STORAGE_KEY/);
   assert.doesNotMatch(`${html}\n${script}`, /https?:\/\//i);
   assert.match(styles, /:focus-visible|prefers-reduced-motion/);
 });
@@ -186,7 +190,7 @@ test('hub provides labeled search, focus visibility, and a small-screen layout',
   assert.match(css, /prefers-reduced-motion/);
 });
 
-test('catalog documents any local persistence, and demo runtime has no auth, secrets, or external runtime URL', () => {
+test('catalog and demo runtime have no browser persistence, login fields, recognizable secrets, or external runtime URL', () => {
   // Catalog prose can name technologies while documenting an assessed source;
   // scan executable assets here and validate catalog metadata separately.
   const runtimeFiles = filesUnder(vibeRoot).filter((file) => /\.(?:html|js|css)$/i.test(file));
