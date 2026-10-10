@@ -1,37 +1,21 @@
-# Kriterieverksted · første vurdering og konseptdemo
+# Vurderingsarbeid · fagskole
 
-## Førsterundeinventar
+Funksjonell lokal showcase-kopi på `/vibe/vurderingsarbeid-fagskolen/`, basert på `eirikyven-gif/app-vurderingsarbeid` commit `73cb9eded2f6517e3ebfbed45bdaf8e70395dac3`.
 
-- **App/kandidat:** `apps-fagskolen/apps/vurderingsarbeid`; oppgitt slug `vurderingsarbeid-fagskolen`.
-- **Navn:** Kriterieverksted.
-- **Bruksområde:** Planlegg synlige vurderingskriterier fra et kompetansemål og en oppgave.
-- **Kategori:** Utdanning.
-- **Målgruppe:** Faglærere, vurderingsteam og studieplanleggere ved fagskole.
-- **Status/anbefaling:** Beholdt som kandidat i bred førstegangsvurdering; original statisk konseptdemo laget. Ingen kuratering eller utsiling.
-- **Foreslått slug/rute:** `vurderingsarbeid-fagskolen` · `/vibe/vurderingsarbeid-fagskolen/`.
-- **Demoens synlige verdi:** Viser ett oppdiktet kompetansemål, en mulig oppgave, tre observerbare kriterieutkast og en enkel sjekkliste for kvaliteten på planen.
-- **Nødvendige forenklinger:** Nytt, syntetisk tema om trygg overlevering av arbeidsstasjon. Ingen kildekode, tekster, vurderingsskjema eller data er kopiert. Sjekklisten vurderer kriterieplanen, aldri personer eller studentarbeid.
-- **Avhengigheter:** Ingen runtime-avhengigheter; HTML, CSS og nettleser-JavaScript. Lokalt hub-stilark.
-- **Risiko:** Kildekandidaten kan behandle sensitive vurderings- og studentdata. Ingen data eller intern kildekode er undersøkt. Demoen har ingen personfelt, poeng, karakterer, innlogging, lagring eller nettverkskall. Kildeinnhold/rettigheter er uavklart.
-- **Estimert omfang:** Liten, selvstendig statisk rute; ett syntetisk eksempel og en lokal sjekkliste.
-- **Kildestatus og usikkerhet:** Kildens metadata kunne ikke verifiseres: GitHub API-oppslag for `apps-fagskolen/apps` returnerte 404 i denne arbeidsøkten. Kilderepoet ble ikke klonet eller åpnet; ingen kode, README, issue, pakkeinnhold eller studentdata ble lest. Brukerens interne inventar sier at dette kan være en migrasjonspakke med uklar entrypoint. Teknologistakk, faktisk funksjon, avhengigheter, tester, utrulling og dataflyt er derfor ukjent.
-- **Mulig overlapp:** Intern inventarinformasjon peker på mulig overlapp med den separate `app-vurderingsarbeid`-kandidaten. Relasjonen og eventuell funksjonell duplisering er ikke verifisert; begge beholdes i bred gjennomgang.
-- **Kilde:** Oppgitt kandidatidentifikator `apps-fagskolen/apps/vurderingsarbeid`; metadataoppslag feilet med 404 2026-10-08. Ingen kildefiler lest.
+## Arbeidsflyt
 
-## Personvern og sikkerhet
+Importer og eksporter rubrikk/datasett som Excel, gi rubrikksvar med kriterievekting og indikatorer, følg student- og kullprogresjon, filtrer oversikten, flytt studenter mellom kull og nullstill vurderinger. Ved første åpning vises fiktiv rubrikk, oppgave og de syntetiske «Eksempelstudent A/B». Excel-mal og vurderingsutdrag kan også lastes ned lokalt.
 
-- Alt scenario- og kriterieinnhold er oppdiktet og formulert for denne demoen.
-- Ingen studentopplysninger, svar, prestasjoner, poeng eller karakterer.
-- Ingen fritekstfelt, autentisering, API, backend, konto, analyse, cookies, storage, secrets, CDN eller eksterne forespørsler.
-- Sjekklistemarkeringer finnes kun i sidens minne og forsvinner ved omlasting.
-- Dette er et konsept for fagpersoners planlegging, ikke en vurderingsfasit eller offisiell veiledning.
+## Lokal data og personvern
 
-## Test og QA
+Excel-filer leses og skrives i nettleseren. Vurderingsendringer lagres i nettleserens `localStorage` på denne enheten; de sendes ikke til en server. Ikke importer ekte studentopplysninger. «Nullstill demo» fjerner demoens lagrede data. Eldre leverandørnøkkelposter fra tidligere versjoner av denne ruten fjernes ved innlasting.
 
-- Kontroller JavaScript med `node --check vibe/vurderingsarbeid-fagskolen/app.js`.
-- Kontroller hubkatalogens JSON og rutedokumentets statiske integritet.
-- `node --check vibe/vurderingsarbeid-fagskolen/app.js`, katalogens JSON-parsing og `git diff --check` bestod. `node --test tests/vibe-static.test.mjs`: 11/11 bestod.
-- Chromium direkterute svarte 200; mobilvisning 375 px hadde ikke horisontal overflow. Tastaturnavigasjon nådde alle tre lenkede sjekkbokser; Space oppdaterte status. Overskriftsstruktur, fieldset/legend og navngitte sjekkbokser er til stede.
-- Nettverkslogg: 8 forespørsler til lokal origin, 0 eksterne. Ingen JavaScript-sidefeil. Tilgjengelighetssjekken var manuell semantikk-/tastaturkontroll, ikke full WCAG-revisjon.
+Ikke portert: KI-generering/manuell KI-promptflyt, provider-endepunkter og nøkkelinnstillinger, autentisering, serverfunksjoner og ekstern synkronisering. KI/API-nøkler er tatt helt ut. XLSX-biblioteket er bundlet lokalt i `assets/`; ingen CDN eller annen ekstern runtime-ressurs brukes.
 
-Issue #2 omtales som delvis fremdrift. Ruten inngår fortsatt i bred kandidatrunde; ingen kuratering eller utsiling er gjort.
+## QA og deploy
+
+Kjør `node --test tests/vurderingsarbeid-source-faithful.test.mjs` og `node --test tests/*.test.mjs` (105 tester bestod). Chromium/Playwright QA ved 1365px og 375px bekreftet at eksempelrubrikk og to syntetiske elever åpnes, A har 5/5 svar, studentoversikten filtrerer søk og viser progresjon, individuell vurderingsnullstilling og oppretting/flytting til kull virker, datasetteksport kan importeres igjen, og Nullstill demo går tilbake til tom tilstand. Mobilvisning har ikke horisontal overflow. Konsollfeil: 0; nettverksforespørsler: side og lokal XLSX-fil, ingen eksterne forespørsler. QA omfatter ikke full WCAG-gjennomgang eller manuell validering av alle mulige Excel-varianter. Endringen løser Issue #2 delvis. Isolert PR; ingen merge eller deploy.
+
+## Kilde og usikkerhet
+
+Tasken startet på showcase v0.56.0; PR-grenen ble rebased på dagens main v0.58.0. SemVer-bumpen er v0.59.0. Kilde-README, `app/vurderingsverktoy.html`, SSoT v0.1.17 og KI-datagrunnlagsnotatet ble lest ved oppgitt SHA. Ingen kildetestkommando ble identifisert. Lisens eller eksplisitt gjenbrukstillatelse ble ikke funnet i gjennomgått appmateriale; rettighetsstatus er uavklart.

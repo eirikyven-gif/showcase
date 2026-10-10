@@ -1,52 +1,2583 @@
 <!doctype html>
-<html lang="nb">
+<html lang="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Et oppdiktet arbeidsbord for å planlegge tydelige vurderingskriterier.">
-  <title>Kriterieverksted — Vibe</title>
-  <link rel="stylesheet" href="/vibe/assets/hub.css">
-  <link rel="stylesheet" href="/vibe/vurderingsarbeid-fagskolen/style.css">
-  <script src="/vibe/vurderingsarbeid-fagskolen/app.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vurderingsarbeid · lokal demo</title>
+<script src="/vibe/vurderingsarbeid-fagskolen/assets/xlsx.full.min.js"></script>
+<style>
+:root{
+  --font: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:44px;
+  --radius:14px;--radius-sm:10px;
+  --shadow:0 10px 30px rgba(0,0,0,.10);--shadow-sm:0 4px 14px rgba(0,0,0,.08);
+  --bg:#ffffff;--surface:#f6f7fb;--text:#0f172a;--muted:#334155;--border:#d6dbe7;
+  --primary:#0b5fff;--primaryText:#ffffff;
+  --secondary:#111827;--secondaryText:#ffffff;
+  --danger:#b42318;--dangerText:#ffffff;
+  --focus:#0b5fff;
+  --infoBg:#e8f0ff;--goodBg:#e8f7ee;--warnBg:#fff4e5;--badBg:#feeceb;
+  --goodText:#065f46;--warnText:#7a4a00;--badText:#7a271a;
+  --pageBg:#f5f6f8;--link:#0b5fff;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:var(--font);line-height:1.55;background:var(--pageBg);color:var(--text);}
+a{color:var(--link);}
+.skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip:focus{left:var(--s4);top:var(--s4);width:auto;height:auto;padding:10px 12px;background:var(--bg);border:2px solid var(--primary);border-radius:var(--radius-sm);z-index:9999;}
+.topbar{background:var(--bg);border-bottom:1px solid var(--border);padding:0 var(--s5);display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;min-height:var(--s7);}
+.topbar h1{font-size:16px;font-weight:700;margin:0;padding:12px 0;flex:1;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--s7);padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:650;font-size:15px;cursor:pointer;user-select:none;text-decoration:none;font-family:var(--font);}
+.btn:hover{filter:brightness(0.985);}
+.btn:active{transform:translateY(1px);}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;}
+.btn-primary{background:var(--primary);border-color:transparent;color:var(--primaryText);}
+.btn-secondary{background:var(--secondary);border-color:transparent;color:var(--secondaryText);}
+.btn-danger{background:var(--danger);border-color:transparent;color:var(--dangerText);}
+.btn-sm{min-height:36px;padding:6px 12px;font-size:14px;}
+.btn:focus-visible,.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:4px solid var(--focus);outline-offset:2px;}
+.page{max-width:1000px;margin:0 auto;padding:var(--s5);}
+.card{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius);padding:var(--s4);box-shadow:var(--shadow-sm);}
+.card+.card{margin-top:var(--s4);}
+.cardHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s3);margin-bottom:var(--s3);}
+.cardHeader h2,.cardHeader h3{margin:0;font-size:17px;}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-weight:700;font-size:12px;}
+.badge.good{background:var(--goodBg);color:var(--goodText);border-color:rgba(0,0,0,.08);}
+.badge.warn{background:var(--warnBg);color:var(--warnText);border-color:rgba(0,0,0,.08);}
+.badge.bad{background:var(--badBg);color:var(--badText);border-color:rgba(0,0,0,.08);}
+.alert{border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);padding:var(--s3);margin-bottom:var(--s3);}
+.alert.info{background:var(--infoBg);border-color:rgba(0,0,0,.08);}
+.alert.good{background:var(--goodBg);border-color:rgba(0,0,0,.08);}
+.alert.warn{background:var(--warnBg);border-color:rgba(0,0,0,.08);}
+.alert.bad{background:var(--badBg);border-color:rgba(0,0,0,.08);}
+.field{display:grid;gap:6px;margin-bottom:var(--s3);}
+.field label{font-weight:650;font-size:14px;}
+.field input,.field select,.field textarea{min-height:var(--s7);border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 12px;font-size:15px;font-family:var(--font);width:100%;}
+.field textarea{min-height:120px;resize:vertical;}
+.hint{color:var(--muted);font-size:13px;}
+.error-text{color:var(--danger);font-size:13px;font-weight:650;}
+.row{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;}
+.divider{height:1px;background:var(--border);margin:var(--s4) 0;}
+.tabs-bar{display:flex;flex-wrap:wrap;gap:var(--s2);border-bottom:2px solid var(--border);margin-bottom:var(--s4);}
+.tabs-bar button{background:none;border:none;padding:10px 16px;font-size:15px;font-weight:650;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:var(--font);}
+.tabs-bar button[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary);}
+.tabs-bar button:focus-visible{outline:4px solid var(--focus);outline-offset:2px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.hidden{display:none!important;}
+.krit-nav{display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s4);}
+.krit-btn{min-height:38px;padding:6px 14px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:14px;font-weight:700;cursor:pointer;}
+.krit-btn.active{background:var(--primary);border-color:transparent;color:#fff;}
+.krit-btn.done{background:var(--goodBg);color:var(--goodText);border-color:rgba(0,0,0,.08);}
+.krit-btn:focus-visible{outline:4px solid var(--focus);outline-offset:2px;}
+.svar-grid{display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s2);}
+.svar-btn{min-height:var(--s7);padding:10px 16px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--bg);color:var(--text);font-size:15px;font-weight:650;cursor:pointer;transition:all .1s;}
+.svar-btn:hover{border-color:var(--primary);}
+.svar-btn.selected{background:var(--primary);border-color:var(--primary);color:#fff;}
+.svar-btn.selected-k0-bad{background:var(--badBg);border-color:var(--danger);color:var(--badText);}
+.svar-btn.selected-k0-good{background:var(--goodBg);border-color:#065f46;color:var(--goodText);}
+.svar-btn:focus-visible{outline:4px solid var(--focus);outline-offset:2px;}
+.indikator-big{font-size:48px;font-weight:800;line-height:1;text-align:center;padding:12px 20px;border-radius:var(--radius);border:2px solid var(--border);min-width:80px;display:inline-block;}
+.ind-A,.ind-B{color:var(--goodText);background:var(--goodBg);border-color:rgba(0,0,0,.08);}
+.ind-C{color:var(--warnText);background:var(--warnBg);border-color:rgba(0,0,0,.08);}
+.ind-D,.ind-E{color:#7c3f00;background:#fff0d9;border-color:rgba(0,0,0,.08);}
+.ind-F{color:var(--badText);background:var(--badBg);border-color:var(--danger);}
+.ind-?{color:var(--muted);background:var(--surface);}
+.progress-bar-wrap{height:8px;background:var(--border);border-radius:999px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:var(--primary);border-radius:999px;transition:width .3s;}
+.stikkord-input{min-height:70px;resize:vertical;}
+.status-banner{padding:10px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;}
+.status-banner.loading{background:var(--infoBg);color:#1e40af;}
+.status-banner.ok{background:var(--goodBg);color:var(--goodText);}
+.status-banner.error{background:var(--badBg);color:var(--badText);}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:24px;z-index:999;}
+.modal-backdrop.open{display:flex;}
+.modal{width:min(660px,100%);border-radius:18px;border:1px solid var(--border);background:var(--bg);box-shadow:var(--shadow);max-height:90vh;display:flex;flex-direction:column;}
+.modal-head{padding:var(--s4);border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;}
+.modal-head h2{margin:0;font-size:17px;}
+.modal-body{padding:var(--s4);overflow-y:auto;}
+.modal-foot{padding:var(--s4);border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:var(--s2);}
+ul.import-list{padding-left:18px;margin:6px 0;}
+ul.import-list li{font-size:14px;margin-bottom:4px;}
+.ai-output{font-size:15px;line-height:1.7;white-space:pre-wrap;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--s3);}
+.student-selector{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-bottom:var(--s4);}
+.student-selector select{min-height:var(--s7);min-width:0;max-width:100%;flex:1 1 240px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 12px;font-size:15px;font-family:var(--font);}
+.student-oversikt-tools{display:flex;gap:var(--s3);align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:var(--s3);}
+.student-oversikt-search{flex:1 1 260px;max-width:420px;margin-bottom:0;}
+.student-oversikt-search .row{justify-content:flex-start;}
+.student-oversikt-filters{display:flex;gap:var(--s2);align-items:flex-end;flex-wrap:wrap;flex:1 1 420px;}
+.student-oversikt-filter{flex:1 1 150px;min-width:150px;margin-bottom:0;}
+.student-oversikt-filter-actions{display:flex;align-items:flex-end;margin-bottom:0;}
+.student-oversikt-resultat{margin:0;color:var(--muted);font-size:13px;flex:1 1 100%;}
+.student-oversikt-table-scroll{max-width:100%;overflow-x:auto;}
+@media(max-width:640px){.topbar{gap:var(--s2);}.page{padding:var(--s3);}.student-oversikt-tools{align-items:stretch;}.student-oversikt-search{max-width:none;}.student-oversikt-filters{flex-direction:column;align-items:stretch;}.student-oversikt-filter,.student-oversikt-filter-actions{width:100%;}}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Hopp til innhold</a>
-  <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="header-note back-link" href="/vibe/">Til alle verktøy</a></header>
-  <main id="main" class="board">
-    <section class="hero" aria-labelledby="title">
-      <p class="eyebrow">Fagskolen · planleggingseksempel</p>
-      <h1 id="title">Gjør kvalitet <em>synlig.</em></h1>
-      <p class="lead">Et lite kriterieverksted for å gå fra et kompetansemål til tegn som kan observeres i en oppgave.</p>
-      <div class="fiction"><span aria-hidden="true">✳</span><p><strong>Fiktivt eksempel.</strong> Alt innhold er skrevet for denne demoen. Ingen studentarbeid, personopplysninger eller resultater brukes.</p></div>
-    </section>
+<a class="skip" href="#main">Hopp til innhold</a>
 
-    <section class="brief card" aria-labelledby="brief-title">
-      <div class="section-tag">01 / Kompetanse</div>
-      <h2 id="brief-title">Planlegg en trygg overlevering</h2>
-      <p>Oppdiktet kompetansemål: kunne klargjøre en delt arbeidsstasjon for neste skift og forklare hva som bør følges opp.</p>
-      <div class="task"><span class="task-icon" aria-hidden="true">↗</span><p><strong>Mulig oppgave</strong><br>Lag en kort muntlig gjennomgang av rekkefølgen du ville brukt, og pek ut ett forhold som må meldes videre.</p></div>
-    </section>
+<div class="topbar">
+  <h1>📋 Vurderingsverktøy <span style="font-weight:400;font-size:13px;color:var(--muted)">v1.11.2</span></h1>
+  <button class="btn btn-sm" id="btnMal" title="Last ned Excel-mal">⬇ Last ned Excel-mal</button>
+  <button class="btn btn-sm btn-primary" id="btnImporter" title="Importer Excel">📂 Importer Excel</button>
+  <button class="btn btn-sm" id="btnImportkontroll" title="Importkontroll">🔍 Importkontroll</button>
+  <button class="btn btn-sm" id="btnDatasettImport" title="Importer datasett (kull)" style="display:none">📥 Importer datasett</button>
+  <button class="btn btn-sm" id="btnDatasettExport" title="Eksporter datasett (kull)" style="display:none">📤 Eksporter datasett</button>
+  <button class="btn btn-sm" id="btnResetDemo" title="Nullstill demo">↺ Nullstill demo</button>
+</div>
 
-    <section class="criteria" aria-labelledby="criteria-title">
-      <div class="criteria-head"><div><div class="section-tag">02 / Kriterieutkast</div><h2 id="criteria-title">Hva kan vi se eller høre?</h2></div><p>Planleggingsstøtte · ingen poeng eller elevvurdering</p></div>
-      <div class="criteria-grid">
-        <article class="criterion"><span class="num">A</span><div><h3>Rekkefølge med hensikt</h3><p>Beskriver en forståelig klargjøringsrekkefølge og knytter den til trygg bruk.</p><span class="evidence">Mulig tegn <b>Forklarer hvorfor ett trinn kommer først.</b></span></div></article>
-        <article class="criterion"><span class="num">B</span><div><h3>Kontroll før overlevering</h3><p>Viser hvilke forhold som bør kontrolleres før arbeidsstasjonen gis videre.</p><span class="evidence">Mulig tegn <b>Skiller mellom kontrollert og uavklart.</b></span></div></article>
-        <article class="criterion"><span class="num">C</span><div><h3>Presis oppfølging</h3><p>Formidler et relevant avvik med nok kontekst til at neste skift kan følge det opp.</p><span class="evidence">Mulig tegn <b>Sier hva som ble observert og hva som gjenstår.</b></span></div></article>
+<input type="file" id="fileInput" accept=".xlsx" style="display:none">
+<input type="file" id="fileDatasetInput" accept=".xlsx" style="display:none">
+
+<main id="main" class="page">
+  <div class="alert warn" role="note"><strong>Kun syntetiske eksempeldata.</strong> Excel-import, endringer og eksport behandles lokalt i denne nettleseren og kan bli lagret på denne enheten. Ikke importer ekte studentopplysninger. Bruk «Nullstill demo» for å slette lokale demo-data.</div>
+  <!-- Status banner -->
+  <div id="statusBanner" class="status-banner hidden" role="status" aria-live="polite"></div>
+
+  <!-- Empty state -->
+  <div id="emptyState" class="card" style="text-align:center;padding:var(--s6)">
+    <div style="font-size:48px;margin-bottom:var(--s3)">📋</div>
+    <h2 style="margin:0 0 var(--s3) 0">Ingen rubrikk lastet inn</h2>
+    <p style="color:var(--muted);margin-bottom:var(--s4)">Last ned Excel-malen, fyll inn rubrikk og klikk «Importer Excel» for å komme i gang.</p>
+    <div class="row" style="justify-content:center;gap:var(--s3)">
+      <button class="btn btn-sm" onclick="downloadMal()">⬇ Last ned Excel-mal</button>
+      <button class="btn btn-sm btn-primary" onclick="startExcelImportFlow()">📂 Importer Excel</button>
+    </div>
+  </div>
+
+  <!-- Main content (shown when rubrikk loaded) -->
+  <div id="mainContent" class="hidden">
+    <!-- Top indicator row -->
+    <div class="card" style="margin-bottom:var(--s4)">
+      <div style="display:flex;gap:var(--s5);align-items:center;flex-wrap:wrap">
+        <div>
+          <div class="hint" style="margin-bottom:4px">Samlet indikator</div>
+          <div id="indikatorBig" class="indikator-big ind-?">?</div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div class="hint" style="margin-bottom:4px">Fremgang</div>
+          <div class="progress-bar-wrap">
+            <div id="progressFill" class="progress-bar-fill" style="width:0%"></div>
+          </div>
+          <div id="progressLabel" class="hint" style="margin-top:4px">0 / 0 punkt besvart</div>
+        </div>
+        <div>
+          <div class="hint" style="margin-bottom:4px">K0 / Formelle krav</div>
+          <div id="k0Badge" class="badge">–</div>
+        </div>
+        <div>
+          <div class="hint" style="margin-bottom:4px">Status</div>
+          <div id="komplettetBadge" class="badge">Ufullstendig</div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="review card" aria-labelledby="review-title">
-      <div><div class="section-tag">03 / Sjekk planen</div><h2 id="review-title">Er kriteriene brukbare?</h2><p>Marker punkter mens du tenker gjennom oppgaveutkastet. Markeringene lever bare i denne fanen.</p></div>
-      <fieldset id="checklist"><legend class="visually-hidden">Sjekkpunkter for kriterieplanen</legend>
-        <label><input type="checkbox"><span>Hvert kriterium peker tilbake på kompetansemålet</span></label>
-        <label><input type="checkbox"><span>Tegnene kan observeres i den foreslåtte oppgaven</span></label>
-        <label><input type="checkbox"><span>Ordlyden er tydelig nok til å drøfte sammen</span></label>
-      </fieldset>
-      <p id="check-status" class="check-status" aria-live="polite">Ingen punkter valgt</p>
-    </section>
-    <p class="footnote">Et konsept for planlegging mellom fagpersoner, ikke en fasit, karakterrubrikk eller vurdering av en person.</p>
-  </main>
-  <footer class="site-footer"><a class="brand footer-brand" href="/vibe/">vibe<span aria-hidden="true">.</span></a><p>Et syntetisk planleggingseksempel</p></footer>
+    <!-- Kull selector -->
+    <div id="kullSelectorRow" class="student-selector" style="display:none">
+      <label for="kullSelect" style="font-weight:650;white-space:nowrap">Aktivt kull:</label>
+      <select id="kullSelect" onchange="switchKull(this.value)"></select>
+      <button class="btn btn-sm" id="btnNyttKull" onclick="openNyttKullModal()">+ Nytt kull</button>
+    </div>
+
+    <!-- Student selector -->
+    <div class="student-selector">
+      <label for="studentSelect" style="font-weight:650;white-space:nowrap">Aktiv student:</label>
+      <select id="studentSelect" onchange="setActiveStudent(this.value)">
+        <option value="">— Velg student —</option>
+      </select>
+      <div id="studentBadge" class="badge hidden"></div>
+      <button class="btn btn-sm" id="btnFlyttStudent" style="display:none" onclick="openFlyttModal(state.activeStudentId)">↪ Flytt student</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar" role="tablist">
+      <button role="tab" id="tab-studenter" aria-selected="false" onclick="showTab('studenter')">Studentoversikt</button>
+      <button role="tab" id="tab-vurdering" aria-selected="true" onclick="showTab('vurdering')">Vurdering</button>
+      <button role="tab" id="tab-vekting" aria-selected="false" onclick="showTab('vekting')">Vekting</button>
+
+      <button role="tab" id="tab-eksport" aria-selected="false" onclick="showTab('eksport')">Eksport</button>
+    </div>
+
+    <!-- Studentoversikt panel -->
+    <div id="panel-studenter" class="tab-panel">
+      <div class="card">
+        <div class="cardHeader"><h2>Studentoversikt – aktivt kull</h2></div>
+        <div class="student-oversikt-tools">
+          <div class="field student-oversikt-search">
+            <label for="studentOversiktSearch">Søk etter student</label>
+            <div class="row">
+              <input id="studentOversiktSearch" type="search" placeholder="Søk på navn, klasse eller student-ID" oninput="setStudentOversiktSearch(this.value)">
+              <button class="btn" id="studentOversiktClear" type="button" onclick="nullstillStudentOversiktSok()">Nullstill søk</button>
+            </div>
+          </div>
+          <div class="student-oversikt-filters" aria-label="Filtre for studentoversikt">
+            <div class="field student-oversikt-filter">
+              <label for="studentOversiktFilterIndikator">Indikator</label>
+              <select id="studentOversiktFilterIndikator" onchange="setStudentOversiktFilter('indikator', this.value)">
+                <option value="">Alle</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+              </select>
+            </div>
+            <div class="field student-oversikt-filter">
+              <label for="studentOversiktFilterFremgang">Fremgang</label>
+              <select id="studentOversiktFilterFremgang" onchange="setStudentOversiktFilter('fremgang', this.value)">
+                <option value="">Alle</option>
+                <option value="not-started">Ikke startet</option>
+                <option value="in-progress">Pågår</option>
+                <option value="complete">Fullført</option>
+              </select>
+            </div>
+            <div class="field student-oversikt-filter">
+              <label for="studentOversiktFilterK0">K0-status</label>
+              <select id="studentOversiktFilterK0" onchange="setStudentOversiktFilter('k0', this.value)">
+                <option value="">Alle</option>
+                <option value="ok">Oppfylt</option>
+                <option value="fail">Ikke oppfylt</option>
+              </select>
+            </div>
+            <div class="field student-oversikt-filter-actions">
+              <button class="btn" id="studentOversiktClearFilters" type="button" onclick="nullstillStudentOversiktFiltre()">Nullstill filtre</button>
+            </div>
+          </div>
+          <p id="studentOversiktResultat" class="student-oversikt-resultat" aria-live="polite"></p>
+        </div>
+        <div id="studentOversiktListe"></div>
+      </div>
+    </div>
+
+    <!-- Vurdering panel -->
+    <div id="panel-vurdering" class="tab-panel active">
+      <!-- Kriterienav -->
+      <div class="krit-nav" id="kritNav" role="tablist" aria-label="Kriterier"></div>
+      <!-- Criterion panel -->
+      <div id="kritPanel" class="card"></div>
+      <!-- Navigation actions -->
+      <div class="row" style="margin-top:var(--s4);gap:var(--s2)" id="studentNavRow">
+        <button class="btn btn-sm" onclick="tilStudentoversikt()">↩ Til studentoversikt</button>
+        <button class="btn btn-sm" onclick="forrigeStudent()">← Forrige student</button>
+        <button class="btn btn-sm btn-primary" onclick="nesteStudent()">Neste student →</button>
+        <div id="remainingStudentsLabel" class="hint" aria-live="polite" style="margin-left:auto"></div>
+      </div>
+    </div>
+
+
+    <!-- Vekting panel -->
+    <div id="panel-vekting" class="tab-panel">
+      <div id="weightEditorPanel" class="card">
+        <div class="cardHeader"><h2>Kriterievekting</h2></div>
+        <p class="hint" style="margin:0 0 var(--s3) 0">Juster kriterievekter uten å forstyrre vurderingsflyten. K0 / Formelle krav inngår ikke i score.</p>
+        <div id="weightEditorBody"></div>
+        <div class="row" style="margin-top:var(--s2);gap:var(--s2);align-items:center;flex-wrap:wrap">
+          <button class="btn btn-sm btn-primary" id="btnSaveWeights" type="button" onclick="saveLocalWeights()">Lagre vekting</button>
+          <button class="btn btn-sm" type="button" onclick="showTab('vurdering')">↩ Tilbake til vurdering</button>
+          <div id="weightEditorStatus" class="hint" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eksport panel -->
+    <div id="panel-eksport" class="tab-panel">
+      <div class="card">
+        <div class="cardHeader"><h2>Eksport – Tekstlig oppsummering</h2></div>
+        <p class="hint" style="margin-bottom:var(--s3)">Eksporterer registrerte rubrikksvar, K0-status og indikatorstøtte for den aktive eksempelstudenten.</p>
+        <div class="row" style="gap:var(--s2)">
+          <button class="btn btn-sm btn-primary" onclick="exportTekst()">📄 Eksporter oppsummering (tekst)</button>
+        </div>
+        <div id="eksportPreview" class="hidden" style="margin-top:var(--s4)">
+          <div class="hint" style="margin-bottom:6px">Forhåndsvisning:</div>
+          <pre id="eksportTekst" style="white-space:pre-wrap;font-size:13px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--s3);max-height:400px;overflow-y:auto"></pre>
+          <button class="btn btn-sm" style="margin-top:var(--s2)" onclick="copyEksport()">📋 Kopier tekst</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Importkontroll modal -->
+<div class="modal-backdrop" id="modalImportkontroll" role="dialog" aria-modal="true" aria-labelledby="modalImportkontrollTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalImportkontrollTitle">Importkontroll</h2>
+      <button class="btn btn-sm" onclick="closeModal('modalImportkontroll')">✕ Lukk</button>
+    </div>
+    <div class="modal-body" id="modalImportkontrollBody">
+      <p class="hint">Ingen import kjørt ennå.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalImportkontroll')">Lukk</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Flytt student -->
+<div id="modalFlyttStudent" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalFlyttStudentTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalFlyttStudentTitle">Flytt student til kull</h2>
+      <button class="btn btn-sm" onclick="closeModal('modalFlyttStudent')" aria-label="Lukk">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="flyttStudentInfo" style="margin-bottom:var(--s3)"></p>
+      <div class="field">
+        <label for="flyttStudentSelect">Velg mål-kull:</label>
+        <select id="flyttStudentSelect"></select>
+      </div>
+      <div id="flyttStudentConflictMsg" class="alert bad hidden" style="margin-top:var(--s3)"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalFlyttStudent')">Avbryt</button>
+      <button class="btn btn-primary" onclick="bekreftFlyttStudent()">Flytt student</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Nytt kull -->
+<div id="modalNyttKull" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalNyttKullTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalNyttKullTitle">Nytt kull</h2>
+      <button class="btn btn-sm" onclick="closeModal('modalNyttKull')" aria-label="Lukk">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="nyttKullNavn">Kullnavn:</label>
+        <input id="nyttKullNavn" type="text" placeholder="F.eks. 3A-høst-2026" maxlength="80">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalNyttKull')">Avbryt</button>
+      <button class="btn btn-primary" onclick="bekreftNyttKull()">Opprett kull</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Nullstill vurderinger -->
+<div id="modalNullstillVurdering" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalNullstillVurderingTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalNullstillVurderingTitle">Nullstill vurderinger</h2>
+      <button class="btn btn-sm" onclick="closeModal('modalNullstillVurdering')" aria-label="Lukk">✕</button>
+    </div>
+    <div class="modal-body" id="modalNullstillVurderingBody"></div>
+    <div class="modal-foot" id="modalNullstillVurderingFoot"></div>
+  </div>
+</div>
+
+<!-- Modal: Klargjør ny import -->
+<div id="modalNyImport" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalNyImportTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalNyImportTitle">Klargjør ny import</h2>
+      <button class="btn btn-sm" onclick="closeModal('modalNyImport')" aria-label="Lukk">✕</button>
+    </div>
+    <div class="modal-body" id="modalNyImportBody"></div>
+    <div class="modal-foot" id="modalNyImportFoot"></div>
+  </div>
+</div>
+
+>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const LS_KEY = 'vibe.vurderingsarbeid.demo.v1';
+let state = {
+  rubrikk: null,        // {kriterier, globalTerskler, hasK0}
+  studenter: [],        // [{id, navn, klasse, notat}] – active kull's students
+  activeStudentId: null,
+  oppgavetekst: null,   // {format, title, body}
+  vurderinger: {},      // Rubric answers and short notes by synthetic learner ID.
+  importLog: [],        // [{type:'blocker'|'warn'|'ok', tekst}]
+  // Kull management (R04)
+  kullId: null,         // ID of active kull (auto-assigned)
+  kullNavn: '',         // display name of active kull
+  otherKulls: [],       // [{id, navn, studenter:[...]}] – non-active kulls
+};
+let nullstillVurderingFlow = {studentId:null, step:1};
+let nullstillNyImportFlow = {step:1};
+let pendingFreshImport = false;
+let studentOversiktSearch = '';
+let studentOversiktFilters = createDefaultStudentOversiktFilters();
+
+function createDefaultStudentOversiktFilters(){
+  return {
+    indikator: '',
+    fremgang: '',
+    k0: '',
+  };
+}
+
+function hasArbeidsoktData(){
+  return !!(
+    state.rubrikk ||
+    state.studenter.length ||
+    state.activeStudentId ||
+    state.oppgavetekst ||
+    Object.keys(state.vurderinger || {}).length ||
+    state.importLog.length ||
+    state.kullId ||
+    state.kullNavn ||
+    (state.otherKulls && state.otherKulls.length)
+  );
+}
+
+function createFreshImportState(){
+  return {
+    rubrikk: null,
+    studenter: [],
+    activeStudentId: null,
+    oppgavetekst: null,
+    vurderinger: {},
+    importLog: [],
+    kullId: null,
+    kullNavn: '',
+    otherKulls: [],
+  };
+}
+
+function applyFreshImportState(nextState){
+  studentOversiktSearch = '';
+  studentOversiktFilters = createDefaultStudentOversiktFilters();
+  state.rubrikk = nextState.rubrikk;
+  state.studenter = nextState.studenter;
+  state.activeStudentId = nextState.activeStudentId;
+  state.oppgavetekst = nextState.oppgavetekst;
+  state.vurderinger = nextState.vurderinger;
+  state.importLog = nextState.importLog;
+  state.kullId = nextState.kullId;
+  state.kullNavn = nextState.kullNavn;
+  state.otherKulls = nextState.otherKulls;
+  activeKritId = null;
+}
+
+function resetDemoData(){
+  if(!confirm('Nullstill lokale demoelever, rubrikk, vurderinger og kull på denne enheten?')) return;
+  localStorage.removeItem(LS_KEY);
+  state = {rubrikk:null,studenter:[],activeStudentId:null,oppgavetekst:null,vurderinger:{},importLog:[],kullId:null,kullNavn:'',otherKulls:[]};
+  renderAll();
+  showStatus('Lokal demo er nullstilt.','ok');
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const saved = JSON.parse(raw);
+      state = Object.assign({}, state, saved);
+      if(!state.otherKulls) state.otherKulls = [];
+      if(!state.kullNavn) state.kullNavn = state.studenter?.length ? 'Kull 1' : '';
+      if(!state.kullId && state.studenter?.length) state.kullId = makeKullId();
+      delete state.aiSettings; delete state._aiKeys; delete state._aiKey;
+      ensureRubrikkWeightFields(state.rubrikk);
+    }
+    // Remove legacy provider-key records written by earlier versions of this route.
+    for(const key of Object.keys(localStorage)){
+      if(key.startsWith('vvt_v1_key') || key === 'vvt_v1') localStorage.removeItem(key);
+    }
+  }catch(e){ console.warn('loadState feilet', e); }
+}
+
+function saveState(){
+  try{
+    const toSave = {...state};
+    delete toSave.aiSettings; delete toSave._aiKeys; delete toSave._aiKey;
+    localStorage.setItem(LS_KEY, JSON.stringify(toSave));
+  }catch(e){ console.warn('saveState feilet', e); }
+}
+
+// ============================================================
+// SVARSETT DEFINITIONS
+// ============================================================
+function buildSvarsettDef(id, alternativer, meta = {}){
+  const options = alternativer.map(alt=>({
+    label: alt.label,
+    score: alt.score,
+    isNotRelevant: !!alt.isNotRelevant,
+    k0Status: alt.k0Status || '',
+  }));
+  const optionMap = Object.fromEntries(options.map(opt=>[opt.label, opt]));
+  const scoreMap = Object.fromEntries(options.map(opt=>[opt.label, opt.isNotRelevant ? null : opt.score]));
+  return {
+    id,
+    navn: meta.navn || id,
+    beskrivelse: meta.beskrivelse || '',
+    options,
+    optionMap,
+    scoreMap,
+  };
+}
+
+function getDefaultSvarsettDefs(){
+  return {
+    A: buildSvarsettDef('A', [
+      {label:'Har', score:1},
+      {label:'Delvis', score:0.5},
+      {label:'Mangler', score:0},
+      {label:'Ikke relevant', score:null, isNotRelevant:true},
+    ], {navn:'Standard A'}),
+    B: buildSvarsettDef('B', [
+      {label:'Svært god', score:1},
+      {label:'God', score:0.8},
+      {label:'Ok', score:0.6},
+      {label:'Svak', score:0.3},
+      {label:'Mangler', score:0},
+      {label:'Ikke relevant', score:null, isNotRelevant:true},
+    ], {navn:'Standard B'}),
+    C: buildSvarsettDef('C', [
+      {label:'Presist', score:1},
+      {label:'Delvis presist', score:0.6},
+      {label:'Upresist', score:0.3},
+      {label:'Mangler', score:0},
+      {label:'Ikke relevant', score:null, isNotRelevant:true},
+    ], {navn:'Standard C'}),
+    K0: buildSvarsettDef('K0', [
+      {label:'Oppfylt', score:1, k0Status:'oppfylt'},
+      {label:'Ikke oppfylt', score:0, k0Status:'ikke_oppfylt'},
+    ], {navn:'Formelle krav (K0)'})
+  };
+}
+
+function mergeSvarsettDefs(baseDefs, overrideDefs = {}){
+  return Object.assign({}, baseDefs, overrideDefs);
+}
+
+function getSvarsettDefs(){
+  return state.rubrikk?.svarsettDefs || getDefaultSvarsettDefs();
+}
+
+function getSvarsettDef(id){
+  return getSvarsettDefs()[id] || null;
+}
+
+// ============================================================
+// SCORING ENGINE
+// ============================================================
+function scoreKriterium(kId, studentId){
+  const rubrikk = state.rubrikk;
+  if(!rubrikk) return null;
+  const krit = rubrikk.kriterier.find(k=>k.id===kId);
+  if(!krit) return null;
+  const vurd = getVurd(studentId);
+  const svar = vurd.svar;
+  let sum = 0, count = 0;
+  for(const p of krit.punkter){
+    const v = svar[p.id];
+    if(!v) continue; // ubesvart teller ikke
+    const scoreMap = getSvarsettDef(p.svarsett)?.scoreMap;
+    const s = scoreMap ? scoreMap[v] : null;
+    if(s === null) continue; // ikke relevant
+    sum += s;
+    count++;
+  }
+  if(count === 0) return null;
+  return sum / count; // 0–1
+}
+
+function scoreToGrade(score, terskler){
+  if(score === null || score === undefined) return '?';
+  const pct = score * 100;
+  if(pct >= terskler.A) return 'A';
+  if(pct >= terskler.B) return 'B';
+  if(pct >= terskler.C) return 'C';
+  if(pct >= terskler.D) return 'D';
+  if(pct >= terskler.E) return 'E';
+  return 'F';
+}
+
+function computeK0Status(studentId){
+  if(!state.rubrikk || !state.rubrikk.hasK0) return 'ok';
+  const k0 = state.rubrikk.kriterier.find(k=>k.isK0);
+  if(!k0) return 'ok';
+  const vurd = getVurd(studentId);
+  for(const p of k0.punkter){
+    const v = vurd.svar[p.id];
+    const valgtAlt = getSvarsettDef(p.svarsett)?.optionMap?.[v];
+    if(!v || !valgtAlt || valgtAlt.k0Status === 'ikke_oppfylt') return 'fail';
+  }
+  return 'ok';
+}
+
+function computeSamletIndikator(studentId){
+  if(!state.rubrikk) return '?';
+  const k0Status = computeK0Status(studentId);
+  if(k0Status === 'fail') return 'F';
+  const kriterier = state.rubrikk.kriterier.filter(k=>!k.isK0);
+  if(kriterier.length === 0) return '?';
+  const vekt = computeVekter(kriterier);
+  let weightedSum = 0, weightedTotal = 0;
+  for(let i=0;i<kriterier.length;i++){
+    const k = kriterier[i];
+    const s = scoreKriterium(k.id, studentId);
+    if(s === null) continue;
+    weightedSum += s * vekt[i];
+    weightedTotal += vekt[i];
+  }
+  if(weightedTotal === 0) return '?';
+  const score = weightedSum / weightedTotal;
+  return scoreToGrade(score, state.rubrikk.globalTerskler);
+}
+
+function computeVekter(kriterier){
+  const hasWeight = kriterier.some(k=>k.active_weight_percent !== null && k.active_weight_percent !== undefined);
+  if(!hasWeight) return kriterier.map(()=>1);
+  return kriterier.map(k=>(k.active_weight_percent ?? 0));
+}
+
+function ensureRubrikkWeightFields(rubrikk){
+  if(!rubrikk || !Array.isArray(rubrikk.kriterier)) return;
+  for(const k of rubrikk.kriterier){
+    if(k.isK0){
+      k.source_weight_percent = null;
+      k.active_weight_percent = null;
+      k.weight_modified_locally = false;
+      continue;
+    }
+    if(k.source_weight_percent === undefined) k.source_weight_percent = (k.vekt ?? null);
+    if(k.active_weight_percent === undefined) k.active_weight_percent = (k.vekt ?? k.source_weight_percent ?? null);
+    if(k.weight_modified_locally === undefined) k.weight_modified_locally = false;
+    k.vekt = k.active_weight_percent;
+  }
+}
+
+function getKriterieWeightStatus(){
+  const kriterier = (state.rubrikk?.kriterier || []).filter(k=>!k.isK0);
+  const sum = kriterier.reduce((acc, k)=>acc + Number(k.active_weight_percent || 0), 0);
+  return {sum, normalized: sum !== 100};
+}
+
+function countBesvart(studentId){
+  if(!state.rubrikk) return {besvart:0, total:0};
+  const vurd = getVurd(studentId);
+  let besvart=0, total=0;
+  for(const k of state.rubrikk.kriterier){
+    if(k.isK0) continue;
+    for(const p of k.punkter){
+      total++;
+      if(vurd.svar[p.id]) besvart++;
+    }
+  }
+  return {besvart, total};
+}
+
+function isComplete(studentId){
+  const {besvart,total} = countBesvart(studentId);
+  return total > 0 && besvart === total;
+}
+
+function countRemainingStudents(){
+  if(!state.rubrikk || !state.studenter || state.studenter.length===0) return 0;
+  return state.studenter.filter(s=>!isComplete(s.id)).length;
+}
+
+function getVurd(studentId){
+  if(!studentId) studentId = state.activeStudentId || '__default__';
+  if(!state.vurderinger[studentId]) state.vurderinger[studentId] = {svar:{}, stikkordK:{}, stikkordP:{}};
+  return state.vurderinger[studentId];
+}
+
+// ============================================================
+// EXCEL IMPORT
+// ============================================================
+function handleFile(file){
+  const freshImport = pendingFreshImport;
+  pendingFreshImport = false;
+  showStatus('Leser fil…','loading');
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      importFromWorkbook(wb, {freshImport});
+    }catch(ex){
+      showStatus('Feil: Kunne ikke lese Excel-fil. '+ex.message,'error');
+      addImportLog('blocker','Kunne ikke lese Excel-fil: '+ex.message);
+      openModal('modalImportkontroll');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function importFromWorkbook(wb, options = {}){
+  const freshImport = !!options.freshImport;
+  const nextState = freshImport ? createFreshImportState() : state;
+  const log = [];
+  const sheetNames = wb.SheetNames;
+
+  let rubrikk = null;
+  let studenter = null;
+  let oppgave = null;
+  let config = null;
+  let kThresh = null;
+  let svarsettDefs = getDefaultSvarsettDefs();
+
+  // Parse each known sheet
+  if(sheetNames.includes('Svarsett')){
+    const parsedSvarsett = parseSvarsett(wb.Sheets['Svarsett'], log);
+    if(parsedSvarsett) svarsettDefs = mergeSvarsettDefs(getDefaultSvarsettDefs(), parsedSvarsett);
+  }
+  if(sheetNames.includes('Rubrikk')){
+    const res = parseRubrikk(wb.Sheets['Rubrikk'], log, svarsettDefs);
+    rubrikk = res;
+  }
+  if(sheetNames.includes('Config')){
+    config = parseConfig(wb.Sheets['Config'], log);
+  }
+  if(sheetNames.includes('K_Thresholds')){
+    kThresh = parseKThresholds(wb.Sheets['K_Thresholds'], log);
+  }
+  if(sheetNames.includes('Studenter')){
+    studenter = parseStudenter(wb.Sheets['Studenter'], log);
+  }
+  if(sheetNames.includes('Oppgavetekst')){
+    oppgave = parseOppgavetekst(wb.Sheets['Oppgavetekst'], log);
+  }
+
+  const blockers = log.filter(l=>l.type==='blocker');
+
+  if(rubrikk && blockers.filter(b=>b.source==='Rubrikk').length===0 && blockers.filter(b=>b.source==='Svarsett').length===0){
+    // Apply config terskler
+    const terskler = config || {A:90,B:80,C:70,D:60,E:50};
+    rubrikk.globalTerskler = terskler;
+    rubrikk.svarsettDefs = svarsettDefs;
+    if(kThresh){
+      for(const k of rubrikk.kriterier){
+        const t = kThresh[k.id];
+        if(t) k.terskler = t;
+      }
+    }
+    ensureRubrikkWeightFields(rubrikk);
+    nextState.rubrikk = rubrikk;
+    log.push({type:'ok', tekst:'Rubrikk importert: '+rubrikk.kriterier.length+' kriterier, '+rubrikk.kriterier.reduce((a,k)=>a+k.punkter.length,0)+' punkt.'});
+    log.push({type:'ok', tekst:'Svarsett lastet: '+Object.keys(svarsettDefs).length+' definisjoner.'});
+  } else if(rubrikk===null && sheetNames.includes('Rubrikk')){
+    // blockers already added
+  } else if(!sheetNames.includes('Rubrikk') && !sheetNames.includes('Studenter') && !sheetNames.includes('Oppgavetekst')){
+    log.push({type:'blocker', source:'General', tekst:'Ingen kjente faner funnet (Rubrikk, Studenter, Oppgavetekst, Config, Svarsett).'});
+  }
+
+  if(studenter && blockers.filter(b=>b.source==='Studenter').length===0){
+    nextState.studenter = studenter;
+    // Assign a kull ID and default name if not already set (R04)
+    if(!nextState.kullId) nextState.kullId = makeKullId();
+    if(!nextState.kullNavn) nextState.kullNavn = 'Kull 1';
+    log.push({type:'ok', tekst:'Studentliste importert: '+studenter.length+' studenter.'});
+  }
+  if(oppgave && blockers.filter(b=>b.source==='Oppgavetekst').length===0){
+    nextState.oppgavetekst = oppgave;
+    log.push({type:'ok', tekst:'Oppgavetekst importert.'});
+  }
+
+  nextState.importLog = log;
+  if(freshImport){
+    applyFreshImportState(nextState);
+  }
+  saveState();
+  renderAll();
+
+  const hasBlocker = log.filter(l=>l.type==='blocker').length > 0;
+  if(hasBlocker){
+    showStatus('Import hadde blokkere – se Importkontroll.','error');
+  } else {
+    showStatus('Import fullført.','ok');
+  }
+  openModal('modalImportkontroll');
+}
+
+function sheetToRows(sheet){
+  const raw = XLSX.utils.sheet_to_json(sheet, {header:1, defval:''});
+  if(raw.length < 2) return {headers:[], rows:[]};
+  const headers = raw[0].map(h=>String(h).trim());
+  const rows = raw.slice(1).map(r=>r.map(c=>String(c??'').trim()));
+  return {headers, rows};
+}
+
+function parseSvarsett(sheet, log){
+  const {headers, rows} = sheetToRows(sheet);
+  const required = ['Svarsett_id','Alternativ','Poengverdi'];
+  for(const r of required){
+    if(!headers.includes(r)){
+      log.push({type:'blocker',source:'Svarsett',tekst:'Mangler obligatorisk kolonne: '+r});
+    }
+  }
+  if(log.filter(l=>l.type==='blocker'&&l.source==='Svarsett').length>0) return null;
+
+  const col = h=>headers.indexOf(h);
+  const svarsettMap = new Map();
+  const optionKeys = new Set();
+
+  for(let i=0;i<rows.length;i++){
+    const row = rows[i];
+    const rowNum = i+2;
+    const id = row[col('Svarsett_id')];
+    const alternativ = row[col('Alternativ')];
+    if(!id && !alternativ) continue;
+    if(!id){log.push({type:'blocker',source:'Svarsett',tekst:'Rad '+rowNum+': Svarsett_id mangler.'});continue;}
+    if(!alternativ){log.push({type:'blocker',source:'Svarsett',tekst:'Rad '+rowNum+': Alternativ mangler.'});continue;}
+    const normalizedId = id.trim();
+    if(!/^[A-Za-z0-9_-]{1,40}$/.test(normalizedId)){
+      log.push({type:'blocker',source:'Svarsett',tekst:'Rad '+rowNum+': Svarsett_id "'+normalizedId+'" er ugyldig. Bruk bokstaver, tall, bindestrek eller understrek.'});
+      continue;
+    }
+    const key = normalizedId+'::'+alternativ;
+    if(optionKeys.has(key)){
+      log.push({type:'blocker',source:'Svarsett',tekst:'Rad '+rowNum+': Duplikat alternativ "'+alternativ+'" i svarsett '+normalizedId+'.'});
+      continue;
+    }
+    optionKeys.add(key);
+    const isNotRelevant = headers.includes('Ikke_relevant') && /^ja$/i.test(row[col('Ikke_relevant')]);
+    const scoreRaw = row[col('Poengverdi')];
+    const score = scoreRaw === '' ? NaN : Number(String(scoreRaw).replace(',', '.'));
+    if(!isNotRelevant && (Number.isNaN(score) || score < 0 || score > 1)){
+      log.push({type:'blocker',source:'Svarsett',tekst:'Rad '+rowNum+': Poengverdi må være et tall mellom 0 og 1.'});
+      continue;
+    }
+    const k0Status = headers.includes('K0_status') ? row[col('K0_status')].trim().toLowerCase() : '';
+    if(k0Status && !['oppfylt','ikke_oppfylt'].includes(k0Status)){
+      log.push({type:'blocker',source:'Svarsett',tekst:'Rad '+rowNum+': K0_status må være oppfylt eller ikke_oppfylt.'});
+      continue;
+    }
+    if(!svarsettMap.has(normalizedId)){
+      svarsettMap.set(normalizedId, {id: normalizedId, navn: headers.includes('Svarsett_navn') ? row[col('Svarsett_navn')] : '', beskrivelse: headers.includes('Beskrivelse') ? row[col('Beskrivelse')] : '', options: []});
+    }
+    const def = svarsettMap.get(normalizedId);
+    if(!def.navn && headers.includes('Svarsett_navn')) def.navn = row[col('Svarsett_navn')];
+    if(!def.beskrivelse && headers.includes('Beskrivelse')) def.beskrivelse = row[col('Beskrivelse')];
+    def.options.push({label: alternativ, score: isNotRelevant ? null : score, isNotRelevant, k0Status});
+  }
+
+  if(log.filter(l=>l.type==='blocker'&&l.source==='Svarsett').length>0) return null;
+  if(svarsettMap.size===0){
+    log.push({type:'blocker',source:'Svarsett',tekst:'Ingen gyldige svarsett funnet i Svarsett-fanen.'});
+    return null;
+  }
+
+  const built = {};
+  for(const [id, def] of svarsettMap.entries()){
+    if(def.options.length < 2){
+      log.push({type:'blocker',source:'Svarsett',tekst:'Svarsett '+id+' må ha minst to alternativer.'});
+      continue;
+    }
+    if(id === 'K0'){
+      const statuses = new Set(def.options.map(opt=>opt.k0Status).filter(Boolean));
+      if(!statuses.has('oppfylt') || !statuses.has('ikke_oppfylt')){
+        log.push({type:'blocker',source:'Svarsett',tekst:'Svarsett K0 må ha minst ett alternativ med K0_status=oppfylt og ett med K0_status=ikke_oppfylt.'});
+        continue;
+      }
+    }
+    built[id] = buildSvarsettDef(id, def.options, {navn:def.navn || id, beskrivelse:def.beskrivelse || ''});
+  }
+  if(log.filter(l=>l.type==='blocker'&&l.source==='Svarsett').length>0) return null;
+  return built;
+}
+
+function parseRubrikk(sheet, log, svarsettDefs){
+  const {headers, rows} = sheetToRows(sheet);
+  const required = ['K_id','K_tittel','Punkt_id','Punkt_tekst','Svarsett'];
+  for(const r of required){
+    if(!headers.includes(r)){
+      log.push({type:'blocker',source:'Rubrikk',tekst:'Mangler obligatorisk kolonne: '+r});
+    }
+  }
+  if(log.filter(l=>l.type==='blocker'&&l.source==='Rubrikk').length>0) return null;
+
+  const col = h=>headers.indexOf(h);
+  const kriterieMap = new Map();
+  const punktIds = new Set();
+  const validSvarsett = new Set(Object.keys(svarsettDefs || {}));
+
+  for(let i=0;i<rows.length;i++){
+    const row = rows[i];
+    const rowNum = i+2;
+    const kId = row[col('K_id')];
+    const kTittel = row[col('K_tittel')];
+    const pId = row[col('Punkt_id')];
+    const pTekst = row[col('Punkt_tekst')];
+    const svarsett = row[col('Svarsett')];
+    if(!kId && !pId) continue;
+    if(!kId){log.push({type:'blocker',source:'Rubrikk',tekst:'Rad '+rowNum+': K_id mangler.'});continue;}
+    if(!pId){log.push({type:'blocker',source:'Rubrikk',tekst:'Rad '+rowNum+': Punkt_id mangler.'});continue;}
+    if(punktIds.has(pId)){log.push({type:'blocker',source:'Rubrikk',tekst:'Rad '+rowNum+': Punkt_id "'+pId+'" er ikke unik.'});continue;}
+    if(!validSvarsett.has(svarsett)){
+      log.push({type:'blocker',source:'Rubrikk',tekst:'Rad '+rowNum+': Svarsett "'+svarsett+'" er ugyldig. Tillatt: '+[...validSvarsett].join(', ')+'.'});
+      continue;
+    }
+    if(kId==='K0' && svarsett!=='K0'){log.push({type:'warn',source:'Rubrikk',tekst:'Rad '+rowNum+': K0-rad skal ha Svarsett=K0. Satt til K0.'});}
+    punktIds.add(pId);
+    if(!kriterieMap.has(kId)){
+      const isK0 = kId==='K0';
+      const tittel = isK0 ? 'Formelle krav' : (kTittel||kId);
+      const vektRaw = headers.includes('K_vekt_prosent') ? row[col('K_vekt_prosent')] : '';
+      const vekt = vektRaw !== '' && !isNaN(Number(vektRaw)) ? Number(vektRaw) : null;
+      kriterieMap.set(kId,{id:kId, tittel, isK0, vekt, source_weight_percent:isK0?null:vekt, active_weight_percent:isK0?null:vekt, weight_modified_locally:false, beskrivelse: headers.includes('K_beskrivelse')?row[col('K_beskrivelse')]:'', punkter:[]});
+    }
+    const k = kriterieMap.get(kId);
+    const actualSvarsett = kId==='K0'?'K0':svarsett;
+    k.punkter.push({
+      id: pId,
+      tekst: pTekst,
+      svarsett: actualSvarsett,
+      hjelpetekst: headers.includes('Punkt_hjelpetekst')?row[col('Punkt_hjelpetekst')]:'',
+      stikkord: headers.includes('Punkt_stikkord')?row[col('Punkt_stikkord')]:'',
+    });
+  }
+
+  if(kriterieMap.size===0){
+    log.push({type:'blocker',source:'Rubrikk',tekst:'Ingen gyldige rader funnet i Rubrikk.'});
+    return null;
+  }
+
+  const kriterier = [...kriterieMap.values()];
+  const hasK0 = kriterier.some(k=>k.isK0);
+  return {kriterier, hasK0, globalTerskler:{A:90,B:80,C:70,D:60,E:50}, svarsettDefs: svarsettDefs || getDefaultSvarsettDefs()};
+}
+
+function parseConfig(sheet, log){
+  const {headers, rows} = sheetToRows(sheet);
+  const keyCol = headers.indexOf('key');
+  const valCol = headers.indexOf('value');
+  if(keyCol<0||valCol<0) return null;
+  const map = {};
+  for(const row of rows){
+    if(row[keyCol]) map[row[keyCol].trim()] = row[valCol];
+  }
+  const t = {A:90,B:80,C:70,D:60,E:50};
+  const keys = {grade_A_min:'A',grade_B_min:'B',grade_C_min:'C',grade_D_min:'D',grade_E_min:'E'};
+  for(const [k,g] of Object.entries(keys)){
+    if(map[k]!==undefined && !isNaN(Number(map[k]))) t[g]=Number(map[k]);
+    else if(map[k]!==undefined) log.push({type:'warn',source:'Config',tekst:'Ugyldig verdi for '+k+'. Bruker standard.'});
+  }
+  return t;
+}
+
+function parseKThresholds(sheet, log){
+  const {headers, rows} = sheetToRows(sheet);
+  const req = ['K_id','A_min','B_min','C_min','D_min','E_min'];
+  for(const r of req){if(!headers.includes(r)) return null;}
+  const col = h=>headers.indexOf(h);
+  const map = {};
+  for(const row of rows){
+    const kId = row[col('K_id')];
+    if(!kId) continue;
+    const t = {};
+    let valid = true;
+    for(const g of ['A','B','C','D','E']){
+      const v = Number(row[col(g+'_min')]);
+      if(isNaN(v)){valid=false;break;}
+      t[g] = v;
+    }
+    if(valid) map[kId] = t;
+    else log.push({type:'warn',source:'K_Thresholds',tekst:'Ugyldige terskler for '+kId+'. Bruker globale.'});
+  }
+  return map;
+}
+
+function parseStudenter(sheet, log){
+  const {headers, rows} = sheetToRows(sheet);
+  for(const r of ['Student_id','Student_navn']){
+    if(!headers.includes(r)){
+      log.push({type:'blocker',source:'Studenter',tekst:'Mangler kolonne: '+r});
+    }
+  }
+  if(log.filter(l=>l.type==='blocker'&&l.source==='Studenter').length>0) return null;
+  const col = h=>headers.indexOf(h);
+  const ids = new Set();
+  const result = [];
+  for(let i=0;i<rows.length;i++){
+    const row = rows[i];
+    const id = row[col('Student_id')];
+    const navn = row[col('Student_navn')];
+    if(!id && !navn) continue;
+    if(!id){log.push({type:'warn',source:'Studenter',tekst:'Rad '+(i+2)+': Student_id mangler.'});continue;}
+    if(ids.has(id)){log.push({type:'warn',source:'Studenter',tekst:'Rad '+(i+2)+': Duplikat Student_id "'+id+'". Hopper over.'});continue;}
+    ids.add(id);
+    result.push({id, navn, klasse: headers.includes('Klasse')?row[col('Klasse')]:'', notat: headers.includes('Notat')?row[col('Notat')]:'',});
+  }
+  if(result.length===0){log.push({type:'blocker',source:'Studenter',tekst:'Ingen gyldige studenter funnet.'});return null;}
+  return result;
+}
+
+function parseOppgavetekst(sheet, log){
+  const {headers, rows} = sheetToRows(sheet);
+  for(const r of ['Format','Body']){
+    if(!headers.includes(r)){
+      log.push({type:'blocker',source:'Oppgavetekst',tekst:'Mangler kolonne: '+r});
+    }
+  }
+  if(log.filter(l=>l.type==='blocker'&&l.source==='Oppgavetekst').length>0) return null;
+  const col = h=>headers.indexOf(h);
+  for(let i=0;i<rows.length;i++){
+    const row = rows[i];
+    const fmt = row[col('Format')].toLowerCase();
+    const body = row[col('Body')];
+    if(!fmt && !body) continue;
+    const validFmt = ['text','markdown'];
+    if(!validFmt.includes(fmt)){
+      log.push({type:'warn',source:'Oppgavetekst',tekst:'Format "'+fmt+'" ugyldig. Bruker "text".'});
+    }
+    const title = headers.includes('Title') ? row[col('Title')] : '';
+    return {format: validFmt.includes(fmt)?fmt:'text', title, body};
+  }
+  log.push({type:'blocker',source:'Oppgavetekst',tekst:'Ingen innhold funnet i Oppgavetekst.'});
+  return null;
+}
+
+function addImportLog(type, tekst){
+  state.importLog.push({type, tekst});
+}
+
+// ============================================================
+// DATASET IMPORT/EXPORT
+// ============================================================
+function computeFingerprint(rubrikk){
+  const punktData = rubrikk.kriterier.map(k=>k.id+':'+k.punkter.map(p=>p.id+'/'+p.svarsett).join(',')).join('|');
+  const svarsettData = Object.values(rubrikk.svarsettDefs || getDefaultSvarsettDefs())
+    .sort((a,b)=>a.id.localeCompare(b.id))
+    .map(def=>def.id+':'+def.options.map(opt=>[opt.label,opt.score,opt.isNotRelevant?'NR':'',opt.k0Status||''].join('/')).join(','))
+    .join('|');
+  const s = punktData+'||'+svarsettData;
+  let h = 0;
+  for(let i=0;i<s.length;i++){h = (h*31 + s.charCodeAt(i)) >>> 0;}
+  return h.toString(16);
+}
+
+const DATASET_HEADERS = {
+  info: ['nøkkel','verdi'],
+  studenter: ['Student_id','Student_navn','Klasse','Notat'],
+  svar: ['Student_id','Punkt_id','Svar'],
+  stikkordK: ['Student_id','K_id','Stikkord'],
+  stikkordP: ['Student_id','Punkt_id','Stikkord'],
+  resultat: ['Student_id','Student_navn','Samlet_indikator','K0_status','Komplett'],
+};
+
+function createDatasetVeiledningSheet(){
+  const veiledningData = [
+    ['Vurderingsverktøy – veiledning til datasetteksport','',''],
+    ['Denne fanen er kun veiledning og blir ignorert ved datasettimport. Behold gjerne fanen i arbeidsboken for å ha format og kontrollpunkter lett tilgjengelig.','',''],
+    ['','',''],
+    ['Steg','Hva du gjør','Viktig å huske'],
+    ['1','Eksporter datasettet fra verktøylinjen når riktig rubrikk og kull er aktivt.','Eksporten gjelder aktiv arbeidsøkt og bruker rubrikkens fingerprint som kontroll ved senere import.'],
+    ['2','Behold arknavn og kolonneoverskrifter dersom du skal redigere filen manuelt.','Importen matcher på faste arknavn og forventede kolonner. Endringer i struktur kan gjøre at rader ignoreres eller at import avvises.'],
+    ['3','Bruk Dataset_Info som referanse, ikke som sted for fritekst.','rubrikk_fingerprint må stemme med aktiv rubrikk ved import, ellers avvises datasettet.'],
+    ['4','Legg bare til eller oppdater studenter på rader med gyldig Student_id.','Merge skjer på Student_id. Nye student-id-er legges til, men ukjente punkt eller ugyldige svar ignoreres med advarsel.'],
+    ['5','Behandle Resultat som dokumentasjon, ikke som styrende input.','Samlet_indikator, K0_status og Komplett eksporteres for oversikt. Vurderingsdata hentes fra arkene Studenter, Svar og stikkordarkene.'],
+    ['6','Importer datasettet tilbake først når samme rubrikk er lastet inn i appen.','Ekstra faner er lov, men brukes ikke av datasettimporten.'],
+    ['','',''],
+    ['Ark','Formål','Kolonner / regler'],
+    ['Dataset_Info','Metadata for datasettet og fingerprint-kontroll.','Kolonner: '+DATASET_HEADERS.info.join(', ')+' med rader for dataset_version, rubrikk_fingerprint og eksport_tidspunkt.'],
+    ['Studenter','Lister studentene som inngår i datasettet.','Kolonner: '+DATASET_HEADERS.studenter.join(', ')+' med merge på Student_id.'],
+    ['Svar','Lagrer valgt svar per punkt og student.','Kolonner: '+DATASET_HEADERS.svar.join(', ')+' der Punkt_id må finnes i aktiv rubrikk.'],
+    ['Stikkord_K','Lagrer kriteriestikkord per student.','Kolonner: '+DATASET_HEADERS.stikkordK.join(', ')+' (valgfri fane).'],
+    ['Stikkord_P','Lagrer punktstikkord per student.','Kolonner: '+DATASET_HEADERS.stikkordP.join(', ')+' (valgfri fane).'],
+    ['Resultat','Viser eksportert oversikt over indikator, K0-status og kompletthet.','Kolonner: '+DATASET_HEADERS.resultat.join(', ')+' (informativ fane, anbefalt å beholde).'],
+    ['','',''],
+    ['Tips','Hvis du kun vil flytte vurderingsdata mellom økter, la datasettfilen beholde samme struktur.','Veiledningsfanen endrer ikke importformatet og kan ligge i filen uten å påvirke fingerprint-reglene.'],
+  ];
+  const sheet = XLSX.utils.aoa_to_sheet(veiledningData);
+  sheet['!cols'] = [{wch:18},{wch:44},{wch:110}];
+  return sheet;
+}
+
+function exportDatasett(){
+  if(!state.rubrikk){showStatus('Ingen rubrikk lastet inn.','error');return;}
+  const fp = computeFingerprint(state.rubrikk);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, createDatasetVeiledningSheet(), 'Veiledning');
+
+  // Dataset_Info
+  const info = [DATASET_HEADERS.info,['dataset_version','1.0'],['rubrikk_fingerprint',fp],['eksport_tidspunkt',new Date().toISOString()]];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(info), 'Dataset_Info');
+
+  // Studenter
+  const stRows = [DATASET_HEADERS.studenter];
+  for(const s of state.studenter) stRows.push([s.id,s.navn,s.klasse||'',s.notat||'']);
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(stRows), 'Studenter');
+
+  // Svar
+  const svarRows = [DATASET_HEADERS.svar];
+  for(const sid of Object.keys(state.vurderinger)){
+    const v = state.vurderinger[sid];
+    for(const [pid, val] of Object.entries(v.svar||{})) svarRows.push([sid,pid,val]);
+  }
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(svarRows), 'Svar');
+
+  // Stikkord_K
+  const stikkKRows = [DATASET_HEADERS.stikkordK];
+  for(const sid of Object.keys(state.vurderinger)){
+    const v = state.vurderinger[sid];
+    for(const [kid, val] of Object.entries(v.stikkordK||{})) stikkKRows.push([sid,kid,val]);
+  }
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(stikkKRows), 'Stikkord_K');
+
+  // Stikkord_P
+  const stikkPRows = [DATASET_HEADERS.stikkordP];
+  for(const sid of Object.keys(state.vurderinger)){
+    const v = state.vurderinger[sid];
+    for(const [pid, val] of Object.entries(v.stikkordP||{})) stikkPRows.push([sid,pid,val]);
+  }
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(stikkPRows), 'Stikkord_P');
+
+  // Resultat
+  const resRows = [DATASET_HEADERS.resultat];
+  for(const s of state.studenter){
+    resRows.push([s.id, s.navn, computeSamletIndikator(s.id), computeK0Status(s.id), isComplete(s.id)?'Ja':'Nei']);
+  }
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(resRows), 'Resultat');
+
+  XLSX.writeFile(wb, 'datasett_kull.xlsx');
+  showStatus('Datasett eksportert.','ok');
+}
+
+function handleDatasetFile(file){
+  showStatus('Leser datasett…','loading');
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      importDatasett(wb);
+    }catch(ex){
+      showStatus('Feil ved import av datasett: '+ex.message,'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function importDatasett(wb){
+  const log = [];
+  if(!state.rubrikk){
+    showStatus('Rubrikk må lastes inn før datasett kan importeres.','error');
+    return;
+  }
+  const fp = computeFingerprint(state.rubrikk);
+
+  // Read fingerprint
+  if(!wb.SheetNames.includes('Dataset_Info')){
+    showStatus('Ugyldig datasettfil: mangler Dataset_Info.','error');
+    return;
+  }
+  const infoRows = sheetToRows(wb.Sheets['Dataset_Info']);
+  const infoMap = {};
+  for(const row of infoRows.rows) infoMap[row[0]] = row[1];
+  if(infoMap['rubrikk_fingerprint'] !== fp){
+    showStatus('Datasett passer ikke til aktiv rubrikk (fingerprint mismatch). Import avvist.','error');
+    log.push({type:'blocker',tekst:'Fingerprint i datasett: '+infoMap['rubrikk_fingerprint']+'. Forventet: '+fp});
+    state.importLog = [...state.importLog, ...log];
+    openModal('modalImportkontroll');
+    renderImportkontroll();
+    return;
+  }
+
+  // Studenter
+  if(wb.SheetNames.includes('Studenter')){
+    const {headers,rows} = sheetToRows(wb.Sheets['Studenter']);
+    const idCol = headers.indexOf(DATASET_HEADERS.studenter[0]);
+    const navnCol = headers.indexOf(DATASET_HEADERS.studenter[1]);
+    if(idCol>=0){
+      const existIds = new Set(state.studenter.map(s=>s.id));
+      for(const row of rows){
+        const id = row[idCol];
+        if(!id) continue;
+        if(!existIds.has(id)){
+          state.studenter.push({id, navn: navnCol>=0?row[navnCol]:'', klasse:'', notat:''});
+          existIds.add(id);
+        }
+      }
+    }
+  }
+
+  // Svar
+  if(wb.SheetNames.includes('Svar')){
+    const {headers,rows} = sheetToRows(wb.Sheets['Svar']);
+    const sidCol=headers.indexOf(DATASET_HEADERS.svar[0]), pidCol=headers.indexOf(DATASET_HEADERS.svar[1]), sCol=headers.indexOf(DATASET_HEADERS.svar[2]);
+    const punktMap = new Map(state.rubrikk.kriterier.flatMap(k=>k.punkter.map(p=>[p.id, p])));
+    for(let i=0;i<rows.length;i++){
+      const row = rows[i];
+      const sid=row[sidCol], pid=row[pidCol], sv=row[sCol];
+      if(!sid||!pid) continue;
+      const punkt = punktMap.get(pid);
+      if(!punkt){log.push({type:'warn',tekst:'Rad '+(i+2)+': Ukjent Punkt_id "'+pid+'". Ignorert.'});continue;}
+      if(!state.studenter.find(s=>s.id===sid)){log.push({type:'warn',tekst:'Rad '+(i+2)+': Ukjent Student_id "'+sid+'". Ignorert.'});continue;}
+      if(sv && !getSvarsettDef(punkt.svarsett)?.optionMap?.[sv]){log.push({type:'warn',tekst:'Rad '+(i+2)+': Svar "'+sv+'" finnes ikke i svarsett '+punkt.svarsett+'. Ignorert.'});continue;}
+      const v = getVurd(sid);
+      v.svar[pid] = sv;
+    }
+  }
+
+  // Stikkord_K
+  if(wb.SheetNames.includes('Stikkord_K')){
+    const {headers,rows} = sheetToRows(wb.Sheets['Stikkord_K']);
+    const sidCol=headers.indexOf(DATASET_HEADERS.stikkordK[0]), kidCol=headers.indexOf(DATASET_HEADERS.stikkordK[1]), sCol=headers.indexOf(DATASET_HEADERS.stikkordK[2]);
+    for(const row of rows){
+      const sid=row[sidCol], kid=row[kidCol], sv=row[sCol];
+      if(!sid||!kid) continue;
+      const v = getVurd(sid);
+      v.stikkordK[kid] = sv;
+    }
+  }
+
+  log.push({type:'ok', tekst:'Datasett importert. '+state.studenter.length+' studenter.'});
+  state.importLog = [...state.importLog, ...log];
+  saveState();
+  renderAll();
+  showStatus('Datasett importert.','ok');
+  openModal('modalImportkontroll');
+}
+
+// ============================================================
+// EXCEL MAL GENERATOR
+// ============================================================
+function downloadMal({download=true} = {}){
+  const wb = XLSX.utils.book_new();
+  const rubrikkHeaders = ['K_id','K_tittel','K_beskrivelse','K_vekt_prosent','Punkt_id','Punkt_tekst','Svarsett','Punkt_hjelpetekst','Punkt_stikkord'];
+  const svarsettHeaders = ['Svarsett_id','Svarsett_navn','Beskrivelse','Alternativ','Poengverdi','Ikke_relevant','K0_status'];
+  const configHeaders = ['key','value'];
+  const threshHeaders = ['K_id','A_min','B_min','C_min','D_min','E_min'];
+  const studentHeaders = ['Student_id','Student_navn','Klasse','Notat'];
+  const oppgaveHeaders = ['Format','Title','Body'];
+
+  // Veiledning
+  const veiledningData = [
+    ['Vurderingsverktøy – veiledning til Excel-mal','',''],
+    ['Denne fanen er kun veiledning og blir ignorert ved import. Behold gjerne fanen i arbeidsboken for å ha formatreglene lett tilgjengelig.','',''],
+    ['','',''],
+    ['Steg','Hva du gjør','Viktig å huske'],
+    ['1','Fyll ut eller tilpass Svarsett før du redigerer rubrikken.','Svarsett_id må være unike. K0 må fortsatt ha både oppfylt og ikke_oppfylt.'],
+    ['2','Fyll ut Rubrikk med ett punkt per rad.','K_id, K_tittel, Punkt_id, Punkt_tekst og Svarsett er obligatoriske kolonner.'],
+    ['3','Juster terskler i Config og eventuelt K_Thresholds.','K_Thresholds er valgfri. Tomme eller ugyldige rader faller tilbake til globale terskler.'],
+    ['4','Legg inn studenter i Studenter-fanen.','Student_id må være unik per rad. Bruk kun syntetiske eksempelverdier i denne lokale demoen.'],
+    ['5','Legg inn oppgavetekst i Oppgavetekst-fanen som vurderingsgrunnlag.','Format bør være text eller markdown.'],
+    ['6','Lagre som .xlsx og importer filen i vurderingsverktøyet.','Ekstra faner er lov, men de brukes ikke av importen.'],
+    ['','',''],
+    ['Ark','Formål','Kolonner / regler'],
+    ['Svarsett','Definerer svaralternativer og poengskalaer.','Kolonner: '+svarsettHeaders.join(', ')],
+    ['Rubrikk','Definerer kriterier og punkter som skal vurderes.','Kolonner: '+rubrikkHeaders.join(', ')],
+    ['Config','Setter globale indikatorgrenser.','Kolonner: '+configHeaders.join(', ')+' med rader som grade_A_min til grade_E_min.'],
+    ['K_Thresholds','Overstyrer indikatorgrenser per kriterium.','Kolonner: '+threshHeaders.join(', ')+' (valgfri fane).'],
+    ['Studenter','Lister studenter som skal vurderes.','Kolonner: '+studentHeaders.join(', ')],
+    ['Oppgavetekst','Gir fast tekstgrunnlag for dokumentasjon.','Kolonner: '+oppgaveHeaders.join(', ')],
+    ['','',''],
+    ['Tips','Du kan slette eksempleradene og erstatte dem med egne data.',''],
+  ];
+  const veiledningSheet = XLSX.utils.aoa_to_sheet(veiledningData);
+  veiledningSheet['!cols'] = [{wch:18},{wch:42},{wch:110}];
+  XLSX.utils.book_append_sheet(wb, veiledningSheet, 'Veiledning');
+
+  // Rubrikk
+  const rubrikkData = [
+    rubrikkHeaders,
+    ['K0','Formelle krav','Absolutte krav','','K0_P1','Innleveringsfristen er overholdt','K0','',''],
+    ['K0','Formelle krav','','','K0_P2','Oppgavens lengde er overholdt','K0','',''],
+    ['K1','Faglig innhold','Vurdering av faglig kvalitet','40','K1_P1','Teorier og begreper er korrekt anvendt','B','',''],
+    ['K1','','','','K1_P2','Relevante kilder er brukt','A','',''],
+    ['K2','Struktur og form','Vurdering av oppbygning og språk','35','K2_P1','Oppgaven har tydelig struktur','C','',''],
+    ['K2','','','','K2_P2','Språket er presist og akademisk','C','',''],
+    ['K3','Refleksjon','Grad av selvstendig refleksjon','25','K3_P1','Egne vurderinger fremgår tydelig','MUNTLIG','',''],
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rubrikkData), 'Rubrikk');
+
+  // Svarsett
+  const svarsettData = [
+    svarsettHeaders,
+    ['A','Standard A','Kan redigeres eller utvides','Har','1','',''],
+    ['A','','','Delvis','0.5','',''],
+    ['A','','','Mangler','0','',''],
+    ['A','','','Ikke relevant','','Ja',''],
+    ['B','Standard B','Kan redigeres eller utvides','Svært god','1','',''],
+    ['B','','','God','0.8','',''],
+    ['B','','','Ok','0.6','',''],
+    ['B','','','Svak','0.3','',''],
+    ['B','','','Mangler','0','',''],
+    ['B','','','Ikke relevant','','Ja',''],
+    ['C','Standard C','Kan redigeres eller utvides','Presist','1','',''],
+    ['C','','','Delvis presist','0.6','',''],
+    ['C','','','Upresist','0.3','',''],
+    ['C','','','Mangler','0','',''],
+    ['C','','','Ikke relevant','','Ja',''],
+    ['K0','Formelle krav','Må inneholde både oppfylt og ikke_oppfylt','Oppfylt','1','','oppfylt'],
+    ['K0','','','Ikke oppfylt','0','','ikke_oppfylt'],
+    ['MUNTLIG','Eget muntlig svarsett','Eksempel på eget svarsett','Svært trygg','1','',''],
+    ['MUNTLIG','','','Trygg','0.75','',''],
+    ['MUNTLIG','','','Usikker','0.4','',''],
+    ['MUNTLIG','','','Mangelfull','0','',''],
+    ['MUNTLIG','','','Ikke relevant','','Ja',''],
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(svarsettData), 'Svarsett');
+
+  // Config
+  const configData = [configHeaders,['grade_A_min','90'],['grade_B_min','80'],['grade_C_min','70'],['grade_D_min','60'],['grade_E_min','50']];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(configData), 'Config');
+
+  // K_Thresholds
+  const threshData = [threshHeaders,['K1','85','75','65','55','45'],['K2','90','80','70','60','50']];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(threshData), 'K_Thresholds');
+
+  // Studenter
+  const stdData = [studentHeaders,['DEMO-01','Eksempelstudent A','Syntetisk eksempelgruppe',''],['DEMO-02','Eksempelstudent B','Syntetisk eksempelgruppe','']];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(stdData), 'Studenter');
+
+  // Oppgavetekst
+  const oppData = [oppgaveHeaders,['markdown','Fiktiv eksempeloppgave','## Oppgave\n\nVurder en fiktiv arbeidsprosess ved hjelp av rubrikken.']];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(oppData), 'Oppgavetekst');
+
+  if(download){ XLSX.writeFile(wb, 'vurderingsverktoy_mal.xlsx'); showStatus('Excel-mal lastet ned.','ok'); }
+  return wb;
+}
+
+// ============================================================
+// RENDERING
+// ============================================================
+function renderAll(){
+  const hasRubrikk = !!state.rubrikk;
+  document.getElementById('emptyState').classList.toggle('hidden', hasRubrikk);
+  document.getElementById('mainContent').classList.toggle('hidden', !hasRubrikk);
+  document.getElementById('btnDatasettImport').style.display = hasRubrikk ? '' : 'none';
+  document.getElementById('btnDatasettExport').style.display = hasRubrikk && state.studenter.length > 0 ? '' : 'none';
+
+  if(!hasRubrikk){
+    renderTopBar();
+    return;
+  }
+  renderKullSelector();
+  renderStudentSelector();
+  renderKriterieNav();
+  renderKriteriePanel();
+  renderWeightEditor();
+  renderTopBar();
+  renderStudentNavStatus();
+  renderImportkontroll();
+  if(document.getElementById('panel-studenter').classList.contains('active')) renderStudentOversikt();
+  // Update student navigation row visibility
+  const navRow = document.getElementById('studentNavRow');
+  if(navRow) navRow.classList.toggle('hidden', state.studenter.length === 0);
+}
+
+function renderStudentSelector(){
+  const sel = document.getElementById('studentSelect');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">— Velg student —</option>';
+  for(const s of state.studenter){
+    const opt = document.createElement('option');
+    opt.value = s.id;
+    opt.textContent = s.navn + (s.klasse ? ' ('+s.klasse+')' : '');
+    sel.appendChild(opt);
+  }
+  if(state.activeStudentId){
+    sel.value = state.activeStudentId;
+    if(sel.value !== state.activeStudentId && state.studenter.length > 0){
+      // student not in list, reset
+      state.activeStudentId = state.studenter[0]?.id || null;
+      sel.value = state.activeStudentId || '';
+    }
+  }
+  const badge = document.getElementById('studentBadge');
+  if(state.activeStudentId){
+    const s = state.studenter.find(s=>s.id===state.activeStudentId);
+    badge.textContent = s ? s.navn : '';
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+let activeKritId = null;
+
+function renderKriterieNav(){
+  const nav = document.getElementById('kritNav');
+  nav.innerHTML = '';
+  if(!state.rubrikk) return;
+  for(const k of state.rubrikk.kriterier){
+    const btn = document.createElement('button');
+    btn.className = 'krit-btn';
+    btn.textContent = k.tittel;
+    btn.setAttribute('role','tab');
+    btn.setAttribute('aria-selected', k.id===activeKritId?'true':'false');
+    if(k.id===activeKritId) btn.classList.add('active');
+    // check if done
+    if(state.activeStudentId){
+      const vurd = getVurd(state.activeStudentId);
+      const done = k.punkter.every(p=>vurd.svar[p.id]);
+      if(done && k.id!==activeKritId) btn.classList.add('done');
+    }
+    btn.onclick = ()=>{ activeKritId = k.id; renderKriterieNav(); renderKriteriePanel(); };
+    nav.appendChild(btn);
+  }
+  // Auto-select first if none
+  if(!activeKritId && state.rubrikk.kriterier.length>0){
+    activeKritId = state.rubrikk.kriterier[0].id;
+    nav.firstChild?.classList.add('active');
+    nav.firstChild?.setAttribute('aria-selected','true');
+  }
+}
+
+function renderKriteriePanel(){
+  const panel = document.getElementById('kritPanel');
+  if(!state.rubrikk || !activeKritId){panel.innerHTML='';return;}
+  const krit = state.rubrikk.kriterier.find(k=>k.id===activeKritId);
+  if(!krit){panel.innerHTML='';return;}
+  const vurd = state.activeStudentId ? getVurd(state.activeStudentId) : {svar:{},stikkordK:{},stikkordP:{}};
+
+  panel.innerHTML = '';
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'cardHeader';
+  const h2 = document.createElement('h2');
+  h2.style.fontSize = '18px';
+  if(krit.isK0){
+    h2.textContent = krit.tittel + ' · Inngår ikke i score';
+  } else {
+    h2.textContent = krit.tittel + ' · ' + Number(krit.active_weight_percent || 0) + ' %';
+  }
+  header.appendChild(h2);
+  if(!krit.isK0 && state.activeStudentId){
+    const ks = scoreKriterium(krit.id, state.activeStudentId);
+    const terskler = krit.terskler || state.rubrikk.globalTerskler;
+    const grade = ks !== null ? scoreToGrade(ks, terskler) : '?';
+    const span = document.createElement('span');
+    span.className = 'indikator-big ind-'+grade;
+    span.style.cssText = 'font-size:24px;padding:6px 14px';
+    span.textContent = grade;
+    header.appendChild(span);
+  }
+  panel.appendChild(header);
+
+  if(krit.beskrivelse){
+    const desc = document.createElement('p');
+    desc.className = 'hint';
+    desc.style.marginBottom = 'var(--s3)';
+    desc.textContent = krit.beskrivelse;
+    panel.appendChild(desc);
+  }
+
+  for(const p of krit.punkter){
+    const chosen = vurd.svar[p.id] || '';
+    const svarAlts = getSvarsettDef(p.svarsett)?.options || [];
+
+    const punktDiv = document.createElement('div');
+    punktDiv.style.cssText = 'margin-bottom:var(--s4);padding-bottom:var(--s3);border-bottom:1px solid var(--border)';
+
+    const pTitle = document.createElement('div');
+    pTitle.style.cssText = 'font-weight:650;margin-bottom:var(--s2);font-size:15px';
+    pTitle.textContent = p.id + ' – ' + p.tekst;
+    punktDiv.appendChild(pTitle);
+    if(!krit.isK0 && krit.punkter.length > 0){
+      const andel = Number(krit.active_weight_percent || 0) / krit.punkter.length;
+      const andelEl = document.createElement('div');
+      andelEl.className = 'hint';
+      andelEl.style.marginBottom = 'var(--s2)';
+      andelEl.textContent = 'Vekter ca. ' + andel.toFixed(1).replace('.', ',') + ' % av totalen';
+      punktDiv.appendChild(andelEl);
+    }
+    if(krit.isK0){
+      const k0InfoEl = document.createElement('div');
+      k0InfoEl.className = 'hint';
+      k0InfoEl.style.marginBottom = 'var(--s2)';
+      k0InfoEl.textContent = 'Inngår ikke i score';
+      punktDiv.appendChild(k0InfoEl);
+    }
+
+    if(p.hjelpetekst){
+      const hint = document.createElement('div');
+      hint.className = 'hint';
+      hint.style.marginBottom = 'var(--s2)';
+      hint.textContent = p.hjelpetekst;
+      punktDiv.appendChild(hint);
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'svar-grid';
+    for(const alt of svarAlts){
+      let cls = 'svar-btn';
+      if(krit.isK0 && chosen===alt.label){
+        cls += alt.k0Status==='oppfylt' ? ' selected-k0-good' : ' selected-k0-bad';
+      } else if(chosen===alt.label){
+        cls += ' selected';
+      }
+      const btn = document.createElement('button');
+      btn.className = cls;
+      btn.textContent = alt.label;
+      btn.addEventListener('click', (function(pid, a){ return function(){ setSvar(pid, a); }; })(p.id, alt.label));
+      grid.appendChild(btn);
+    }
+    punktDiv.appendChild(grid);
+
+    // Stikkord per punkt
+    const stikkP = vurd.stikkordP ? (vurd.stikkordP[p.id] || '') : '';
+    const stWrap = document.createElement('div');
+    stWrap.style.marginTop = 'var(--s2)';
+    const stLabel = document.createElement('label');
+    stLabel.setAttribute('for', 'stP_'+p.id);
+    stLabel.style.cssText = 'font-size:13px;font-weight:650;display:block;margin-bottom:4px';
+    stLabel.textContent = 'Stikkord (valgfritt):';
+    stWrap.appendChild(stLabel);
+    const stInput = document.createElement('input');
+    stInput.type = 'text';
+    stInput.id = 'stP_'+p.id;
+    stInput.value = stikkP;
+    stInput.placeholder = 'Korte stikkord for dette punktet';
+    stInput.style.cssText = 'width:100%;min-height:40px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);padding:8px 12px;font-size:14px;font-family:var(--font)';
+    stInput.addEventListener('input', (function(pid, el){ return function(){ setStikkordP(pid, el.value); }; })(p.id, stInput));
+    stWrap.appendChild(stInput);
+    punktDiv.appendChild(stWrap);
+
+    panel.appendChild(punktDiv);
+  }
+
+  // Stikkord per kriterium
+  const stikkK = vurd.stikkordK ? (vurd.stikkordK[krit.id] || '') : '';
+  const stKWrap = document.createElement('div');
+  stKWrap.style.marginTop = 'var(--s3)';
+  const stKLabel = document.createElement('label');
+  stKLabel.setAttribute('for', 'stK_'+krit.id);
+  stKLabel.style.cssText = 'font-weight:650;font-size:14px;display:block;margin-bottom:6px';
+  stKLabel.textContent = 'Stikkord for ' + krit.tittel + ' (valgfritt):';
+  stKWrap.appendChild(stKLabel);
+  const stKArea = document.createElement('textarea');
+  stKArea.id = 'stK_'+krit.id;
+  stKArea.placeholder = 'Stikkord, observasjoner eller notater for dette kriteriet...';
+  stKArea.style.cssText = 'width:100%;min-height:70px;resize:vertical;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 12px;font-size:14px;font-family:var(--font)';
+  stKArea.value = stikkK;
+  stKArea.addEventListener('input', (function(kid, el){ return function(){ setStikkordK(kid, el.value); }; })(krit.id, stKArea));
+  stKWrap.appendChild(stKArea);
+  panel.appendChild(stKWrap);
+}
+
+function renderTopBar(){
+  const el = document.getElementById('indikatorBig');
+  const progressFill = document.getElementById('progressFill');
+  const progressLabel = document.getElementById('progressLabel');
+  const k0b = document.getElementById('k0Badge');
+  const cb = document.getElementById('komplettetBadge');
+
+  if(!state.rubrikk || !state.activeStudentId){
+    el.textContent = '?';
+    el.className = 'indikator-big ind-?';
+    progressFill.style.width = '0%';
+    progressLabel.textContent = '0 / 0 punkt besvart';
+    k0b.textContent = state.rubrikk && !state.rubrikk.hasK0 ? 'Ingen K0' : '–';
+    k0b.className = 'badge';
+    cb.textContent = 'Ufullstendig';
+    cb.className = 'badge';
+    return;
+  }
+
+  const ind = computeSamletIndikator(state.activeStudentId);
+  el.textContent = ind;
+  el.className = 'indikator-big ind-'+ind;
+
+  const {besvart, total} = countBesvart(state.activeStudentId);
+  progressFill.style.width = total>0 ? (besvart/total*100)+'%' : '0%';
+  progressLabel.textContent = besvart+' / '+total+' punkt besvart';
+
+  const k0 = computeK0Status(state.activeStudentId);
+  if(!state.rubrikk.hasK0){
+    k0b.textContent = 'Ingen K0';
+    k0b.className = 'badge';
+  } else if(k0==='ok'){
+    k0b.textContent = '✓ Oppfylt';
+    k0b.className = 'badge good';
+  } else {
+    k0b.textContent = '✗ Ikke oppfylt';
+    k0b.className = 'badge bad';
+  }
+
+  const comp = isComplete(state.activeStudentId);
+  cb.textContent = comp ? 'Fullstendig' : 'Ufullstendig';
+  cb.className = 'badge '+(comp?'good':'warn');
+
+
+}
+
+function renderWeightEditor(){
+  const body = document.getElementById('weightEditorBody');
+  if(!body) return;
+  body.innerHTML = '';
+  if(!state.rubrikk) return;
+  const tbl = document.createElement('div');
+  for(const k of state.rubrikk.kriterier){
+    const row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:1fr 140px;gap:var(--s2);align-items:center;margin-bottom:var(--s2)';
+    const label = document.createElement('div');
+    label.textContent = k.tittel + (k.isK0 ? ' · Inngår ikke i score' : '');
+    row.appendChild(label);
+    if(k.isK0){
+      const k0Text = document.createElement('div');
+      k0Text.className = 'hint';
+      k0Text.textContent = 'Inngår ikke i score';
+      row.appendChild(k0Text);
+    } else {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.inputMode = 'decimal';
+      input.dataset.kId = k.id;
+      input.dataset.weightInput = 'true';
+      input.value = String(Number(k.active_weight_percent || 0));
+      row.appendChild(input);
+    }
+    tbl.appendChild(row);
+  }
+  body.appendChild(tbl);
+  const status = getKriterieWeightStatus();
+  document.getElementById('weightEditorStatus').textContent = 'Aktiv vektsum: ' + status.sum + ' %.';
+}
+
+function parseWeightValue(raw){
+  const txt = String(raw ?? '').trim();
+  if(txt === '') return {ok:false, reason:'empty'};
+  const normalized = txt.replace(',', '.');
+  if(!/^\d+(\.\d+)?$/.test(normalized)) return {ok:false, reason:'format'};
+  const val = Number(normalized);
+  if(Number.isNaN(val) || val < 0) return {ok:false, reason:'range'};
+  return {ok:true, val};
+}
+
+function saveLocalWeights(){
+  if(!state.rubrikk) return;
+  const statusEl = document.getElementById('weightEditorStatus');
+  const updates = document.querySelectorAll('#weightEditorBody [data-weight-input="true"][data-k-id]');
+  const parsed = [];
+  for(const input of updates){
+    const kriterieId = input.dataset.kId;
+    const k = state.rubrikk.kriterier.find(item=>item.id===kriterieId);
+    if(!k || k.isK0) continue;
+    const parsedWeight = parseWeightValue(input.value);
+    if(!parsedWeight.ok){
+      const navn = k.tittel ? ' for «' + k.tittel + '»' : '';
+      statusEl.textContent = 'Ugyldig vektverdi' + navn + '. Bruk tall som er 0 eller høyere.';
+      statusEl.className = 'error-text';
+      return;
+    }
+    parsed.push({id:kriterieId, val:parsedWeight.val});
+  }
+  for(const upd of parsed){
+    const k = state.rubrikk.kriterier.find(item=>item.id===upd.id);
+    if(!k || k.isK0) continue;
+    k.active_weight_percent = upd.val;
+    k.vekt = upd.val;
+    k.weight_modified_locally = true;
+  }
+  saveState();
+  renderAll();
+  const status = getKriterieWeightStatus();
+  if(status.normalized){
+    statusEl.textContent = 'Vekting lagret. Sum er ' + status.sum + ' %. Verdiene normaliseres i beregningen.';
+    statusEl.className = 'hint';
+  } else {
+    statusEl.textContent = 'Vekting lagret. Sum: 100 %.';
+    statusEl.className = 'hint';
+  }
+}
+
+function renderStudentNavStatus(){
+  const label = document.getElementById('remainingStudentsLabel');
+  if(!label) return;
+  if(!state.studenter || state.studenter.length===0){
+    label.textContent = '';
+    return;
+  }
+  const remaining = countRemainingStudents();
+  const noun = remaining === 1 ? 'student' : 'studenter';
+  label.textContent = remaining > 0
+    ? 'Gjenstår i kullet: '+remaining+' '+noun+' som ikke er ferdig vurdert'
+    : 'Alle studenter i kullet er ferdig vurdert';
+}
+
+function renderImportkontroll(){
+  const body = document.getElementById('modalImportkontrollBody');
+  if(!state.importLog || state.importLog.length===0){
+    body.innerHTML = '<p class="hint">Ingen import kjørt ennå.</p>';
+    return;
+  }
+  const blockers = state.importLog.filter(l=>l.type==='blocker');
+  const warns = state.importLog.filter(l=>l.type==='warn');
+  const oks = state.importLog.filter(l=>l.type==='ok');
+  let html = '';
+  if(blockers.length>0){
+    html += '<div class="alert bad" style="margin-bottom:var(--s3)"><strong>🚫 Blokkere ('+blockers.length+')</strong><ul class="import-list">';
+    for(const l of blockers) html += '<li>'+esc(l.tekst)+'</li>';
+    html += '</ul></div>';
+  }
+  if(warns.length>0){
+    html += '<div class="alert warn" style="margin-bottom:var(--s3)"><strong>⚠ Advarsler ('+warns.length+')</strong><ul class="import-list">';
+    for(const l of warns) html += '<li>'+esc(l.tekst)+'</li>';
+    html += '</ul></div>';
+  }
+  if(oks.length>0){
+    html += '<div class="alert good"><strong>✓ Fullført</strong><ul class="import-list">';
+    for(const l of oks) html += '<li>'+esc(l.tekst)+'</li>';
+    html += '</ul></div>';
+  }
+  if(state.rubrikk){
+    const status = getKriterieWeightStatus();
+    const erLokal = state.rubrikk.kriterier.some(k=>!k.isK0 && k.weight_modified_locally);
+    html += '<div class="alert '+(status.normalized?'warn':'good')+'" style="margin-top:var(--s3)"><strong>Vekter</strong><ul class="import-list">';
+    html += '<li>Aktiv vektsum: '+status.sum+' %</li>';
+    html += '<li>Kilde: '+(erLokal?'Lokalt redigert':'Importert/standard')+'</li>';
+    html += '<li>Normalisering: '+(status.normalized?'Ja, brukes i beregning':'Nei')+'</li>';
+    html += '</ul></div>';
+  }
+  body.innerHTML = html;
+}
+
+// ============================================================
+// USER ACTIONS
+// ============================================================
+function setSvar(punktId, val){
+  if(!state.activeStudentId){showStatus('Velg en student først.','error');return;}
+  const punkt = state.rubrikk?.kriterier.flatMap(k=>k.punkter).find(p=>p.id===punktId);
+  if(!punkt){showStatus('Fant ikke vurderingspunktet som skulle oppdateres.','error');return;}
+  if(!getSvarsettDef(punkt.svarsett)?.optionMap?.[val]){showStatus('Valgt svar finnes ikke i svarsettet for punktet.','error');return;}
+  const v = getVurd(state.activeStudentId);
+  v.svar[punktId] = val;
+  saveState();
+  renderKriterieNav();
+  renderKriteriePanel();
+  renderTopBar();
+  renderStudentNavStatus();
+}
+
+function setStikkordK(kId, val){
+  if(!state.activeStudentId) return;
+  const v = getVurd(state.activeStudentId);
+  if(!v.stikkordK) v.stikkordK = {};
+  v.stikkordK[kId] = val;
+  saveState();
+}
+
+function setStikkordP(pId, val){
+  if(!state.activeStudentId) return;
+  const v = getVurd(state.activeStudentId);
+  if(!v.stikkordP) v.stikkordP = {};
+  v.stikkordP[pId] = val;
+  saveState();
+}
+
+function setActiveStudent(id){
+  state.activeStudentId = id || null;
+  saveState();
+  // Hold aktiv student-visning synkron i både velger, badge og oversikt.
+  renderStudentSelector();
+  renderKriterieNav();
+  renderKriteriePanel();
+  renderTopBar();
+  renderStudentNavStatus();
+  const studentPanel = document.getElementById('panel-studenter');
+  if(studentPanel && studentPanel.classList.contains('active')){
+    renderStudentOversikt();
+  }
+  // Show/hide "Flytt student" button
+  const btnFlytt = document.getElementById('btnFlyttStudent');
+  if(btnFlytt) btnFlytt.style.display = (id && state.otherKulls.length > 0) ? '' : 'none';
+}
+
+function refreshAiActionUi(){}
+
+// ============================================================
+// EKSPORT
+// ============================================================
+function exportTekst(){
+  if(!state.rubrikk||!state.activeStudentId){showStatus('Velg student og last inn rubrikk.','error');return;}
+  const student = state.studenter.find(s=>s.id===state.activeStudentId);
+  const vurd = getVurd(state.activeStudentId);
+  const ind = computeSamletIndikator(state.activeStudentId);
+  const k0 = computeK0Status(state.activeStudentId);
+  const {besvart,total} = countBesvart(state.activeStudentId);
+  const dato = new Date().toLocaleDateString('nb-NO');
+
+  let tekst = '=== VURDERINGSOPPSUMMERING ===\n';
+  tekst += 'Student: '+(student?.navn||state.activeStudentId)+'\n';
+  if(student?.klasse) tekst += 'Klasse: '+student.klasse+'\n';
+  tekst += 'Dato: '+dato+'\n';
+  tekst += 'Samlet indikator: '+ind+'\n';
+  tekst += 'K0-status: '+(k0==='ok'?'Oppfylt':'IKKE OPPFYLT')+'\n';
+  tekst += 'Fremgang: '+besvart+'/'+total+' punkt besvart\n';
+  tekst += '\n';
+
+  if(state.oppgavetekst){
+    tekst += '--- Oppgavetekst ---\n';
+    if(state.oppgavetekst.title) tekst += state.oppgavetekst.title+'\n';
+    tekst += state.oppgavetekst.body+'\n\n';
+  }
+
+  for(const krit of state.rubrikk.kriterier){
+    tekst += '--- '+krit.tittel+(krit.isK0?' (Formelle krav)':'')+' ---\n';
+    let k0notOk = [];
+    for(const p of krit.punkter){
+      const sv = vurd.svar[p.id] || '(ikke besvart)';
+      tekst += '  '+p.tekst+': '+sv+'\n';
+      const valgtAlt = vurd.svar[p.id] ? getSvarsettDef(p.svarsett)?.optionMap?.[vurd.svar[p.id]] : null;
+      if(krit.isK0 && valgtAlt?.k0Status==='ikke_oppfylt') k0notOk.push(p.tekst);
+      if(vurd.stikkordP?.[p.id]) tekst += '    Stikkord: '+vurd.stikkordP[p.id]+'\n';
+    }
+    if(vurd.stikkordK?.[krit.id]) tekst += '  Stikkord: '+vurd.stikkordK[krit.id]+'\n';
+    if(k0notOk.length>0) tekst += '  ⚠ K0-avvik: '+k0notOk.join(', ')+'\n';
+    if(!krit.isK0){
+      const ks = scoreKriterium(krit.id, state.activeStudentId);
+      const terskler = krit.terskler || state.rubrikk.globalTerskler;
+      const grade = ks !== null ? scoreToGrade(ks, terskler) : '?';
+      tekst += '  Kriterieindikator: '+grade+'\n';
+    }
+    tekst += '\n';
+  }
+
+  document.getElementById('eksportTekst').textContent = tekst;
+  document.getElementById('eksportPreview').classList.remove('hidden');
+  showStatus('Oppsummering generert.','ok');
+}
+
+function copyEksport(){
+  const el = document.getElementById('eksportTekst');
+  navigator.clipboard.writeText(el.textContent).then(()=>showStatus('Kopiert til utklippstavlen.','ok')).catch(()=>{
+    showStatus('Kopiering ikke støttet. Merk teksten manuelt.','error');
+  });
+}
+
+// ============================================================
+// MODAL HELPERS
+// ============================================================
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.getElementById(id).querySelector('button')?.focus();
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  if(id === 'modalNullstillVurdering'){
+    nullstillVurderingFlow = {studentId:null, step:1};
+  }
+  if(id === 'modalNyImport'){
+    nullstillNyImportFlow = {step:1};
+  }
+}
+
+// ============================================================
+// TAB HELPERS
+// ============================================================
+function showTab(name){
+  for(const t of ['studenter','vurdering','vekting','eksport']){
+    document.getElementById('panel-'+t).classList.toggle('active', t===name);
+    const btn = document.getElementById('tab-'+t);
+    btn.setAttribute('aria-selected', t===name?'true':'false');
+  }
+  if(name==='studenter') renderStudentOversikt();
+}
+
+function startExcelImportFlow(){
+  pendingFreshImport = false;
+  if(!hasArbeidsoktData()){
+    document.getElementById('fileInput').click();
+    return;
+  }
+  nullstillNyImportFlow = {step:1};
+  openModal('modalNyImport');
+  renderNyImportModal();
+}
+
+function renderNyImportModal(){
+  const body = document.getElementById('modalNyImportBody');
+  const foot = document.getElementById('modalNyImportFoot');
+  if(!body || !foot) return;
+
+  body.innerHTML = '';
+  foot.innerHTML = '';
+
+  const intro = document.createElement('p');
+  intro.style.marginTop = '0';
+  intro.textContent = nullstillNyImportFlow.step === 1
+    ? 'Ny import starter fra tom tilstand slik at gamle student- og kulldata ikke blir hengende igjen.'
+    : 'Siste bekreftelse: Dette sletter arbeidsøkten som ligger i appen nå før du velger ny Excel-fil.';
+  body.appendChild(intro);
+
+  const removeBox = document.createElement('div');
+  removeBox.className = 'alert bad';
+  removeBox.innerHTML = '<strong>Dette slettes:</strong><ul class="import-list"><li>rubrikk, studenter og aktiv student</li><li>vurderinger, stikkord og kommentarer</li><li>oppgavetekst, importlogg og alle kull i arbeidsøkten</li></ul>';
+  body.appendChild(removeBox);
+
+  const keepBox = document.createElement('div');
+  keepBox.className = 'alert info';
+  keepBox.innerHTML = '<strong>Dette beholdes:</strong><ul class="import-list"><li>Appen og Excel-mal-nedlasting</li><li>selve appen og nedlastingsmuligheten for Excel-mal</li></ul>';
+  body.appendChild(keepBox);
+
+  const hint = document.createElement('p');
+  hint.className = 'hint';
+  hint.style.marginBottom = '0';
+  hint.textContent = nullstillNyImportFlow.step === 1
+    ? 'Velg «Ja, fortsett» for å gå til siste bekreftelse.'
+    : 'Når du fortsetter, åpnes filvelgeren for ny import fra tom tilstand.';
+  body.appendChild(hint);
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn';
+  cancelBtn.textContent = 'Avbryt';
+  cancelBtn.addEventListener('click', ()=>closeModal('modalNyImport'));
+  foot.appendChild(cancelBtn);
+
+  if(nullstillNyImportFlow.step === 1){
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn btn-danger';
+    nextBtn.textContent = 'Ja, fortsett';
+    nextBtn.addEventListener('click', ()=>{
+      nullstillNyImportFlow.step = 2;
+      renderNyImportModal();
+    });
+    foot.appendChild(nextBtn);
+  } else {
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn';
+    backBtn.textContent = 'Tilbake';
+    backBtn.addEventListener('click', ()=>{
+      nullstillNyImportFlow.step = 1;
+      renderNyImportModal();
+    });
+    foot.appendChild(backBtn);
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.className = 'btn btn-danger';
+    confirmBtn.textContent = 'Nullstill og velg fil';
+    confirmBtn.addEventListener('click', bekreftNyImportNullstilling);
+    foot.appendChild(confirmBtn);
+  }
+}
+
+function bekreftNyImportNullstilling(){
+  pendingFreshImport = true;
+  closeModal('modalNyImport');
+  showStatus('Velg Excel-fil for ny import. Nåværende arbeidsøkt beholdes til filen er lest inn.','ok');
+  document.getElementById('fileInput').click();
+}
+
+// ============================================================
+// STUDENT OVERSIKT
+// ============================================================
+function normalizeSearchText(value){
+  return String(value || '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+function getStudentOversiktProgressStatus(studentId){
+  if(!state.rubrikk) return 'not-started';
+  const {besvart, total} = countBesvart(studentId);
+  if(total <= 0 || besvart <= 0) return 'not-started';
+  if(besvart >= total) return 'complete';
+  return 'in-progress';
+}
+
+function getStudentOversiktRowMeta(studentId){
+  const indikator = state.rubrikk ? computeSamletIndikator(studentId) : '?';
+  const k0 = state.rubrikk ? computeK0Status(studentId) : null;
+  const fremgangStatus = getStudentOversiktProgressStatus(studentId);
+  const progress = state.rubrikk ? countBesvart(studentId) : {besvart:0,total:0};
+  return {
+    indikator,
+    k0,
+    fremgangStatus,
+    besvart: progress.besvart,
+    total: progress.total,
+  };
+}
+
+function getStudentOversiktProgressLabel(status){
+  if(status === 'complete') return 'fullført';
+  if(status === 'in-progress') return 'pågår';
+  return 'ikke startet';
+}
+
+function getStudentOversiktK0Label(status){
+  if(status === 'ok') return 'K0 oppfylt';
+  if(status === 'fail') return 'K0 ikke oppfylt';
+  return 'K0 ikke i bruk';
+}
+
+function getStudentOversiktActiveFilterSummary(){
+  const parts = [];
+  if(studentOversiktFilters.indikator) parts.push('indikator ' + studentOversiktFilters.indikator);
+  if(studentOversiktFilters.fremgang) parts.push('fremgang ' + getStudentOversiktProgressLabel(studentOversiktFilters.fremgang));
+  if(studentOversiktFilters.k0) parts.push(getStudentOversiktK0Label(studentOversiktFilters.k0));
+  return parts;
+}
+
+function getFilteredStudentsForOversikt(){
+  const query = normalizeSearchText(studentOversiktSearch);
+  return state.studenter.filter((student)=>{
+    const haystack = normalizeSearchText([student.navn, student.klasse, student.id].filter(Boolean).join(' '));
+    if(query && !haystack.includes(query)) return false;
+    const rowMeta = getStudentOversiktRowMeta(student.id);
+
+    if(studentOversiktFilters.indikator){
+      if(rowMeta.indikator !== studentOversiktFilters.indikator) return false;
+    }
+
+    if(studentOversiktFilters.fremgang){
+      if(rowMeta.fremgangStatus !== studentOversiktFilters.fremgang) return false;
+    }
+
+    if(studentOversiktFilters.k0){
+      if(!state.rubrikk?.hasK0) return false;
+      if(rowMeta.k0 !== studentOversiktFilters.k0) return false;
+    }
+
+    return true;
+  });
+}
+
+function setStudentOversiktSearch(value){
+  studentOversiktSearch = value || '';
+  // Normaliser tomt/kun mellomrom slik at UI og søk holder seg synkronisert.
+  if(!normalizeSearchText(studentOversiktSearch)) studentOversiktSearch = '';
+  renderStudentOversikt();
+}
+
+function nullstillStudentOversiktSok(){
+  studentOversiktSearch = '';
+  const input = document.getElementById('studentOversiktSearch');
+  if(input){
+    input.value = '';
+    input.focus();
+  }
+  renderStudentOversikt();
+}
+
+function setStudentOversiktFilter(key, value){
+  if(!Object.prototype.hasOwnProperty.call(studentOversiktFilters, key)) return;
+  studentOversiktFilters[key] = value || '';
+  renderStudentOversikt();
+}
+
+function nullstillStudentOversiktFiltre(){
+  studentOversiktFilters = createDefaultStudentOversiktFilters();
+  renderStudentOversikt();
+}
+
+function renderStudentOversikt(){
+  const el = document.getElementById('studentOversiktListe');
+  const searchInput = document.getElementById('studentOversiktSearch');
+  const resultEl = document.getElementById('studentOversiktResultat');
+  const clearBtn = document.getElementById('studentOversiktClear');
+  const indikatorFilter = document.getElementById('studentOversiktFilterIndikator');
+  const fremgangFilter = document.getElementById('studentOversiktFilterFremgang');
+  const k0Filter = document.getElementById('studentOversiktFilterK0');
+  const clearFiltersBtn = document.getElementById('studentOversiktClearFilters');
+  if(!el) return;
+
+  if(searchInput && searchInput.value !== studentOversiktSearch) searchInput.value = studentOversiktSearch;
+  const query = normalizeSearchText(studentOversiktSearch);
+  if(clearBtn) clearBtn.classList.toggle('hidden', !query);
+  if(indikatorFilter && indikatorFilter.value !== studentOversiktFilters.indikator) indikatorFilter.value = studentOversiktFilters.indikator;
+  if(fremgangFilter && fremgangFilter.value !== studentOversiktFilters.fremgang) fremgangFilter.value = studentOversiktFilters.fremgang;
+  if(k0Filter){
+    k0Filter.disabled = !state.rubrikk?.hasK0;
+    if(!state.rubrikk?.hasK0 && studentOversiktFilters.k0){
+      studentOversiktFilters.k0 = '';
+    }
+    if(k0Filter.value !== studentOversiktFilters.k0) k0Filter.value = studentOversiktFilters.k0;
+  }
+  const filterSummary = getStudentOversiktActiveFilterSummary();
+  const hasActiveFilters = filterSummary.length > 0;
+  if(clearFiltersBtn) clearFiltersBtn.disabled = !hasActiveFilters;
+
+  if(!state.studenter || state.studenter.length===0){
+    if(resultEl) resultEl.textContent = '';
+    el.innerHTML = '<p class="hint">Ingen studenter lastet. Importer Excel med Studenter-fane.</p>';
+    return;
+  }
+
+  const visibleStudents = getFilteredStudentsForOversikt();
+  if(resultEl){
+    if(query || hasActiveFilters){
+      const filterText = [];
+      if(query) filterText.push('søk «' + studentOversiktSearch.trim() + '»');
+      if(hasActiveFilters) filterText.push(filterSummary.join(', '));
+      resultEl.textContent = 'Viser ' + visibleStudents.length + ' av ' + state.studenter.length + ' studenter for ' + filterText.join(' og ') + '.';
+    } else {
+      resultEl.textContent = 'Viser alle ' + state.studenter.length + ' studenter i aktivt kull.';
+    }
+  }
+
+  if(visibleStudents.length===0){
+    el.innerHTML = query || hasActiveFilters
+      ? '<div class="alert info">Ingen studenter matcher gjeldende søk eller filtre. Prøv et kortere søk eller nullstill filtrene.</div>'
+      : '<div class="alert info">Ingen studenter å vise i aktivt kull.</div>';
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.style.cssText = 'width:100%;border-collapse:collapse;font-size:15px';
+  const thead = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  headRow.style.borderBottom = '2px solid var(--border)';
+  for(const [text, align] of [['Navn','left'],['Klasse','left'],['Indikator','center'],['K0','center'],['Fremgang','center'],['','']]) {
+    const th = document.createElement('th');
+    th.style.cssText = 'text-align:'+align+';padding:8px 10px;font-weight:700';
+    th.textContent = text;
+    headRow.appendChild(th);
+  }
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  for(const s of visibleStudents){
+    const rowMeta = getStudentOversiktRowMeta(s.id);
+    const ind = rowMeta.indikator;
+    const k0 = rowMeta.k0;
+    const {besvart, total} = rowMeta;
+    const isActive = s.id === state.activeStudentId;
+
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid var(--border)';
+    if(isActive) tr.style.background = 'var(--infoBg)';
+
+    // Navn
+    const tdNavn = document.createElement('td');
+    tdNavn.style.cssText = 'padding:8px 10px;font-weight:'+(isActive?'700':'400');
+    tdNavn.textContent = s.navn;
+    if(isActive){
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.style.cssText = 'font-size:11px;padding:2px 6px;margin-left:6px';
+      badge.textContent = 'aktiv';
+      tdNavn.appendChild(badge);
+    }
+    tr.appendChild(tdNavn);
+
+    // Klasse
+    const tdKlasse = document.createElement('td');
+    tdKlasse.style.cssText = 'padding:8px 10px;color:var(--muted)';
+    tdKlasse.textContent = s.klasse || '–';
+    tr.appendChild(tdKlasse);
+
+    // Indikator
+    const tdInd = document.createElement('td');
+    tdInd.style.cssText = 'text-align:center;padding:8px 10px';
+    const indSpan = document.createElement('span');
+    indSpan.className = 'badge ind-'+ind;
+    indSpan.style.cssText = 'font-size:14px;font-weight:800;min-width:32px;justify-content:center';
+    indSpan.textContent = ind;
+    tdInd.appendChild(indSpan);
+    tr.appendChild(tdInd);
+
+    // K0
+    const tdK0 = document.createElement('td');
+    tdK0.style.cssText = 'text-align:center;padding:8px 10px';
+    if(!state.rubrikk?.hasK0){
+      tdK0.style.color = 'var(--muted)';
+      tdK0.textContent = '–';
+    } else {
+      const k0Span = document.createElement('span');
+      k0Span.className = 'badge '+(k0==='ok'?'good':'bad');
+      k0Span.textContent = k0==='ok' ? '✓' : '✗';
+      tdK0.appendChild(k0Span);
+    }
+    tr.appendChild(tdK0);
+
+    // Fremgang
+    const tdFremgang = document.createElement('td');
+    tdFremgang.style.cssText = 'text-align:center;padding:8px 10px;color:var(--muted);font-size:13px';
+    tdFremgang.textContent = besvart+'/'+total;
+    tr.appendChild(tdFremgang);
+
+    // Åpne vurdering
+    const tdBtn = document.createElement('td');
+    tdBtn.style.padding = '8px 10px';
+    const actionWrap = document.createElement('div');
+    actionWrap.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;gap:6px';
+    const openBtn = document.createElement('button');
+    openBtn.className = 'btn btn-sm';
+    openBtn.textContent = 'Åpne vurdering';
+    openBtn.addEventListener('click', (function(sid){ return function(){ aapneStudent(sid); }; })(s.id));
+    actionWrap.appendChild(openBtn);
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'btn btn-sm btn-danger';
+    resetBtn.textContent = 'Nullstill';
+    resetBtn.addEventListener('click', (function(sid){ return function(){ openNullstillVurderingModal(sid); }; })(s.id));
+    actionWrap.appendChild(resetBtn);
+    // Flytt student (R04 – visible only when other kulls exist)
+    if(state.otherKulls && state.otherKulls.length > 0){
+      const flyttBtn = document.createElement('button');
+      flyttBtn.className = 'btn btn-sm';
+      flyttBtn.textContent = '↪ Flytt';
+      flyttBtn.setAttribute('title', 'Flytt student til et annet kull');
+      flyttBtn.addEventListener('click', (function(sid){ return function(){ openFlyttModal(sid); }; })(s.id));
+      actionWrap.appendChild(flyttBtn);
+    }
+    tdBtn.appendChild(actionWrap);
+    tr.appendChild(tdBtn);
+
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  el.innerHTML = '';
+  const tableScroll = document.createElement('div');
+  tableScroll.className = 'student-oversikt-table-scroll';
+  tableScroll.setAttribute('role', 'region');
+  tableScroll.setAttribute('aria-label', 'Studentoversikt-tabell, rull horisontalt ved behov');
+  tableScroll.appendChild(table);
+  el.appendChild(tableScroll);
+}
+
+function aapneStudent(id){
+  setActiveStudent(id);
+  showTab('vurdering');
+}
+
+function openNullstillVurderingModal(studentId){
+  const student = state.studenter.find(s=>s.id===studentId);
+  if(!student){
+    showStatus('Studenten ble ikke funnet i aktivt kull.','error');
+    return;
+  }
+  nullstillVurderingFlow = {studentId, step:1};
+  openModal('modalNullstillVurdering');
+  renderNullstillVurderingModal();
+}
+
+function renderNullstillVurderingModal(){
+  const body = document.getElementById('modalNullstillVurderingBody');
+  const foot = document.getElementById('modalNullstillVurderingFoot');
+  if(!body || !foot) return;
+
+  const student = state.studenter.find(s=>s.id===nullstillVurderingFlow.studentId);
+  if(!student){
+    closeModal('modalNullstillVurdering');
+    showStatus('Studenten ble ikke funnet i aktivt kull.','error');
+    return;
+  }
+
+  body.innerHTML = '';
+  foot.innerHTML = '';
+
+  const intro = document.createElement('p');
+  intro.style.marginTop = '0';
+  intro.textContent = 'Student: '+student.navn+(student.klasse ? ' ('+student.klasse+')' : '');
+  body.appendChild(intro);
+
+  const details = document.createElement('div');
+  details.className = 'alert bad';
+  const detailsText = document.createElement('p');
+  detailsText.style.margin = '0';
+  detailsText.textContent = nullstillVurderingFlow.step === 1
+    ? 'Dette fjerner alle lagrede vurderinger, stikkord og kommentarer for studenten i aktivt kull.'
+    : 'Siste bekreftelse: Når du nullstiller, kan vurderingsdataene ikke gjenopprettes automatisk.';
+  details.appendChild(detailsText);
+  body.appendChild(details);
+
+  if(nullstillVurderingFlow.step === 1){
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.style.marginBottom = '0';
+    hint.textContent = 'Velg «Ja, fortsett» for å gå til siste bekreftelse.';
+    body.appendChild(hint);
+  } else {
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.style.marginBottom = '0';
+    hint.textContent = 'Kontroller at du nullstiller riktig student før du fullfører.';
+    body.appendChild(hint);
+  }
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn';
+  cancelBtn.textContent = 'Avbryt';
+  cancelBtn.addEventListener('click', ()=>closeModal('modalNullstillVurdering'));
+  foot.appendChild(cancelBtn);
+  let focusTarget = cancelBtn;
+
+  if(nullstillVurderingFlow.step === 1){
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn btn-danger';
+    nextBtn.textContent = 'Ja, fortsett';
+    nextBtn.addEventListener('click', ()=>{
+      nullstillVurderingFlow.step = 2;
+      renderNullstillVurderingModal();
+    });
+    foot.appendChild(nextBtn);
+  } else {
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn';
+    backBtn.textContent = 'Tilbake';
+    backBtn.addEventListener('click', ()=>{
+      nullstillVurderingFlow.step = 1;
+      renderNullstillVurderingModal();
+    });
+    foot.appendChild(backBtn);
+    focusTarget = backBtn;
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.className = 'btn btn-danger';
+    confirmBtn.textContent = 'Nullstill vurderinger nå';
+    confirmBtn.addEventListener('click', bekreftNullstillVurderinger);
+    foot.appendChild(confirmBtn);
+  }
+
+  setTimeout(()=>focusTarget.focus(), 0);
+}
+
+function bekreftNullstillVurderinger(){
+  const studentId = nullstillVurderingFlow.studentId;
+  const student = state.studenter.find(s=>s.id===studentId);
+  if(!student){
+    closeModal('modalNullstillVurdering');
+    showStatus('Studenten ble ikke funnet i aktivt kull.','error');
+    return;
+  }
+
+  delete state.vurderinger[studentId];
+  saveState();
+  closeModal('modalNullstillVurdering');
+  renderAll();
+  if(document.getElementById('panel-studenter').classList.contains('active')){
+    renderStudentOversikt();
+  }
+  showStatus('Vurderingene for '+student.navn+' er nullstilt.','ok');
+}
+
+// ============================================================
+// NAVIGATION HELPERS
+// ============================================================
+function forrigeStudent(){
+  if(!state.studenter.length) return;
+  if(!state.activeStudentId){
+    setActiveStudent(state.studenter[0].id);
+    return;
+  }
+  const idx = state.studenter.findIndex(s=>s.id===state.activeStudentId);
+  if(idx < 0){
+    setActiveStudent(state.studenter[state.studenter.length - 1].id);
+    return;
+  }
+  const prev = state.studenter[(idx - 1 + state.studenter.length) % state.studenter.length];
+  setActiveStudent(prev.id);
+}
+
+function nesteStudent(){
+  if(!state.studenter.length) return;
+  if(!state.activeStudentId){
+    setActiveStudent(state.studenter[0].id);
+    return;
+  }
+  const idx = state.studenter.findIndex(s=>s.id===state.activeStudentId);
+  if(idx < 0){
+    setActiveStudent(state.studenter[0].id);
+    return;
+  }
+  const next = state.studenter[(idx+1) % state.studenter.length];
+  setActiveStudent(next.id);
+}
+
+function tilStudentoversikt(){
+  showTab('studenter');
+}
+
+// ============================================================
+// STATUS BANNER
+// ============================================================
+function showStatus(msg, type){
+  const el = document.getElementById('statusBanner');
+  el.textContent = msg;
+  el.className = 'status-banner '+type;
+  el.classList.remove('hidden');
+  if(type==='ok') setTimeout(()=>el.classList.add('hidden'), 4000);
+}
+
+// ============================================================
+// UTILITY
+// ============================================================
+function esc(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function stripMarkdown(text){
+  if(!text) return '';
+  return text
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\*{2,3}([^*\n]+)\*{2,3}/g, '$1')
+    .replace(/\*([^*\n]+)\*/g, '$1')
+    .replace(/_{2}([^_\n]+)_{2}/g, '$1')
+    .replace(/_([^_\n]+)_/g, '$1')
+    .replace(/~~([^~\n]+)~~/g, '$1')
+    .replace(/^[\*\-\+]\s+/gm, '')
+    .replace(/^\d+\.\s+/gm, '')
+    .replace(/^>\s*/gm, '')
+    .replace(/^[-*_]{3,}\s*$/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+// ============================================================
+// ============================================================
+// KULL MANAGEMENT (R04)
+// ============================================================
+function makeKullId(){
+  return 'kull_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,6);
+}
+
+function renderKullSelector(){
+  const row = document.getElementById('kullSelectorRow');
+  const sel = document.getElementById('kullSelect');
+  if(!row || !sel) return;
+  const hasRubrikk = !!state.rubrikk;
+  row.style.display = hasRubrikk ? '' : 'none';
+  // Populate select
+  sel.innerHTML = '';
+  const active = document.createElement('option');
+  active.value = state.kullId || '__active__';
+  active.textContent = (state.kullNavn || 'Kull 1') + ' (aktivt)';
+  sel.appendChild(active);
+  for(const k of (state.otherKulls || [])){
+    const opt = document.createElement('option');
+    opt.value = k.id;
+    opt.textContent = k.navn + ' (' + k.studenter.length + ' stud.)';
+    sel.appendChild(opt);
+  }
+  sel.value = state.kullId || '__active__';
+  // Show/hide "Flytt student" button
+  const btnFlytt = document.getElementById('btnFlyttStudent');
+  if(btnFlytt) btnFlytt.style.display = (state.activeStudentId && state.otherKulls.length > 0) ? '' : 'none';
+}
+
+function switchKull(newKullId){
+  const activeId = state.kullId || '__active__';
+  if(newKullId === activeId) return;
+  // Save current active kull back to otherKulls
+  const existing = state.otherKulls.find(k => k.id === state.kullId);
+  if(existing){
+    existing.studenter = state.studenter.slice();
+  } else if(state.kullId){
+    state.otherKulls.push({id: state.kullId, navn: state.kullNavn || 'Kull 1', studenter: state.studenter.slice()});
+  }
+  // Activate the chosen kull
+  const target = state.otherKulls.find(k => k.id === newKullId);
+  if(!target){showStatus('Kull ikke funnet.','error');return;}
+  state.studenter = target.studenter.slice();
+  state.kullId = target.id;
+  state.kullNavn = target.navn;
+  state.otherKulls = state.otherKulls.filter(k => k.id !== newKullId);
+  state.activeStudentId = state.studenter[0]?.id || null;
+  saveState();
+  renderAll();
+  showStatus('Byttet til kullet «' + state.kullNavn + '».','ok');
+}
+
+function openNyttKullModal(){
+  document.getElementById('nyttKullNavn').value = '';
+  openModal('modalNyttKull');
+  setTimeout(()=>document.getElementById('nyttKullNavn').focus(), 50);
+}
+
+function bekreftNyttKull(){
+  const namnEl = document.getElementById('nyttKullNavn');
+  const navn = namnEl.value.trim();
+  if(!navn){showStatus('Kullnavn kan ikke være tomt.','error');return;}
+  const id = makeKullId();
+  if(!state.otherKulls) state.otherKulls = [];
+  state.otherKulls.push({id, navn, studenter:[]});
+  saveState();
+  closeModal('modalNyttKull');
+  renderKullSelector();
+  showStatus('Nytt kull «' + navn + '» opprettet.','ok');
+}
+
+function openFlyttModal(studentId){
+  if(!studentId){showStatus('Velg en student først.','error');return;}
+  if(!state.otherKulls || state.otherKulls.length === 0){
+    showStatus('Det finnes ingen andre kull å flytte til. Opprett et nytt kull først.','error');
+    return;
+  }
+  const student = state.studenter.find(s=>s.id===studentId);
+  document.getElementById('flyttStudentInfo').textContent =
+    'Flytt «' + (student ? student.navn : studentId) + '» (ID: ' + studentId + ') fra «' + (state.kullNavn || 'Kull 1') + '» til:';
+  const sel = document.getElementById('flyttStudentSelect');
+  sel.innerHTML = '';
+  for(const k of state.otherKulls){
+    const opt = document.createElement('option');
+    opt.value = k.id;
+    opt.textContent = k.navn + ' (' + k.studenter.length + ' stud.)';
+    sel.appendChild(opt);
+  }
+  sel.dataset.studentId = studentId;
+  document.getElementById('flyttStudentConflictMsg').classList.add('hidden');
+  openModal('modalFlyttStudent');
+}
+
+function bekreftFlyttStudent(){
+  const sel = document.getElementById('flyttStudentSelect');
+  const studentId = sel.dataset.studentId;
+  const targetKullId = sel.value;
+  if(!studentId || !targetKullId){return;}
+  const targetKull = state.otherKulls.find(k=>k.id===targetKullId);
+  if(!targetKull){showStatus('Mål-kull ikke funnet.','error');return;}
+  // AVKLARING-01: Reject if same Student_id exists in target kull
+  if(targetKull.studenter.find(s=>s.id===studentId)){
+    const msgEl = document.getElementById('flyttStudentConflictMsg');
+    msgEl.textContent = '⚠ Kan ikke flytte: Student_id «' + studentId + '» finnes allerede i mål-kullet «' + targetKull.navn + '». Studenten blir stående i kilde-kullet uten endringer.';
+    msgEl.classList.remove('hidden');
+    return;
+  }
+  const student = state.studenter.find(s=>s.id===studentId);
+  if(!student){showStatus('Studenten ble ikke funnet i aktivt kull.','error');return;}
+  // Move student
+  state.studenter = state.studenter.filter(s=>s.id!==studentId);
+  targetKull.studenter.push(student);
+  // Update active student if it was the moved one
+  if(state.activeStudentId === studentId){
+    state.activeStudentId = state.studenter[0]?.id || null;
+  }
+  saveState();
+  closeModal('modalFlyttStudent');
+  renderAll();
+  showStatus('Student «' + student.navn + '» er flyttet til kullet «' + targetKull.navn + '».','ok');
+}
+
+// ============================================================
+// WIRE UP BUTTONS
+// ============================================================
+document.getElementById('btnMal').onclick = downloadMal;
+document.getElementById('btnImporter').onclick = startExcelImportFlow;
+document.getElementById('btnImportkontroll').onclick = ()=>{ renderImportkontroll(); openModal('modalImportkontroll'); };
+document.getElementById('btnDatasettImport').onclick = ()=>document.getElementById('fileDatasetInput').click();
+document.getElementById('btnDatasettExport').onclick = exportDatasett;
+document.getElementById('btnResetDemo').onclick = resetDemoData;
+document.getElementById('fileInput').onchange = e=>{
+  if(e.target.files[0]) handleFile(e.target.files[0]);
+  else pendingFreshImport = false;
+  e.target.value='';
+};
+document.getElementById('fileDatasetInput').onchange = e=>{ if(e.target.files[0]) handleDatasetFile(e.target.files[0]); e.target.value=''; };
+
+// Close modals on backdrop click
+for(const id of ['modalImportkontroll','modalFlyttStudent','modalNyttKull','modalNullstillVurdering']){
+  document.getElementById(id).addEventListener('click', function(e){ if(e.target===this) closeModal(id); });
+}
+// Close modals on Escape
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') for(const id of ['modalImportkontroll','modalFlyttStudent','modalNyttKull','modalNullstillVurdering']) closeModal(id); });
+
+// ============================================================
+// INIT
+// ============================================================
+loadState();
+if(!state.rubrikk){
+  importFromWorkbook(downloadMal({download:false}), {freshImport:true});
+  state.kullNavn = 'Syntetisk eksempelgruppe';
+  state.activeStudentId = state.studenter[0]?.id || null;
+  for(const [index, learner] of state.studenter.entries()){
+    const record = getVurd(learner.id);
+    for(const criterion of state.rubrikk?.kriterier || []) for(const point of criterion.punkter){
+      const options = state.rubrikk.svarsettDefs?.[point.svarsett]?.options || [];
+      if(options.length) record.svar[point.id] = options[index % options.length].label;
+    }
+  }
+  closeModal('modalImportkontroll');
+  renderAll();
+  saveState();
+}
+renderAll();
+</script>
 </body>
 </html>
