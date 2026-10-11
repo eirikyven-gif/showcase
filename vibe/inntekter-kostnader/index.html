@@ -12,41 +12,46 @@
   <script src="/vibe/inntekter-kostnader/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#overview">Hopp til månedsoversikten</a>
+  <a class="skip-link" href="#workspace">Hopp til registreringen</a>
   <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span>.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
-  <main id="overview" class="page-shell">
+  <main id="workspace" class="page-shell">
     <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">En enkel økonomioversikt</p>
+      <p class="eyebrow">Lokal økonomioversikt</p>
       <h1 id="page-title">Inntekter og <span>kostnader.</span></h1>
-      <p class="intro-copy">Se hvordan en enkel månedsoversikt kan fungere. Alle beløp og poster på siden er oppdiktede demoeksempler.</p>
+      <p class="intro-copy">Registrer eksempelposter, se summer per måned og kategori, og prøv faste poster. Alle data er syntetiske og blir bare liggende i minnet mens siden er åpen.</p>
     </section>
-    <section class="dashboard" aria-label="Eksempel på månedsoversikt">
-      <div class="dashboard-head">
-        <div><p class="sample-label">Syntetiske eksempeldata</p><h2>Månedsoversikt</h2></div>
-        <label class="month-control" for="month-select">Vis måned
-          <select id="month-select" aria-describedby="demo-note"><option value="juni">Juni 2026</option><option value="mai">Mai 2026</option><option value="april">April 2026</option></select>
-        </label>
-      </div>
-      <p id="demo-note" class="demo-note">Dette er fiktive tall laget kun for demonstrasjonen. Ingenting du velger sendes eller lagres.</p>
+    <section class="workspace-card" aria-label="Demonstrasjon av økonomioversikt">
+      <div class="workspace-head"><div><p class="sample-label">Syntetiske eksempeldata</p><h2>Årsark <span id="year-label">2026</span></h2></div><button id="new-year" class="secondary-button" type="button">+ Nytt år</button></div>
+      <p class="demo-note">Prøvehandlinger oppdaterer bare denne siden. Oppdatering eller lukking nullstiller alt til eksempeldata.</p>
       <div class="summary-grid" aria-live="polite" aria-atomic="true">
-        <article class="summary-card income"><p>Inntekter</p><strong id="income-total">—</strong><span>Eksempelsum</span></article>
-        <article class="summary-card expense"><p>Kostnader</p><strong id="expense-total">—</strong><span>Eksempelsum</span></article>
-        <article class="summary-card balance"><p>Til overs</p><strong id="balance-total">—</strong><span>Inntekter minus kostnader</span></article>
+        <article class="summary-card income"><p>Inntekter denne måneden</p><strong id="income-total">—</strong></article>
+        <article class="summary-card expense"><p>Utgifter denne måneden</p><strong id="expense-total">—</strong></article>
+        <article class="summary-card balance"><p>Igjen denne måneden</p><strong id="balance-total">—</strong><span id="daily-balance"></span></article>
       </div>
-      <div class="content-grid">
-        <section class="panel" aria-labelledby="entries-heading">
-          <div class="panel-heading"><div><p class="panel-kicker">Eksempelliste</p><h3 id="entries-heading">Posteringer</h3></div><span id="entry-count" class="count-pill"></span></div>
-          <div class="table-wrap"><table><caption class="visually-hidden">Syntetiske eksempelposteringer for valgt måned</caption><thead><tr><th scope="col">Beskrivelse</th><th scope="col">Type</th><th scope="col">Beløp</th></tr></thead><tbody id="entries-body"></tbody></table></div>
+      <div class="month-bar"><label for="month-select">Måned<select id="month-select"></select></label><p id="month-status" role="status" aria-live="polite"></p></div>
+      <div class="main-grid">
+        <section class="panel register-panel" aria-labelledby="register-title">
+          <h3 id="register-title">Registrer post</h3>
+          <form id="entry-form">
+            <label>Dato<input id="entry-date" name="date" type="date" required></label>
+            <label>Kategori<input id="entry-category" name="category" list="category-options" maxlength="50" required autocomplete="off"><datalist id="category-options"></datalist></label>
+            <label>Beløp i kroner<input id="entry-amount" name="amount" type="number" min="0.01" step="0.01" required inputmode="decimal"></label>
+            <fieldset><legend>Type</legend><label class="choice"><input type="radio" name="type" value="Inntekt" checked> Inntekt</label><label class="choice"><input type="radio" name="type" value="Utgift"> Utgift</label></fieldset>
+            <button class="primary-button" type="submit">Registrer</button>
+          </form>
+          <p class="helper-copy">Skriv en ny kategori hvis den mangler. Inntekter vises først i posteringene.</p>
         </section>
-        <section class="panel" aria-labelledby="recurring-heading">
-          <div class="panel-heading"><div><p class="panel-kicker">Planlagt eksempel</p><h3 id="recurring-heading">Faste poster</h3></div><span class="recurring-mark" aria-hidden="true">↻</span></div>
-          <ul id="recurring-list" class="recurring-list"></ul>
-          <p class="recurring-note">Faste poster er kun vist som eksempler; de oppretter ikke faktiske betalinger.</p>
+        <section class="panel entries-panel" aria-labelledby="entries-title">
+          <div class="panel-heading"><h3 id="entries-title">Posteringer</h3><span id="entry-count" class="count-pill"></span></div>
+          <div class="table-wrap"><table><caption class="visually-hidden">Posteringer for valgt måned</caption><thead><tr><th scope="col">Dato</th><th scope="col">Kategori</th><th scope="col">Type</th><th scope="col">Beløp</th><th scope="col" aria-label="Handling"></th></tr></thead><tbody id="entries-body"></tbody></table></div>
+          <p id="empty-month" class="empty-state" hidden>Ingen poster denne måneden. Registrer en post i skjemaet.</p>
         </section>
       </div>
+      <section class="panel monthly-panel" aria-labelledby="monthly-title"><div class="panel-heading"><div><p class="panel-kicker">Summer per kategori</p><h3 id="monthly-title">Månedsoversikt</h3></div><span id="year-total" class="year-total"></span></div><div class="table-wrap"><table><caption class="visually-hidden">Summer per kategori for hver måned i valgt år</caption><thead id="totals-head"></thead><tbody id="totals-body"></tbody></table></div></section>
+      <section class="panel recurring-panel" aria-labelledby="recurring-title"><div class="panel-heading"><div><p class="panel-kicker">Eksempel på kategorier-arket</p><h3 id="recurring-title">Faste poster</h3></div></div><p class="helper-copy">Faste poster legges inn én gang for valgt måned. De opprettes ikke automatisk og sender ingen betaling.</p><form id="recurring-form" class="recurring-form"><label>Type<select name="type"><option>Utgift</option><option>Inntekt</option></select></label><label>Kategori<input name="category" maxlength="50" required></label><label>Beløp<input name="amount" type="number" min="0.01" step="0.01" required inputmode="decimal"></label><label>Dag i måneden<input name="day" type="number" min="1" max="31" value="1" required></label><button class="secondary-button" type="submit">Legg til fast post</button></form><ul id="recurring-list" class="recurring-list"></ul></section>
       <p id="activity-status" class="activity-status" role="status" aria-live="polite"></p>
     </section>
-    <aside class="privacy-card" aria-labelledby="privacy-title"><span class="privacy-icon" aria-hidden="true">◎</span><div><h2 id="privacy-title">Demo uten lagring</h2><p>Du kan bytte måned for å se andre eksempelverdier. Denne siden har ingen registrering, konto, lagring eller tilkobling til bank eller andre tjenester.</p></div></aside>
+    <aside class="privacy-card" aria-labelledby="privacy-title"><span class="privacy-icon" aria-hidden="true">◎</span><div><h2 id="privacy-title">Demo uten lagring</h2><p>Ingen innlogging, server, nettleserlagring, eksport, makroer eller tilkobling til banktjenester. Ikke skriv inn ekte økonomiske eller personlige opplysninger.</p></div></aside>
   </main>
   <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Kun syntetiske eksempeldata.</span></footer>
 </body>
