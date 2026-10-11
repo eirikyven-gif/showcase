@@ -475,12 +475,24 @@
     {
       "slug": "laringssti-fagskolen",
       "name": "Læringssti",
-      "useCase": "Prøv en kort leksjon med tekst, refleksjon og et kontrollspørsmål.",
+      "useCase": "Følg en teststi om tilstandsvurdering med parallelle kategorier, læringssider, video- og lydressurser, enkeltvalg, flervalg, sortering, prioritering, fritekstsvar, løsningsforslag og synlig progresjon.",
       "category": "Utdanning",
       "audience": [
         "Fagskolestudenter",
         "Undervisere"
-      ]
+      ],
+      "status": "Forbedringsrunde: kildefunksjoner og demostiflyt er gjenskapt som statisk, lokal simulering. Privat, autentisert kursinnhold kan ikke kopieres; testinnholdet er syntetisk.",
+      "purpose": "Kildens Læringssti for fagskole lar undervisere administrere emner, grupper, studentaliaser, læringsstier, kategorier, sider, medier, oppgaver, publisering og lærerforhåndsvisning. Studenter følger tildelte stier, utfører H5P-aktiviteter og ser progresjon.",
+      "demoValue": "Kopierer den låste demostien fra SSoT v0.21: Tilstandsvurdering av et eldre bygg med kategoriene Kartlegg bygget og Vurder funnene, valgfri rekkefølge, parallelle kategorier, bilde/video/lyd, læringssider, tekst- og videoløsninger, enkeltvalg, flervalg, sortering, prioritering, fritekst og progresjonskriterier.",
+      "simplifications": "PHP- og database-/JSON-runtime, autentisering, cookies, kontoer, elevregistre, serverlagring, H5P-tjeneste, medie-API-er og privat driftskonfigurasjon er utelatt. Student, lærer og administrasjon er rollevendere uten innlogging. Innhold og media er syntetiske; lokal testvideo har norske undertekster og tekstalternativ, mens lokallyden er en kort syntetisk tone uten tale med tekstlig alternativ. Studentbesvarelser, sortering, fremdrift og adminendringer lagres kun i nettleserens localStorage og kan nullstilles.",
+      "risk": "Kildeappen håndterer studentaliaser, PIN, tilgang, progresjon, besvarelser, mediefiler, publisering og aktivitetslogg med server-side identitet og lagring. Ingen identifiserende data eller produksjonsinnhold er kopiert. Syntetisk testinnhold kan inneholde faglige feil. LocalStorage består på enheten inntil demoreset og må bare inneholde oppdiktede svar.",
+      "scope": "Statisk rute /vibe/laringssti-fagskolen/ med elev-, lærerforhåndsvisning- og enkel adminmodus; kategorier og sider; lokale syntetiske video-, lyd- og bildeaktiva med teksting/transkripsjon/alternativtekst; enkeltvalg, flervalg, sorterings-, prioriterings- og fritekstoppgaver; løsningsforslag etter fullføring/i lærerforhåndsvisning; kategori- og modulfremdrift; lokal sidetillegging, demopublisering og full reset. localStorage brukes bare på enheten. Ingen konto, passordfelt, nettverkskall, server/API, cookie, privat data, ekte H5P-runtime eller eksterne assets.",
+      "source": "eirikyven-gif/apps-fagskolen, fil apps/laringsti/index.php sist endret i commit 89f7b2c086008c91c61d3754853453a37904add5 (2026-10-07), README og kildearkitektur gjennomgått. Låst Notion SSoT v0.22 (2026-09-13) og demosti-presisering v0.21 lest. Kilderepoet er uendret.",
+      "sourceStack": "Kilden er PHP med JSON-/databasebasert runtime, privat serverlagring, autentisering, HTML/CSS/JavaScript, mediehåndtering og H5P-aktiviteter. Showcase-versjonen er statisk HTML/CSS/JavaScript.",
+      "sourceTests": "Kilderepoet har omfattende PHP-, Node- og nettlesertester for student-, admin-, H5P-, lagrings- og tilgangsflater. Showcase-kopien har egen node:test for dekning av låst demosti, personvernbarrierer, direkterute og katalogmetadata; kilde- og nettleserens serverflyter kjøres ikke av denne statiske kopien.",
+      "sourceApiAuthStoragePrivacy": "Kilden bruker autentisert admin/studenttilgang, sesjoner, private PHP-API-er og serverlagring for kontoer, innhold, elevaktivitet, svar og medier. Showcase fjerner alle autentiserings- og server/API-flyter; alle roller er åpent valgbare syntetiske forhåndsvisninger. Ingen tredjeparts- eller same-origin-forespørsler foretas. Demoens localStorage inneholder bare oppdiktede svar/fremdrift/adminendringer; Nullstill demo fjerner nøkkelen.",
+      "rightsUncertainty": "Kildeinnholdet er privat driftsdata bak innlogging og er ikke tilgjengelig i kildekoderepoet. Ingen produksjonsinnhold eller mediefiler er kopiert. Demostiteksten er syntetisk rekonstruert fra låst SSoT v0.21; eventuell lisens/gjenbruksstatus for øvrige kildekomponenter er ikke avklart her.",
+      "routeState": "Eksisterende unik rute /vibe/laringssti-fagskolen/ er beholdt og oppgradert fra oppdiktet én-leksjonskonsept til den funksjonelle, syntetiske ende-til-ende-demostien. Katalogslug uendret."
     },
     {
       "slug": "dugnadsplanlegging",
