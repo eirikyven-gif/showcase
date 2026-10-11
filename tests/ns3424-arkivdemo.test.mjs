@@ -13,12 +13,12 @@ test('catalog and route identify the archived app and its status', () => {
   const catalog = JSON.parse(read('vibe/catalog.json'));
   const app = catalog.apps.find(item => item.slug === 'ns3424-arkivdemo');
   assert.ok(app);
-  assert.equal(read('VERSION').trim(), '0.60.7');
+  assert.equal(read('VERSION').trim(), '0.61.0');
   assert.match(app.source, /eirikyven-gif\/ns3456/);
   assert.match(app.source, /5c58678269fb2c24d83af8afedeb65c8878732ff/);
   assert.match(app.status, /kildeparitet[\s\S]*5c58678269fb2c24d83af8afedeb65c8878732ff/);
   assert.match(app.status, /Issue #2 delvis/);
-  assert.match(app.routeState, /#94 v0\.60\.6.*#100 v0\.60\.7.*#90 v0\.61\.0/);
+  assert.match(app.routeState, /PR #100 merged into main as patch v0\.60\.7/);
   assert.equal(app.parityDocument, 'vibe/ns3424-arkivdemo/PARITY.md');
   assert.match(html, /rel="canonical" href="\/vibe\/ns3424-arkivdemo\/"/);
   assert.match(html, /eirikyven-gif\/ns3456, app-fdvu-ns3424 v0\.1\.1; arkivert/);

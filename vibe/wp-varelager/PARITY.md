@@ -1,6 +1,6 @@
 # WP Varelager source parity audit
 
-**Status: source-facing workflows have local equivalents; PR #90 stays draft pending release order.** Direct comparison target is the runnable plugin UI and registered actions in archived source commit `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree `7506300fcd587546f7772e1cab4d55293bd7b947` (plugin manifest v2.3.0). Showcase route: `/vibe/wp-varelager/`, rebased on showcase `main` v0.60.5. Planned route release: v0.61.0 after #94 v0.60.6 and #100 v0.60.7. Source checkout is read-only. Slug is not provenance. This matrix records user-facing behavior, not WordPress transport implementation.
+**Status: source-facing workflows have local equivalents; PR #90 stays draft pending user review.** Direct comparison target is the runnable plugin UI and registered actions in archived source commit `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree `7506300fcd587546f7772e1cab4d55293bd7b947` (plugin manifest v2.3.0). Showcase route: `/vibe/wp-varelager/`, rebased on showcase `main` `cd5ba4a` v0.60.7 (41 catalog entries). This new route proposes v0.61.0 (42 entries); patch queue #94 v0.60.6 and #100 v0.60.7 is complete. Source checkout is read-only. Slug is not provenance. This matrix records user-facing behavior, not WordPress transport implementation.
 
 | Source area and evidence | Source screens, actions, fields/content | Coverage in demo | Remaining gap or permitted safety block |
 |---|---|---|---|

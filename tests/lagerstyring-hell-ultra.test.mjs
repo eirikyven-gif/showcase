@@ -72,7 +72,7 @@ test('taxonomy assignment, loan edge validation, linked synthetic fixtures, and 
 });
 
 test('source-parity corrections and v0.60.6 release tracking stay in this route', () => {
-  assert.equal(version, '0.60.7');
+  assert.equal(version, '0.61.0');
   assert.match(routeEntry.routeState, /patch v0\.60\.6, basert på v0\.60\.5/);
   assert.match(routeEntry.routeState, /Showcase-ruten er stabil/);
   assert.doesNotMatch(routeEntry.routeState, /draft|ikke merget|ikke deployet/i);
