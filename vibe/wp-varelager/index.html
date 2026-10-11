@@ -19,9 +19,9 @@
     <section id="admin-view" aria-live="polite" hidden></section>
     <section id="portal-tabs" aria-label="Lagerportal">
       <nav class="tabs" role="tablist" aria-label="Portalområder">
-        <button role="tab" aria-selected="true" data-tab="varer">Utstyr</button><button role="tab" aria-selected="false" data-tab="utleie">Utleie</button><button role="tab" aria-selected="false" data-tab="rapporter">Rapporter</button><button role="tab" aria-selected="false" data-tab="delte">Delte lister</button><button role="tab" aria-selected="false" data-tab="import">Import/eksport</button><button role="tab" aria-selected="false" data-tab="innstillinger">Innstillinger</button>
+        <button id="tab-varer" type="button" role="tab" aria-controls="view" aria-selected="true" tabindex="0" data-tab="varer">Utstyr</button><button id="tab-utleie" type="button" role="tab" aria-controls="view" aria-selected="false" tabindex="-1" data-tab="utleie">Utleie</button><button id="tab-rapporter" type="button" role="tab" aria-controls="view" aria-selected="false" tabindex="-1" data-tab="rapporter">Rapporter</button><button id="tab-delte" type="button" role="tab" aria-controls="view" aria-selected="false" tabindex="-1" data-tab="delte">Delte lister</button><button id="tab-import" type="button" role="tab" aria-controls="view" aria-selected="false" tabindex="-1" data-tab="import">Import/eksport</button><button id="tab-innstillinger" type="button" role="tab" aria-controls="view" aria-selected="false" tabindex="-1" data-tab="innstillinger">Innstillinger</button>
       </nav>
-      <section id="view" aria-live="polite"></section>
+      <section id="view" role="tabpanel" aria-labelledby="tab-varer" tabindex="0"></section>
     </section>
     <p class="disclaimer">Selvstendig nettlesersimulering av WP Varelager 2.3.0. Alle eksempelverdier er syntetiske. Ingen WordPress, PHP, konto, server, database eller API er tilkoblet. Kun tabell/galleri-valget bruker kildens hu_inv_view_mode-nøkkel; lagerdata er ikke persistent. Media og delingslenker er av.</p>
   </main>
