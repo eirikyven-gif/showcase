@@ -63,6 +63,23 @@ test('source feedback workflows remain with clear local simulation and manual pr
   assert.match(html, /computeK0Status/);
 });
 
+test('assessment route exposes accessible tab, answer, dialog, alert, and contrast states', () => {
+  assert.match(html, /aria-label="Vurderingsverktøy" onkeydown="handleMainTabKeydown\(event\)"/);
+  assert.match(html, /role="tab" id="tab-vurdering" aria-controls="panel-vurdering" aria-selected="true" tabindex="0"/);
+  assert.match(html, /id="panel-vurdering" class="tab-panel active" role="tabpanel" aria-labelledby="tab-vurdering" tabindex="0"/);
+  assert.match(html, /function handleRovingTabKeydown\(/);
+  assert.match(html, /event\.key === 'ArrowRight'/);
+  assert.match(html, /aria-pressed', chosen===alt\.label \? 'true' : 'false'/);
+  assert.match(html, /chosen===alt\.label \? '✓ ' : ''/);
+  assert.match(html, /function openAccessibleDialog\(/);
+  assert.match(html, /background\.inert = true/);
+  assert.match(html, /function handleDialogKeydown\(/);
+  assert.match(html, /aria-labelledby','kiPromptDialogTitle'/);
+  assert.match(html, /id="flyttStudentConflictMsg" class="alert bad hidden" role="alert"/);
+  assert.match(html, /--border:#7f8794/);
+  assert.match(html, /aria-describedby="nyttKullError"/);
+});
+
 test('all exact-source function declarations have an explicit implementation or security rationale', () => {
   const ledger = JSON.parse(read('vibe/vurderingsarbeid-fagskolen/FUNCTION-COVERAGE.json'));
   assert.equal(ledger.sourceCommit, sha);

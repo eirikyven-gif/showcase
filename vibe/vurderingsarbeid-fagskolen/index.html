@@ -12,7 +12,7 @@
   --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:44px;
   --radius:14px;--radius-sm:10px;
   --shadow:0 10px 30px rgba(0,0,0,.10);--shadow-sm:0 4px 14px rgba(0,0,0,.08);
-  --bg:#ffffff;--surface:#f6f7fb;--text:#0f172a;--muted:#334155;--border:#d6dbe7;
+  --bg:#ffffff;--surface:#f6f7fb;--text:#0f172a;--muted:#334155;--border:#7f8794;
   --primary:#0b5fff;--primaryText:#ffffff;
   --secondary:#111827;--secondaryText:#ffffff;
   --danger:#b42318;--dangerText:#ffffff;
@@ -191,16 +191,16 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
     </div>
 
     <!-- Tabs -->
-    <div class="tabs-bar" role="tablist">
-      <button role="tab" id="tab-studenter" aria-selected="false" onclick="showTab('studenter')">Studentoversikt</button>
-      <button role="tab" id="tab-vurdering" aria-selected="true" onclick="showTab('vurdering')">Vurdering</button>
-      <button role="tab" id="tab-vekting" aria-selected="false" onclick="showTab('vekting')">Vekting</button>
-      <button role="tab" id="tab-ki" aria-selected="false" onclick="showTab('ki')">KI-støtte</button>
-      <button role="tab" id="tab-eksport" aria-selected="false" onclick="showTab('eksport')">Eksport</button>
+    <div class="tabs-bar" role="tablist" aria-label="Vurderingsverktøy" onkeydown="handleMainTabKeydown(event)">
+      <button role="tab" id="tab-studenter" aria-controls="panel-studenter" aria-selected="false" tabindex="-1" onclick="showTab('studenter')">Studentoversikt</button>
+      <button role="tab" id="tab-vurdering" aria-controls="panel-vurdering" aria-selected="true" tabindex="0" onclick="showTab('vurdering')">Vurdering</button>
+      <button role="tab" id="tab-vekting" aria-controls="panel-vekting" aria-selected="false" tabindex="-1" onclick="showTab('vekting')">Vekting</button>
+      <button role="tab" id="tab-ki" aria-controls="panel-ki" aria-selected="false" tabindex="-1" onclick="showTab('ki')">KI-støtte</button>
+      <button role="tab" id="tab-eksport" aria-controls="panel-eksport" aria-selected="false" tabindex="-1" onclick="showTab('eksport')">Eksport</button>
     </div>
 
     <!-- Studentoversikt panel -->
-    <div id="panel-studenter" class="tab-panel">
+    <div id="panel-studenter" class="tab-panel" role="tabpanel" aria-labelledby="tab-studenter" tabindex="0">
       <div class="card">
         <div class="cardHeader"><h2>Studentoversikt – aktivt kull</h2></div>
         <div class="student-oversikt-tools">
@@ -252,11 +252,11 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
     </div>
 
     <!-- Vurdering panel -->
-    <div id="panel-vurdering" class="tab-panel active">
+    <div id="panel-vurdering" class="tab-panel active" role="tabpanel" aria-labelledby="tab-vurdering" tabindex="0">
       <!-- Kriterienav -->
-      <div class="krit-nav" id="kritNav" role="tablist" aria-label="Kriterier"></div>
+      <div class="krit-nav" id="kritNav" role="tablist" aria-label="Kriterier" onkeydown="handleKriterieTabKeydown(event)"></div>
       <!-- Criterion panel -->
-      <div id="kritPanel" class="card"></div>
+      <div id="kritPanel" class="card" role="tabpanel" tabindex="0"></div>
       <!-- Navigation actions -->
       <div class="row" style="margin-top:var(--s4);gap:var(--s2)" id="studentNavRow">
         <button class="btn btn-sm" onclick="tilStudentoversikt()">↩ Til studentoversikt</button>
@@ -268,7 +268,7 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
 
 
     <!-- Vekting panel -->
-    <div id="panel-vekting" class="tab-panel">
+    <div id="panel-vekting" class="tab-panel" role="tabpanel" aria-labelledby="tab-vekting" tabindex="0">
       <div id="weightEditorPanel" class="card">
         <div class="cardHeader"><h2>Kriterievekting</h2></div>
         <p class="hint" style="margin:0 0 var(--s3) 0">Juster kriterievekter uten å forstyrre vurderingsflyten. K0 / Formelle krav inngår ikke i score.</p>
@@ -282,7 +282,7 @@ ul.import-list li{font-size:14px;margin-bottom:4px;}
     </div>
 
     <!-- Kildeappens KI-støtteflate. Eksterne tjenester er erstattet av tydelig lokal simulering. -->
-    <div id="panel-ki" class="tab-panel">
+    <div id="panel-ki" class="tab-panel" role="tabpanel" aria-labelledby="tab-ki" tabindex="0">
       <div class="alert info" role="note"><strong>Lokal simulering.</strong> Ingen KI-tjeneste, provider, konto eller nettverkskall er koblet til. «Generer» lager et nøkternt, regelbasert utkast kun fra aktiv rubrikk, registrerte svar, stikkord, indikator og K0-status. Du kan fortsatt kopiere kildeappens promptgrunnlag manuelt; teksten vises før kopiering. Ikke lim inn personopplysninger i eksterne tjenester.</div>
       <section class="card" aria-labelledby="kiFremoverTitle">
         <div class="cardHeader"><h2 id="kiFremoverTitle">Fremovermelding (underveis)</h2></div>
@@ -306,7 +306,7 @@ Fremhev både styrker, mangler og realistiske neste steg på en måte som faglæ
     </div>
 
     <!-- Eksport panel -->
-    <div id="panel-eksport" class="tab-panel">
+    <div id="panel-eksport" class="tab-panel" role="tabpanel" aria-labelledby="tab-eksport" tabindex="0">
       <div class="card">
         <div class="cardHeader"><h2>Eksport – Tekstlig oppsummering</h2></div>
         <p class="hint" style="margin-bottom:var(--s3)">Eksporterer registrerte rubrikksvar, K0-status og indikatorstøtte for den aktive eksempelstudenten.</p>
@@ -352,7 +352,7 @@ Fremhev både styrker, mangler og realistiske neste steg på en måte som faglæ
         <label for="flyttStudentSelect">Velg mål-kull:</label>
         <select id="flyttStudentSelect"></select>
       </div>
-      <div id="flyttStudentConflictMsg" class="alert bad hidden" style="margin-top:var(--s3)"></div>
+      <div id="flyttStudentConflictMsg" class="alert bad hidden" role="alert" style="margin-top:var(--s3)"></div>
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('modalFlyttStudent')">Avbryt</button>
@@ -371,7 +371,8 @@ Fremhev både styrker, mangler og realistiske neste steg på en måte som faglæ
     <div class="modal-body">
       <div class="field">
         <label for="nyttKullNavn">Kullnavn:</label>
-        <input id="nyttKullNavn" type="text" placeholder="F.eks. 3A-høst-2026" maxlength="80">
+          <input id="nyttKullNavn" type="text" placeholder="F.eks. 3A-høst-2026" maxlength="80" aria-describedby="nyttKullError" oninput="clearKullNameError()">
+          <span id="nyttKullError" class="error-text" role="alert" hidden></span>
       </div>
     </div>
     <div class="modal-foot">
@@ -1427,12 +1428,16 @@ function renderKriterieNav(){
   const nav = document.getElementById('kritNav');
   nav.innerHTML = '';
   if(!state.rubrikk) return;
-  for(const k of state.rubrikk.kriterier){
+  for(const [index,k] of state.rubrikk.kriterier.entries()){
     const btn = document.createElement('button');
     btn.className = 'krit-btn';
+    btn.id = 'krit-tab-' + index;
+    btn.dataset.kritId = k.id;
     btn.textContent = k.tittel;
     btn.setAttribute('role','tab');
+    btn.setAttribute('aria-controls','kritPanel');
     btn.setAttribute('aria-selected', k.id===activeKritId?'true':'false');
+    btn.tabIndex = k.id===activeKritId ? 0 : -1;
     if(k.id===activeKritId) btn.classList.add('active');
     // check if done
     if(state.activeStudentId){
@@ -1440,7 +1445,20 @@ function renderKriterieNav(){
       const done = k.punkter.every(p=>vurd.svar[p.id]);
       if(done && k.id!==activeKritId) btn.classList.add('done');
     }
-    btn.onclick = ()=>{ activeKritId = k.id; renderKriterieNav(); renderKriteriePanel(); };
+    btn.onclick = ()=>{
+      activeKritId = k.id;
+      for(const tab of nav.querySelectorAll('[role="tab"]')){
+        const selected = tab === btn;
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        tab.tabIndex = selected ? 0 : -1;
+        tab.classList.toggle('active', selected);
+        const criterion = state.rubrikk.kriterier.find(item => item.id===tab.dataset.kritId);
+        const done = !!state.activeStudentId && criterion?.punkter.every(point => getVurd(state.activeStudentId).svar[point.id]);
+        tab.classList.toggle('done', !selected && !!done);
+      }
+      document.getElementById('kritPanel').setAttribute('aria-labelledby', btn.id);
+      renderKriteriePanel();
+    };
     nav.appendChild(btn);
   }
   // Auto-select first if none
@@ -1448,7 +1466,10 @@ function renderKriterieNav(){
     activeKritId = state.rubrikk.kriterier[0].id;
     nav.firstChild?.classList.add('active');
     nav.firstChild?.setAttribute('aria-selected','true');
+    if(nav.firstChild) nav.firstChild.tabIndex = 0;
   }
+  const selectedTab = nav.querySelector('[aria-selected="true"]');
+  if(selectedTab) document.getElementById('kritPanel').setAttribute('aria-labelledby', selectedTab.id);
 }
 
 function renderKriteriePanel(){
@@ -1537,7 +1558,10 @@ function renderKriteriePanel(){
       }
       const btn = document.createElement('button');
       btn.className = cls;
-      btn.textContent = alt.label;
+      btn.dataset.punktId = p.id;
+      btn.dataset.answer = alt.label;
+      btn.setAttribute('aria-pressed', chosen===alt.label ? 'true' : 'false');
+      btn.textContent = (chosen===alt.label ? '✓ ' : '') + alt.label;
       btn.addEventListener('click', (function(pid, a){ return function(){ setSvar(pid, a); }; })(p.id, alt.label));
       grid.appendChild(btn);
     }
@@ -1769,6 +1793,9 @@ function setSvar(punktId, val){
   const punkt = state.rubrikk?.kriterier.flatMap(k=>k.punkter).find(p=>p.id===punktId);
   if(!punkt){showStatus('Fant ikke vurderingspunktet som skulle oppdateres.','error');return;}
   if(!getSvarsettDef(punkt.svarsett)?.optionMap?.[val]){showStatus('Valgt svar finnes ikke i svarsettet for punktet.','error');return;}
+  const focusedAnswer = document.activeElement?.classList.contains('svar-btn')
+    ? {punktId:document.activeElement.dataset.punktId, answer:document.activeElement.dataset.answer}
+    : null;
   const v = getVurd(state.activeStudentId);
   v.svar[punktId] = val;
   saveState();
@@ -1777,6 +1804,10 @@ function setSvar(punktId, val){
   renderTopBar();
   refreshAiActionUi();
   renderStudentNavStatus();
+  if(focusedAnswer){
+    const answerButton = [...document.querySelectorAll('.svar-btn')].find(button => button.dataset.punktId===focusedAnswer.punktId && button.dataset.answer===focusedAnswer.answer);
+    answerButton?.focus();
+  }
 }
 
 function setStikkordK(kId, val){
@@ -1849,10 +1880,12 @@ function buildAiClipboardText(type){
 }
 function openKiPromptModal(text, intro){
   const escaped=esc(text);
-  const modal=document.createElement('div'); modal.className='modal-backdrop open'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true');
-  modal.innerHTML='<div class="modal"><div class="modal-head"><h2>Promptgrunnlag – kopieres ikke automatisk</h2><button class="btn btn-sm" type="button" data-close>Lukk</button></div><div class="modal-body"><p>'+intro+'</p><textarea aria-label="Promptgrunnlag" readonly style="width:100%;min-height:220px">'+escaped+'</textarea><div class="row"><button class="btn btn-primary" type="button" data-copy>Kopier prompt</button><span class="hint" aria-live="polite"></span></div></div></div>';
+  const modal=document.createElement('div'); modal.className='modal-backdrop'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true'); modal.setAttribute('aria-labelledby','kiPromptDialogTitle');
+  modal.innerHTML='<div class="modal"><div class="modal-head"><h2 id="kiPromptDialogTitle">Promptgrunnlag – kopieres ikke automatisk</h2><button class="btn btn-sm" type="button" data-close>Lukk</button></div><div class="modal-body"><p>'+intro+'</p><textarea aria-label="Promptgrunnlag" readonly style="width:100%;min-height:220px">'+escaped+'</textarea><div class="row"><button class="btn btn-primary" type="button" data-copy>Kopier prompt</button><span class="hint" aria-live="polite"></span></div></div></div>';
   document.body.appendChild(modal);
-  modal.querySelector('[data-close]').onclick=()=>modal.remove();
+  openAccessibleDialog(modal, modal.querySelector('[data-close]'));
+  modal.addEventListener('click', event=>{if(event.target===modal) closeAccessibleDialog(modal,true);});
+  modal.querySelector('[data-close]').onclick=()=>closeAccessibleDialog(modal,true);
   modal.querySelector('[data-copy]').onclick=async()=>{try{await navigator.clipboard.writeText(text);modal.querySelector('[aria-live]').textContent='Kopiert. Du velger selv om du limer inn teksten et annet sted.';}catch{modal.querySelector('textarea').focus();modal.querySelector('textarea').select();modal.querySelector('[aria-live]').textContent='Kopier teksten manuelt.';}};
 }
 function copyAiPrompt(type){
@@ -1969,18 +2002,55 @@ function copyEksport(){
 // ============================================================
 // MODAL HELPERS
 // ============================================================
+const modalReturnFocus = new WeakMap();
+const modalBackground = () => document.querySelectorAll('.skip,.topbar,#main,#fileInput,#fileDatasetInput');
+function openAccessibleDialog(dialog, initialFocus){
+  modalReturnFocus.set(dialog, document.activeElement);
+  for(const background of modalBackground()) background.inert = true;
+  dialog.classList.add('open');
+  (initialFocus || dialog.querySelector('button,input,select,textarea,[tabindex]:not([tabindex="-1"])') || dialog).focus();
+}
+function closeAccessibleDialog(dialog, remove=false){
+  dialog.classList.remove('open');
+  if(remove) dialog.remove();
+  if(!document.querySelector('[role="dialog"][aria-modal="true"].open')){
+    for(const background of modalBackground()) background.inert = false;
+  }
+  const returnFocus = modalReturnFocus.get(dialog);
+  if(returnFocus?.isConnected && !returnFocus.closest('[inert]')) returnFocus.focus();
+  modalReturnFocus.delete(dialog);
+}
 function openModal(id){
-  document.getElementById(id).classList.add('open');
-  document.getElementById(id).querySelector('button')?.focus();
+  const dialog = document.getElementById(id);
+  openAccessibleDialog(dialog, dialog.querySelector('button'));
 }
 function closeModal(id){
-  document.getElementById(id).classList.remove('open');
+  closeAccessibleDialog(document.getElementById(id));
   if(id === 'modalNullstillVurdering'){
     nullstillVurderingFlow = {studentId:null, step:1};
   }
   if(id === 'modalNyImport'){
     nullstillNyImportFlow = {step:1};
   }
+}
+
+function handleDialogKeydown(event){
+  const dialogs = [...document.querySelectorAll('[role="dialog"][aria-modal="true"].open')];
+  const dialog = dialogs.at(-1);
+  if(!dialog) return;
+  if(event.key === 'Escape'){
+    event.preventDefault();
+    if(dialog.id) closeModal(dialog.id);
+    else closeAccessibleDialog(dialog, true);
+    return;
+  }
+  if(event.key !== 'Tab') return;
+  const focusable = [...dialog.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(element => !element.closest('[hidden]') && element.getClientRects().length > 0);
+  if(!focusable.length){event.preventDefault();dialog.focus();return;}
+  const first=focusable[0], last=focusable.at(-1);
+  if(event.shiftKey && (document.activeElement===first || !dialog.contains(document.activeElement))){event.preventDefault();last.focus();}
+  else if(!event.shiftKey && (document.activeElement===last || !dialog.contains(document.activeElement))){event.preventDefault();first.focus();}
 }
 
 // ============================================================
@@ -1991,9 +2061,33 @@ function showTab(name){
     document.getElementById('panel-'+t).classList.toggle('active', t===name);
     const btn = document.getElementById('tab-'+t);
     btn.setAttribute('aria-selected', t===name?'true':'false');
+    btn.tabIndex = t===name ? 0 : -1;
   }
   if(name==='studenter') renderStudentOversikt();
   if(name==='ki') refreshAiActionUi();
+}
+
+function handleRovingTabKeydown(event, tabs, activate, restoreFocus){
+  const current = tabs.indexOf(event.target);
+  if(current < 0) return;
+  let next = current;
+  if(event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (current+1)%tabs.length;
+  else if(event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (current-1+tabs.length)%tabs.length;
+  else if(event.key === 'Home') next = 0;
+  else if(event.key === 'End') next = tabs.length-1;
+  else return;
+  event.preventDefault();
+  activate(tabs[next]);
+  (restoreFocus ? restoreFocus() : tabs[next]).focus();
+}
+function handleMainTabKeydown(event){
+  const tabs=[...document.querySelectorAll('.tabs-bar [role="tab"]')];
+  handleRovingTabKeydown(event,tabs,tab=>tab.click());
+}
+function handleKriterieTabKeydown(event){
+  const nav=document.getElementById('kritNav');
+  const tabs=[...nav.querySelectorAll('[role="tab"]')];
+  handleRovingTabKeydown(event,tabs,tab=>tab.click(),()=>nav.querySelector('[aria-selected="true"]'));
 }
 
 function startExcelImportFlow(){
@@ -2597,14 +2691,30 @@ function switchKull(newKullId){
 
 function openNyttKullModal(){
   document.getElementById('nyttKullNavn').value = '';
+  clearKullNameError();
   openModal('modalNyttKull');
-  setTimeout(()=>document.getElementById('nyttKullNavn').focus(), 50);
+  document.getElementById('nyttKullNavn').focus();
+}
+
+function clearKullNameError(){
+  const input=document.getElementById('nyttKullNavn');
+  const error=document.getElementById('nyttKullError');
+  input.removeAttribute('aria-invalid');
+  error.hidden=true;
+  error.textContent='';
 }
 
 function bekreftNyttKull(){
   const namnEl = document.getElementById('nyttKullNavn');
   const navn = namnEl.value.trim();
-  if(!navn){showStatus('Kullnavn kan ikke være tomt.','error');return;}
+  if(!navn){
+    const error=document.getElementById('nyttKullError');
+    error.textContent='Kullnavn kan ikke være tomt.';
+    error.hidden=false;
+    namnEl.setAttribute('aria-invalid','true');
+    namnEl.focus();
+    return;
+  }
   const id = makeKullId();
   if(!state.otherKulls) state.otherKulls = [];
   state.otherKulls.push({id, navn, studenter:[]});
@@ -2682,11 +2792,10 @@ document.getElementById('fileInput').onchange = e=>{
 document.getElementById('fileDatasetInput').onchange = e=>{ if(e.target.files[0]) handleDatasetFile(e.target.files[0]); e.target.value=''; };
 
 // Close modals on backdrop click
-for(const id of ['modalImportkontroll','modalFlyttStudent','modalNyttKull','modalNullstillVurdering']){
+for(const id of ['modalImportkontroll','modalFlyttStudent','modalNyttKull','modalNullstillVurdering','modalNyImport']){
   document.getElementById(id).addEventListener('click', function(e){ if(e.target===this) closeModal(id); });
 }
-// Close modals on Escape
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') for(const id of ['modalImportkontroll','modalFlyttStudent','modalNyttKull','modalNullstillVurdering']) closeModal(id); });
+document.addEventListener('keydown', handleDialogKeydown);
 
 // ============================================================
 // INIT

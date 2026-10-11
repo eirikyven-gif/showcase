@@ -170,6 +170,7 @@ test('rubric scoring, progress filters, student reset and cohort move preserve a
   await byId('flyttStudentSelect').selectOption(conflictingTarget);
   await moveDialog.getByRole('button', { name: 'Flytt student' }).click();
   assert.match(await byId('flyttStudentConflictMsg').innerText(), /finnes allerede i mål-kullet/);
+  assert.match(await page.getByRole('alert').innerText(), /finnes allerede i mål-kullet/);
   assert.match(await byId('studentOversiktListe').innerText(), /Eksempelstudent A/);
   await moveDialog.getByRole('button', { name: 'Avbryt' }).click();
   await byId('studentOversiktListe').getByRole('row').filter({ hasText: 'Eksempelstudent A' }).getByRole('button', { name: '↪ Flytt' }).click();
@@ -255,17 +256,111 @@ test('dataset XLSX round trip, prompt preview, local drafts and final approval m
   await byId('modalImportkontroll').getByRole('button', { name: /Lukk/ }).last().click();
 });
 
+test('WCAG semantics, roving tab keys, selected answers, dialogs, alerts, and control contrast', async () => {
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  const mainTabs = page.locator('.tabs-bar [role="tab"]');
+  assert.equal(await page.locator('.tabs-bar').getAttribute('aria-label'), 'Vurderingsverktøy');
+  assert.equal(await mainTabs.evaluateAll((tabs) => tabs.filter((tab) => tab.tabIndex === 0).length), 1);
+  for (const tab of await mainTabs.all()) {
+    const panelId = await tab.getAttribute('aria-controls');
+    assert.ok(panelId);
+    const panel = byId(panelId);
+    assert.equal(await panel.getAttribute('role'), 'tabpanel');
+    assert.equal(await panel.getAttribute('aria-labelledby'), await tab.getAttribute('id'));
+  }
+  await byId('tab-vurdering').focus();
+  await page.keyboard.press('ArrowRight');
+  assert.equal(await byId('tab-vekting').getAttribute('aria-selected'), 'true');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'tab-vekting');
+  await page.keyboard.press('End');
+  assert.equal(await byId('tab-eksport').getAttribute('aria-selected'), 'true');
+  await page.keyboard.press('Home');
+  assert.equal(await byId('tab-studenter').getAttribute('aria-selected'), 'true');
+  await byId('tab-vurdering').click();
+
+  const criterionTabs = page.locator('#kritNav [role="tab"]');
+  assert.equal(await criterionTabs.evaluateAll((tabs) => tabs.filter((tab) => tab.tabIndex === 0).length), 1);
+  for (const tab of await criterionTabs.all()) {
+    assert.equal(await tab.getAttribute('aria-controls'), 'kritPanel');
+    assert.equal(await byId('kritPanel').getAttribute('aria-labelledby'), await page.locator('#kritNav [aria-selected="true"]').getAttribute('id'));
+  }
+  const selectedCriterion = page.locator('#kritNav [aria-selected="true"]');
+  await selectedCriterion.focus();
+  await page.keyboard.press('ArrowRight');
+  assert.equal(await page.locator('#kritNav [aria-selected="true"]').evaluate((tab) => tab === document.activeElement), true);
+  const answer = page.locator('#kritPanel .svar-btn').first();
+  await answer.click();
+  assert.equal(await answer.getAttribute('aria-pressed'), 'true');
+  assert.match(await answer.innerText(), /^✓\s/);
+  assert.equal(await answer.evaluate((el) => el === document.activeElement), true, 'focus remains on the answer after the panel rerenders');
+
+  const cohortTrigger = byId('btnNyttKull');
+  await cohortTrigger.click();
+  const cohortDialog = byId('modalNyttKull');
+  assert.equal(await byId('main').evaluate((el) => el.inert), true);
+  assert.equal(await byId('nyttKullNavn').evaluate((el) => el === document.activeElement), true);
+  await byId('nyttKullNavn').fill('   ');
+  await cohortDialog.getByRole('button', { name: 'Opprett kull' }).click();
+  assert.equal(await byId('nyttKullNavn').getAttribute('aria-invalid'), 'true');
+  assert.equal(await byId('nyttKullError').isVisible(), true);
+  assert.equal(await byId('nyttKullError').getAttribute('role'), 'alert');
+  assert.equal(await byId('nyttKullNavn').getAttribute('aria-describedby'), 'nyttKullError');
+  await byId('nyttKullNavn').fill('Gyldig syntetisk kull');
+  assert.equal(await byId('nyttKullNavn').getAttribute('aria-invalid'), null);
+  const createCohort = cohortDialog.getByRole('button', { name: 'Opprett kull' });
+  await createCohort.focus();
+  await page.keyboard.press('Tab');
+  assert.equal(await cohortDialog.getByRole('button', { name: 'Lukk' }).evaluate((el) => el === document.activeElement), true, 'Tab wraps from the final dialog control to the first');
+  await page.keyboard.press('Shift+Tab');
+  assert.equal(await createCohort.evaluate((el) => el === document.activeElement), true, 'Shift+Tab wraps from the first dialog control to the final');
+  await page.keyboard.press('Escape');
+  assert.equal(await cohortDialog.isVisible(), false);
+  assert.equal(await byId('main').evaluate((el) => el.inert), false);
+  assert.equal(await cohortTrigger.evaluate((el) => el === document.activeElement), true);
+
+  await byId('tab-ki').click();
+  const promptTrigger = byId('btnKiFremoverCopy');
+  await promptTrigger.click();
+  const promptDialog = page.locator('[role="dialog"].open').last();
+  assert.equal(await promptDialog.getAttribute('aria-labelledby'), 'kiPromptDialogTitle');
+  assert.match(await promptDialog.getByRole('heading').innerText(), /Promptgrunnlag/);
+  assert.equal(await promptDialog.getByRole('button', { name: 'Lukk' }).evaluate((el) => el === document.activeElement), true);
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('[role="dialog"].open').count(), 0);
+  assert.equal(await promptTrigger.evaluate((el) => el === document.activeElement), true);
+
+  const borderContrast = await page.evaluate(() => {
+    const luminance = color => {
+      const channels = color.match(/[\d.]+/g).slice(0, 3).map(Number).map(value => {
+        value /= 255;
+        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+    };
+    const controls = [...document.querySelectorAll('#studentSelect, #nyttKullNavn, #globalKiStyring')];
+    return controls.map(control => {
+      const style = getComputedStyle(control);
+      const foreground = luminance(style.borderTopColor);
+      const background = luminance(style.backgroundColor);
+      return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+    });
+  });
+  assert.ok(borderContrast.every(ratio => ratio >= 3), `control borders have >=3:1 contrast: ${borderContrast.join(', ')}`);
+});
+
 test('keyboard focus, local settings, responsive screenshots, and complete local reset', async () => {
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
   await page.keyboard.press('Tab');
   const firstFocus = await page.evaluate(() => ({ tag: document.activeElement.tagName, label: document.activeElement.getAttribute('aria-label') || document.activeElement.innerText || document.activeElement.title }));
   assert.ok(firstFocus.tag === 'BUTTON' || firstFocus.tag === 'A' || firstFocus.tag === 'INPUT', `keyboard starts on a usable control: ${JSON.stringify(firstFocus)}`);
+  assert.equal(await page.locator('.tabs-bar [role="tab"][tabindex="0"]').count(), 1, 'tablist exposes one sequential keyboard stop');
+  await page.locator('.tabs-bar [role="tab"][aria-selected="true"]').focus();
   let reachedKiTab = false;
-  for (let i = 0; i < 32; i++) {
+  for (let i = 0; i < 5; i++) {
     if (await byId('tab-ki').evaluate((el) => el === document.activeElement)) { reachedKiTab = true; break; }
-    await page.keyboard.press('Tab');
+    await page.keyboard.press('ArrowRight');
   }
-  assert.equal(reachedKiTab, true, 'the KI-support tab is reachable in sequential keyboard order');
+  assert.equal(reachedKiTab, true, 'arrow-key navigation reaches the KI-support tab');
   assert.equal(await byId('tab-ki').evaluate((el) => el.matches(':focus-visible')), true, 'keyboard focus has a visible indicator');
   await page.keyboard.press('Enter');
   assert.equal(await byId('tab-ki').getAttribute('aria-selected'), 'true');
