@@ -57,13 +57,17 @@ test('native draft, publish, trash, restore, source filters, and dashboard scope
 test('taxonomy assignment, loan edge validation, linked synthetic fixtures, and referential cleanup exist', () => {
   for (const behavior of [
     'data-assigned-term',
-    'Planlagt retur kan ikke være før utlånsdato',
     'Samme lagervare kan bare velges én gang',
     "n===10?[1,5,8]:n===2?[1]:[]",
     "name:'[TESTDATA] Syntetisk arrangementsutstyr'",
     'removeItemAndReferences',
     "b.test||usedBorrowers.has(b.id)",
   ]) assert.ok(js.includes(behavior), `missing ${behavior}`);
+  assert.doesNotMatch(js, /Planlagt retur kan ikke være før utlånsdato/);
+  assert.ok(
+    js.indexOf("if(newName)db.borrowers.push(borrower)") > js.indexOf("return toast('En eller flere varer er utilgjengelige eller allerede utlånt')"),
+    'a new synthetic borrower is added only after loan/item validation succeeds',
+  );
   assert.match(js, /db\.lists=db\.lists\.filter\(l=>!l\.test&&!l\.items\.some/);
 });
 
