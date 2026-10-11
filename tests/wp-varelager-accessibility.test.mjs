@@ -32,7 +32,7 @@ test('portal tabs implement the single-stop, labelled tab and panel pattern', ()
 test('dynamic rerenders and native modal close restore keyboard focus', () => {
   assert.match(js, /function focusInfo\(/);
   assert.match(js, /function restoreFocus\(/);
-  assert.match(js, /addEventListener\('close',\(\)=>\{const focus=dialogReturnFocus;dialogReturnFocus=null;restoreFocus\(focus\)\}\)/);
+  assert.match(js, /addEventListener\('close',\(\)=>\{const focus=dialogReturnFocus;dialogReturnFocus=null;revokeAttachmentPreview\(\);attachmentDraftFile=null;restoreFocus\(focus\)\}\)/);
   assert.match(js, /addEventListener\('cancel',event=>\{event\.preventDefault\(\);closeEditor\(\)\}\)/);
   assert.match(js, /data-admin-return[\s\S]*?\[data-admin-view=/);
   assert.match(html, /<dialog id="editor-dialog" aria-labelledby="editor-title">/);
