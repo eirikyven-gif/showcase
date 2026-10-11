@@ -19,10 +19,10 @@ Kildeportalen er shortcode `[hul_inventory_portal]` på en WordPress-side som ad
 - ingen WP-auth, API eller server/database-persistens: WP-innlogging, capabilities/nonces, server-/databasepersistens, magic-linktoken, ekte låntaker/personopplysninger, private mediefiler, private tjenester og secrets er fjernet. Rollevalget er kun UI-simulering, ikke tilgangskontroll.
 - Forhåndslastet innhold er merket syntetisk. Lokalt valgte media/XLSX-filer blir i nettleserøkten; appen bruker ikke API, nettverkskall eller nettleserlagring. Omlasting nullstiller endringene.
 - Kildens rollebaserte kapabiliteter simuleres ikke som sikkerhet. En liste-ID i demoen er bare en eksempel-ID, ikke en adgangshemmelighet. WP-side-sluggen for shortcodeportalen er uavklart.
-- XLSX-parseren er laget for lokal filbehandling og er QA-et med demoens egen eksport; eksterne leverandør-XLSX-varianter bør fortsatt verifiseres før noen hevder full filformatkompatibilitet.
+- XLSX-parseren støtter deflate, delte strenger og spredte celler. ZIP64 støttes ikke; data-descriptor-arkiv, leverandørspesifikke dato-/XLSX-varianter og hele kildens valideringsmatrise er ikke verifisert.
 
 ## QA
 
-Nettleser-ende-til-ende kontroll dekker portalfiltre/visning, detaljmedia/utlån, listetilstander, quick edit, vareeditor/underelement/media, legacy retur, låntaker/lån/retur, liste, pakke, taksonomi, innstillinger, testdata, XLSX eksport/import og mobilbredde. Statisk route/safety-test og full repo CI kjøres i PR #94. Dekningsmatrise, kildebevis og åpne avvik ligger i [`docs/lagerstyring-hell-ultra-parity.md`](../../docs/lagerstyring-hell-ultra-parity.md) og PR-beskrivelsen. Draft forblir draft til alle eventuelle parity-gap er løst og verifisert.
+Nettleser-ende-til-ende kontroll dekker portalfiltre/visning, detaljmedia/utlån, listetilstander, quick edit, vareeditor/underelement/media, legacy retur, låntaker/lån/retur, liste, pakke, taksonomi, innstillinger, testdata, XLSX eksport/import og mobilbredde. PR #94 inkluderer 120 repo-tester samt dedikert Chromium QA. Fokuserte WCAG-kontroller omfatter kontrast, kontrollnavn, landemerker, tabellsemantikk, tastatur/fokus og Chromium AX-tre; dette er ikke full WCAG-sertifisering eller OS-skjermlesertest. Dekningsmatrise og konkrete gjenstående grenser ligger i [`docs/lagerstyring-hell-ultra-parity.md`](../../docs/lagerstyring-hell-ultra-parity.md) og PR-beskrivelsen.
 
 Kjør lokalt fra repo-roten: `python3 -m http.server 8000`, åpne `http://localhost:8000/vibe/lagerstyring-hell-ultra/`.

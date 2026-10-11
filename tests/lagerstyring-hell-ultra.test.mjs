@@ -9,6 +9,7 @@ const css = readFileSync(new URL('style.css', base), 'utf8');
 const readme = readFileSync(new URL('README.md', base), 'utf8');
 const catalog = JSON.parse(readFileSync(new URL('../../vibe/catalog.json', base), 'utf8'));
 const routeEntry = catalog.apps.find((entry) => entry.slug === 'lagerstyring-hell-ultra');
+const version = readFileSync(new URL('../../VERSION', base), 'utf8').trim();
 
 test('route shell exposes role simulation and clearly marks synthetic data', () => {
   assert.match(html, /DEMO · syntetiske data/);
@@ -64,4 +65,14 @@ test('taxonomy assignment, loan edge validation, linked synthetic fixtures, and 
     "b.test||usedBorrowers.has(b.id)",
   ]) assert.ok(js.includes(behavior), `missing ${behavior}`);
   assert.match(js, /db\.lists=db\.lists\.filter\(l=>!l\.test&&!l\.items\.some/);
+});
+
+test('source-parity corrections and v0.60.6 release tracking stay in this route', () => {
+  assert.equal(version, '0.60.6');
+  assert.match(routeEntry.routeState, /patch v0\.60\.6 på main v0\.60\.5/);
+  assert.match(routeEntry.routeState, /PR #94 er rebased/);
+  assert.match(js, /function isListExpired/);
+  assert.match(js, /ZIP64/);
+  assert.match(js, /aria-labelledby','textPromptTitle'/);
+  assert.match(js, /packageChoices/);
 });
