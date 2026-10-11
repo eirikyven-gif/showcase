@@ -200,6 +200,12 @@
           { listId: seedListId, itemId: 'FLASKE-01', opprettet: seedNow }
         ],
         loans: [],
+        orders: [],
+        orderLines: [],
+        borrowers: [
+          { id: 'DEMO-LAANER-01', navn: 'Syntetisk låntaker 1', status: 'aktiv' },
+          { id: 'DEMO-LAANER-02', navn: 'Syntetisk låntaker 2', status: 'aktiv' }
+        ],
         documents: {},
         auditLog: [],
         masterdata: deepClone(SEED_MASTERDATA),
@@ -218,6 +224,12 @@
       if (!Array.isArray(db.listItems)) {
         db.listItems = [];
       }
+      if (!Array.isArray(db.orders)) db.orders = [];
+      if (!Array.isArray(db.orderLines)) db.orderLines = [];
+      if (!Array.isArray(db.borrowers)) db.borrowers = [
+        { id: 'DEMO-LAANER-01', navn: 'Syntetisk låntaker 1', status: 'aktiv' },
+        { id: 'DEMO-LAANER-02', navn: 'Syntetisk låntaker 2', status: 'aktiv' }
+      ];
       saveDb(db);
     }
     return db;
@@ -263,6 +275,13 @@
       text: function () { return Promise.resolve(bodyStr); },
       headers: { get: function () { return null; } }
     };
+  }
+
+  // GAS business routes expose their result fields at the top level.
+  function mockApi(data, status) {
+    var code = status || 200;
+    var bodyStr = JSON.stringify(data);
+    return { ok: code >= 200 && code < 300, status: code, json: function () { return Promise.resolve(data); }, text: function () { return Promise.resolve(bodyStr); }, headers: { get: function () { return 'application/json'; } } };
   }
 
   function mockErr(code, message, status) {
@@ -567,6 +586,20 @@
     return { path: pathPart, params: new URLSearchParams(queryPart) };
   }
 
+  function getDemoOrder(db, orderId) {
+    var order = (db.orders || []).find(function (entry) { return entry.id === orderId; });
+    if (!order) return null;
+    var copy = deepClone(order);
+    copy.linjer = (db.orderLines || []).filter(function (line) { return line.orderId === orderId; }).map(function (line) {
+      return deepClone(line);
+    });
+    return copy;
+  }
+
+  function getOrderLine(db, orderId, lineId) {
+    return (db.orderLines || []).find(function (line) { return line.orderId === orderId && line.id === lineId; }) || null;
+  }
+
   /* -----------------------------------------------------------------------
    * GET-handler
    * --------------------------------------------------------------------- */
@@ -727,6 +760,10 @@
     }
 
     /* Utlånsliste */
+    if (path === 'api/v1/borrowers') {
+      var borrowerStatus = params.get('status') || '';
+      return mockOk((db.borrowers || []).filter(function (borrower) { return !borrowerStatus || borrower.status === borrowerStatus; }));
+    }
     if (path === 'api/v1/loans') {
       var activeLoans = db.loans.filter(function (l) { return !l.returDato; });
       return mockOk(activeLoans);
@@ -765,6 +802,19 @@
     if (path === 'api/v1/masterdata') {
       // Returnerer rå streng-arrays; normalizeMasterdataPayload() i app.js håndterer det
       return mockOk(db.masterdata);
+    }
+
+    /* Bestillinger: samme leseformat som GAS-API, med bare syntetiske lokale data. */
+    if (path === 'api/v1/orders') {
+      var allowedOrderStatuses = String(params.get('status') || '').split(',').filter(Boolean);
+      return mockApi({ bestillinger: (db.orders || []).filter(function (order) {
+        return !allowedOrderStatuses.length || allowedOrderStatuses.indexOf(order.status) !== -1;
+      }).map(function (order) { return getDemoOrder(db, order.id); }) });
+    }
+    var orderDetailMatch = path.match(/^api\/v1\/orders\/([^/]+)$/);
+    if (orderDetailMatch) {
+      var orderDetail = getDemoOrder(db, decodeURIComponent(orderDetailMatch[1]));
+      return orderDetail ? mockApi({ bestilling: orderDetail }) : mockErr('NOT_FOUND', 'Bestillingen ble ikke funnet.', 404);
     }
 
     /* XLSX importmal */
@@ -808,8 +858,131 @@
    * POST-handler
    * --------------------------------------------------------------------- */
 
+  function addDemoOrderLine(db, order, input) {
+    var item = (db.items || []).find(function (entry) { return entry.id === String(input.productId || '').trim(); });
+    var line = {
+      id: nextId(db), orderId: order.id, productId: String(input.productId || '').trim(),
+      productNameSnapshot: item ? item.navn : String(input.productId || '').trim(),
+      mainProductId: String(input.mainProductId || input.productId || '').trim(),
+      quantity: Math.max(1, parseInt(input.quantity, 10) || 1), requestedQty: Math.max(1, parseInt(input.quantity, 10) || 1),
+      pickedQty: 0, lineType: String(input.lineType || 'MAIN_WITH_EQUIPMENT'), variantKey: String(input.variantKey || ''),
+      lineStatus: 'OPEN', deviationReason: '', createdAt: nowIso()
+    };
+    db.orderLines.push(line);
+    return line;
+  }
+
   function handlePost(path, body) {
     var db = getDb();
+
+    var orderDraftMatch = path.match(/^api\/v1\/orders\/draft$/);
+    if (orderDraftMatch) {
+      var orderId = nextId(db);
+      var order = { id: orderId, orderNumber: 'DEMO-' + orderId, requesterRef: 'syntetisk-bruker', requesterName: 'Syntetisk demo-bruker', status: 'DRAFT', comment: String(body.comment || body.notat || ''), createdAt: nowIso(), loanLinks: [] };
+      db.orders.push(order);
+      (Array.isArray(body.lines) ? body.lines : []).forEach(function (line) { addDemoOrderLine(db, order, line); });
+      saveDb(db);
+      return mockApi({ success: true, orderId: orderId, orderNumber: order.orderNumber, status: order.status }, 201);
+    }
+
+    var orderLinesMatch = path.match(/^api\/v1\/orders\/([^/]+)\/lines$/);
+    if (orderLinesMatch) {
+      var linesOrderId = decodeURIComponent(orderLinesMatch[1]);
+      var draft = (db.orders || []).find(function (entry) { return entry.id === linesOrderId; });
+      if (!draft) return mockErr('NOT_FOUND', 'Bestillingen ble ikke funnet.', 404);
+      if (draft.status !== 'DRAFT') return mockErr('INVALID_STATE', 'Kun DRAFT-bestillinger kan redigeres.', 400);
+      var lineMethod = String(body._method || '').toUpperCase();
+      if (lineMethod === 'PUT' || lineMethod === 'DELETE') {
+        var lineToChange = getOrderLine(db, linesOrderId, String(body.lineId || ''));
+        if (!lineToChange) return mockErr('NOT_FOUND', 'Ordrelinjen ble ikke funnet.', 404);
+        if (lineMethod === 'PUT') {
+          var quantity = parseInt(body.quantity, 10);
+          if (!Number.isInteger(quantity) || quantity < 1) return mockErr('VALIDATION_ERROR', 'Antall må være et heltall >= 1.', 400);
+          lineToChange.requestedQty = quantity;
+          saveDb(db);
+          return mockApi({ success: true, line: deepClone(lineToChange) });
+        }
+        db.orderLines = db.orderLines.filter(function (line) { return line.id !== lineToChange.id; });
+        saveDb(db);
+        return mockApi({ success: true, removedLineId: lineToChange.id, orderId: linesOrderId });
+      }
+      if (!body.productId) return mockErr('VALIDATION_ERROR', 'productId er påkrevd.', 400);
+      var newLine = addDemoOrderLine(db, draft, body);
+      saveDb(db);
+      return mockApi({ success: true, line: deepClone(newLine), orderId: linesOrderId }, 201);
+    }
+
+    var orderSubmitMatch = path.match(/^api\/v1\/orders\/([^/]+)\/submit$/);
+    if (orderSubmitMatch) {
+      var submitOrder = (db.orders || []).find(function (entry) { return entry.id === decodeURIComponent(orderSubmitMatch[1]); });
+      if (!submitOrder) return mockErr('NOT_FOUND', 'Bestillingen ble ikke funnet.', 404);
+      var submitLines = (db.orderLines || []).filter(function (line) { return line.orderId === submitOrder.id; });
+      if (submitOrder.status !== 'DRAFT' || !submitLines.length) return mockErr('VALIDATION_ERROR', 'Kun en DRAFT-bestilling med varelinjer kan sendes inn.', 400);
+      submitOrder.status = 'SUBMITTED'; submitOrder.submittedAt = nowIso(); saveDb(db);
+      return mockApi({ success: true, bestilling: getDemoOrder(db, submitOrder.id), epostVarsel: { sent: false, reason: 'E-post er slått av i den lokale demoen.' } });
+    }
+
+    var orderStatusMatch = path.match(/^api\/v1\/orders\/([^/]+)\/status$/);
+    if (orderStatusMatch) {
+      var statusOrder = (db.orders || []).find(function (entry) { return entry.id === decodeURIComponent(orderStatusMatch[1]); });
+      var nextStatus = String(body.status || '').toUpperCase();
+      var allowedTransitions = { SUBMITTED: ['PICKING'], PICKING: ['READY_FOR_PICKUP', 'DEVIATION'], READY_FOR_PICKUP: ['COMPLETED'] };
+      if (!statusOrder) return mockErr('NOT_FOUND', 'Bestillingen ble ikke funnet.', 404);
+      if (statusOrder.status !== nextStatus && (allowedTransitions[statusOrder.status] || []).indexOf(nextStatus) === -1) return mockErr('INVALID_STATE', 'Ugyldig statusovergang.', 400);
+      if (nextStatus === 'READY_FOR_PICKUP' && (db.orderLines || []).filter(function (line) { return line.orderId === statusOrder.id; }).some(function (line) { return ['PICKED', 'PACKED', 'DEVIATION'].indexOf(line.lineStatus) === -1; })) return mockErr('INVALID_STATE', 'Alle linjer må være ferdig håndtert.', 400);
+      statusOrder.status = nextStatus;
+      if (body.lagerComment) statusOrder.lagerComment = String(body.lagerComment);
+      if (nextStatus === 'READY_FOR_PICKUP') statusOrder.readyAt = nowIso();
+      saveDb(db);
+      return mockApi({ success: true, bestilling: getDemoOrder(db, statusOrder.id), epostVarsel: nextStatus === 'READY_FOR_PICKUP' ? { sent: false, reason: 'E-post er slått av i den lokale demoen.' } : null });
+    }
+
+    var orderPickMatch = path.match(/^api\/v1\/orders\/([^/]+)\/lines\/([^/]+)\/pick$/);
+    var orderDeviationMatch = path.match(/^api\/v1\/orders\/([^/]+)\/lines\/([^/]+)\/deviation$/);
+    if (orderPickMatch || orderDeviationMatch) {
+      var match = orderPickMatch || orderDeviationMatch;
+      var actionOrderId = decodeURIComponent(match[1]);
+      var actionLineId = decodeURIComponent(match[2]);
+      var actionOrder = (db.orders || []).find(function (entry) { return entry.id === actionOrderId; });
+      var actionLine = getOrderLine(db, actionOrderId, actionLineId);
+      if (!actionOrder || !actionLine) return mockErr('NOT_FOUND', 'Bestilling eller ordrelinje ble ikke funnet.', 404);
+      if (orderPickMatch) {
+        var pickedQty = parseInt(body.pickedQty, 10);
+        if (!Number.isInteger(pickedQty) || pickedQty < 0) return mockErr('VALIDATION_ERROR', 'Plukket antall må være 0 eller høyere.', 400);
+        actionLine.pickedQty = pickedQty;
+        actionLine.lineStatus = pickedQty === actionLine.requestedQty ? 'PICKED' : 'PARTIALLY_PICKED';
+        if (actionOrder.status === 'SUBMITTED') actionOrder.status = 'PICKING';
+      } else {
+        var actualQty = parseInt(body.actualQty, 10);
+        if (!Number.isInteger(actualQty) || actualQty < 0 || !String(body.reason || '').trim()) return mockErr('VALIDATION_ERROR', 'Faktisk antall og avviksårsak er påkrevd.', 400);
+        actionLine.pickedQty = actualQty;
+        actionLine.deviationReason = String(body.reason);
+        actionLine.lineStatus = 'DEVIATION';
+        actionOrder.status = 'DEVIATION';
+      }
+      saveDb(db);
+      return mockApi({ success: true, line: deepClone(actionLine), bestilling: getDemoOrder(db, actionOrderId) });
+    }
+
+    var orderLoanMatch = path.match(/^api\/v1\/orders\/([^/]+)\/loan$/);
+    if (orderLoanMatch) {
+      var loanOrder = (db.orders || []).find(function (entry) { return entry.id === decodeURIComponent(orderLoanMatch[1]); });
+      var borrower = (db.borrowers || []).find(function (entry) { return entry.id === body.borrowerId && entry.status === 'aktiv'; });
+      if (!loanOrder) return mockErr('NOT_FOUND', 'Bestillingen ble ikke funnet.', 404);
+      if (loanOrder.status !== 'READY_FOR_PICKUP') return mockErr('INVALID_STATE', 'Bestillingen må være klar for henting.', 400);
+      if (!borrower) return mockErr('VALIDATION_ERROR', 'Velg en aktiv syntetisk låntaker.', 400);
+      if (loanOrder.loanLinks && loanOrder.loanLinks.length) return mockErr('INVALID_STATE', 'Bestillingen er allerede overført til utlån.', 400);
+      var createdLoans = [];
+      (db.orderLines || []).filter(function (line) { return line.orderId === loanOrder.id; }).forEach(function (line) {
+        var item = (db.items || []).find(function (entry) { return entry.id === line.productId; });
+        if (!item || item.beholdning < line.pickedQty) return;
+        item.beholdning -= line.pickedQty;
+        var loan = { id: nextId(db), itemId: item.id, laaner: borrower.navn, utlanDato: todayStr(), forfallDato: String(body.forfallDato || ''), notat: 'Syntetisk utlån fra ' + loanOrder.orderNumber + (body.notat ? ' · ' + body.notat : ''), returDato: null };
+        db.loans.push(loan); createdLoans.push(loan); loanOrder.loanLinks.push({ loanId: loan.id, lineId: line.id });
+      });
+      loanOrder.status = 'COMPLETED'; saveDb(db);
+      return mockApi({ success: true, createdLoans: createdLoans, bestilling: getDemoOrder(db, loanOrder.id) });
+    }
 
     if (path === 'api/v1/lists') {
       var newName = String(body.navn || '').trim();

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 
 const route = 'vibe/hul-lagerstyring/';
 const html = readFileSync(`${route}index.html`, 'utf8');
@@ -91,6 +92,66 @@ test('catalog points to the route and source provenance', () => {
   assert.equal(version, '0.60.3');
   assert.match(app.source, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);
   assert.match(app.scope, /connect-src none/);
-  assert.match(app.routeState, /VERSION bumped til 0\.60\.2/);
+  assert.match(app.routeState, /PR #97/);
+  assert.match(app.routeState, /ingen merge eller deploy/i);
   assert.doesNotMatch(app.risk, /rolle-simulator|rolle.*sideøkten/);
+});
+
+test('HUL mock supports complete synthetic order, picking, deviation, status and loan workflows', async () => {
+  const values = new Map();
+  const window = { __HUL_RUNTIME_CONFIG: { mockBackend: true, backendBaseUrl: 'mock://hul-mock.local' }, fetch: async () => { throw new Error('unexpected network'); } };
+  const context = { window, document: { dispatchEvent() {} }, CustomEvent: function CustomEvent() {}, localStorage: { getItem: (key) => values.get(key) || null, setItem: (key, value) => values.set(key, value), removeItem: (key) => values.delete(key) }, URLSearchParams, Promise, Date, Math, JSON, Uint8Array, DataView, TextEncoder, ArrayBuffer, btoa: (value) => Buffer.from(value, 'binary').toString('base64') };
+  vm.runInNewContext(backend, context);
+  async function request(pathname, method = 'GET', body = {}) {
+    const response = await window.fetch(`mock://hul-mock.local${pathname}`, { method, body: method === 'POST' ? JSON.stringify(body) : undefined });
+    return response.json();
+  }
+  const draft = await request('/api/v1/orders/draft', 'POST', { lines: [] });
+  const orderId = draft.orderId;
+  assert.ok(orderId);
+  const added = await request(`/api/v1/orders/${orderId}/lines`, 'POST', { productId: 'FLASKE-01', quantity: 2 });
+  const lineId = added.line.id;
+  await request(`/api/v1/orders/${orderId}/lines`, 'POST', { productId: 'TROJE-S', quantity: 1 });
+  await request(`/api/v1/orders/${orderId}/lines`, 'POST', { _method: 'PUT', lineId, quantity: 3 });
+  const detail = await request(`/api/v1/orders/${orderId}`);
+  assert.equal(detail.bestilling.linjer[0].requestedQty, 3);
+  const removable = detail.bestilling.linjer[1].id;
+  await request(`/api/v1/orders/${orderId}/lines`, 'POST', { _method: 'DELETE', lineId: removable });
+  await request(`/api/v1/orders/${orderId}/submit`, 'POST', {});
+  await request(`/api/v1/orders/${orderId}/status`, 'POST', { status: 'PICKING' });
+  await request(`/api/v1/orders/${orderId}/lines/${lineId}/pick`, 'POST', { pickedQty: 2 });
+  await request(`/api/v1/orders/${orderId}/lines/${lineId}/deviation`, 'POST', { actualQty: 2, reason: 'DAMAGED' });
+  const queue = await request('/api/v1/orders?status=DEVIATION');
+  assert.equal(queue.bestillinger[0].status, 'DEVIATION');
+  assert.equal(queue.bestillinger[0].linjer[0].lineStatus, 'DEVIATION');
+
+  const loanDraft = await request('/api/v1/orders/draft', 'POST', {});
+  const loanOrderId = loanDraft.orderId;
+  const loanLine = await request(`/api/v1/orders/${loanOrderId}/lines`, 'POST', { productId: 'FLASKE-01', quantity: 2 });
+  await request(`/api/v1/orders/${loanOrderId}/submit`, 'POST', {});
+  await request(`/api/v1/orders/${loanOrderId}/status`, 'POST', { status: 'PICKING' });
+  await request(`/api/v1/orders/${loanOrderId}/lines/${loanLine.line.id}/pick`, 'POST', { pickedQty: 2 });
+  await request(`/api/v1/orders/${loanOrderId}/status`, 'POST', { status: 'READY_FOR_PICKUP' });
+  const loanResult = await request(`/api/v1/orders/${loanOrderId}/loan`, 'POST', { borrowerId: 'DEMO-LAANER-01' });
+  assert.equal(loanResult.createdLoans.length, 1);
+  assert.equal((await request('/api/v1/loans')).data.length, 1);
+  assert.equal((await request('/api/v1/orders?status=COMPLETED')).bestillinger[0].id, loanOrderId);
+
+  const storedBeforeReload = values.get('HUL_MOCK_DB_v1');
+  assert.match(storedBeforeReload, /syntetisk-bruker/);
+  const refreshedWindow = { __HUL_RUNTIME_CONFIG: window.__HUL_RUNTIME_CONFIG, fetch: async () => { throw new Error('unexpected network'); } };
+  context.window = refreshedWindow;
+  vm.runInNewContext(backend, context);
+  const afterRefresh = await refreshedWindow.fetch(`mock://hul-mock.local/api/v1/orders?status=DEVIATION`);
+  assert.equal((await afterRefresh.json()).bestillinger[0].status, 'DEVIATION');
+  values.delete('HUL_MOCK_DB_v1');
+  assert.equal(values.has('HUL_MOCK_DB_v1'), false, 'demo reset removes the complete local database');
+});
+
+test('HUL demo remains responsive and confines write actions to the local mock', () => {
+  assert.match(css, /@media/);
+  assert.match(html, /connect-src 'none'/);
+  assert.match(runtime, /backendBaseUrl:\s*'mock:\/\//);
+  assert.match(backend, /api\\\/v1\\\/orders/);
+  assert.match(backend, /localStorage\.setItem\(STORAGE_KEY/);
 });
