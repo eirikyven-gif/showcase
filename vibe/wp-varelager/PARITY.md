@@ -1,6 +1,6 @@
 # WP Varelager source parity audit
 
-**Status: incomplete; PR #90 stays draft.** Direct comparison target is the runnable plugin UI and registered actions in archived source commit `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree `7506300fcd587546f7772e1cab4d55293bd7b947` (plugin manifest v2.3.0). Showcase route: `/vibe/wp-varelager/`, version `0.61.0`; source checkout is read-only. Slug is not provenance. This matrix records user-facing behavior, not WordPress transport implementation.
+**Status: incomplete; PR #90 stays draft.** Direct comparison target is the runnable plugin UI and registered actions in archived source commit `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree `7506300fcd587546f7772e1cab4d55293bd7b947` (plugin manifest v2.3.0). Showcase route: `/vibe/wp-varelager/`, branch base version `0.60.3`; the route release version awaits coordinator confirmation; source checkout is read-only. Slug is not provenance. This matrix records user-facing behavior, not WordPress transport implementation.
 
 | Source area and evidence | Source screens, actions, fields/content | Coverage in demo | Remaining gap or permitted safety block |
 |---|---|---|---|
@@ -33,7 +33,7 @@
 - Creation/opening of a publicly reachable share URL or token, plus delivery of the optional share email; only the synthetic local list row is recorded.
 - Real contact/person values; contact records and the mailto destination use synthetic values and the reserved `.invalid` domain.
 
-These blocks remove security or external-service behavior, while preserving the local screen, fields, and actions where possible. They are not a declaration of parity. The matrix still needs independent source review for any omitted user-facing interaction. PR #90 remains draft; Issue #2 is partially addressed. Do not mark ready, merge, or deploy before that parity review and complete checks pass.
+These blocks remove security or external-service behavior while preserving local screens, fields, and workflows where possible. Final comparison against the pinned runnable UI, forms, repository validation, and action classes found no additional source gaps beyond these listed blocks. They remain material user-facing parity gaps. PR #90 stays draft; Issue #2 is partially addressed. Do not mark ready, merge, or deploy while these blocks remain unresolved.
 
 ## Parity gate and QA
 

@@ -14,4 +14,4 @@ Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning o
 
 Kontroller: `node --test tests/wp-varelager.test.mjs` dekker proveniens, katalogversjon, kildefaner, workflow-handlinger, feltskjemaer og sikkerhetsgrenser. Full lokal browser-QA og CI kjøres på denne revisjonen; parity-aksept gjenstår til matrisens sikkerhetsblokker er bekreftet som eneste gap.
 
-Versjon/katalog: showcase `0.61.0`, 42 katalogoppføringer; versjonen følger rebase etter PR #93. Ikke merge eller deploy før parity-matrisen er lukket og relevante kontroller består.
+Versjon/katalog: showcase-baseline `0.60.3`, 42 katalogoppføringer i kandidatgrenen; releaseversjon utsettes til koordinator bekrefter rekkefølgen. Ikke merge eller deploy før parity-matrisen er lukket og relevante kontroller består.
