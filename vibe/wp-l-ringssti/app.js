@@ -17,14 +17,14 @@
     ],
     timeline: [{ date: 'Steg 1', label: 'Mål opp', description: 'Finn rammens størrelse.', tags: ['plan:forberedelse'] }, { date: 'Steg 2', label: 'Regn ut', description: 'Summer plassen som trengs.', tags: ['plan:beregning'] }, { date: 'Steg 3', label: 'Tegn', description: 'Lag en skisse som passer.', tags: ['plan:skisse'] }],
     media: [{ id: 1, title: 'Ruteplan · eksempelillustrasjon', icon: '▦', linked: true }, { id: 2, title: 'Plantekort · syntetisk eksempel', icon: '✿', linked: true }, { id: 3, title: 'Tidslinje · eksempelgrafikk', icon: '◷', linked: false }],
-    activeModule: 0, step: 0, overview: true, completed: [], draft: '', quizChoice: [], feedback: '', feedbackState: '', tab: 'modules'
+    activeModule: 0, step: 0, overview: true, completed: [], draft: '', draftInput: '', quizChoice: [], feedback: '', feedbackState: '', tab: 'modules', collapsedModules: {}, collapsedElements: {}, saveStatus: ''
   });
   const storageKey = 'vibe-wp-l-ringssti-demo-v1';
   function loadState() {
     try {
       const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
       if (stored && Array.isArray(stored.modules) && Array.isArray(stored.timeline) && Array.isArray(stored.media) && Array.isArray(stored.completed)) {
-        return { ...seed(), ...stored };
+        return { ...seed(), ...stored, draftInput: stored.draft || '' };
       }
     } catch {}
     return seed();
@@ -32,7 +32,8 @@
   let state = loadState();
   function persistState() {
     try {
-      localStorage.setItem(storageKey, JSON.stringify(state));
+      const { draftInput, ...persistedState } = state;
+      localStorage.setItem(storageKey, JSON.stringify(persistedState));
     } catch {
       const status = document.querySelector('#storage-status');
       if (status) status.textContent = 'Nettleseren kunne ikke lagre lokalt. Demoen virker til fanen lukkes.';
@@ -45,7 +46,7 @@
   const currentModule = () => state.modules[state.activeModule];
   const currentElements = () => currentModule()?.elements || [];
   const humanType = (type) => ({ factBox: 'Faktaboks', accordion: 'Accordion', hierarchy: 'Hirarki', timeline: 'Tidslinje', richText: 'Tekst', quiz: 'Quiz', case: 'Caseoppgave' })[type] || type;
-  const resetStepState = () => { state.step = 0; state.quizChoice = []; state.feedback = ''; state.feedbackState = ''; state.draft = ''; };
+  const resetStepState = () => { state.step = 0; state.quizChoice = []; state.feedback = ''; state.feedbackState = ''; };
   const focusStep = () => document.querySelector('[data-step-heading]')?.focus();
 
   function moduleCard(module, index) {
@@ -61,7 +62,7 @@
     const progress = m.elements.length ? Math.round((state.step + (state.completed.includes(state.activeModule) ? 1 : 0)) / m.elements.length * 100) : 0;
     let content = '';
     if (state.overview) content = `<div class="overview-intro"><p>Velg en modul for å starte. Låste moduler vises for å illustrere kursrekkefølgen.</p><div class="overview-grid">${state.modules.map(moduleCard).join('')}</div></div>`;
-    else if (locked) content = '<div class="locked-panel" role="status"><strong>Modulen er låst.</strong><br>Fullfør forrige steg for å låse den opp. Dette er en forhåndsdefinert demoprofil uten innlogging.</div>';
+    else if (locked) content = '<div class="locked-panel" role="status"><strong>Modulen er låst.</strong><br>Denne modulen er låst i eksempelstien. Demoversjonen har ingen innlogging eller tilgangskontroll.</div>';
     else if (!step) content = `<div class="complete-panel"><div class="complete-icon" aria-hidden="true">✓</div><h3>Modul fullført</h3><p>Du har sett alle stegene i denne modulen.</p><button class="button" type="button" data-action="back-overview">Tilbake til moduloversikten</button></div>`;
     else content = renderStep(step, m);
     pathRoot.innerHTML = `<div class="path-layout"><aside class="path-side"><p class="eyebrow">Syntetisk læringssti</p><h2>${esc(state.title)}</h2><p class="sub">En eksempelsti med moduler, innholdselementer og stegvis gjennomføring.</p><div class="badge-row"><span class="badge">${state.modules.length} moduler</span><span class="badge">${state.modules.reduce((sum, mod) => sum + mod.elements.length, 0)} steg</span></div>${state.overview ? '<p class="sample-label">Velg en modul for å begynne.</p>' : `<nav class="module-list" aria-label="Moduler">${state.modules.map(moduleCard).join('')}</nav><button class="button" type="button" data-action="back-overview">Moduloversikt</button>`}<span class="sample-label">Alle navn og eksempler er syntetiske.</span></aside><div class="path-main"><article class="content-card"><div class="module-topline"><h2>${state.overview ? 'Moduloversikt' : esc(m.title)}</h2><span class="step-progress">${state.overview ? 'Velg en modul' : locked ? 'Låst' : step ? `Steg ${state.step + 1} av ${m.elements.length}` : 'Fullført'}</span></div>${!state.overview ? `<div class="progress-track" role="progressbar" aria-label="Fremdrift i modul" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${locked ? 0 : progress}"><span style="width:${locked ? 0 : progress}%"></span></div>` : ''}${content}</article>${!state.overview && !locked && step ? `<div class="player-actions"><button class="button" type="button" data-action="previous" ${state.step === 0 ? 'disabled' : ''}>← Forrige</button><button class="button" type="button" data-action="back-overview">Moduloversikt</button><div class="right">${state.step === m.elements.length - 1 ? '<button class="button primary" type="button" data-action="finish-module">Fullfør modul</button>' : `<button class="button primary" type="button" data-action="next" ${step.type === 'quiz' && !state.completed.includes(state.activeModule + ':' + state.step) ? 'disabled' : ''}>Neste →</button>`}</div></div>` : ''}</div></div>`;
@@ -77,7 +78,7 @@
       const inputType = el.multi ? 'checkbox' : 'radio';
       return `${base}<p class="step-copy">${esc(el.question)}</p><fieldset><legend class="visually-hidden">Svaralternativer</legend><div class="quiz-options">${el.options.map((option, index) => `<label class="quiz-option"><input type="${inputType}" name="quiz" value="${index}" ${state.quizChoice.includes(index) ? 'checked' : ''}><span>${esc(option)}</span></label>`).join('')}</div></fieldset><div class="button-row"><button type="button" class="button primary" data-action="check-quiz">Sjekk svar</button><button type="button" class="button" data-action="ai-quiz" ${!state.completed.includes(state.activeModule + ':' + state.step) ? 'disabled' : ''}>Dypdykk (KI)</button></div><p class="quiz-feedback ${state.feedbackState}" tabindex="-1" role="status" aria-live="polite">${esc(state.feedback)}</p>`;
     }
-    if (el.type === 'case') return `${base}<p class="step-copy">${esc(el.text)}</p><p><strong>Leveranse</strong></p><ul>${el.deliverables.map(item => `<li>${esc(item)}</li>`).join('')}</ul><label class="field" for="case-draft">Ditt utkast<textarea id="case-draft" class="case-textarea" placeholder="Skriv et kort utkast …">${esc(state.draft)}</textarea></label><div class="case-actions"><button type="button" class="button primary" data-action="save-draft">Lagre utkast midlertidig</button><button type="button" class="button" data-action="clear-draft">Slett utkast</button><button type="button" class="button" data-action="ai-case">KI-sensor</button><span class="save-status" role="status" aria-live="polite" id="draft-status"></span></div><p class="sample-label">Utkast finnes bare i minnet til denne fanen. Det sendes ikke inn og forsvinner ved oppdatering.</p>`;
+    if (el.type === 'case') return `${base}<p class="step-copy">${esc(el.text)}</p><p><strong>Leveranse</strong></p><ul>${el.deliverables.map(item => `<li>${esc(item)}</li>`).join('')}</ul><label class="field" for="case-draft">Ditt utkast<textarea id="case-draft" class="case-textarea" placeholder="Skriv et kort utkast …">${esc(state.draftInput)}</textarea></label><div class="case-actions"><button type="button" class="button primary" data-action="save-draft">Lagre utkast midlertidig</button><button type="button" class="button" data-action="clear-draft">Slett utkast</button><button type="button" class="button" data-action="ai-case">KI-sensor</button><span class="save-status" role="status" aria-live="polite" id="draft-status"></span></div><p class="sample-label">Utkast lagres lokalt i nettleseren når du velger «Lagre utkast». Det sendes ikke inn. «Nullstill demo» sletter det.</p>`;
     return `${base}<p>Dette elementet har ingen eksempelinnhold ennå.</p>`;
   }
 
@@ -97,11 +98,40 @@
     if (el.type === 'case') return `${field('Oppgavetekst', el.text, p('text'), true, true)}${field('Leveransekrav (ett per linje)', el.deliverables.join('\n'), `${p('deliverables')}`, true, true)}`;
     return '';
   }
+  function validateDemo() {
+    const warnings = [];
+    const ids = new Set();
+    state.modules.forEach((module, mi) => {
+      if (!/^m\d{2}$/.test(module.id || '')) warnings.push(`Modul #${mi + 1}: moduleId bør følge formatet m01..m99.`);
+      if (ids.has(module.id)) warnings.push(`Modul ${module.id}: duplikat moduleId.`);
+      ids.add(module.id);
+      if (!String(module.title || '').trim()) warnings.push(`Modul ${module.id}: tittel mangler.`);
+      module.elements.forEach(element => {
+        if (element.type === 'factBox' && !element.rows.some(row => String(row.text || '').trim())) warnings.push(`Modul ${module.id}: faktaboks mangler tekst.`);
+        if (element.type === 'accordion' && (!element.items.length || element.items.some(item => !String(item.title || '').trim() || !String(item.text || '').trim()))) warnings.push(`Modul ${module.id}: accordion må ha minst ett punkt med tittel og tekst.`);
+        if (element.type === 'hierarchy' && (!element.levels.length || element.levels.some(level => !String(level.label || '').trim() || !level.items.some(item => String(item).trim())))) warnings.push(`Modul ${module.id}: hirarki må ha nivå og punkt.`);
+        if (element.type === 'timeline' && element.mode === 'filter' && !element.filterTags.length) warnings.push(`Modul ${module.id}: tidslinjefilter krever minst én tag.`);
+        if (element.type === 'quiz' && (!String(element.question || '').trim() || element.options.filter(option => String(option).trim()).length < 2 || !element.correct.length || (!element.multi && element.correct.length > 1))) warnings.push(`Modul ${module.id}: kontroller quizspørsmål, minst to alternativer og riktige svar.`);
+        if (element.type === 'case' && (!String(element.text || '').trim() || !element.deliverables.some(item => String(item).trim()))) warnings.push(`Modul ${module.id}: case må ha oppgavetekst og leveransekrav.`);
+        if (element.type === 'case' && module.elements.filter(item => item.type === 'case').length > 1) warnings.push(`Modul ${module.id}: kun én caseoppgave per modul.`);
+      });
+    });
+    state.timeline.forEach(event => {
+      if (!String(event.label || '').trim()) warnings.push('Tidslinje-event mangler tittel.');
+      event.tags.forEach(tag => { if (!/^[a-z0-9-]+:[a-z0-9-]+$/.test(tag)) warnings.push(`Tidslinje-tag «${tag}» bør følge kategori:verdi.`); });
+    });
+    return warnings;
+  }
+  function renderValidation() {
+    const warnings = validateDemo();
+    return warnings.length ? `<div class="callout validation-warnings" role="status"><strong>Validering:</strong> Du kan lagre, men punktene bør rettes før synkronisering.<ul>${warnings.map(warning => `<li>${esc(warning)}</li>`).join('')}</ul></div>` : '<p class="callout" role="status">Validering: Ingen varsler.</p>';
+  }
+
   function renderEditor() {
     if (!editorRoot) return;
     editorRoot.setAttribute('aria-labelledby', `tab-${state.tab}`);
     if (state.tab === 'modules') {
-      editorRoot.innerHTML = `<div class="callout">Endringene simulerer adminredigering. Bruk pilknappene til å endre rekkefølge. Ingen «Lagre»-knapp sender data til en server.</div><div class="section-label">Læringsmoduler</div>${state.modules.length ? state.modules.map((m, mi) => `<section class="module-edit-card"><div class="module-edit-head"><h3>Modul ${mi + 1} · ${esc(m.id)}</h3><div class="edit-controls"><button class="icon-button" type="button" aria-label="Flytt modul opp" data-action="move-module" data-mi="${mi}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt modul ned" data-action="move-module" data-mi="${mi}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-module" data-mi="${mi}">Slett</button></div></div><div class="module-fields">${field('Modultittel', m.title, `modules.${mi}.title`)}${field('Undertittel', m.subtitle, `modules.${mi}.subtitle`)}<label class="field inline"><input type="checkbox" data-bind="modules.${mi}.locked" ${m.locked ? 'checked' : ''}> Låst modul</label></div><div class="section-label">Del 1-elementer</div>${m.elements.map((el, ei) => `<article class="element-edit-card"><div class="element-edit-head"><h4>${esc(humanType(el.type))} · ${esc(el.title || `Element ${ei + 1}`)}</h4><div class="edit-controls"><button class="icon-button" type="button" aria-label="Flytt element opp" data-action="move-element" data-mi="${mi}" data-ei="${ei}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt element ned" data-action="move-element" data-mi="${mi}" data-ei="${ei}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-element" data-mi="${mi}" data-ei="${ei}">Slett</button></div></div><div class="element-fields">${field('Elementtittel', el.title, pathFor(mi, ei, 'title'), true)}${renderElementFields(el, mi, ei)}</div></article>`).join('')}<div class="button-row"><label class="field">Nytt element<select data-add-type="${mi}"><option value="">Velg type</option><option value="factBox">Faktaboks</option><option value="accordion">Accordion</option><option value="hierarchy">Hirarki</option><option value="timeline">Tidslinje</option><option value="richText">Tekst (markdown)</option><option value="quiz">Quiz</option><option value="case">Caseoppgave</option></select></label><button class="button" type="button" data-action="add-module-element" data-mi="${mi}">Legg til element</button></div></section>`).join('') : '<div class="empty-state">Ingen moduler ennå.</div>'}<button class="button primary" type="button" data-action="add-module">+ Legg til modul</button>`;
+      editorRoot.innerHTML = `<div class="callout">Endringene simulerer adminredigering og lagres bare i denne nettleseren. Valideringsvarsler følger kildens editor.</div><div class="button-row"><button class="button" type="button" data-action="toggle-all-modules">Åpne/Lukk alle</button><button class="button primary" type="button" data-action="save-local">Lagre lokalt</button><span role="status" aria-live="polite">${esc(state.saveStatus)}</span></div>${renderValidation()}<div class="section-label">Læringsmoduler</div>${state.modules.length ? state.modules.map((m, mi) => `<section class="module-edit-card"><div class="module-edit-head"><h3>Modul ${mi + 1} · ${esc(m.id)}</h3><div class="edit-controls"><button class="button" type="button" aria-expanded="${!state.collapsedModules[m.id]}" data-action="toggle-module" data-mi="${mi}">${state.collapsedModules[m.id] ? 'Åpne' : 'Lukk'}</button><button class="icon-button" type="button" aria-label="Flytt modul opp" data-action="move-module" data-mi="${mi}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt modul ned" data-action="move-module" data-mi="${mi}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-module" data-mi="${mi}">Slett</button></div></div>${state.collapsedModules[m.id] ? '' : `<div class="module-fields">${field('Modultittel', m.title, `modules.${mi}.title`)}${field('Undertittel', m.subtitle, `modules.${mi}.subtitle`)}<label class="field inline"><input type="checkbox" data-bind="modules.${mi}.locked" ${m.locked ? 'checked' : ''}> Låst modul</label></div><div class="section-label">Del 1-elementer</div>${m.elements.map((el, ei) => `<article class="element-edit-card"><div class="element-edit-head"><h4>${esc(humanType(el.type))} · ${esc(el.title || `Element ${ei + 1}`)}</h4><div class="edit-controls"><button class="button" type="button" aria-expanded="${!state.collapsedElements[`${m.id}:${ei}`]}" data-action="toggle-element" data-mi="${mi}" data-ei="${ei}">${state.collapsedElements[`${m.id}:${ei}`] ? 'Åpne' : 'Lukk'}</button><button class="icon-button" type="button" aria-label="Flytt element opp" data-action="move-element" data-mi="${mi}" data-ei="${ei}" data-dir="-1">↑</button><button class="icon-button" type="button" aria-label="Flytt element ned" data-action="move-element" data-mi="${mi}" data-ei="${ei}" data-dir="1">↓</button><button class="button danger" type="button" data-action="remove-element" data-mi="${mi}" data-ei="${ei}">Slett</button></div></div>${state.collapsedElements[`${m.id}:${ei}`] ? '' : `<div class="element-fields">${field('Elementtittel', el.title, pathFor(mi, ei, 'title'), true)}${renderElementFields(el, mi, ei)}</div>`}</article>`).join('')}<div class="button-row"><label class="field">Nytt element<select data-add-type="${mi}"><option value="">Velg type</option><option value="factBox">Faktaboks</option><option value="accordion">Accordion</option><option value="hierarchy">Hirarki</option><option value="timeline">Tidslinje</option><option value="richText">Tekst (markdown)</option><option value="quiz">Quiz</option><option value="case">Caseoppgave</option></select></label><button class="button" type="button" data-action="add-module-element" data-mi="${mi}">Legg til element</button></div>`}</section>`).join('') : '<div class="empty-state">Ingen moduler ennå.</div>'}<button class="button primary" type="button" data-action="add-module">+ Legg til modul</button>`;
     } else if (state.tab === 'timeline') {
       editorRoot.innerHTML = `<div class="callout">Global tidslinje kan gjenbrukes av tidslinje-elementer i modulene. Tagger er syntetiske og lokale.</div><div class="section-label">Hendelser</div>${state.timeline.map((event, i) => `<article class="timeline-edit-card"><div class="element-fields">${field('Dato / steg', event.date, `timeline.${i}.date`)}${field('Tittel', event.label, `timeline.${i}.label`)}${field('Beskrivelse', event.description, `timeline.${i}.description`, true, true)}${field('Tagger (kommaseparert)', event.tags.join(', '), `timeline.${i}.tags`, true)}</div><button class="button danger" type="button" data-action="remove-event" data-index="${i}">Slett hendelse</button></article>`).join('')}<button class="button primary" type="button" data-action="add-event">+ Legg til hendelse</button>`;
     } else {
@@ -132,7 +162,7 @@
     if (action === 'open-module') { state.activeModule = ix; state.overview = false; resetStepState(); renderPath(); focusStep(); }
     else if (action === 'previous') { state.step = Math.max(0, state.step - 1); state.quizChoice = []; state.feedback = ''; renderPath(); focusStep(); }
     else if (action === 'next') { state.step++; state.quizChoice = []; state.feedback = ''; state.feedbackState = ''; renderPath(); focusStep(); }
-    else if (action === 'finish-module') { if (!state.completed.includes(state.activeModule)) state.completed.push(state.activeModule); state.step = currentElements().length; renderPath(); }
+    else if (action === 'finish-module') { if (!state.completed.includes(state.activeModule)) state.completed.push(state.activeModule); state.step = 0; state.overview = true; renderPath(); document.querySelector('.module-card:not(:disabled)')?.focus(); }
     else if (action === 'back-overview') { state.step = 0; state.overview = true; renderPath(); document.querySelector('.module-card:not(:disabled)')?.focus(); }
     else if (action === 'check-quiz') {
       const selected = [...document.querySelectorAll('input[name="quiz"]:checked')].map(input => Number(input.value));
@@ -141,10 +171,14 @@
       else if (selected.length === quiz.correct.length && selected.every(value => quiz.correct.includes(value))) { state.feedback = quiz.feedbackCorrect; state.feedbackState = 'good'; const key = state.activeModule + ':' + state.step; if (!state.completed.includes(key)) state.completed.push(key); }
       else { state.feedback = quiz.feedbackWrong; state.feedbackState = 'bad'; }
       renderPath(); document.querySelector('.quiz-feedback')?.focus();
-    } else if (action === 'save-draft') { state.draft = document.querySelector('#case-draft').value; document.querySelector('#draft-status').textContent = 'Utkast lagret lokalt i denne nettleseren.'; }
-    else if (action === 'clear-draft') { state.draft = ''; renderPath(); document.querySelector('#case-draft').focus(); }
+    } else if (action === 'save-draft') { state.draft = state.draftInput; persistState(); document.querySelector('#draft-status').textContent = 'Utkast lagret lokalt i denne nettleseren.'; }
+    else if (action === 'clear-draft') { state.draft = ''; state.draftInput = ''; persistState(); renderPath(); document.querySelector('#case-draft').focus(); }
     else if (action === 'ai-quiz') openDialog('Dypdykk (KI)', 'Denne kildeknappen er en stub uten tilkoblet backend. I demoen sendes ingen svar videre.');
     else if (action === 'ai-case') openDialog('KI-sensor', 'Dette er en kilde-stub som ikke er koblet til backend. Utkastet vurderes ikke og forlater ikke nettleserfanen.');
+    else if (action === 'save-local') { persistState(); state.saveStatus = 'Eksempelinnhold lagret lokalt.'; renderEditor(); }
+    else if (action === 'toggle-module') { const id = state.modules[mi].id; state.collapsedModules[id] = !state.collapsedModules[id]; renderEditor(); }
+    else if (action === 'toggle-element') { const key = `${state.modules[mi].id}:${ei}`; state.collapsedElements[key] = !state.collapsedElements[key]; renderEditor(); }
+    else if (action === 'toggle-all-modules') { const collapse = state.modules.some(module => !state.collapsedModules[module.id]); state.modules.forEach(module => state.collapsedModules[module.id] = collapse); renderEditor(); }
     else if (action === 'add-module') { const n = state.modules.length + 1; state.modules.push({ id: `m${String(n).padStart(2, '0')}`, title: `Ny modul ${n}`, subtitle: 'Syntetisk demoinnhold', locked: false, elements: [] }); renderEditor(); }
     else if (action === 'move-module') { move(state.modules, mi, Number(target.dataset.dir)); renderEditor(); }
     else if (action === 'remove-module') { state.modules.splice(mi, 1); state.activeModule = Math.min(state.activeModule, Math.max(0, state.modules.length - 1)); renderEditor(); renderPath(); }
@@ -163,14 +197,13 @@
   });
   document.addEventListener('input', (event) => {
     if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.type === 'checkbox' ? event.target.checked : event.target.value); persistState(); }
-    if (event.target.matches('#case-draft')) { state.draft = event.target.value; persistState(); }
+    if (event.target.matches('#case-draft')) { state.draftInput = event.target.value; }
     if (event.target.matches('input[name="quiz"]')) { const value = Number(event.target.value); if (event.target.type === 'radio') state.quizChoice = [value]; else if (event.target.checked) state.quizChoice.push(value); else state.quizChoice = state.quizChoice.filter(item => item !== value); persistState(); }
   });
   document.addEventListener('change', (event) => {
     if (event.target.matches('[data-add-type]')) event.target.dataset.selectedType = event.target.value;
     if (event.target.matches('[data-correct]')) { const [mi, ei, oi] = event.target.dataset.correct.split('.').map(Number); const correct = state.modules[mi].elements[ei].correct; state.modules[mi].elements[ei].correct = event.target.checked ? [...new Set([...correct, oi])] : correct.filter(value => value !== oi); }
-    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.value); }
-    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.value); }
+    if (event.target.matches('[data-bind]')) { updatePath(event.target.dataset.bind, event.target.type === 'checkbox' ? event.target.checked : event.target.value); }
     if (event.target.matches('[data-media]')) state.media[Number(event.target.dataset.media)].linked = event.target.checked;
     if (event.target.matches('[data-correct], [data-media], [data-bind]')) persistState();
   });
