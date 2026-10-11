@@ -48,4 +48,4 @@ The route still does not byte-for-byte reproduce the source app’s hosted authe
 - Static regression coverage: `tests/ns3424-arkivdemo.test.mjs`.
 - Browser QA was rerun in Chromium at 1440px and 390px after the case correction: all five source-shaped case workflows completed; no horizontal overflow, page errors or external requests.
 - No public deployment check: this PR remains draft and is not merged or deployed.
-- Release queue: PR #97 v0.60.4, PR #94 v0.60.5, then PR #100 v0.60.6. `VERSION` remains at the current main baseline until PR #100 reaches its turn.
+- Release queue: PR #94 v0.60.6, PR #100 v0.60.7, then new WP Varelager route PR #90 v0.61.0. `VERSION` is set to v0.60.7 as a patch from the rebased main baseline v0.60.6.

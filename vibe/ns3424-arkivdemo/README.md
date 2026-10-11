@@ -16,4 +16,4 @@ Demoen er kun en pedagogisk illustrasjon, ikke faglig veiledning. Innhold er ikk
 
 ## QA/status
 
-Kjør `node --test tests/ns3424-arkivdemo.test.mjs` eller hele settet `node --test tests/*.test.mjs`. Paritetsrettelsen er i PR #100 og avventer releasekøen: #97 v0.60.4, #94 v0.60.5, deretter #100 v0.60.6. VERSION står på main-baselinen v0.60.3 til PR #100 får sin tur; PR-en er draft, ikke merget eller publisert.
+Kjør `node --test tests/ns3424-arkivdemo.test.mjs` eller hele settet `node --test tests/*.test.mjs`. Paritetsrettelsen er i PR #100 og avventer releasekøen: #94 v0.60.6, #100 v0.60.7, deretter ny WP Varelager-rute PR #90 v0.61.0. VERSION v0.60.7 er patch mot main v0.60.6; PR-en er draft, ikke merget eller publisert.
