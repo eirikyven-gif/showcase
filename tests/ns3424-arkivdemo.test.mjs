@@ -18,7 +18,7 @@ test('catalog and route identify the archived app and its status', () => {
   assert.match(app.source, /5c58678269fb2c24d83af8afedeb65c8878732ff/);
   assert.match(app.status, /kildeparitet[\s\S]*5c58678269fb2c24d83af8afedeb65c8878732ff/);
   assert.match(app.status, /Issue #2 delvis/);
-  assert.match(app.routeState, /0\.60\.2.*0\.61\.0/);
+  assert.match(app.routeState, /#97 v0\.60\.4.*#94 v0\.60\.5.*#100 v0\.60\.6/);
   assert.equal(app.parityDocument, 'vibe/ns3424-arkivdemo/PARITY.md');
   assert.match(html, /rel="canonical" href="\/vibe\/ns3424-arkivdemo\/"/);
   assert.match(html, /eirikyven-gif\/ns3456, app-fdvu-ns3424 v0\.1\.1; arkivert/);
@@ -49,8 +49,10 @@ test('source learning path has every module and dedicated local workflows', () =
     'Case 4: Branncelle-dør og rømningsvei (middels–høy)',
     'Case 5: Kombinasjonsbygg bolig + næring (kompleks)'
   ]) assert.ok(html.includes(title), title);
-  for (const hook of ['data-module-open', 'data-level', 'data-tg', 'data-kg', 'data-prob', 'data-sort', 'data-case-observation', 'data-case-level-reason', 'data-case-documentation', 'data-case-evidence', 'data-case-verification', 'data-case-uncertainty', 'data-case-priority', 'data-case-student-comment', 'data-case-tg-reason', 'data-case-further', 'data-submit-case', 'data-skip-quiz', 'data-complete-module']) assert.ok(html.includes(hook), hook);
-  assert.match(docs, /No built-in print, report generation, PDF\/export or download function found/);
+  for (const hook of ['data-module-open', 'data-level', 'data-tg', 'data-kg', 'data-prob', 'data-sort', 'data-case-observation', 'data-case-level', 'data-case-tg-reason', 'data-case-kg-reason', 'data-case-risk-reason', 'data-case-now', 'data-case-short', 'data-case-long', 'data-case-further', 'data-submit-case', 'data-skip-quiz', 'data-complete-module']) assert.ok(html.includes(hook), hook);
+  assert.match(docs, /No built-in print, report generation, PDF\/export or download function was found/);
+  assert.match(docs, /master log remains provenance for a separate plan/i);
+  for (const unsupported of ['data-case-level-reason', 'data-case-documentation', 'data-case-evidence', 'data-case-verification', 'data-case-uncertainty', 'data-case-priority', 'data-case-student-comment']) assert.doesNotMatch(html, new RegExp(unsupported));
   assert.doesNotMatch(html, /Vis arbeidsarkssammendrag|Eksporter rapport|Last ned PDF/);
 });
 
