@@ -4,7 +4,7 @@ En statisk, funksjonell demonstrasjon av WordPress-pluginen WP Læringssti v0.5.
 
 ## Kilde og vurderingsgrunnlag
 
-- Kilde: [`eirikyven-gif/WP-l-ringssti`](https://github.com/eirikyven-gif/WP-l-ringssti), offentlig `main`, undersøkt 2026-10-10. Repoet inneholder `wp-learningsti-mvp_v0.5.6.zip`; filene i arkivet ble lest, ikke endret.
+- Kilde: [`eirikyven-gif/WP-l-ringssti`](https://github.com/eirikyven-gif/WP-l-ringssti), offentlig `main` commit `b358faabd862355ae7e666a9953d8a708b983786`, undersøkt 2026-10-11. Repoet inneholder `wp-learningsti-mvp_v0.5.6.zip`; filene i arkivet ble lest, ikke endret.
 - Arkivets pluginheader oppgir v0.5.6. Kilderepoet har ingen lisensfil. Showcase-koden er derfor skrevet selvstendig ut fra kildeappens observerbare funksjoner og bruker ikke PHP-, JS- eller CSS-kildefiler fra pluginarkivet.
 - Arkivets `README.txt` sier at quiz og case ikke finnes i v0.5.6, mens PHP- og frontend-JS-koden inneholder quizvalidering, caseoppgave og KI-stubber. Masterloggen `Import` beskriver også v0.5.6-playerflyt. Demoen følger den implementerte pluginoppførselen; kildebeskrivelsenes sprik er fortsatt en usikkerhet.
 - Det finnes ingen kurskonfigurasjon eller faktiske kursinnhold i repoet. Parsellinnholdet her er syntetisk, og viser strukturen framfor å fremstille seg som et originalt kurs.
@@ -21,7 +21,7 @@ En statisk, funksjonell demonstrasjon av WordPress-pluginen WP Læringssti v0.5.
 ## Bevisste demoavgrensninger
 
 - Alle navn, moduler, tekst, tidslinjer og medier er tydelig syntetiske. Ingen personopplysninger eller privat tjenestedata brukes.
-- Redigeringsvalg, læringsfremdrift og caseutkast lagres i nettleserens `localStorage`, som en lokal simulering av kildefunksjonene. Data sendes ikke til en server. «Nullstill demo» sletter den lokale demoen og går tilbake til syntetiske eksempeldata.
+- Redigeringsvalg og læringsfremdrift lagres i nettleserens `localStorage`. Caseutkast lagres der først når besøkende velger «Lagre utkast», som i kildens lokale utkastflyt. Ikke-lagret tekst forsvinner ved oppdatering. Data sendes ikke til en server. «Nullstill demo» sletter den lokale demoen og går tilbake til syntetiske eksempeldata.
 - Quiz vurderes lokalt i nettleseren. Riktig svar er dermed synlig i kildefilene og har ingen sikkerhets- eller vurderingsverdi.
 - «Dypdykk (KI)» og «KI-sensor» åpner forklarende dialoger, men kaller ikke en KI-tjeneste. Sti-media er illustrasjoner, ikke WordPress-attachments.
 - WordPress/Gutenberg-blokk, posttype, roller og capability-kontroller, serverlagring, AJAX, servervalidert fasit, mediebibliotek og eventuell produksjonsintegrasjon er ikke med.
@@ -31,4 +31,4 @@ En statisk, funksjonell demonstrasjon av WordPress-pluginen WP Læringssti v0.5.
 
 Fra Showcase-roten: `python3 -m http.server 8000`, og åpne `http://localhost:8000/vibe/wp-l-ringssti/`.
 
-Kjør fokustestene fra Showcase-roten med `node --test tests/wp-l-ringssti.test.mjs`.
+Se [PARITY.md](PARITY.md) for skjerm-/arbeidsflytkartlegging mot denne eksakte kildeversjonen. Kjør fokustestene fra Showcase-roten med `node --test tests/wp-l-ringssti.test.mjs` og Chromium QA med `node --test qa/wp-l-ringssti-parity.mjs`.

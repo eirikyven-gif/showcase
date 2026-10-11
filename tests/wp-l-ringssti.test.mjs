@@ -29,6 +29,19 @@ test('demo preserves the source player and editor feature families with syntheti
   assert.match(docs, /syntetiske/i);
 });
 
+test('parity correction matches pinned source editor and player interactions', () => {
+  assert.match(js, /data-action="toggle-module"/);
+  assert.match(js, /data-action="toggle-element"/);
+  assert.match(js, /data-action="toggle-all-modules"/);
+  assert.match(js, /data-action="save-local"/);
+  assert.match(js, /function validateDemo\(\)/);
+  assert.match(js, /function renderValidation\(\)/);
+  assert.match(js, /state\.overview = true; renderPath\(\)/);
+  assert.match(js, /event\.target\.type === 'checkbox' \? event\.target\.checked/);
+  assert.match(js, /Denne modulen er låst i eksempelstien/);
+  assert.match(docs, /PARITY\.md/);
+});
+
 test('demo persistence is local-only, resettable, and has no network or cookies', () => {
   assert.match(js, /let state = loadState\(\)/);
   assert.match(js, /localStorage\.getItem\(storageKey\)/);
@@ -37,11 +50,17 @@ test('demo persistence is local-only, resettable, and has no network or cookies'
   assert.match(html, /data-action="reset-demo"/);
   assert.match(js, /action === 'reset-demo'/);
   assert.match(html, /Alt innhold og all fremdrift lagres bare lokalt/);
+  assert.match(html, /Bruk «Nullstill demo» for å slette alt lokalt/);
+  assert.match(docs, /localStorage/);
+  assert.match(js, /draftInput/);
+  assert.match(js, /state\.draft = state\.draftInput; persistState\(\)/);
   assert.doesNotMatch(`${html}\n${js}`, /\b(?:fetch|XMLHttpRequest|sendBeacon|sessionStorage|indexedDB|document\.cookie|navigator\.sendBeacon)\b/i);
   assert.doesNotMatch(`${html}\n${js}`, /https?:\/\//i);
   assert.match(js, /document\.addEventListener\('click'/);
   assert.match(docs, /Nullstill demo/);
   assert.match(docs, /localStorage/);
+  assert.match(js, /draftInput/);
+  assert.match(js, /state\.draft = state\.draftInput; persistState\(\)/);
 });
 
 test('interactive controls have visible keyboard focus and the layout adapts to mobile', () => {
@@ -63,4 +82,7 @@ test('catalog entry documents the faithful copy and its static-demo boundary', (
   assert.match(entry.sourceApiAuthStoragePrivacy, /ingen nettverkskall|ingen nettverk/i);
   assert.match(entry.rightsUncertainty, /lisens/i);
   assert.match(entry.scope, /ingen.*lagring/i);
+  assert.match(entry.source, /b358faabd862355ae7e666a9953d8a708b983786/);
+  assert.match(entry.source, /bd0411bb9087440a211969bc0d358dae87725bf98fb546dd224fa26f85327d16/);
+  assert.match(entry.separation, /larebot/i);
 });
