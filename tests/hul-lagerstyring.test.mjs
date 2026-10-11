@@ -44,10 +44,25 @@ test('source-faithful HUL route is mock-only, disclosed, and resettable', () => 
   assert.match(controls, /HUL_MOCK_DB_v1/);
   assert.match(controls, /data-order-line-qty/);
   assert.match(controls, /aria-label', 'Antall for '/);
+  assert.match(controls, /Navn på ny liste/);
   assert.match(html, /localStorage/);
   assert.match(backend, /localStorage\.removeItem\(STORAGE_KEY\)/);
   assert.match(readme, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);
   assert.match(readme, /localStorage/);
+});
+
+test('HUL accessibility corrections keep normal-text contrast and modal keyboard support', () => {
+  assert.match(css, /\.text-slate-500[^}]*rgb\(71 85 105/);
+  assert.match(css, /\.text-emerald-600[^}]*rgb\(4 120 87/);
+  assert.match(controls, /normalizeAttachmentHeadings/);
+  assert.match(controls, /#inventory-form-attachments-lists h4/);
+  assert.match(controls, /makeModalKeyboardAccessible/);
+  assert.match(controls, /event\.key !== 'Tab'/);
+  assert.match(controls, /event\.shiftKey/);
+  assert.match(controls, /state\.opener\.focus\(\)/);
+  assert.match(appJs.toString('utf8'), /role="dialog" aria-modal="true" aria-labelledby=/);
+  assert.match(readme, /axe-core 4\.10\.3/);
+  assert.match(readme, /qa\/hul-lagerstyring-accessibility\.cjs/);
 });
 
 test('HUL route has no off-origin script, style, image, font, media, or network resource', () => {
