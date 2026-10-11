@@ -19,7 +19,7 @@ const removed = [
 ];
 
 test('curated routes and catalog entries are removed for the v2 breaking release', () => {
-  assert.equal(readFileSync(new URL('../VERSION', import.meta.url), 'utf8').trim(), '2.0.0');
+  assert.equal(readFileSync(new URL('../VERSION', import.meta.url), 'utf8').trim(), '2.0.1');
   assert.equal(catalog.apps.length, 28);
   for (const slug of removed) {
     assert.equal(catalog.apps.some((app) => app.slug === slug), false, `${slug} is absent from the hub catalog`);
