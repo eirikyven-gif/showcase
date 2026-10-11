@@ -1,0 +1,17 @@
+# WP Varelager · lokal simulering
+
+**Lokale kildearbeidsflyter er modellert med syntetiske data.** Issue #2 er delvis adressert; PR #90 forblir draft. Se [kildebasert parity-matrise](PARITY.md) for mapping og sikkerhetsgrenser.
+
+## Kilde og avgrensning
+
+Det arkiverte `eirikyven-gif/Wp-varelager` ble kontrollert i kildekode og runtime-visninger, ikke utledet fra ruteslug. Inspisert `main` SHA `e080136b7b0bc20e1885c9c9456f7143ca170861`, tree `7506300fcd587546f7772e1cab4d55293bd7b947`. Kilderepoet er ikke endret. Demoen har syntetiske eksempler og holder all redigering i sidens minne.
+
+Lokale source-parity-substitutter: velg syntetisk rolle og hver av de ti kilde-capabilities; kontroller blir lokalt gated etter valgte capabilities. Velg en syntetisk kategoriliste og aktivt/utløpt demo-scenario. Kopiert `#share-preview/<synthetic-slug>` inneholder bare en allowlistet slug; en ny side eller omlasting velger de samme syntetiske varene og demoens utløpsstatus. Den lokale datoen kan flyttes for å simulere status, men datoen nullstilles ved omlasting. Slugen inneholder ikke token, etikett, mottaker eller private verdier og gir ingen tilgang. Velg en syntetisk JPG/PNG/PDF/DOCX-fil fra filvelgeren eller en innebygd fixture, fyll etikett/kategori, se lokal forhåndsvisning og slett oppføringen. En valgt fil beholdes bare i sidens minne; ingen fetch, nettverk, cookies eller nettleserlagring brukes. Forhåndsvisningens object URL tilbakekalles når dialogen lukkes; avbryt, sletting og omlasting slipper også filreferansen. Bruk bare syntetiske filer uten personopplysninger; maks 10 MB. Innebygd fixture er fortsatt tilgjengelig. Kildegrensene og nøyaktig mapping står i [PARITY.md](PARITY.md).
+
+## Status og QA
+
+Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kildearbeidsflytene er implementert lokalt, inkludert separate adminskjermer, avtaler, rapport/opptelling, tokenløs delingsforhåndsvisning/kopiering, CSV/XLSX, innstillinger, notater og syntetisk vedleggsfixture-liste/visning/fjerning. Matrisen oppgir kildehandling, lokal ekvivalent, presis sikkerhetsgrense og Chromium-QA per kildeområde. Korreksjoner for tomme varevalg, SKU-validering/-generering, leiedatofeil og egendefinerte felt er kildebasert og dokumentert der. Ekte identitet/serverlagring, personopplysninger, offentlig bearer-lenke og e-post er deaktivert. Valgte syntetiske filbytes finnes kun for øyeblikket i nettleserminnet og slettes fra appens referanser ved avbryt, sletting eller omlasting; private data skal ikke velges. De synlige arbeidsflytene har lokale substitutter; begrensningene er ikke beskrevet som helt utelatte brukerflyter.
+
+Kontroller på denne revisjonen: `node --test tests/*.test.mjs` (131/131); fokuserte WP Varelager unit/accessibilitytester (10/10); share Chromium (1/1) og attachment Chromium (1/1). Share-scenariet dekker allowlistet slug, ny side, omlasting og begge utløpsscenarioer. Attachment-scenariet dekker lokal syntetisk fil, metadata, bildeforhåndsvisning, object-URL-tilbakekalling, slett, nullstill/avbryt, omlasting, ingen cookies/off-origin-kall og reflow ved 320/390/768/1440px. `node --check`, `git diff --check` og JSON-validering er bestått. Ingen JavaScript-feil eller off-origin-kall. CI-status føres i PR #90.
+
+Versjon/katalog: rebaset på showcase main `cd5ba4a` med `VERSION` v0.60.7 og 41 eksisterende katalogoppføringer. Denne nye ruta foreslår v0.61.0 og gir 42 oppføringer. Patchkø #94 v0.60.6 og #100 v0.60.7 er fullført. PR #90 forblir draft; ikke merge eller deploy.

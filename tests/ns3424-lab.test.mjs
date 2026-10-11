@@ -13,14 +13,16 @@ test('isolated route and catalog document source, route, scope, and uncertaintie
   const catalog = JSON.parse(read('vibe/catalog.json'));
   const app = catalog.apps.find(item => item.slug === 'ns3424-lab');
   assert.ok(app);
-  assert.equal(catalog.apps.length, 41);
+  assert.equal(catalog.apps.length, 42);
   for (const field of ['status', 'source', 'sourceStack', 'sourceTests', 'sourceApiAuthStoragePrivacy', 'rightsUncertainty', 'purpose', 'demoValue', 'simplifications', 'risk', 'scope', 'routeState', 'sourceUncertainty']) {
     assert.equal(typeof app[field], 'string', `${field} is documented`);
     assert.ok(app[field].trim());
   }
   assert.match(app.source, /6938f28097d428d1af4c55d701ebb58bad9ff8a7/);
+  assert.match(app.routeState, /stabil eksisterende rute/i);
+  assert.match(app.routeState, /fullført og publisert i v0\.60\.7, basert på v0\.60\.6.*PR #100/);
   assert.match(app.routeState, /f325ed5b805bbc88e6e9b1d5578d693156dc9013/);
-  assert.match(app.routeState, /0\.48\.0.*0\.49\.0/);
+  assert.match(app.routeState, /0\.48\.0 → 0\.49\.0/);
   assert.match(html, /rel="canonical" href="\/vibe\/ns3424-lab\/"/);
   assert.match(html, /href="\/vibe\/"/);
   assert.match(html, /Kun en illustrativ demo/);
