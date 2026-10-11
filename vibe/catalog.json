@@ -340,7 +340,7 @@
     {
       "slug": "inntekter-kostnader",
       "name": "Inntekter og kostnader",
-      "useCase": "Utforsk en månedsoversikt med inntekter, kostnader og faste eksempelposter.",
+      "useCase": "Registrer inntekter og utgifter, se månedssummer per kategori, legg til egne kategorier og prøv faste poster.",
       "category": "Økonomi",
       "audience": [
         "Alle som vil se et enkelt eksempel på månedsoversikt"
@@ -348,11 +348,11 @@
       "status": "Beholdt i bred førstegangsvurdering; eksisterende syntetisk, statisk demo er gjennomgått. Ingen kuratering eller utsiling.",
       "sourceUncertainty": "Kildecheckoutet har ingen appversjon/tag, lisens eller appspesifikk testkommando; faktisk Excel/VBA-kompatibilitet og produksjonsstatus er uverifisert. Kildeinnhold og gjenbruksrettigheter er uavklart.",
       "purpose": "Utforske en månedsoversikt for inntekter, kostnader og faste poster.",
-      "demoValue": "Tre eksempelperioder viser hvordan inntekts- og kostnadssummer, differanse og poster kan samles.",
-      "simplifications": "Kun syntetiske månedsverdier. Ingen brukerregistrering, Excel/VBA, filopplasting, makroer, konto, betaling eller eksport.",
+      "demoValue": "Utforsk registrering, redigering og sletting av poster, månedssummer per kategori, årsoversikt, egendefinerte kategorier og faste poster.",
+      "simplifications": "Syntetiske startposter. Excel-arbeidsbok, formler og VBA erstattet med lokale nettleserfunksjoner. Faste poster legges inn manuelt én gang; de kjører ikke automatisk ved åpning eller månedsskifte. Oppføringer og innstillinger finnes bare i minnet til siden lastes på nytt. Ingen filopplasting, makroer, konto, betaling eller eksport.",
       "dependencies": "Kun statisk HTML/CSS/JS og lokale Vibe-stiler; ingen eksterne runtime-avhengigheter.",
       "risk": "Økonomidata er sensitive. Beløp og kategorier er fiktive og tydelig merket; demoen er ikke regnskap eller økonomisk rådgivning. Kildelisens er uavklart.",
-      "scope": "Eksisterende statisk /vibe/inntekter-kostnader/ med lokal månedvelger; ingen persondata, auth, serverlagring, nettleserlagring, API, makroer, eksterne kall eller persistens.",
+      "scope": "Interaktiv /vibe/inntekter-kostnader/ som gjenskaper årsarkets registrering, redigering/sletting, kategorier, summer og faste poster med syntetiske data. Alt er lokalt i minnet; ingen persondata, auth, serverlagring, nettleserlagring, API, makroer, eksterne kall eller persistens.",
       "source": "eirikyven-gif/diverse-apper/apps/inntekter-og-kostnader, main commit 0900ffe48fa92dcefae1c6d0bbee8e0d02eec530; kilde inventar utført 2026-10-08.",
       "separation": "Ruten eksisterte allerede én gang i showcase main; denne endringen dokumenterer og kontrollerer den, uten duplikatkode."
     },

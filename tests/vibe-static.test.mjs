@@ -390,18 +390,25 @@ test('Inntekter og kostnader audits the existing route without duplicating it', 
   assert.match(html, /href="\/vibe\/"/, 'route links back to the hub');
   assert.match(html, /for="month-select"/, 'month selection has a visible label');
   assert.match(html, /Syntetiske eksempeldata/, 'the UI identifies synthetic finance examples');
-  assert.match(html, /<a class="skip-link" href="#overview">/, 'keyboard users can skip to the demo');
+  assert.match(html, /<a class="skip-link" href="#workspace">/, 'keyboard users can skip to the demo');
   assert.doesNotMatch(script, /localStorage|sessionStorage|indexedDB/, 'month changes are not persisted');
+  assert.doesNotMatch(script, /\bfetch\s*\(|\bXMLHttpRequest\b|\bsendBeacon\b/, 'demo interactions do not make network requests');
   assert.match(script, /textContent\s*=/, 'rendered entry text uses textContent');
-  assert.match(script, /income\s*-\s*data\.expenses/, 'balance is computed from example totals');
+  assert.match(html, /id="entry-form"/, 'the demo supports adding and editing entries');
+  assert.match(script, /state\.entries\.filter/, 'monthly and category totals use current entries');
+  assert.match(script, /beginEdit\(entry\)/, 'entries can be edited locally');
+  assert.match(script, /Fiktiv fast post lagt inn én gang/, 'fixed entries are added only on explicit action');
+  assert.match(script, /Nytt tomt årsark/, 'a following year can be created');
+  assert.match(script, /Slett/, 'entries can be removed locally');
+  assert.match(html, /id="totals-head"/, 'the year view has per-category monthly totals');
   assert.match(styles, /@media\s*\(max-width:/, 'layout adapts to narrow screens');
   assert.match(read('vibe/assets/hub.css') + styles, /:focus-visible|:focus-within/, 'interactive focus styling is present');
   assert.match(docs, /0900ffe48fa92dcefae1c6d0bbee8e0d02eec530/, 'source snapshot is recorded');
-  assert.match(docs, /Ingen appversjon eller release-tag funnet/);
-  assert.match(docs, /Ingen lisensfil eller uttrykkelig gjenbrukstillatelse/);
-  assert.match(docs, /Ingen egne testfiler eller testkommando/);
-  assert.match(docs, /Ingen innlogging eller brukeridentiteter/);
-  assert.match(docs, /Issue #2:\*\* Delvis løst/);
+  assert.match(docs, /Ingen appversjon\/release-tag/);
+  assert.match(docs, /lisens\/gjenbrukstillatelse/);
+  assert.match(docs, /appspesifikk testkommando/);
+  assert.match(docs, /Ingen innlogging, brukerkontoer/);
+  assert.match(docs, /Issue #2: delvis løst/);
 });
 
 test('Nedtelling candidate documents source uncertainty and keeps its existing route local and accessible', () => {
@@ -464,7 +471,10 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
         const scriptPath = path.join(vibeRoot, relativePath.split('?')[0]);
         return statSync(scriptPath).isFile() ? readFileSync(scriptPath, 'utf8') : '';
       }).join('\n') + [...html.matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map((scriptMatch) => scriptMatch[1]).join('\n');
-      if (path.relative(vibeRoot, file).startsWith(`arrangementsvakt${path.sep}`)) {
+      if (path.relative(vibeRoot, file) === `inntekter-kostnader${path.sep}index.html`) {
+        assert.equal((pageScripts.match(/addEventListener\(['"]submit['"]/g) || []).length >= 2, true, `${file} handles both forms locally`);
+        assert.equal((pageScripts.match(/event\.preventDefault\(\)/g) || []).length >= 2, true, `${file} prevents both form submissions`);
+      } else if (path.relative(vibeRoot, file).startsWith(`arrangementsvakt${path.sep}`)) {
         assert.match(pageScripts, /preventDefault\(\)/, `${file} registers local submit handling`);
         assert.match(pageScripts, /demoApi/, `${file} routes actions to local simulation`);
       } else if (file.includes(`${path.sep}ukelonn${path.sep}`)) {
