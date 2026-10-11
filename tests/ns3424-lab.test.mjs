@@ -19,8 +19,10 @@ test('isolated route and catalog document source, route, scope, and uncertaintie
     assert.ok(app[field].trim());
   }
   assert.match(app.source, /6938f28097d428d1af4c55d701ebb58bad9ff8a7/);
+  assert.match(app.routeState, /stabil eksisterende rute/i);
+  assert.match(app.routeState, /fullført og publisert i v0\.60\.7, basert på v0\.60\.6.*PR #100/);
   assert.match(app.routeState, /f325ed5b805bbc88e6e9b1d5578d693156dc9013/);
-  assert.match(app.routeState, /0\.48\.0.*0\.49\.0/);
+  assert.match(app.routeState, /0\.48\.0 → 0\.49\.0/);
   assert.match(html, /rel="canonical" href="\/vibe\/ns3424-lab\/"/);
   assert.match(html, /href="\/vibe\/"/);
   assert.match(html, /Kun en illustrativ demo/);
