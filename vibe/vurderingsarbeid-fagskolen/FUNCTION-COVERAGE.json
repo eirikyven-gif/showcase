@@ -3,6 +3,12 @@
   "sourceCommit": "73cb9eded2f6517e3ebfbed45bdaf8e70395dac3",
   "sourceFile": "app/vurderingsverktoy.html",
   "functionCount": 141,
+  "browserQaScenarios": [
+    "Source-generated workbook template download, user-selected re-import, workbook sheet/schema/content parity, synthetic-only learner values, and invalid workbook blocker with prior session preserved",
+    "Rubric and K0 scoring; progress, K0, indicator and ID search filters; individual assessment reset; blank cohort rejection; duplicate-ID move conflict; successful cohort move with assessment state preserved",
+    "Dataset XLSX export/import round trip; source prompt preview and no-network copy; editable per-learner local drafts; final rubric gate, final-text edit/approval and export",
+    "Sequential keyboard access and visible focus; accessible names for visible controls; responsive widths 320–1365px; settings persistence; full reset restores only synthetic defaults; no off-origin requests or runtime errors"
+  ],
   "entries": [
     {
       "sourceFunction": "createEmptyAiKeys",

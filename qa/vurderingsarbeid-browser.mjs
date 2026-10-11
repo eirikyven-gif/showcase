@@ -52,6 +52,13 @@ async function downloadTemplateAndImport() {
   await byId('btnImporter').click();
   await page.getByRole('button', { name: 'Ja, fortsett' }).click();
   await page.getByRole('button', { name: 'Nullstill og velg fil' }).click();
+  await byId('fileInput').setInputFiles(workbookPath);
+  await page.getByRole('dialog').waitFor({ state: 'visible' });
+  assert.deepEqual(await byId('studentSelect').locator('option').evaluateAll((options) => options.map((option) => option.textContent.trim()).filter((name) => /Eksempelstudent/.test(name)).map((name) => name.split(' (')[0])), ['Eksempelstudent A', 'Eksempelstudent B'], 'the downloaded template can be re-imported as a user-selected workbook');
+  await byId('modalImportkontroll').getByRole('button', { name: /Lukk/ }).last().click();
+  await byId('btnImporter').click();
+  await page.getByRole('button', { name: 'Ja, fortsett' }).click();
+  await page.getByRole('button', { name: 'Nullstill og velg fil' }).click();
   const sourceWorkbookPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../tests/fixtures/vurderingsarbeid-source-template-synthetic.xlsx');
   await byId('fileInput').setInputFiles(sourceWorkbookPath);
   await page.getByRole('dialog').waitFor({ state: 'visible' });
@@ -133,6 +140,13 @@ test('rubric scoring, progress filters, student reset and cohort move preserve a
   const duplicateDatasetPath = path.join(artifactDir, 'duplicate-cohort.xlsx');
   await duplicateDataset.saveAs(duplicateDatasetPath);
 
+  await page.getByRole('button', { name: '+ Nytt kull' }).click();
+  const cohortsBeforeBlank = await byId('kullSelect').locator('option').count();
+  await byId('nyttKullNavn').fill('   ');
+  await page.getByRole('button', { name: 'Opprett kull' }).click();
+  assert.equal(await byId('kullSelect').locator('option').count(), cohortsBeforeBlank, 'blank cohort names do not create entries');
+  assert.match(await page.locator('body').innerText(), /Kullnavn kan ikke være tomt/);
+  await page.getByRole('button', { name: 'Avbryt' }).click();
   await page.getByRole('button', { name: '+ Nytt kull' }).click();
   await byId('nyttKullNavn').fill('Syntetisk duplikatkull');
   await page.getByRole('button', { name: /Opprett kull|Lagre/ }).click();
@@ -271,6 +285,10 @@ test('keyboard focus, local settings, responsive screenshots, and complete local
   }
   await byId('btnResetDemo').click();
   await page.waitForFunction(() => !localStorage.getItem('vibe.vurderingsarbeid.demo.v1'));
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.doesNotMatch(await byId('globalKiStyring').inputValue(), /Lokal syntetisk QA-instruksjon/, 'full reset clears local guidance settings after reload');
+  assert.deepEqual((await byId('kullSelect').locator('option').allTextContents()).map((name) => name.trim()), ['Syntetisk eksempelgruppe (aktivt)'], 'full reset restores only the synthetic default cohort');
+  assert.deepEqual((await byId('studentSelect').locator('option').allTextContents()).map((name) => name.trim().split(' (')[0]).filter((name) => name.startsWith('Eksempelstudent')), ['Eksempelstudent A', 'Eksempelstudent B'], 'full reset replaces imported learners with synthetic defaults');
   assert.deepEqual(offOrigin, []);
   assert.deepEqual(errors, []);
 });
