@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-const headers = readFileSync(new URL('../.htaccess', import.meta.url), 'utf8');
+const headers = readFileSync(new URL('../vibe/.htaccess', import.meta.url), 'utf8');
 
 test('Vibe responses prevent stale hub cards and removed routes from being cached', () => {
   assert.match(headers, /Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"/);
