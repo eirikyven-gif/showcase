@@ -3,3 +3,7 @@
 #mediaDialog,.confirm-dialog{width:min(850px,calc(100vw - 24px));max-height:90vh;border:1px solid var(--line);border-radius:9px;padding:16px;box-shadow:0 14px 44px #0003}#mediaDialog::backdrop,.confirm-dialog::backdrop{background:#10203b80}.media-dialog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.media-preview-image{display:block;max-width:100%;max-height:75vh;margin:auto}.media-preview-frame{width:100%;height:65vh;border:1px solid var(--line);background:#fff}.confirm-dialog{max-width:480px}.confirm-dialog form{display:grid;gap:12px}.card-art img{width:100%;height:100%;object-fit:cover}
 .local-featured-preview{display:block;max-width:min(100%,28rem);max-height:18rem;object-fit:contain;border-radius:12px;margin:.75rem 0}
 .detail-art img,.card-art img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+
+.card-title{font-size:1.05rem;line-height:1.35;margin:0;color:var(--blue)}
+#packageChoices [role="option"]{justify-content:flex-start;text-align:left}
+#packageChoices [role="option"][aria-selected="true"]{outline:3px solid var(--blue2);outline-offset:1px}
