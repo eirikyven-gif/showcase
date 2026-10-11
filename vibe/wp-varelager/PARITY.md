@@ -37,4 +37,6 @@ These blocks remove security or external-service behavior, while preserving the 
 
 ## Parity gate and QA
 
-Workflow-level browser QA has been run at 390px and 1440px for the implemented screens/actions listed above. Automated checks and CI results are tracked in the PR body. Recheck the matrix against the source UI before declaring parity complete.
+Source comparison found and corrected one form gap: source add/edit permits category, location, and status to be unset, while the previous demo forced one of each. The portal and admin forms now expose the source blank choice; the admin form leaves category unset because the source admin form does not expose a category field. Chromium validation also found and fixed a date-error path that attempted `reportValidity()` on a container rather than the date inputs. Regression assertions cover both corrections.
+
+Chromium QA at 390px exercised all six portal tabs, no-result inventory search, item creation, invalid rental date rejection, required stock-count reason, local share-record simulation, and run create with date/note. Keyboard focus and horizontal overflow were checked at mobile width. Further workflow-level QA at both 390px and 1440px is still required after this correction; keep the PR draft until it passes. Automated checks and CI results are tracked in the PR body.

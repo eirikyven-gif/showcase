@@ -41,6 +41,11 @@ test('source agreements, admin areas, config fields and import/export schemas ar
   assert.match(js, /ID','SKU','Navn','Kategori','Enhet','Antall','Innkjøpspris','Estimert verdi','Notat/);
   assert.match(js, /duplicate SKU|duplikat SKU/i);
   assert.match(audit, /Import\/export/i);
+  assert.match(js, /blankOption:'-- Velg --'/);
+  assert.match(js, /opts\(db\.statuses,db\.statuses\[0\],'--'\)/);
+  assert.match(js, /opts\(db\.locations,db\.locations\[0\],'--'\)/);
+  assert.match(js, /start\.reportValidity\(\);end\.reportValidity\(\)/);
+  assert.doesNotMatch(js, /form\.reportValidity\(\)/);
 });
 
 test('safety simplifications are explicit; only source view preference uses browser storage', () => {
