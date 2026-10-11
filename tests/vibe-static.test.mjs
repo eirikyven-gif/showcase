@@ -355,26 +355,6 @@ test('HTML-only app routes are valid deployment targets', () => {
   assert.doesNotMatch(workflow, /test -f "\$stage\/\$slug\/style\.css"/);
 });
 
-test('Bilag v5 showcase keeps both source workflows interactive and synthetic', () => {
-  const html = read('vibe/bilag-v5/index.html');
-  const styles = read('vibe/bilag-v5/style.css');
-  const script = read('vibe/bilag-v5/app.js');
-  const app = catalog.apps.find((entry) => entry.slug === 'bilag-v5');
-  assert.ok(app, 'Bilag v5 remains in the broad catalog');
-  assert.match(html, /href="\/vibe\/bilag-v5\/style\.css"/);
-  assert.match(html, /<h2 id="pdf-title">Normaliser og flytt<\/h2>/);
-  assert.match(html, /<h2 id="zip-title">Pakk ut til Innboks<\/h2>/);
-  for (const id of ['run-pdf', 'run-zip', 'reset-demo', 'retry-file', 'pdf-rows', 'zip-rows', 'log-rows']) assert.match(html, new RegExp(`id="${id}"`));
-  assert.match(html, /Ikke revisjonslogger/);
-  assert.match(html, /Alle navn, filer, innhold.*oppdiktet/);
-  assert.match(html, /ingen opplasting, nedlasting, parsing, PDF-konvertering/i);
-  assert.match(html, /class="skip-link" href="#main"/);
-  assert.match(styles, /@media\s*\(max-width:/);
-  assert.match(read('vibe/assets/hub.css'), /:focus-visible/);
-  assert.match(script, /localStorage\.removeItem\(STORAGE_KEY\)/);
-  assert.doesNotMatch(script, /\b(fetch|XMLHttpRequest|DriveApp|SpreadsheetApp|FileReader)\b/);
-});
-
 test('Inntekter og kostnader audits the existing route without duplicating it', () => {
   const html = read('vibe/inntekter-kostnader/index.html');
   const script = read('vibe/inntekter-kostnader/app.js');

@@ -169,31 +169,6 @@
       "routeState": "En unik eksisterende /vibe/backyard-stats/-rute beholdes. Denne vurderingen oppdaterer kun metadata, README og test; ingen ny rute eller runtime-kobling."
     },
     {
-      "slug": "wp-l-ringssti",
-      "name": "WP Læringssti · modulbygger og elevflyt",
-      "useCase": "Bygg en modulbasert læringssti med innholdselementer, og prøv den steg for steg som deltaker.",
-      "category": "Utdanning og læringsverktøy",
-      "audience": [
-        "Undervisere",
-        "Studenter",
-        "Personer som lager modulbasert læringsinnhold"
-      ],
-      "status": "Korrigert funksjonskopi av observerbar v0.5.6-oppførsel; publisert i showcase v1.1.0. Innholdsparitet kan ikke verifiseres fordi kilden mangler kurskonfigurasjon og kursmedia. Syntetiske data; Issue #2 delvis løst.",
-      "sourceUncertainty": "Kildearkivets README.txt sier at quiz/case ikke finnes i v0.5.6, men PHP og frontend-JavaScript implementerer quiz, case og KI-stubber. Import-masterloggen beskriver modulvis playerflyt ved v0.5.6. Funksjonsgrunnlag følger faktisk arkivkode; spriket er bevart som usikkerhet. Arkivet inneholder ingen kurskonfigurasjon, kurstekster eller media, så innholdet i demoen er tydelig syntetisk.",
-      "purpose": "WordPress/Gutenberg-plugin for redigering av læringsstier med moduler, innholdselementer, global tidslinje og tilknyttet media; arkivets frontend har modulvis playerflyt, quiz, case og KI-stubber.",
-      "demoValue": "Lar besøkende gjennomføre en modul og prøve hovedområdene i editoren: moduler, elementtyper, tidslinje og sti-media.",
-      "simplifications": "WordPress-administrasjon og frontend er samlet som lokale visninger. Eksempelstien er syntetisk. Redigering, modulstatus, quizfremdrift og caseutkast lagres kun i nettleseren; «Nullstill demo» sletter all lokal demoaktivitet. Media er illustrasjoner; KI-knapper forklarer at tjenesten ikke er tilkoblet.",
-      "risk": "Kilden er WordPress-plugin med autentiserte adminoperasjoner, serverlagring og AJAX. Quizfasit flyttes til klienten i demoen, derfor quiz ikke sikker vurdering. Kildens ZIP-README og implementasjon spriker om quiz/case. Ingen kursdata eller personopplysninger finnes i Showcase-kopien.",
-      "scope": "Selvstendig statisk HTML/CSS/JavaScript på /vibe/wp-l-ringssti/. Ingen eksterne forespørsler, WordPress/PHP, autentisering, cookies, serverlagring, API, persondata eller secrets. Demoens localStorage inneholder kun syntetiske brukerendringer og fremdrift, og kan slettes med «Nullstill demo».",
-      "source": "eirikyven-gif/WP-l-ringssti, offentlig main commit b358faabd862355ae7e666a9953d8a708b983786; fil wp-learningsti-mvp_v0.5.6.zip SHA-256 bd0411bb9087440a211969bc0d358dae87725bf98fb546dd224fa26f85327d16; komplett arkiv lest 2026-10-11. Source repo er ikke endret.",
-      "separation": "Denne ruta modellerer WordPress-pluginen WP-l-ringssti fra arkivet v0.5.6. Den er ikke WP-laringssti v0.9-webappen, diverse-apper/apps/larebot eller den separate showcase-ruta laringssti-fagskolen.",
-      "sourceStack": "WordPress/PHP-plugin med Gutenberg-blokk, JavaScript-admin/editor og statisk frontend-CSS/JS; admin- og quizhandlinger bruker WordPress AJAX.",
-      "sourceTests": "Kilde-ZIP inneholder ingen testfiler eller testoppsett. Showcase har fokusert node:test for rute, funksjonsdekning, personvernflater, responsivitet og katalogmetadata.",
-      "sourceApiAuthStoragePrivacy": "Pluginen registrerer autentisert WP-admin AJAX for lesing/lagring av konfigurasjon og medietagging; quizkontroll bruker AJAX. Admin krever WordPress capabilities og nonce. Pluginen lagrer konfigurasjon server-side og media i WP attachment-meta. Caseutkast og elevfremdrift lagres lokalt i nettleseren. Showcase simulerer adminredigering lokalt, fjerner serverfunksjoner og bruker localStorage for demoens utkast/fremdrift; «Nullstill demo» sletter all lokal data. Ingen nettverkskall fra Showcase-ruten.",
-      "rightsUncertainty": "Kilderepoet har ingen lisensfil eller lisensmetadata i gjennomgått innhold. Demoens kode og syntetiske eksempeltekst er skrevet selvstendig; ingen ZIP-kildekode eller mediefiler er kopiert.",
-      "routeState": "PR #99 er merget og publisert i showcase v1.1.0 (deploy run #38149771589). Funksjonsparitet gjelder observerbar pluginatferd. Kurskonfigurasjon, kurstekster og media finnes ikke i kildearkivet; innholdsparitet kan derfor ikke bekreftes. Se vibe/wp-l-ringssti/PARITY.md."
-    },
-    {
       "slug": "ns3424-lab",
       "name": "NS3424 Læringslaboratorium · illustrativ demo",
       "useCase": "Utforsk kapitler, begreper, eksempler, risikomatrise, seks graderingsoppgaver og en ti-spørsmåls kunnskapstest fra kildens læringsskisse.",
@@ -216,31 +191,6 @@
       "scope": "Statisk /vibe/ns3424-lab/. De seks øvelsescasene SYN-01–SYN-06, objektdetaljer og observasjoner er oppdiktet og merket; kildeens øvelsesstruktur, antall, funksjoner og graderingslogikk beholdes. Ingen cookies, localStorage, API, fetch, server, auth, PII, secrets eller tredjeparts runtime. Full reset nullstiller quiz, øvelser, akkordioner og navigasjon.",
       "routeState": "Stabil eksisterende rute /vibe/ns3424-lab/; ruteavtale og slug beholdes. Kildeparitets-/katalogrettingen ble fullført og publisert som v0.60.7, basert på v0.60.6 (PR #100), og inngår i vellykket deployment #38123085728. Historisk kildeparitetsrelease: main f325ed5b805bbc88e6e9b1d5578d693156dc9013, VERSION 0.48.0 → 0.49.0. Syntetiske case er illustrative; faglig riktighet og gjenbruksrettigheter er ikke verifisert.",
       "sourceUncertainty": "Kilde-README er kun «ns3424»; eneste kildecommit legger til index.html. Ingen standardtekst/lisens/referansekilder, test, designbrief eller driftsdokumentasjon finnes. Kildens seks caseopplysninger kunne ikke verifiseres som syntetiske og er derfor erstattet med nye merkede syntetiske data. Faglig validering av undervisningstekstene, gjeldende standardforhold og gjenbruksrett er uavklart."
-    },
-    {
-      "slug": "ns3424-arkivdemo",
-      "name": "NS 3424 · arkivert læringsapp",
-      "useCase": "Utforsk analysenivåer, TG/TGIU, konsekvens, risiko og syntetiske case i en pedagogisk NS 3424-læringsdemo.",
-      "category": "Utdanning",
-      "audience": [
-        "Studenter",
-        "Undervisere",
-        "Nybegynnere innen byggforvaltning"
-      ],
-      "status": "Korrigerer kildeparitet for arkivert app-fdvu-ns3424 fra eksakt SHA 5c58678269fb2c24d83af8afedeb65c8878732ff. PR #100 er en isolert korrigerings-PR; ikke merget eller deployet. Issue #2 delvis adressert.",
-      "demoValue": "Kildens moduloversikt med 11 moduler, trygg velkomstflyt, lokale Om/feedback-dialoger, start/innholdsquiz, 200-ords caseoppgave med feedback, nivåvelger, TG/TGIU-trener, KG-/sannsynlighetstrener, observasjonssortering, fem syntetiske casearbeidsark med kildens nivå-, observasjons-, TG/KG-, risiko- og tiltaksfelt, moduloppsummering og minnebasert fremdrift.",
-      "simplifications": "Kildens fem caseflyter er representert med eksplisitt merkede syntetiske SYN-01–SYN-05 og uten identifiserende bygnings-/rapportdata. Kunnskapssjekk får lokal, demonstrativ feedback fordi kildens fasitvalidering er backend-basert. Autentisering, dev-PIN, identifikatorer, server/API, KI, lagring, feedback-kø og innsending er fjernet. Om/feedback-dialogene er beholdt med syntetisk innhold; feedback blir verken sendt eller lagret. Kildens synlige casearbeidsark har manuell kopiering som mulighet, men ingen innebygd utskrift, rapporteksport eller PDF-flyt; demoen legger ikke til en slik funksjon.",
-      "risk": "Standardpåstander og grader er ikke faglig kontrollert og kan være feil eller utdaterte. Ikke bruk demoen som profesjonell vurdering eller til virkelige bygg-, sikkerhets-, vedlikeholds- eller investeringsbeslutninger. Gjenbruksrettigheter er uavklart. Kildens HTML inneholder et Apps Script-endepunkt samt auth- og lagringskode; dette er ikke tatt med.",
-      "scope": "Statisk `/vibe/ns3424-arkivdemo/`. Kildebasert læringssti med 11 moduloppføringer, trygge Om/feedback-dialoger og fem merkede syntetiske caser. Autentisering, dev, backend, KI, lagring og feedback-innsending er fjernet. Ingen nettverkskall, API, server, CDN, cookies, telemetry, PII eller secrets. Case-/quizsvar og fremdrift lever kun i sideminnet; full reset nullstiller dem.",
-      "source": "eirikyven-gif/ns3456, arkivert, commit 5c58678269fb2c24d83af8afedeb65c8878732ff; source tree 142c31e21eb1afe5f10eeee23f3d8cb145209745. README/SPEC identifiserer app-fdvu-ns3424. Kilde kun lest; ikke endret.",
-      "sourceStack": "Kilden er én HTML-fil med React/Babel, Tailwind og Marked via eksterne CDN-er. Showcase-ruten er én statisk HTML/CSS/JavaScript-fil uten eksterne runtime-ressurser.",
-      "sourceTests": "Kilde-README, SPEC, ROADMAP, CONTRIBUTING, CHANGELOG og app-filen kontrollert på pinna SHA. Ingen kilde-test- eller byggkommando dokumentert. Paritetsmatrise: vibe/ns3424-arkivdemo/PARITY.md. Showcase-test kjøres med node --test tests/ns3424-arkivdemo.test.mjs og CI med node --test tests/*.test.mjs; Playwright/Chromium QA på desktop og mobil.",
-      "sourceApiAuthStoragePrivacy": "Kildens HTML inneholder auth/login og utvikler-PIN-flyter, localStorage-identifikatorer/progresjon/feedback-kø, Apps Script/backend-kall og et hardkodet Apps Script feedback-endepunkt. Kildekort viser rapportreferanser. Showcase-kopien fjerner auth, nettverk, API, server, vedvarende storage, telemetry, tredjepartsressurser, kildekort, PII og secrets. Synlige feedbackdialoger er bare klientbasert, med ingen innsending og tømming ved lukking. Arbeidsarkdata finnes kun i sideminnet og nullstilles.",
-      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte kildefiler. Offentlige gjenbruksrettigheter er uavklart.",
-      "purpose": "Pedagogisk læringsapp om NS 3424 for voksne studenter, med analysenivå, TG/TGIU, KG, sannsynlighet/risiko, observasjoner, tiltak, fem caser og quiz.",
-      "routeState": "Stable existing route /vibe/ns3424-arkivdemo/. Source-parity correction merged as patch v0.60.7 based on v0.60.6 (PR #100) and included in successful deployment #38122871657. Existing route contract is retained. Synthetic cases are illustrative; factual alignment to the current NS 3424 standard and reuse rights are unverified. Issue #2 partially addressed.",
-      "parityDocument": "vibe/ns3424-arkivdemo/PARITY.md",
-      "sourceUncertainty": "Repoets README/SPEC/endringslogg fastslår appens NS 3424-identitet og funksjonsmål. README/masterdokument omtaler v0.1.1 som åpen demo uten auth/backend, mens den pinnede HTML-filen inneholder auth/dev/backend-kode; alle slike integrasjoner er fjernet. De fem scenariene er omskrevet og merket syntetiske; kildeeksempler/rapporter, navn, adresser, auth, storage og private backend-elementer brukes ikke. Gjennomgangen kontrollerer proveniens mot den pinnede appfila; den avgjør ikke om tekstene er faglig korrekte eller oppdaterte mot gjeldende standard. Dette er ingen påstand om konkret mismatch med standarden."
     },
     {
       "slug": "analog-synthesizer",
@@ -518,41 +468,6 @@
       "routeState": "Eksisterende unik mappe og slug /vibe/dugnadsplanlegging/ er beholdt og erstatter tidligere placeholder; én katalogoppføring og én direkte statisk rute."
     },
     {
-      "slug": "vibe-coding",
-      "name": "Vibe coding læringsportal",
-      "useCase": "Følg et fiktivt eksempel fra idé via testbare krav til enkel testplan.",
-      "category": "Læring",
-      "audience": [
-        "Studenter",
-        "Faglærere",
-        "Alle som vil lære idé-til-test-arbeidsflyt"
-      ]
-    },
-    {
-      "slug": "vurderingspraksis",
-      "name": "Vurderingspraksis",
-      "useCase": "Utforsk et syntetisk eksempel på sammenheng mellom læringsmål, observasjoner og vurdering.",
-      "category": "Utdanning",
-      "audience": [
-        "Faglærere",
-        "Vurderingsteam",
-        "Studieplanleggere"
-      ],
-      "status": "Beholdt i bred førstegangsvurdering; kildefaithful, lokal showcase-kopi utarbeidet. Issue #2 er delvis løst; ingen merge eller deploy.",
-      "sourceUncertainty": "Kilde eirikyven-gif/apps-fagskolen/apps/vurderingspraksis lest skrivebeskyttet på main commit 92379f1108ec71013a06c4e5976a6fe79de81a3e (2026-10-10). README viser v0.11.18; appspesifikk låst SSoT er v0.49. Se kilde-QA for utestående manuelle kontroller.",
-      "purpose": "Støtt forberedelse, kollegial workshopdrøfting og videre oppfølging av sammenhengen mellom læringsutbytte, aktiviteter, arbeidskrav og vurdering.",
-      "demoValue": "Kildebasert arbeidsflyt med fire områder, ni flytskjemaemner, læringsstier, begrepsliste, dagplan, dialoger, snarveimeny og tema.",
-      "simplifications": "Beholder klientflyt og kildeavledet fagstruktur. Funn fra faktiske workshopdeltakere erstattes med oppdiktede eksempler; institusjon og dato fjernes. Drive-filer, presentasjon, eksterne referanser og videoer fjernes. Ingen innlogging, server eller svarfunksjon. localStorage brukes bare for tema og vist flytskjema; synlig personverntekst og nullstillingsknapp er med.",
-      "risk": "Ingen innsending eller personopplysninger i demoen. To lokale visningsnøkler vedvarer på enheten til reset eller nettleserdata slettes. Kildens innholds-/designrettigheter er ikke uavhengig avklart.",
-      "scope": "Responsiv statisk rute med kildebaserte arbeidsområder, flytskjema, læringsstier, ordliste, tastatur/dialognavigasjon og tema. Bare route-spesifikk localStorage for visning. Ingen nettverkskall, eksterne ressurser, cookies, konto, API, server eller brukerinput.",
-      "source": "eirikyven-gif/apps-fagskolen/apps/vurderingspraksis, privat kildekode lest skrivebeskyttet via autentisert lesetilgang, main commit 92379f1108ec71013a06c4e5976a6fe79de81a3e; gjennomgått README, SSoT, QA, HTML, CSS, JS og tester.",
-      "sourceStack": "Kilden er statisk HTML/CSS/JavaScript med lokale fontfiler. Ingen server- eller innloggingskode i denne appmappen. Showcase-ruten er statisk HTML/CSS/JS.",
-      "sourceTests": "Kilden oppgir Python-kontroller og Playwright/Chromium-kontroller i `tests/`; de er ikke kjørt mot kildekopien her. Showcase-kontroller og CI kjøres på isolert PR-branch.",
-      "sourceApiAuthStoragePrivacy": "Kilden samler ikke inn deltakersvar. Den bruker localStorage for tema og hvilke dagflytskjema som er vist, og har eksterne dokument-/videoressurser. Showcase fjerner eksterne URL-er og embeds, og gir synlig reset for sine to lokale visningsnøkler. Ingen login/API/server.",
-      "rightsUncertainty": "Kildeinnhold og visuell utforming er kopiert etter eksplisitt brukeroppdrag. Lisens for bredere redistribusjon av appinnholdet er ikke uavhengig avklart; Inter-fontens OFL-lisens følger med.",
-      "routeState": "Eksisterende `/vibe/vurderingspraksis/`-rute beholdt og konseptdemo erstattet på samme slug; én katalogoppføring og én direkte statisk rute. Issue #2 er delvis løst, PR venter review, ingen deploy. Showcase SemVer er oppdatert til v0.52.0."
-    },
-    {
       "slug": "larebot",
       "name": "Lærebot · lokal læringsbot",
       "useCase": "Utforsk fag- og temavalg, still et spørsmål til en læringsbot, og se et lokalt eksempel med kildehenvisning.",
@@ -575,54 +490,6 @@
       "scope": "Statisk /vibe/larebot/ med to simulerte visninger, fiktivt vannkretsløp, lokalt regelstyrte eksempelresponser og kildeetiketter. Ingen auth, API, serverlagring, nettverkskall, ekte modell, PIN, brukernavn, student-/lærerdetaljer, private data eller hemmeligheter. localStorage er begrenset til redigert syntetisk ressurs- og botoppsett; synlig full nullstilling fjerner én appnøkkel.",
       "routeState": "Eksisterende /vibe/larebot/ og katalogslug beholdt; den tidligere tre-spørsmåls skissen utvidet til kildeappens trygge elev- og adminflater. Baseline showcase main aeb16e7b3ad66f791c3c5783c27b0eae3bebaf95, VERSION 0.49.0; PR foreslår 0.50.0. Ikke merget eller publisert.",
       "sourceUncertainty": "README dokumenterer Lærebot SSoT v0.2 LÅST og deployoppsett, men låst styringsdokument/SSoT, produksjonsinnhold og faktisk runtime ble ikke separat verifisert. Kilde-README oppgir at spørsmål sendes til OpenAI/Gemini eller får et lokalt avgrenset svar."
-    },
-    {
-      "slug": "bilag",
-      "name": "Bilagssortering · lokal arbeidsflytdemo",
-      "useCase": "Prøv en syntetisk bilagskø med gjenopptak, sortering til Løsøre og Drift, menneskelig kontroll, manuell flytting og kjøringslogg.",
-      "category": "Gårdsadministrasjon og dokumentflyt",
-      "audience": [
-        "Gårdsbrukere",
-        "Regnskapsmedarbeidere",
-        "Dokumentansvarlige"
-      ],
-      "status": "Beholdt i bred førstegangsvurdering; kildeundersøkt, funksjonell og lokal showcase-kopi av forsikring-bilag. Ingen kuratering eller utsiling.",
-      "demoValue": "Viser køstart/gjenopptak, batchbehandling av syntetiske eksempler, to arbeidsfaner, manuelle X-felt, radflytting med duplikatkonfliktbevaring, stopp og videreføring, kjøringslogg samt bekreftet nullstilling som bevarer loggen.",
-      "simplifications": "Fast syntetisk innhold erstatter Drive-lesing, filvalidering, OCR/Gemini, dokumentbevis- og beløpsvalidering, SHA-256/fakturadublettkontroll og Google Sheets-skriving. Lokal nettlesertilstand simulerer gjenopptak og nullstilling; ingen kildeintegrasjon eller KI avgjør data.",
-      "risk": "Demoen er ikke et regnskapsverktøy og validerer ikke bilag. Ikke bruk virkelige økonomi- eller personopplysninger. Lokal lagring kan bli liggende i nettleseren inntil «Nullstill demo» eller nettleserens nettstedslagring tømmes. Kildens eksterne drift, tilgang og produksjonsdata er ikke uavhengig revidert.",
-      "scope": "Statisk /vibe/bilag/-rute med fire fiktive eksempler. Ingen nettverkskall, Drive, Sheets, Gemini, opplasting/nedlasting, auth, cookies, serverlagring, PII eller hemmeligheter. localStorage under vibe.bilag.demo.v1 inneholder bare syntetisk kø, resultatlinjer og logg; bekreftet nullstilling gjenoppretter eksemplene og bevarer loggen.",
-      "source": "eirikyven-gif/forsikring-bilag, offentlig main commit f32f92ed00d1286e25e9cc7a0454ba1ad8c579eb (2026-08-17). Aktiv app: app/bilagsregister.gs og app/bilagsregister-core.gs; README, app/README.md og docs/bilagssortering.md gjennomgått. Kilderepoet er kun lest og ikke endret.",
-      "sourceStack": "Kilden er Google Apps Script for Google Drive/Sheets med Gemini REST-kall. Showcase-ruten er statisk HTML/CSS/JavaScript.",
-      "sourceTests": "Kilden definerer node --test tests/*.test.js med Google-tjenestemocker. Showcase QA kjører rutespesifikk test, JavaScript-syntakskontroll, git diff --check og CI. Ingen Apps Script-/Google-integrasjon kjøres.",
-      "sourceApiAuthStoragePrivacy": "Kilden bruker låste Drive-/Sheets-ID-er, Script Properties med GEMINI_API_KEY, Google Apps Script-tjenester og Gemini API. Showcase fjerner alle kall, nøkler, ID-er, autentisering, filer og serverlagring. Kun oppdiktede eksempler lagres lokalt under vibe.bilag.demo.v1; «Nullstill demo» bekreftes og sletter rader/fremdrift mens loggen bevares.",
-      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse ble identifisert i gjennomgåtte kildefiler. Kildekode er ikke kopiert; UI-tekst, syntetiske eksempler og grensesnitt er skrevet for showcase. Gjenbruksrettigheter bør avklares separat.",
-      "purpose": "Kildeappen skanner Google Drive-bilag, leser varelinjer, klassifiserer dem til Løsøre eller Drift i Google Sheets og lar mennesker kontrollere skade-/lagerstatus og flytte rader.",
-      "routeState": "Eksisterende /vibe/bilag/-rute beholdes. Showcase main-baseline 65b8f90, VERSION 0.52.0. Denne PR-en oppgraderer bare Bilag-ruten/katalogen, QA-testen og SemVer til 0.53.0; URL og slug er stabile.",
-      "sourceUncertainty": "Kilde-repoets main ble undersøkt på commit f32f92ed00d1286e25e9cc7a0454ba1ad8c579eb. Repoet inneholder aktive kildefiler og tester; produksjonsdeploy, faktisk drift og gjenbruksrettigheter er ikke uavhengig verifisert."
-    },
-    {
-      "slug": "bilag-v5",
-      "name": "Bilag v5 · PDF-batch og ZIP-import",
-      "useCase": "Utforsk separat PDF-normalisering og ZIP-import med stabile filer, retry, trygg sti-validering og batchlogger.",
-      "category": "Gårdsadministrasjon og dokumentflyt",
-      "audience": [
-        "Gårdsbrukere",
-        "Regnskapsmedarbeidere",
-        "Dokumentansvarlige",
-        "Utviklere som vurderer batchflyt"
-      ],
-      "status": "Kildebasert arbeidsflytdemo med syntetiske data. Issue #2 delvis løst.",
-      "demoValue": "Interaktive PDF- og ZIP-batcher gjengir kildens køvalg, konverterings- og flyttestatus, tre-feils blokkering og retry, ZIP-stivalidering, idempotens, kollisjonsnavn, batchgrenser og separate hendelseslogger.",
-      "simplifications": "Manuell start erstatter tidsutløsere; faste syntetiske fil- og ZIP-oppføringer erstatter Drive-innhold. Konvertering, flytting, utpakking og regnearklogging er kun klientbaserte statusendringer. Ingen opplastingsfelt eller fritekst. Demoen lagrer bare syntetiske tilstander i localStorage med synlig nullstilling.",
-      "risk": "Kilden håndterer økonomiske dokumenter og skriver filidentifikatorer/lenker til operative logger. Demoen viser bare oppdiktede navn/status og simulerer ingen tilgangskontroll, revisjonslogg eller faktisk dokumentbehandling. Kildens produksjonsdata og tilgangsoppsett er ikke revidert.",
-      "scope": "Eksisterende /vibe/bilag-v5/ oppgradert med separate interaktive PDF- og ZIP-simuleringer. Browser localStorage inneholder bare faste syntetiske scenarier; nullstillingsknapp fjerner nøkkelen. Ingen API, fetch/XHR, server, Drive, Sheets, autentisering, filopplasting/-nedlasting, ekte parsing, PII eller secrets.",
-      "source": "eirikyven-gif/apps-fornes-gard/apps/bilag-v5, offentlig commit 90014358fb3d70e89265b2b30d38e9376a6927b2 (lest 2026-10-11); aktive backend-, README- og testfiler gjennomgått. Kilde kun lest.",
-      "sourceStack": "Kilden bruker Google Apps Script, Drive, Sheets, tidsutløsere og ScriptLock. Showcase-kopien bruker statisk HTML/CSS/JavaScript og localStorage.",
-      "sourceTests": "Gjennomgått AutomationTest.gs og ZipImportTest.gs, inkludert kjøreprogrammene. Kildetestene ble ikke kjørt. Showcase-paritetstester validerer rute, metadata og sikkerhetsgrenser.",
-      "sourceApiAuthStoragePrivacy": "Kilden bruker interne Drive-/Sheet-identifikatorer, SYSTEM-jobber og to triggerkjørte backend-løp som deler ScriptLock; den har ikke brukerinnlogging i den beskrevne batchflyten. Showcase fjerner Drive, Sheets, triggere, låsetjeneste, ekte filer/bytes, ID-er, URL-er og serverpersistens. Kun syntetiske demoobjekter lagres i localStorage; synlig nullstilling finnes.",
-      "purpose": "Kilden flytter PDF-er direkte eller konverterer støttede dokumenter/bilder til PDF i kildemappen før flytting til Dokumentasjon. En separat ZIP-jobb validerer arkivoppføringer og legger dem flatt i Innboks med idempotens og kollisjonsunngåelse.",
-      "routeState": "Eksisterende /vibe/bilag-v5/ og slug beholdt. Oppdaterer rute, appspesifikk README/test og katalogmetadata; VERSION håndteres av koordinatoren.",
-      "sourceUncertainty": "Gjennomgått kildens aktive README, Config.gs, DriveAdapter.gs, SheetAdapter.gs, SyncService.gs, ZipImport.gs, AutomationTest.gs, ZipImportTest.gs og testkjørere på commit 90014358fb3d70e89265b2b30d38e9376a6927b2. Produksjonskjøring, rettigheter og faktisk dataoppsett er ikke verifisert."
     },
     {
       "slug": "gardsbehov-fornes",
@@ -648,30 +515,6 @@
       "sourceUncertainty": "Kilde-README v0.20.1 og frontend er lest; kildekodetester og produksjonssystem er ikke kjørt/revidert. Demoen dekker ikke alle funksjoner i kildeappen, særlig autentisering, offentlige statuslenker, bildeeditor, e-post eller administrasjon."
     },
     {
-      "slug": "kornseddel",
-      "name": "Kornfølgeseddel",
-      "useCase": "Fyll ut en syntetisk kornfølgeseddel og skriv ut tre identiske kopier.",
-      "category": "Gårdsdrift og dokumentflyt",
-      "audience": [
-        "Gårdsbrukere",
-        "Transportører",
-        "Mottak"
-      ],
-      "status": "Beholdt i bred førstegangsvurdering; kildefaithful statisk demo med syntetiske eksempelverdier. Ingen kuratering eller utsiling.",
-      "sourceUncertainty": "Kilde-SSoT er LÅST, men faktisk produksjonsbruk er ikke uavhengig verifisert. Kilden beskriver en tredjeparts 2026-blankett; rettighet til merkevare/grafikk er ikke verifisert.",
-      "purpose": "Kildens form lar gårdsbruker fylle ut og skrive ut en følgeseddel for kornlevering.",
-      "demoValue": "Fyll ut leverandør-, korn-, leverings- og kontrollfelt én gang, se dem speilet på tre kopier og åpne nettleserens utskriftsdialog.",
-      "simplifications": "Reelle person-/produsentforhåndsverdier er byttet ut med syntetiske eksempelverdier. Ingen backend, konto, innsending eller persistent lagring; utfylling gjelder bare åpen sideøkt.",
-      "risk": "Skjemafelter og utskrift kan inneholde person-, kontakt-, gårds- og leveringsopplysninger; appen viser en klar syntetisk demo-advarsel og bruker bare oppdiktede prefyllingsverdier. Utskrift kan forveksles med gyldig dokument. Tredjeparts grafikk/merkevare er videreført fra kilde; gjenbrukstillatelse er uavklart.",
-      "scope": "Eksisterende /vibe/kornseddel/-rute, kildebasert HTML/CSS/JS-skjema, katalogmetadata og rutespesifikk regresjonsdekning. Ingen auth, server/API, nettverkskall, secrets eller persistent browser storage; skjema holdes bare i sidens minne.",
-      "source": "eirikyven-gif/apps-fornes-gard/apps/kornseddel ved offentlig main commit 90014358fb3d70e89265b2b30d38e9376a6927b2. Gjennomgått README.md, SSOT.md, index.html, app.js og style.css.",
-      "sourceStack": "Statisk HTML/CSS og nettleser-JavaScript; redigerbare skjemaelementer, kopisynkronisering og window.print().",
-      "sourceTests": "Ingen package.json, testscript eller tests/-mappe ble funnet i appmappen. Ingen kildetester ble kjørt; kilde-SSoT beskriver krav om mobil/desktop, tastatur/skjermleser og én A4-side med tre kopier, ikke testresultater.",
-      "sourceApiAuthStoragePrivacy": "Kildens SSOT sier utfylling holdes i gjeldende sideøkt, uten konto, innsending eller serverlagring. Ingen auth/API/nettverkskall eller persistent storage i appkoden. Reelle prefyllingsverdier er erstattet med syntetiske verdier; brukerinnhold går ikke ut av siden.",
-      "rightsUncertainty": "Kilde-SSoT beskriver tredjeparts Felleskjøpet-blankett med foto, logoer, innhold og layout. Ingen LICENSE eller uttrykkelig gjenbrukstillatelse kontrollert. Videreføring av kildeuttrykk er rettighetsrisiko som må avklares før offentlig bruk.",
-      "routeState": "Eksisterende /vibe/kornseddel/-rute beholdt og konseptdemo erstattet med kildefaithful utfyllbart skjema. Issue #2 delvis løst; PR åpen, ikke merget eller deployet. Showcase main-baseline 65d430d, VERSION 0.54.0; foreslått 0.55.0."
-    },
-    {
       "slug": "lagerkart-vinter",
       "name": "Lagerkart Vinter",
       "useCase": "Se og juster plassering av oppdiktede vinterlagrede kjøretøy på et rad- og meterbasert lagerkart.",
@@ -686,28 +529,6 @@
       "simplifications": "Fire skjematiske rader og sju oppdiktede enheter. Kun søk, plassering, flytting og uttak. Ingen import, kundedata, sesongadministrasjon, eksport, betaling, meldinger eller venteliste.",
       "risk": "Kilden håndterer kunde- og kjøretøyopplysninger, admin-innlogging, privat filbasert lagring og venteliste. Produksjons- og testadresser finnes i kildedokumentasjonen, men ble ikke besøkt. Ingen kildedata eller hemmeligheter er kopiert. Demoen er statisk og ikke egnet for reell lagerplanlegging.",
       "scope": "Plain HTML/CSS/JavaScript på /vibe/lagerkart-vinter/ med syntetiske data i nettleserminnet. Ingen PHP, auth, serverlagring, API, persondata, ekstern data eller nettverkskall."
-    },
-    {
-      "slug": "vinterlagring-fornes",
-      "name": "Vinterlagring Fornes",
-      "useCase": "Utforsk det nåværende, visuelle grunnlaget for registrering, kundevisning og administrasjon av vinterlagring.",
-      "category": "Gårdsadministrasjon og lagerstyring",
-      "audience": [
-        "Lageransvarlige",
-        "Gårdsbrukere",
-        "Personer som utforsker vinterlagring"
-      ],
-      "status": "Beholdt i bred førstegangsvurdering; kildebasert, statisk scaffold-demo. Ingen kuratering eller utsiling.",
-      "demoValue": "Samler kildens tre frontendområder, navigasjon og syntetiske eksempeldata på en direkte tilgjengelig statisk rute.",
-      "simplifications": "Kun kildekodens eksisterende statiske frontendskall er tatt med. Alle navn, kontaktverdier, registreringsverdier, statusrader og statistikk er oppdiktede. Ikke implementerte eller framtidige arbeidsflyter er ikke simulert.",
-      "risk": "Kildens planlagte funksjonelle scope omfatter kundeopplysninger, magiske lenker, admin, database, e-postvarsling og eksport. Disse funksjonene er ikke implementert i kildecommitten og finnes ikke i demoen. Bruk kun som visuell demonstrasjon; aldri legg inn reelle opplysninger.",
-      "scope": "Kildebasert statisk HTML/CSS/JS på /vibe/vinterlagring-fornes/ med de eksisterende sidene for start, registrering, kunde og admin. Ingen server, database, auth, API-kall, e-post, nettleserlagring eller personopplysninger.",
-      "sourceUncertainty": "Kilde kontrollert på main commit a26c5e99183bded5549bcb4c1ebd03cf2973cf90 (2026-10-10). Frontendens registrering-, kunde- og adminflater er placeholders; app.js er tom bortsett fra kommentar. Ingen implementerte registrerings-, kunde-, admin-, auth- eller API-arbeidsflyter finnes i denne revisjonen.",
-      "purpose": "Vise appens eksisterende startside og visuelle placeholders for registrering, kundevisning og administrasjon.",
-      "source": "eirikyven-gif/vinterlagring, main commit a26c5e99183bded5549bcb4c1ebd03cf2973cf90 (2026-10-10). Gjennomgått AGENTS.md, VERSION, docs/ssot/CURRENT_SSOT.md, frontend/index.html, frontend/registrer/index.html, frontend/kunde/index.html, frontend/admin/index.html, frontend/assets/css/app.css, frontend/assets/js/config.js og frontend/assets/js/app.js.",
-      "sourceStack": "Plain HTML, CSS og JavaScript. Kildens app.js inneholder ingen implementert nettleserlogikk; config.js oppgir en API-sti, men ingen kode utfører forespørsler. Ingen eksterne avhengigheter.",
-      "sourceApiAuthStoragePrivacy": "Denne kildeversjonen har ingen autentisering, API-forespørsler, skjemainnsending, e-post eller lagring. config.js inneholder en ubrukt API-sti. Showcase kopierer bare frontend, bruker syntetiske mockverdier og sender eller lagrer ikke data.",
-      "routeState": "Eksisterende /vibe/vinterlagring-fornes/-rute og katalogslug beholdes; routeinnholdet følger den faktiske frontendscaffolden på kildecommitten."
     },
     {
       "slug": "vurderingsarbeid-fagskolen",
@@ -782,99 +603,6 @@
       "risk": "Kilden håndterer identiteter, telefoner, arrangementsdetaljer, meldinger, vedlegg og rollebasert tilgang. Demoen bruker ikke kildeproduksjonsdata og tilbyr ikke ekte tilgangskontroll eller operativ lagring.",
       "scope": "Statisk kopi på /vibe/arrangementsvakt/ med syntetisk lokal simulator. Kun localStorage under vibe.arrangementsvakt.*; full reset-knapp sletter demoaktivitet. Ingen fetch/XHR, backend, ekte auth, cookies, service worker, push, opplasting, PII eller secrets.",
       "routeState": "Eksisterende assessment-only /vibe/arrangementsvakt/-rute beholdes og erstattes av funksjonell kopi; katalogsluggen forblir stabil."
-    },
-    {
-      "slug": "progresjonsplan",
-      "name": "Progresjonsplan · læringssti",
-      "useCase": "Utforsk en fiktiv læringssti med korte moduler, kunnskapssjekk og progresjon i nettleserøkten.",
-      "category": "Utdanning og læringsgrensesnitt",
-      "audience": [
-        "Undervisere",
-        "Studenter",
-        "Personer som utforsker læringsdesign"
-      ],
-      "status": "Beholdt i bred førstegangsrunde; original, forenklet konseptdemo. Ingen kuratering eller utsiling er gjort.",
-      "source": "eirikyven-gif/WP-l-ringssti, offentlig main commit b358faabd862355ae7e666a9953d8a708b983786, lest 2026-10-09; kildefiler kun lest. Gjennomgått pluginarkiv wp-learningsti-mvp_v0.5.6.zip SHA-256 bd0411bb9087440a211969bc0d358dae87725bf98fb546dd224fa26f85327d16.",
-      "sourceStack": "Kilden er en WordPress/PHP-plugin med JavaScript- og CSS-aktiva. Showcase-demoen er statisk HTML/CSS/JavaScript.",
-      "sourceTests": "Ingen testmappe eller testkommando ble funnet i repoets rotoversikt. Kildetester ble ikke kjørt; pluginruntime ble ikke satt opp.",
-      "sourceApiAuthStoragePrivacy": "Gjennomgått pluginarkiv har WordPress-rolle-/nonce-kontroller og AJAX-handlere. Masterloggen beskriver lokal lagring av quizforsøk, caseutkast og UI-/posisjonsstatus, samt WordPress-lagret admininnhold; sentral auth og WP↔Sheet-sync er framtidsplaner. Faktisk drift og datapraksis er ikke uavhengig kontrollert. Showcase har ingen auth/API/lagring.",
-      "rightsUncertainty": "Ingen lisens eller uttrykkelig gjenbrukstillatelse funnet i gjennomgåtte rotfiler. Kode-, design- og innholdsrettigheter er uavklart; demoen kopierer ikke kildeinnhold eller aktiva.",
-      "purpose": "Kildens README beskriver en Gutenberg-plugin for organisering av læringsinnhold i moduler, innholdselementer, quiz og caseoppgaver.",
-      "demoValue": "Viser moduloversikt, stegvis innhold, en flervalgsoppgave med tilbakemelding og fullføring i en sideøkt.",
-      "simplifications": "Originalt, generisk eksempeltema og tekst. Ingen editor, roller, opplasting, fritekst, KI, poenghistorikk, reelle kurs eller faglig validering.",
-      "risk": "Demoen er en UI-skisse, ikke kursmateriell eller vurdering. Kildens operative datapraksis, integrasjoner og gjenbruksrettigheter er ikke avklart.",
-      "scope": "Statisk HTML/CSS/JS på /vibe/progresjonsplan/. Oppdiktet innhold; progresjon finnes bare i JavaScript-minne i aktiv sideøkt. Ingen nettverk, auth, server, API, nettleserlagring, skjema, telemetry, PII eller secrets.",
-      "routeState": "Ny isolert rute på baseline showcase main ec138417c00220de18d5ab838b3e2950eab2a3d6, v0.36.1 med 38 katalogoppføringer.",
-      "sourceUncertainty": "Issue #2 viser til låste Notion-krav som ikke var tilgjengelige i checkouten. Vurderingen bygger på offentlig README, masterlogg og pluginarkiv; faktisk produksjonsbruk, komplett kravgrunnlag og gjenbruksrettigheter er ikke verifisert."
-    },
-    {
-      "slug": "lagerstyring-hell-ultra",
-      "name": "Lagerstyring Hell Ultra",
-      "useCase": "Utforsk og administrer syntetisk lager: portalfiltre, varedetaljer og media, utlån og eldre enkeltlån, låntakere, delte lister, pakker, vareliste/quick edit, innstillinger, testdata og XLSX-import/eksport.",
-      "category": "Lagerstyring og utlån",
-      "audience": [
-        "Lageransvarlige",
-        "Arrangører",
-        "Personer som utforsker lagerstyring"
-      ],
-      "status": "Funksjonell, lokal showcase-demo med syntetiske data; issue #2 delvis løst.",
-      "sourceUncertainty": "Kildens shortcodeportal ligger på en WordPress-side valgt i admin, så portalens permanente side-slug kan ikke utledes. Magic-link rewrite-ruter er entydige. Offentlig main commit inspisert; faktisk produksjonsoppsett og publiserte data ble ikke kontrollert.",
-      "purpose": "WordPress-plugin for klubbens lagervarer, metadata, offentlig portal, varedetaljer, utlånshistorikk og delte egendefinerte lister.",
-      "demoValue": "Bevarer portalens filtrering/sortering/gruppering/kort-tabell, offentlige vare- og listelenker, varemetadata/media/attributter/underenheter, adminens lager CRUD/quick edit, lånegrupper/retur/historikk/legacy-retur, låntakere, lister, pakker, XLSX-maler/import-preview-validering/eksport, innstillinger og testdata. QA er kjørt i nettleser; detaljert dekning/gap føres i PR #94.",
-      "simplifications": "WordPress auth/capabilities/nonces, server/database persistence, magic-link secrets/tokens, ekte kontaktopplysninger, private kildemedier og API-er er fjernet. All state/media/import er lokal for nettleserøkten; roller er UI-simulatorer, data og media er syntetiske eller brukerens lokalt valgte fixtures. XLSX leses/skapes lokalt.",
-      "source": "eirikyven-gif/lagerstyring-hell-ultra, offentlig main commit f1f13246677d15de24e84070d8dad74f2a0376ee; plugin templates/public-portal.php, public-item-detail.php, public-list.php; public/class-hul-lager-public.php; includes/class-hul-lager-magic-link.php; assets/css/public.css og assets/js/public.js lest. Kilderepoet er urørt.",
-      "sourceStack": "Kilden er en WordPress/PHP-plugin med shortcodeportal, rewrite-baserte magic-lenker, CPT/taksonomier, PHP-renderte maler og JavaScript/CSS. Showcase er statisk HTML/CSS/JavaScript.",
-      "sourceTests": "Direkte sammenlignet med plugin-malene, assets og admin-/includes-klasser ved kilde SHA f1f13246677d15de24e84070d8dad74f2a0376ee. Kildens CI ble ikke kjørt. Showcase har statisk safety-/provenanstest og nettleser-ende-til-ende QA; se PR #94 for dekningsmatrise, kontroller og resterende gap.",
-      "sourceApiAuthStoragePrivacy": "Kilden henter publiserte varer via WordPress, bruker WP-rolle/capability-basert admin og oppbevarer vare-/utlåns-/magic-token-data på server. Demoen har ingen WP-auth, API, serverlagring eller tokens. Alle identitets- og lånefelt er oppdiktet. Rollevelgeren er ikke sikkerhetskontroll.",
-      "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse ble kontrollert. Demoen gjenskaper observerte arbeidsflyter med selvstendig markup/styling og syntetiske data; juridisk status er uavklart.",
-      "risk": "Ingen reell tilgangskontroll, serverlagring, lånebehandling eller publisering. Demoens rollevelger er bare presentasjon; alle forhåndslastede identiteter/kontaktfelt/media er merket syntetiske, og valgte filer forblir lokale i nettleserøkten. Rute til source shortcode-side kan ikke fastslås fordi WP-admin velger siden.",
-      "scope": "Isolert `/vibe/lagerstyring-hell-ultra/`-rute. Showcase-rutene `#/item/{id}` og `#/list/{id}` erstatter WordPress magic-linkmønstrene; dette er ikke tokens. Ingen kilde-PII/media/secrets, auth, cookies, nettleserlagring, backend, private services eller nettverkskall.",
-      "routeState": "Eksisterende /vibe/lagerstyring-hell-ultra/-rute med kildebaserte korrigeringer versjonert som patch v0.60.6, basert på v0.60.5. Showcase-ruten er stabil; kildens WordPress-portal velges av administrator og har derfor ingen fast slug. Issue #2 delvis løst."
-    },
-    {
-      "slug": "hul-lagerstyring",
-      "name": "HUL Lagerstyring · lokal demo",
-      "useCase": "Utforsk et lagerarbeidsområde med varer, lister, bestillinger, utlån og masterdata.",
-      "category": "Lagerstyring",
-      "audience": [
-        "Personer som utforsker lagerarbeidsflyter",
-        "Utviklere og produkteiere"
-      ],
-      "status": "Full frontend fra kildecommit fdda6419dbe8c8891eb9d27f9f6e56ec3151a602 med lokal mock og syntetiske seeddata; produksjonsbackend er ikke med.",
-      "demoValue": "Prøv den faktiske frontendarbeidsflaten: søk, detalj, redigering, lister, utlån, import/eksport og administrasjon mot lokal mock.",
-      "simplifications": "GAS, Google Sheets, ekte backend, autentisering og eksterne API-er er tatt bort. Showcase bruker kildens mockbackend og seedverdier.",
-      "risk": "Ingen autentisering eller tilgangskontroll. Seeddata er syntetiske, men brukerens egne inndata lagres lokalt til reset. Ikke oppgi personopplysninger. Mockbackend erstatter produksjonsserver og dens autorisasjon/validering; kilde-/gjenbruksrettigheter er uavklart.",
-      "scope": "Kopi av app/frontend på /vibe/hul-lagerstyring/; runtime låst til mockBackend=true og authMode=none; CSP connect-src none; HUL mockdata lagres i localStorage og visningstilstand i sessionStorage, forklart i synlig varsel og slettbar med reset.",
-      "source": "eirikyven-gif/hul-lager-html-gas, offentlig main commit fdda6419dbe8c8891eb9d27f9f6e56ec3151a602 (undersøkt 2026-10-10). Ingen kildefiler endret.",
-      "sourceStack": "Kilden har HTML, Tailwind CDN, browser JavaScript, Google Apps Script og Google Sheets. Showcase bruker samme app.js som kildecommit fdda6419dbe8c8891eb9d27f9f6e56ec3151a602 (SHA-256 0d0a236b1aec73b3545cbc053222b40d0a1b500b6002ea121fd1e4c1ce778894), lokalt bygget style.css og kildebasert mockbackend. Ingen ekstern runtime-ressurs.",
-      "sourceTests": "HUL-regresjonstesten låser app.js-SHA-256 til den dokumenterte kildecommiten og dekker CSP, ressurser, nettverksflater og lokal mock. Hele showcase valideres med node --test tests/*.test.mjs og deployworkflowens katalog-/ressurskontroller.",
-      "sourceApiAuthStoragePrivacy": "Kildens frontend bruker auth/API-klient og GAS/Sheets-integrasjon. Showcase beholder frontendflytene, men erstatter nettverk og servertilstand med kildebasert lokal mock; authMode none betyr at ingen autentisering eller tilgangskontroll finnes. CSP script-src/style-src self-only og connect-src none; ressurser er lokale, med data/blob for vedlegg. Mockdatabase i localStorage HUL_MOCK_DB_v1 og visningstilstand i sessionStorage nullstilles med synlig knapp. Ingen produksjonsdata/secrets/API-adresser eller off-origin ressurser følger med.",
-      "routeState": "Eksisterende /vibe/hul-lagerstyring/-rute, adskilt fra lagerstyring-hell-ultra, lagerkart-vinter og vinterlagring-fornes. PR #97 merget som patch v0.60.4; deploy run #38120957375 bestod etter én automatisk rollback ved runnerens offentlige nettverkstimeout. Kildebasert lokal mock for bestilling, plukk, avvik, status og syntetisk utlån. Ordre-E2E bestod ved 320/390/768/1440 px. Fokuserte tilgjengelighetskontroller dekker åtte hovedflater, synlige kontrollnavn, tastaturfokus, add-to-list-dialog og kontrastmålinger; vedlegg-/variantdialoger og OS-skjermleser er ikke fullstendig testet. Cache-bustede offentlige hub-, katalog-, rute- og assetkontroller svarte HTTP 200; publiserte route assets verifisert byte-for-byte mot main. Issue #2 delvis løst.",
-      "rightsUncertainty": "Ingen lisens eller særskilt gjenbrukstillatelse er verifisert i kildens gjennomgåtte filer. Videre offentlig gjenbruk av kildekode, UI og innhold krever rettighetsavklaring."
-    },
-    {
-      "slug": "wp-varelager",
-      "name": "WP Varelager · syntetisk lagerportal",
-      "useCase": "Utforsk en lokal eksempelportal for lageroversikt, syntetiske varer, utleie, rapporter, delte lister, import/eksport og opptelling.",
-      "category": "Lager og administrasjon",
-      "audience": [
-        "Personer som vurderer lagerverktøy",
-        "Lageransvarlige",
-        "Utviklere"
-      ],
-      "status": "Published stable route. PR #90 merged as v0.61.0 and deployment #38123085728 succeeded; the public app asset SHA matches the release. The route remains a synthetic local simulator: role controls are not authorization, shares are tokenless synthetic previews, and selected attachment bytes remain volatile in-tab memory only. Real authentication, server persistence/uploads, private data/files, email and public bearer links remain disabled.",
-      "source": "eirikyven-gif/Wp-varelager, arkivert repository, main SHA e080136b7b0bc20e1885c9c9456f7143ca170861 (2026-03-07). Plugin-manifestet oppgir v2.3.0. Repoet ble kun lest.",
-      "sourceStack": "WordPress-plugin, PHP 7.4+, shortcode-basert portal, CSS/JavaScript og plugin-eide databasetabeller. Showcase er statisk HTML/CSS/JavaScript.",
-      "sourceTests": "Kildepakken inneholder .github/workflows/build-release.yml og ingen app-testmappe/root testscript ble funnet. Denne simulatoren valideres gjennom showcase Vibe static validation (node --test tests/*.test.mjs), egne WP Varelager-workflowtester og Chromium-scenarier.",
-      "sourceApiAuthStoragePrivacy": "The archived plugin uses WordPress capabilities, database-backed inventory/contacts/rentals, uploaded media, email and public share links. The simulator offers disclosed local role/capability presets (UI simulation only), in-memory share rows, and tokenless demo route fragments containing only an allowlisted synthetic list/expiry-scenario slug. Fresh visits resolve that slug to fixed bundled synthetic rows and a baseline active/expired state; an as-of date can simulate local expiry without persistence. The route includes no row ID, label, contact, arbitrary date, bearer token, or private data. It has no real auth/identity, server/database, private people records, private APIs/secrets, persisted/private file bytes, email delivery, public bearer link/token, or external service calls. CSV is read in-browser and XLSX is generated locally. Only the source-compatible hu_inv_view_mode preference persists in localStorage.",
-      "rightsUncertainty": "Pluginens hovedfil oppgir GPLv2-or-later; separat lisensfil eller klar lisensavklaring for dokumentasjon/aktiva ble ikke funnet i gjennomgåtte filer. Demoen er skrevet selvstendig og gjenbruker ikke kildekode, aktiva eller spesifikasjonstekst ordrett.",
-      "purpose": "Utforsk den kjørbare WP Varelager-pluginens brukerflater for utstyr, enheter, utleie, rapporter, delte lister, import/eksport og innstillinger; pluginens README og PHP beskriver overordnet funksjon og drift.",
-      "demoValue": "Explore source-mapped local workflows for search/filter/grouping, equipment and serialized units, detail/notes/history, local synthetic file-picker and fixture attachment add/list/view/delete, tenants, rental creation/edit/activation/return, reports/counting, role/capability selection, selectable category-filtered synthetic share preview with local simulated expiry and tokenless route copy, CSV/XLSX, settings and separate admin screens.",
-      "simplifications": "All demo business data and role/capability choices exist only in page memory. Source-compatible hu_inv_view_mode preference alone uses localStorage. Each synthetic share row selects a list (all items or one populated category); opening #share-preview filters to that list and simulates active/expired state against a user-chosen local date. Copying returns #share-preview/<synthetic-slug>, carrying only an allowlisted synthetic category and expiry-scenario key. Fresh visits resolve the same bundled rows and baseline expiry state; custom as-of date is local and resets on reload. Optional email is not sent. Attachments accept a local synthetic JPG/PNG/PDF/DOCX selection (max 10 MB) or bundled fixture. File bytes remain only in the current page memory; label/category metadata is listed locally. Image/PDF preview uses an object URL revoked on close; cancel/delete/reload drop the references. No network, cookies, localStorage, server upload, private data, or durable file storage; DOCX is metadata-only. No real login, identity, WordPress/server authorization, durable database, private people data, API/secrets, public bearer link, or external network calls.",
-      "risk": "A local workflow may be mistaken for a live warehouse database or actual rental record. Simulated capability gating is not security; no identity or persistence exists. Attachment bytes can exist transiently in tab memory only and are not persisted or transmitted; share previews are filtered synthetic examples, expiry is only a local display simulation, and copied tokenless routes select only bundled synthetic rows by allowlisted slug and never grant access. Source production operation and data practices have not been independently verified.",
-      "scope": "Static /vibe/wp-varelager/ simulator. Synthetic business records and role/capability selection exist only in page memory; only the source-compatible display preference uses localStorage. Share rows select all items or a synthetic category; #share-preview filters to the selected rows and simulates expiry locally. The copied tokenless #share-preview/<synthetic-slug> route resolves the same bundled category and fixed active/expired demo scenario on fresh visits; it carries no record ID, label, contact, arbitrary date, token, or private data. Attachments provide a local synthetic file picker plus bundled image/text fixtures; label/category metadata is in memory, image/PDF previews use object URLs revoked on close, and cancel/delete/reload release file references. No file bytes are transmitted or persisted; DOCX remains metadata-only. CSV is read locally; XLSX is generated locally. No real auth, server capability enforcement, durable business-data persistence, API, cookies/session identity, private people data, email delivery, public bearer token/link, persisted/server-uploaded/private file bytes, secrets, or external service calls.",
-      "routeState": "Stable existing route /vibe/wp-varelager/. PR #90 merged as v0.61.0; deploy run #38123085728 succeeded and the public app asset SHA was verified against the release. The stable route contract and slug are retained. Simulator limitations remain: no real auth/authorization, durable server storage, private data or uploaded bytes, email, secrets, or bearer links; role/capability selection is UI-only, shares resolve allowlisted synthetic slugs, and attachment bytes stay in volatile page memory. DOCX preview is metadata-only.",
-      "sourceUncertainty": "Kilde-repoet er arkivert. main SHA e080136b7b0bc20e1885c9c9456f7143ca170861 peker på tree SHA 7506300fcd587546f7772e1cab4d55293bd7b947; siste main-commit legger til v2.3.0 ZIP. Rot-README blob SHA 89ac942d4e21c3a832c46d2feb9f232b5779592b er 18 byte; plugin readme.txt blob SHA f19e0cb81d005748fb3117ed8283f6fcd62226d7 (Stable tag 2.1.0) gir overordnet funksjonsbeskrivelse, mens plugin entrypoint blob SHA efab8c606ffdeb94b01b414ab8a7728f16eb5aca og changelog blob SHA 2c777661911f4c1cb306a84cb6224d5851c31511 dokumenterer v2.3.0. Ingen eksisterende /vibe/wp-varelager/-rute eller katalogslug på showcase main cd5ba4a (VERSION 0.60.7). Demoen følger de kjørbare portal-/adminskjermene og arbeidsflytene; sikkerhetskritiske nettverks- og lagringshandlinger er erstattet med syntetiske lokale simuleringer. Parity er fortsatt under kontroll."
     }
   ]
 }
