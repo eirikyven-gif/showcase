@@ -178,7 +178,7 @@
         "Studenter",
         "Personer som lager modulbasert læringsinnhold"
       ],
-      "status": "Korrigert funksjonskopi av observerbar v0.5.6-oppførsel; innholdsparitet kan ikke verifiseres fordi kilden ikke har kurskonfigurasjon eller kursmedia. Statisk Showcase-demo med syntetiske data; parity-korreksjon er draft, ikke merget eller publisert. Issue #2 delvis løst.",
+      "status": "Korrigert funksjonskopi av observerbar v0.5.6-oppførsel; publisert i showcase v1.1.0. Innholdsparitet kan ikke verifiseres fordi kilden mangler kurskonfigurasjon og kursmedia. Syntetiske data; Issue #2 delvis løst.",
       "sourceUncertainty": "Kildearkivets README.txt sier at quiz/case ikke finnes i v0.5.6, men PHP og frontend-JavaScript implementerer quiz, case og KI-stubber. Import-masterloggen beskriver modulvis playerflyt ved v0.5.6. Funksjonsgrunnlag følger faktisk arkivkode; spriket er bevart som usikkerhet. Arkivet inneholder ingen kurskonfigurasjon, kurstekster eller media, så innholdet i demoen er tydelig syntetisk.",
       "purpose": "WordPress/Gutenberg-plugin for redigering av læringsstier med moduler, innholdselementer, global tidslinje og tilknyttet media; arkivets frontend har modulvis playerflyt, quiz, case og KI-stubber.",
       "demoValue": "Lar besøkende gjennomføre en modul og prøve hovedområdene i editoren: moduler, elementtyper, tidslinje og sti-media.",
@@ -191,7 +191,7 @@
       "sourceTests": "Kilde-ZIP inneholder ingen testfiler eller testoppsett. Showcase har fokusert node:test for rute, funksjonsdekning, personvernflater, responsivitet og katalogmetadata.",
       "sourceApiAuthStoragePrivacy": "Pluginen registrerer autentisert WP-admin AJAX for lesing/lagring av konfigurasjon og medietagging; quizkontroll bruker AJAX. Admin krever WordPress capabilities og nonce. Pluginen lagrer konfigurasjon server-side og media i WP attachment-meta. Caseutkast og elevfremdrift lagres lokalt i nettleseren. Showcase simulerer adminredigering lokalt, fjerner serverfunksjoner og bruker localStorage for demoens utkast/fremdrift; «Nullstill demo» sletter all lokal data. Ingen nettverkskall fra Showcase-ruten.",
       "rightsUncertainty": "Kilderepoet har ingen lisensfil eller lisensmetadata i gjennomgått innhold. Demoens kode og syntetiske eksempeltekst er skrevet selvstendig; ingen ZIP-kildekode eller mediefiler er kopiert.",
-      "routeState": "Paritetsgjennomgang mot arkivet wp-learningsti-mvp_v0.5.6.zip ved kildecommit b358faabd862355ae7e666a9953d8a708b983786; se vibe/wp-l-ringssti/PARITY.md. Denne PR-en lukker observerte player- og editorarbeidsflytgap. Kurskonfigurasjon, kursinnhold og media mangler i kildearkivet, så innholdsparitet kan ikke bekreftes. Issue #2 delvis adressert; PR #99 draft, ikke merget eller publisert. SemVer overlates til koordinator."
+      "routeState": "PR #99 er merget og publisert i showcase v1.1.0 (deploy run #38149771589). Funksjonsparitet gjelder observerbar pluginatferd. Kurskonfigurasjon, kurstekster og media finnes ikke i kildearkivet; innholdsparitet kan derfor ikke bekreftes. Se vibe/wp-l-ringssti/PARITY.md."
     },
     {
       "slug": "ns3424-lab",
