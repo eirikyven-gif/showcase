@@ -3,6 +3,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        slate: {
+          500: '#475569',
+        },
+        emerald: {
+          600: '#047857',
+        },
         hulBlue: '#1d4ed8',
         hulBlueDark: '#1e3a8a',
         hulBlueSoft: '#dbeafe',
