@@ -9,14 +9,14 @@ const css = read('vibe/wp-varelager/style.css');
 const audit = read('vibe/wp-varelager/PARITY.md');
 const catalog = JSON.parse(read('vibe/catalog.json'));
 
-test('source provenance is pinned and parity gaps remain explicit', () => {
-  assert.equal(read('VERSION').trim(), '0.60.3');
+test('source provenance is pinned and safe local parity boundaries remain explicit', () => {
+  assert.equal(read('VERSION').trim(), '0.60.5');
   assert.equal(catalog.apps.length, 42);
   const app = catalog.apps.find(item => item.slug === 'wp-varelager');
   assert.ok(app);
   assert.match(app.source, /e080136b7b0bc20e1885c9c9456f7143ca170861/);
   assert.match(app.sourceUncertainty, /7506300fcd587546f7772e1cab4d55293bd7b947/);
-  assert.match(audit, /Status: incomplete/i);
+  assert.match(audit, /local equivalents/i);
   assert.match(audit, /PR #90 stays draft/i);
   assert.match(html, /Syntetisk demonstrasjon/);
   assert.match(html, /ved omlasting/);
