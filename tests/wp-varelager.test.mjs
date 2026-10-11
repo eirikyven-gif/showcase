@@ -81,11 +81,18 @@ test('source capabilities have local role presets and individual in-memory gates
   assert.match(js, /function hasCap\(cap\)/);
   assert.match(js, /function actionCapability\(button\)/);
   assert.match(html, /Valget simulerer UI-gating/);
+  assert.match(html, /ikke innlogging eller sikkerhetskontroll/);
   assert.match(audit, /Local role selector presets/i);
 });
 
 test('share and attachment source interactions map to safe local previews and metadata lifecycle', () => {
   assert.match(js, /function sharePreviewView\(\)/);
+  assert.match(js, /id="share-list"/);
+  assert.match(js, /category:document\.querySelector\('#share-list'\)\.value/);
+  assert.match(js, /id="share-preview-date"/);
+  assert.match(js, /Utløpt \(simulert\)/);
+  assert.match(js, /items=db\.items\.filter\(i=>category==='all'\|\|i\.category===category\)/);
+  assert.match(js, /selectedPreviewShareId=b\.dataset\.id/);
   assert.match(js, /data-action="copy-share-route"/);
   assert.match(js, /location\.href\.split\('#'\)\[0\]\}#share-preview/);
   assert.match(js, /function fixturePreview\(fixture\)/);
