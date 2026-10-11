@@ -1,30 +1,25 @@
 # Læringssti
 
-Første vurderingsrunde for en kort læringsøvelse. Kandidaten beholdes i den brede vurderingen; ingen kuratering eller utsiling er gjort.
+Statisk showcase-kopi av sentrale Læringssti-funksjoner. Direkterute: `/vibe/laringssti-fagskolen/`.
 
-## Katalogmetadata
+## Gjennomgått kilde og krav
 
-- **Navn:** Læringssti
-- **Bruksområde:** Kort leksjon med tekst, refleksjon og kontrollspørsmål
-- **Kategori:** Utdanning
-- **Målgruppe:** Fagskolestudenter og undervisere
-- **Status:** Statisk Vibe-demonstrasjon; kandidat beholdt til senere kurateringsrunde
-- **Foreslått slug:** `laringssti-fagskolen`
-- **Demoens verdi:** Viser en liten undervisningsflyt fra forklaring til aktiv gjenhenting med umiddelbar tilbakemelding
-- **Omfang:** Én kort leksjon og ett flervalgs kontrollspørsmål
+- Kilde: `eirikyven-gif/apps-fagskolen`, `apps/laringsti/index.php`, commit `89f7b2c086008c91c61d3754853453a37904add5` (sist endret 2026-10-07), samt appens README og UI-/runtime-arkitektur.
+- Låst Notion SSoT **v0.22**: administrasjon av emner, grupper og aliaser; læringsstier, kategorier, sider, medier, publisering, lærerforhåndsvisning, studentaktivitet, progresjon og svar.
+- Låst Notion SSoT **v0.21**: demostien *Tilstandsvurdering av et eldre bygg*, testinnhold, to obligatoriske kategorier, oppgavetyper, medier og progresjonsregler.
 
-## Kildeinngangspunkt og vurdering
+## Kildeparitet
 
-Kildeinngangspunktet er `apps/laringsti/index.php` i kildeprosjektet. Demoen er skrevet fra grunnen av med oppdiktet innhold; kildekode, leksjonstekster, studentdata, medier og tjenestekonfigurasjon er ikke kopiert. Første vurdering bekrefter en læringsflate som er aktuell for studenter og undervisere.
+Demostien følger v0.21 med kategoriene **Kartlegg bygget** og **Vurder funnene**, som kan gjennomføres i valgfri rekkefølge. Den viser introduksjons- og læringssider, bilde, spillbar lokal video med norsk teksting, spillbar syntetisk lyd med transkripsjon, enkeltvalg, flervalg, sortering, prioritering, fritekstsvar, tekst- og videoløsningsforslag, lærerforhåndsvisning samt kategori- og modulfremdrift. Video-/tekst-/automatisk fullføring følger demostipresiseringen. Lærerforhåndsvisning viser løsningsforslag uten å registrere studentprogresjon.
 
-## Forenklinger og risiko
+Kildekoden støtter langt flere administrative arbeidsflyter enn denne avgrensede statiske demoen, blant annet studentregister, emne-/gruppeadministrasjon, mediaredigering, tilgangsstyring, aktivitetslogg, H5P-varianter, eksport og serverstyrt publisering. Showcase-kopien viser en enkel adminflate for syntetiske kategorier/sider og demo-publisering, ikke hele den produksjonssikre plattformen.
 
-- Oppdiktet eksempel om å formulere læringsmål; ingen originalt kursinnhold.
-- Ingen konto, rolle, autentisering, elevidentifikator eller progresjon.
-- Ingen PHP, serverlagring, database, API, H5P, mediefil eller ekstern tjeneste.
-- Valg og tilbakemelding finnes bare i sidens minne; oppdatering/nullstilling fjerner dem.
-- Studentrelatert kildeprodukt gir personvernrisiko hvis reelle kontoer, svar, fremdrift eller innhold eksponeres. Denne demoen samler ikke inn slike opplysninger. Syntetisk undervisningstekst reduserer innholds- og personvernrisikoen.
+## Innhold og sikkerhetsforenklinger
+
+Kildeinnholdet ligger i privat serverlagring bak autentisering og finnes ikke i kildekoderepoet. Det er ikke hentet fra produksjon. Læringssti, forklaringer, svar og medier i denne ruta er derfor syntetiske eksempler basert på den låste demostiflyten og skal ikke brukes som undervisnings- eller vurderingsgrunnlag. Illustrasjonen er tegnet i ruta; videoen er laget lokalt for demoen og har norsk teksting, mens lydfilen er en kort syntetisk tone uten tale med tekstlig alternativ.
+
+Ingen konto, passord, innlogging, elevregister, ekte alias/PIN, serverlagring, API, cookie, privat mediefil eller ekstern ressurs finnes i demoen. Student-, lærer- og adminmodus velges åpent. Oppgaver, svar, fremdrift, publiseringsstatus og egendefinerte testsider lagres kun i `localStorage` på denne enheten. **Nullstill demo** spør om bekreftelse og fjerner denne nøkkelen.
 
 ## QA
 
-`/vibe/laringssti-fagskolen/` er kanonisk direkterute med returlenke til `/vibe/`. Kontrollspørsmålet avbryter standard skjemainnsending og bruker kun nettleserminne. Se PR-sammendraget for tester, responsive kontroller, tastatur og nettverks-/lagringskontroll.
+`tests/laringssti-fagskolen.test.mjs` kontrollerer SSoT-dekning, katalogoppføring, rutelenker, localStorage-reset og fravær av nettverks-/auth-flater. Manuell nettleser-QA bør prøve begge kategorier i vilkårlig rekkefølge, alle oppgavetyper, lærerforhåndsvisning, lokal adminredigering, mobilbredde, tastatur og reset.
