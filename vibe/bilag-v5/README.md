@@ -1,24 +1,25 @@
-# Bilag v5 · batchstatus
+# Bilag v5 · PDF-batch og ZIP-import
 
-## Første vurdering
+## Kildegjennomgang
 
-- **Kildestatus:** Read-only gjennomgang av `apps-fornes-gard/apps/bilag-v5/README.md` i GitHub. README-en beskriver PDF-batch, separat ZIP-import, tidsstyrte triggere, batchgrenser, separate låser, Google Drive-/Sheet-flyt, append-only logger og `SYSTEM`-identitet. Backend, tester og data ble ikke hentet eller kjørt; beskrivelser av implementasjonen bygger derfor på README-en og er ikke uavhengig verifisert.
-- **Bruksområde:** Synliggjøre status og forskjellen mellom to separate batchløp i dokumentflyt.
-- **Kategori:** Gårdsadministrasjon og dokumentflyt.
-- **Målgruppe:** Gårdsbrukere, regnskapsmedarbeidere, dokumentansvarlige og utviklere som vurderer batcharbeidsflyt.
-- **Status:** Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.
-- **Slug/rute:** `bilag-v5` · `/vibe/bilag-v5/`.
-- **Demoverdi:** To samtidige statuskort og en syntetisk hendelsesoversikt gjør det enkelt å forstå hvorfor PDF-batch og ZIP-import må følges som ulike jobber.
-- **Forenklinger:** Fast HTML-visning med fiktive pakkenavn, filnavn, klokkeslett og statusverdier. Ingen interaksjon, jobbkjøring, tidsstyring, filmetadata, retry, lås eller audit-logikk.
-- **Risiko:** Kildebeskrivelsen omfatter økonomiske dokumenter, Drive-filer og Sheet-logger som kan inneholde navn, lenker og fil-ID-er. Tilgangsmodell, dataklassifisering, trigger-eier og faktiske data ble ikke verifisert. Eksempelsiden viser bare oppdiktede verdier og peker tydelig på at loggen ikke er en faktisk revisjonslogg.
-- **Omfang:** Bare denne isolerte ruten, katalograden og vurderingen. Ingen opplasting/nedlasting, ZIP/PDF-parsing, Drive, Sheet, triggere, systemidentitet, eksterne kall, autentisering, lagring, PII eller hemmeligheter.
+Kilde: `eirikyven-gif/apps-fornes-gard/apps/bilag-v5`, commit `90014358fb3d70e89265b2b30d38e9376a6927b2` (lest 2026-10-11). Gjennomgåtte aktive filer: `README.md`, `backend/Config.gs`, `backend/DriveAdapter.gs`, `backend/SheetAdapter.gs`, `backend/SyncService.gs`, `backend/ZipImport.gs`, `tests/AutomationTest.gs`, `tests/ZipImportTest.gs`, `tests/run-automation-tests.js` og `tests/run-zip-import-tests.js`. `arkiv/` er uttrykkelig utelatt fra aktiv kildeleveranse.
 
-## Overlapp med Bilag
+## Kildeparitet i demoen
 
-`/vibe/bilag/` skisserer én kø med sorteringsstatus. Bilag v5-kilden beskriver en bredere og konkret automatisert arbeidsflyt: én tidsstyrt jobb normaliserer og flytter støttede filer til Dokumentasjon; en separat tidsstyrt ZIP-jobb pakker ut stabile arkiver til Innboks. De to løpene har egne triggere og låser og skriver til egne/relaterte loggfaner. Demoen her overlapper derfor på oversikts- og oppfølgingsbehovet, men fremhever at PDF-batch og ZIP-import er forskjellige steg. Den utfører ingen av dem og presenterer ikke statusene som kildens faktiske driftsstatus.
+Demoen gjengir arbeidsflytens observerbare valg med lokale syntetiske data:
 
-## QA og publisering
+- **PDF-batch:** allerede behandlede elementer hoppes over; PDF flyttes direkte, mens støttede Google-dokumenter, regneark, JPEG, PNG og ren tekst simuleres som konvertert i kildemappen og deretter flyttet til Dokumentasjon. Originalen markeres beholdt. Ikke-støttet MIME-type hoppes over. Ustabil/uleselig fil gir eget feilutfall uten å stoppe resten.
+- **Forsøk:** tre feil blokkerer videre automatisk behandling. En eksplisitt retry registreres separat og nullstiller forsøksrekken uten å fjerne eldre logghendelser.
+- **ZIP-import:** ustabil ZIP hoppes over, korrupt ZIP gir isolert feil, oppføringer fra undermapper flates ut til filnavn, traversal/absolutte stier/kataloger/nestet ZIP avvises. Oppføringsnøkkel gir idempotens og eksisterende navn får deterministisk `(2)`-suffiks.
+- **Jobbdrift:** PDF og ZIP har separate kontroller og logger, men deler Apps Scripts prosjektlås som serialiserer kjøringene. Maksgrensen er 25 elementer og kjøretidsrammen vises som fire minutter. Originalens tidsutløsere erstattes med manuell start.
+- **Register og logger:** kø, forsøk, status og hendelser vises lokalt. Originalens `Bilag`, `Historikk`, `Kjøringslogg` og `ZIP-logg` i Google Sheets er ikke tilkoblet.
 
-Siden er statisk HTML/CSS uten appskript. Demoen skal vurderes for liten skjerm, lesbar tabell ved horisontal rulling, overskriftsstruktur, skip-lenke, kontrast/fokus fra felles hub-stil, syntetiske verdier og ingen forespørsler utover statiske lokale ressurser. Kjør fra repo-roten: `node --test tests/*.test.mjs` og `git diff --check`; åpne `/vibe/bilag-v5/` med lokal HTTP-server for direkte-rute- og mobilkontroll.
+Demodata inkluderer særskilte tilfeller for PDF-flytting, konvertering, ustabil og ikke-støttet fil, retry-blokkering, ZIP-kollisjon, traversal, nestet ZIP, ustabil ZIP og korrupt ZIP.
 
-Denne leveransen er et delbidrag til Issue #2. Ingen publisering er utført. Deploystatus er derfor upublisert; den etablerte `diverse-apper`-baserte deployflyten krever merge til `main`, dry-run og deretter godkjent live-kjøring. Denne endringen setter `VERSION` til `0.22.0`, neste minor etter `0.21.0` på `main` ved integrering.
+## Trygghetsgrenser
+
+Ingen kildekode eller konfigurasjons-ID-er er kopiert. Ingen filer lastes opp/ned eller leses; ingen ZIP åpnes og ingen PDF konverteres. Ingen Drive/Sheets, API-er, nettverkskall, autentisering, eksterne tjenester eller serverlagring. `localStorage` inneholder kun den faste syntetiske demo-tilstanden under `vibe.bilag-v5.demo.v2` og kan slettes via **Nullstill demo**. Ingen felter tar imot filnavn, personopplysninger eller økonomidata. Loggene er ikke revisjonslogger.
+
+## Tester og QA
+
+Kjør fra repo-roten: `node --test tests/bilag-v5-parity.test.mjs`, `node --check vibe/bilag-v5/app.js`, `node --test tests/*.test.mjs` og `git diff --check`. Siden fungerer på `/vibe/bilag-v5/` og lenker tilbake til `/vibe/`. Kildetestene ble lest, men ikke kjørt i showcase. Denne endringen er et delbidrag til Issue #2. VERSION, merge og deploy håndteres av koordinatoren.

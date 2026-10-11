@@ -3,55 +3,64 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="En statisk statusoversikt for to fiktive batchløp. Ingen PDF- eller ZIP-filer behandles.">
-  <title>Bilag v5 · batchstatus — Vibe</title>
+  <meta name="description" content="Interaktiv, lokal simulering av PDF-batch og separat ZIP-import med syntetiske dokumenter.">
+  <title>Bilag v5 · batchbehandling — Vibe</title>
   <link rel="stylesheet" href="/vibe/assets/hub.css">
   <link rel="stylesheet" href="/vibe/bilag-v5/style.css">
+  <script src="/vibe/bilag-v5/app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Hopp til innhold</a>
   <header class="site-header"><a class="brand" href="/vibe/" aria-label="Vibe – forsiden">vibe<span aria-hidden="true">.</span></a><a class="back-link" href="/vibe/">← Alle verktøy</a></header>
   <main id="main" class="page-shell">
     <section class="intro" aria-labelledby="title">
-      <p class="eyebrow">Bilag v5 · konseptskisse</p>
-      <h1 id="title">To løp.<br><span>Én statusoversikt.</span></h1>
-      <p class="lead">Et fiktivt blikk på hvordan en PDF-batch og en separat ZIP-import kan følges hver for seg.</p>
-      <aside class="notice" role="note"><strong>Kun eksempelstatus.</strong> Ingen filer velges, leses, pakkes ut, konverteres, flyttes eller lastes ned. Alle navn og statuser på siden er oppdiktet.</aside>
+      <p class="eyebrow">Bilag v5 · syntetisk arbeidsflyt</p>
+      <h1 id="title">To løp.<br><span>Kontrollert flyt.</span></h1>
+      <p class="lead">Utforsk hvordan PDF-normalisering og ZIP-import behandles som separate batchjobber med grenser, feilhåndtering og sporbar status.</p>
+      <aside class="notice" role="note"><strong>Trygg demo.</strong> Alle navn, filer, innhold, klokkeslett og ID-er er oppdiktet. Ingen filer velges eller leses. Handlinger lagres bare i denne nettleseren og kan nullstilles.</aside>
     </section>
 
-    <section class="runs" aria-label="Fiktive batchløp">
+    <section class="controls" aria-label="Demokontroller">
+      <div><strong>Simulert kjøring</strong><p>Manuell knapp erstatter tidsstyrt trigger. Maks 25 elementer og 4 minutter per kjøring i originalen.</p></div>
+      <label class="check-control"><input id="fail-next" type="checkbox"> Simuler konverteringsfeil på neste støttede dokument</label>
+      <button id="reset-demo" class="button button-secondary" type="button">Nullstill demo</button>
+    </section>
+    <p id="notice" class="live-notice" role="status" aria-live="polite"></p>
+
+    <section class="runs" aria-label="Uavhengige batchjobber">
       <article class="run-card" aria-labelledby="pdf-title">
-        <div class="card-top"><span class="run-icon" aria-hidden="true">PDF</span><span class="status status-active">Eksempel · pågår</span></div>
-        <p class="eyebrow">Tidsstyrt batch A</p>
-        <h2 id="pdf-title">PDF-behandling</h2>
-        <p class="description">Fiktiv oversikt over filer som i en operativ flyt kan normaliseres og følges opp.</p>
-        <dl class="metrics"><div><dt>Eksempel i kø</dt><dd>3</dd></div><div><dt>Eksempelstatus</dt><dd>1 venter</dd></div><div><dt>Visning</dt><dd>Kun tekst</dd></div></dl>
-        <div class="sample-file"><span>Oppdiktet filnavn</span><strong>bilag-demo-104.pdf</strong></div>
-        <p class="state"><span class="state-dot" aria-hidden="true"></span>Venter på eksempelgjennomgang</p>
+        <div class="card-top"><span class="run-icon" aria-hidden="true">PDF</span><span id="pdf-state" class="status">Klar</span></div>
+        <p class="eyebrow">Separat batch A · tidsstyrt i originalen</p>
+        <h2 id="pdf-title">Normaliser og flytt</h2>
+        <p class="description">Stabile PDF-er flyttes til Dokumentasjon. Støttede dokumenter og bilder blir først konvertert til PDF i kildemappen. Originalen beholdes.</p>
+        <dl class="metrics"><div><dt>I syntetisk kø</dt><dd id="pdf-queued">–</dd></div><div><dt>Behandlet denne økten</dt><dd id="pdf-processed">0</dd></div><div><dt>Maks konverteringsforsøk</dt><dd>3</dd></div></dl>
+        <button id="run-pdf" class="button" type="button">Kjør PDF-batch</button>
+        <div class="table-wrap"><table><caption class="visually-hidden">Syntetisk PDF-kø</caption><thead><tr><th scope="col">Fil (oppdiktet)</th><th scope="col">Kilde</th><th scope="col">Status</th><th scope="col">Forsøk</th></tr></thead><tbody id="pdf-rows"></tbody></table></div>
+        <div id="retry-panel" class="retry-panel" hidden><p id="retry-copy"></p><button id="retry-file" class="button button-secondary" type="button">Be om nytt forsøk</button></div>
       </article>
+
       <article class="run-card zip-card" aria-labelledby="zip-title">
-        <div class="card-top"><span class="run-icon zip-icon" aria-hidden="true">ZIP</span><span class="status status-queued">Eksempel · i kø</span></div>
-        <p class="eyebrow">Separat tidsstyrt jobb B</p>
-        <h2 id="zip-title">ZIP-import</h2>
-        <p class="description">Et eget eksempel på køstatus for en pakke. Ingen arkivoppføring blir åpnet eller tolket.</p>
-        <dl class="metrics"><div><dt>Eksempel i kø</dt><dd>1</dd></div><div><dt>Eksempelstatus</dt><dd>Avventer</dd></div><div><dt>Visning</dt><dd>Kun tekst</dd></div></dl>
-        <div class="sample-file"><span>Oppdiktet pakkenavn</span><strong>pakke-eksempel-07.zip</strong></div>
-        <p class="state queued-state"><span class="state-dot" aria-hidden="true"></span>Venter i separat eksempeljobb</p>
+        <div class="card-top"><span class="run-icon zip-icon" aria-hidden="true">ZIP</span><span id="zip-state" class="status">Klar</span></div>
+        <p class="eyebrow">Separat batch B · delt prosjektlås, egen logg i originalen</p>
+        <h2 id="zip-title">Pakk ut til Innboks</h2>
+        <p class="description">Stabile ZIP-er behandles separat. Undermapper flates ut; utrygge stier, mapper og nestede ZIP-er hoppes over. Navnekollisjoner får et nytt navn.</p>
+        <dl class="metrics"><div><dt>Pakker i kø</dt><dd id="zip-queued">–</dd></div><div><dt>Opprettet denne økten</dt><dd id="zip-processed">0</dd></div><div><dt>Maks per kjøring</dt><dd>25</dd></div></dl>
+        <button id="run-zip" class="button" type="button">Kjør ZIP-import</button>
+        <div class="table-wrap"><table><caption class="visually-hidden">Syntetisk ZIP-kø</caption><thead><tr><th scope="col">Pakke og oppføring (oppdiktet)</th><th scope="col">Resultat</th></tr></thead><tbody id="zip-rows"></tbody></table></div>
       </article>
     </section>
 
     <section class="log-panel" aria-labelledby="log-title">
-      <div class="section-heading"><div><p class="eyebrow">Syntetiske hendelser</p><h2 id="log-title">Eksempellogg</h2></div><span class="log-label">Ikke en revisjonslogg</span></div>
-      <div class="table-wrap"><table><caption class="visually-hidden">Oppdiktede statuslinjer uten filidentifikatorer eller lenker</caption><thead><tr><th scope="col">Eksempeltid</th><th scope="col">Løp</th><th scope="col">Oppdiktet navn</th><th scope="col">Status</th></tr></thead><tbody>
-        <tr><td>09:12</td><td>PDF-batch</td><td>bilag-demo-104.pdf</td><td><span class="table-status">Venter</span></td></tr>
-        <tr><td>09:10</td><td>ZIP-import</td><td>pakke-eksempel-07.zip</td><td><span class="table-status queued">I kø</span></td></tr>
-        <tr><td>09:04</td><td>PDF-batch</td><td>kvittering-demo-022.pdf</td><td><span class="table-status complete">Eksempel ferdig</span></td></tr>
-      </tbody></table></div>
-      <p class="log-note">Tidene og radene er faste illustrasjoner. Ingen faktisk jobb har kjørt, og ingen kilde- eller mållenker vises.</p>
+      <div class="section-heading"><div><p class="eyebrow">Lokal, append-only visning</p><h2 id="log-title">Kjørings- og ZIP-logg</h2></div><span class="log-label">Ikke revisjonslogger</span></div>
+      <div class="table-wrap"><table><caption class="visually-hidden">Syntetiske hendelser for begge batchjobber</caption><thead><tr><th scope="col">Tid</th><th scope="col">Løp</th><th scope="col">Oppdiktet element</th><th scope="col">Handling</th><th scope="col">Detalj</th></tr></thead><tbody id="log-rows"></tbody></table></div>
+      <p class="log-note">Originalen skriver append-only historikk og kjøringslogger til egne regnearkfaner. Her er loggene lokale og syntetiske, uten fil-ID-er eller lenker.</p>
     </section>
 
-    <section class="boundary" aria-labelledby="boundary-title"><p class="eyebrow">Les dette som en skisse</p><h2 id="boundary-title">Arbeidsflyt i kilden, status i demoen</h2><p>Bilag v5 beskriver én tidsstyrt PDF-batch for normalisering og kontrollert flytting, pluss en separat tidsstyrt ZIP-import som legger utpakkede filer i Innboks. De bruker egne triggere og låser, men kan fortsatt berøre de samme dokumentene og regnearkbaserte oversiktene. Denne demoen viser bare den konseptuelle forskjellen mellom køene. Den representerer ikke kontrollene eller resultatene i den operative løsningen.</p><p class="disclaimer">Bruk aldri virkelige filnavn, økonomiopplysninger, identifikatorer eller personopplysninger i denne demoen. Den gir ikke regnskapsråd og skal ikke brukes til dokumenthåndtering.</p></section>
+    <section class="boundary" aria-labelledby="boundary-title"><p class="eyebrow">Hva er simulert?</p><h2 id="boundary-title">Kildens beslutninger, trygge demodata</h2>
+      <ul><li>PDF-løpet hopper over allerede ferdigbehandlede filer og ikke-støttede filtyper; ustabile og uleselige elementer gir feil uten å stoppe resten.</li><li>Etter tre konverteringsfeil blokkeres elementet. Eksplisitt retry nullstiller forsøkstelleren uten å slette historikken.</li><li>ZIP-løpet bruker stabil oppføring, sti-validering, stabil idempotensnøkkel og deterministisk navneendring ved kollisjon. Korrupt arkivfeil isoleres.</li><li>Jobbene deler prosjektets scriptlås, men har separate status- og hendelsesstrømmer. Kjøringer begrenses til 25 elementer eller fire minutter.</li></ul>
+      <p class="disclaimer">Ingen opplasting, nedlasting, parsing, PDF-konvertering, ekstern tjeneste, autentisering eller serverlagring. Demoens localStorage inneholder bare faste, syntetiske scenarier. Ikke skriv inn eller bruk reelle filnavn, økonomiopplysninger eller personopplysninger.</p>
+    </section>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Statisk visning · kun syntetiske statusdata</span></footer>
+  <footer class="site-footer"><a class="footer-brand" href="/vibe/">Tilbake til Vibe</a><span>Kun syntetiske dokumentflyter · nettleserlagring kan nullstilles</span></footer>
 </body>
 </html>
