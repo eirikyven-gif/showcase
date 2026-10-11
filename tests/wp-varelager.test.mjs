@@ -10,8 +10,8 @@ const audit = read('vibe/wp-varelager/PARITY.md');
 const catalog = JSON.parse(read('vibe/catalog.json'));
 
 test('source provenance is pinned and safe local parity boundaries remain explicit', () => {
-  assert.equal(read('VERSION').trim(), '0.61.0');
-  assert.equal(catalog.apps.length, 42);
+  assert.equal(read('VERSION').trim(), '1.0.0');
+  assert.equal(catalog.apps.length, 41);
   const app = catalog.apps.find(item => item.slug === 'wp-varelager');
   assert.ok(app);
   assert.match(app.source, /e080136b7b0bc20e1885c9c9456f7143ca170861/);
