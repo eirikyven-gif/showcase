@@ -15,6 +15,12 @@ test('source provenance is pinned and safe local parity boundaries remain explic
   const app = catalog.apps.find(item => item.slug === 'wp-varelager');
   assert.ok(app);
   assert.match(app.source, /e080136b7b0bc20e1885c9c9456f7143ca170861/);
+  assert.match(app.status, /PR #90 merged as v0\.61\.0/i);
+  assert.match(app.status, /deployment #38123085728 succeeded/i);
+  assert.match(app.routeState, /Stable existing route \/vibe\/wp-varelager\//);
+  assert.match(app.routeState, /merged as v0\.61\.0.*deploy run #38123085728 succeeded/i);
+  assert.match(app.routeState, /no real auth\/authorization.*volatile page memory/i);
+  assert.doesNotMatch(app.routeState, /draft|not deployed|proposes v0\.61\.0/i);
   assert.match(app.sourceUncertainty, /7506300fcd587546f7772e1cab4d55293bd7b947/);
   assert.match(audit, /local equivalents/i);
   assert.match(audit, /PR #90 stays draft/i);
