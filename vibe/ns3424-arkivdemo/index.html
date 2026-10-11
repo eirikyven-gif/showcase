@@ -38,7 +38,7 @@
     min-height: 100vh;
   }
   a { color: var(--clr-primary); }
-  button:focus-visible, a:focus-visible { outline: 3px solid #f39c12; outline-offset: 3px; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 3px solid #7f3b32; outline-offset: 3px; }
   .skip-link { position: absolute; left: -9999px; top: 0; z-index: 200; background: #fff; padding: .75rem; }
   .skip-link:focus { left: .5rem; }
   .back-link { display: block; max-width: 960px; margin: .5rem auto; padding: 0 1.5rem; }
@@ -459,6 +459,50 @@
     border-top: 1px solid var(--clr-border);
     margin-top: 2rem;
   }
+  .learning-groups { display: grid; gap: 1.25rem; }
+  .learning-group { margin: 0; }
+  .learning-group h3 { margin: 0 0 .75rem; color: var(--clr-primary); }
+  .learning-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: .8rem; }
+  .learning-card { display: flex; flex-direction: column; align-items: flex-start; gap: .65rem; min-height: 150px; padding: 1rem; border: 1px solid var(--clr-border); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+  .learning-card h4 { color: var(--clr-primary); font-size: 1rem; }
+  .learning-card p { color: var(--clr-text-light); font-size: .88rem; }
+  .learning-card button, .module-action { margin-top: auto; border: 0; border-radius: 6px; padding: .65rem .9rem; background: var(--clr-primary); color: white; cursor: pointer; font: inherit; font-weight: 600; }
+  .learning-card button:hover, .module-action:hover { background: var(--clr-primary-light); }
+  .module-toolbar { display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+  .module-toolbar button { border:1px solid var(--clr-border); border-radius:6px; background:#fff; color:var(--clr-primary); padding:.55rem .8rem; font:inherit; cursor:pointer; }
+  .module-content { max-width: 850px; margin:0 auto; }
+  .module-content h2 { color:var(--clr-primary); margin:1rem 0 .5rem; }
+  .module-content p, .module-content li { margin:.5rem 0; }
+  .module-content ul { padding-left:1.4rem; }
+  .module-form { display:grid; gap:.9rem; }
+  .module-form label { display:grid; gap:.35rem; font-weight:600; }
+  .module-form textarea, .module-form select { width:100%; min-height:2.6rem; border:1px solid #9aa4b2; border-radius:.35rem; padding:.55rem; font:inherit; }
+  .module-form textarea { min-height:5rem; }
+  .module-options { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.65rem; }
+  .module-option { height:100%; text-align:left; border:1px solid var(--clr-border); border-radius:.5rem; background:white; padding:.8rem; cursor:pointer; font:inherit; }
+  .module-option[aria-pressed="true"] { border:2px solid var(--clr-primary); background:#eef6fb; }
+  .module-feedback { padding:.8rem; border-radius:.5rem; background:#eef6fb; color:#173b50; }
+  .module-feedback[hidden] { display:none; }
+  .module-progress { font-weight:600; color:var(--clr-primary); }
+  .source-demo-label { display:inline-block; padding:.15rem .45rem; border-radius:999px; background:#fff1ed; color:#7f2f24; font-size:.75rem; font-weight:700; }
+  .welcome-dialog { width:min(560px, calc(100% - 2rem)); max-height:calc(100vh - 2rem); margin:auto; border:0; border-radius:12px; padding:1.25rem; color:var(--clr-text); box-shadow:var(--shadow-lg); }
+  .welcome-dialog::backdrop { background:rgba(15,23,42,.68); }
+  .welcome-dialog h2 { color:var(--clr-primary); margin-bottom:.75rem; }
+  .welcome-dialog p { margin:.6rem 0; }
+  .welcome-steps { color:var(--clr-text-light); font-size:.9rem; }
+  .welcome-actions { display:flex; gap:.6rem; justify-content:space-between; margin-top:1.25rem; }
+  .welcome-actions button { min-height:44px; border:0; border-radius:6px; padding:.65rem 1rem; background:var(--clr-primary); color:white; font:inherit; font-weight:600; cursor:pointer; }
+  .welcome-actions button:disabled { background:#9aa4b2; cursor:not-allowed; }
+  .utility-actions { position:fixed; z-index:80; bottom:1rem; left:1rem; right:1rem; display:flex; justify-content:space-between; gap:.75rem; pointer-events:none; }
+  .utility-actions button { pointer-events:auto; min-height:44px; border:0; border-radius:999px; padding:.65rem 1rem; background:#163d55; color:#fff; font:inherit; font-weight:700; box-shadow:var(--shadow); cursor:pointer; }
+  .utility-dialog { width:min(560px, calc(100% - 2rem)); max-height:calc(100vh - 2rem); margin:auto; border:0; border-radius:12px; padding:1.25rem; color:var(--clr-text); box-shadow:var(--shadow-lg); }
+  .utility-dialog::backdrop { background:rgba(15,23,42,.68); }
+  .utility-dialog h2 { color:var(--clr-primary); }
+  .utility-dialog textarea { width:100%; min-height:8rem; margin:.5rem 0; padding:.65rem; border:1px solid #9aa4b2; border-radius:.4rem; font:inherit; }
+  .utility-dialog-actions { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:.6rem; margin-top:1rem; }
+  .utility-dialog-actions button { min-height:44px; border:0; border-radius:6px; padding:.65rem 1rem; background:var(--clr-primary); color:white; font:inherit; font-weight:600; cursor:pointer; }
+  @media (max-width:600px) { .utility-actions { bottom:.5rem; left:.5rem; right:.5rem; } .utility-actions button { padding:.55rem .85rem; } }
+  @media print { .back-link, .reset-row, .nav, .module-toolbar, .learning-card button, .module-action, .footer { display:none !important; } .section { display:block !important; } }
 </style>
 </head>
 <body>
@@ -470,9 +514,37 @@
 </div>
 
 <aside class="safety-notice" role="note" aria-label="Faglig avgrensning"><strong>Kun en illustrativ demo – ikke faglig veiledning</strong><p>Dette er en pedagogisk demonstrasjon basert på en arkivert læringsapp. Innhold, grader, risiko og eksempler er ikke kontrollert mot gjeldende standard og kan være forenklet eller feil. Dette er ikke faglig veiledning, tilstandsanalyse eller profesjonell vurdering. Ikke bruk demoen til beslutninger om virkelige bygg, sikkerhet eller vedlikehold. Bruk gjeldende standard og rådfør deg med kvalifisert fagperson.</p><p class="source-note">Kildeappen oppgir NS 3424. Showcase-innholdet er kun en illustrativ læringsøvelse, ikke en autoritativ standardtekst.</p></aside>
+<dialog class="welcome-dialog" id="welcome-dialog" aria-labelledby="welcome-title" aria-describedby="welcome-copy">
+  <p class="welcome-steps" id="welcome-step-label">Trinn 1 av 3</p>
+  <h2 id="welcome-title">Før du starter</h2>
+  <div id="welcome-copy" aria-live="polite"></div>
+  <div class="welcome-actions"><button type="button" id="welcome-back" disabled>Tilbake</button><button type="button" id="welcome-next">Neste</button></div>
+</dialog>
+<div class="utility-actions" aria-label="Demoens informasjon og tilbakemelding">
+  <button type="button" id="open-info" aria-haspopup="dialog">? Om appen</button>
+  <button type="button" id="open-feedback" aria-haspopup="dialog">Tilbakemelding</button>
+</div>
+<dialog class="utility-dialog" id="info-dialog" aria-labelledby="info-title">
+  <h2 id="info-title">Om appen</h2>
+  <p>Dette er en lokal læringsdemo basert på den arkiverte app-fdvu-ns3424. Den viser læringsmoduler, øvelser og fem syntetiske caser.</p>
+  <p>Innholdet er ikke kvalitetssikret mot gjeldende standard. Quiz- og treningsfeedback er demonstrasjon, ikke faglig vurdering.</p>
+  <p>Demoen bruker ingen innlogging, ekstern tjeneste eller nettverkskall. Svar og fremdrift forsvinner når siden lukkes eller nullstilles.</p>
+  <div class="utility-dialog-actions"><button type="button" data-close-dialog="info-dialog">Lukk</button></div>
+</dialog>
+<dialog class="utility-dialog" id="feedback-dialog" aria-labelledby="feedback-title">
+  <h2 id="feedback-title">Tilbakemelding</h2>
+  <p>Beskriv gjerne et problem i denne øvelsen. Ikke skriv navn, kontaktopplysninger eller detaljer om virkelige personer eller bygg.</p>
+  <label for="feedback-message">Tilbakemelding (maks. 280 tegn)</label>
+  <textarea id="feedback-message" maxlength="280" aria-describedby="feedback-count feedback-disclosure" placeholder="Beskriv kort hva du la merke til."></textarea>
+  <p id="feedback-count" class="source-note" aria-live="polite">0/280 tegn</p>
+  <p id="feedback-disclosure" class="module-feedback" role="note">Dette skjemaet sender eller lagrer ikke feedback. Teksten blir liggende bare til du lukker dialogen.</p>
+  <p id="feedback-status" role="status" aria-live="polite" hidden></p>
+  <div class="utility-dialog-actions"><button type="button" data-close-dialog="feedback-dialog">Avbryt</button><button type="button" id="submit-feedback">Send</button></div>
+</dialog>
 <div class="reset-row"><button class="reset-all" id="reset-all" type="button">Nullstill hele demoen</button></div>
 <nav class="nav" id="nav" aria-label="Demoens kapitler">
-  <button class="active" data-section="intro" aria-current="page">Introduksjon</button>
+  <button class="active" data-section="home" aria-current="page">Læringssti</button>
+  <button data-section="intro">Introduksjon</button>
   <button data-section="tg">Tilstandsgrader</button>
   <button data-section="levels">Analysenivåer</button>
   <button data-section="kg">Konsekvensgrader</button>
@@ -484,8 +556,26 @@
 
 <main class="main" id="main-content" tabindex="-1">
 
+  <div class="section active" id="sec-home">
+    <div class="card">
+      <h2>NS 3424 – Pedagogisk fremvisning</h2>
+      <p>Tren på metode og vurderinger med moduler og syntetiske caser. Velg et kort for å åpne læringsaktiviteten. Fremdrift og svar finnes bare mens denne siden er åpen.</p>
+      <p class="module-progress" id="module-progress" aria-live="polite">0 / 11 moduler fullført</p>
+      <div class="progress-bar" aria-label="Modulfremdrift"><div class="fill" id="module-progress-fill" style="width:0%"></div></div>
+    </div>
+    <aside class="safety-notice synthetic-notice" role="note"><strong>Åpen, syntetisk demo</strong><p>Casene er oppdiktet. Innlogging, studentkontoer, KI/backend, lokal/serverlagring, tilbakemeldingskøer og private kildehenvisninger er fjernet. Svar sendes ikke noe sted.</p></aside>
+    <div class="card learning-groups" id="learning-groups" aria-label="Læringsmoduler"></div>
+  </div>
+
+  <div class="section" id="sec-module">
+    <div class="card">
+      <div class="module-toolbar"><button type="button" id="module-back">← Til læringsstien</button><span class="source-demo-label">Syntetisk demo · lokal tilstand</span></div>
+      <div class="module-content" id="module-content" aria-live="polite"></div>
+    </div>
+  </div>
+
   <!-- ====== INTRODUKSJON ====== -->
-  <div class="section active" id="sec-intro">
+  <div class="section" id="sec-intro">
     <div class="card">
       <h2>Hva er NS3424?</h2>
       <p>NS3424 er den norske standarden for <strong>tilstandsanalyse av byggverk</strong>. Standarden gir et rammeverk for systematisk kartlegging, vurdering og dokumentasjon av tilstanden til bygninger og konstruksjoner.</p>
@@ -1267,95 +1357,16 @@
     </div>
 
     <div id="quiz-container">
-      <div class="quiz-q" data-correct="b" data-id="q1">
-        <p>1. Hva beskriver tilstandsgrad (TG) i NS3424?</p>
-        <label><input type="radio" name="q1" value="a"> Forventet gjenværende levetid for bygningsdelen</label>
-        <label><input type="radio" name="q1" value="b"> Avviket mellom faktisk tilstand og et definert referansenivå</label>
-        <label><input type="radio" name="q1" value="c"> Bygningsdelens estetiske kvalitet</label>
-        <label><input type="radio" name="q1" value="d"> Kostnaden for å utbedre skaden</label>
-        <div class="feedback" id="fb-q1"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="c" data-id="q2">
-        <p>2. Hvor mange analysenivåer opererer NS3424 med?</p>
-        <label><input type="radio" name="q2" value="a"> 2</label>
-        <label><input type="radio" name="q2" value="b"> 4</label>
-        <label><input type="radio" name="q2" value="c"> 3</label>
-        <label><input type="radio" name="q2" value="d"> 5</label>
-        <div class="feedback" id="fb-q2"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="d" data-id="q3">
-        <p>3. Hva innebærer TG3?</p>
-        <label><input type="radio" name="q3" value="a"> Normal aldring innenfor forventet levetid</label>
-        <label><input type="radio" name="q3" value="b"> Mindre avvik som kan utbedres ved neste vedlikeholdsperiode</label>
-        <label><input type="radio" name="q3" value="c"> Vesentlige avvik som krever tiltak innen rimelig tid</label>
-        <label><input type="radio" name="q3" value="d"> Stort eller alvorlig avvik — kraftig svikt, mulig fare for liv og helse</label>
-        <div class="feedback" id="fb-q3"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="b" data-id="q4">
-        <p>4. Hvilke fire kategorier vurderes konsekvensgraden etter?</p>
-        <label><input type="radio" name="q4" value="a"> Funksjon, levetid, energi, miljø</label>
-        <label><input type="radio" name="q4" value="b"> Sikkerhet, helse/miljø, økonomi, estetikk</label>
-        <label><input type="radio" name="q4" value="c"> Bæreevne, tetthet, isolasjon, utseende</label>
-        <label><input type="radio" name="q4" value="d"> Brann, fukt, lyd, energi</label>
-        <div class="feedback" id="fb-q4"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="a" data-id="q5">
-        <p>5. Hva kjennetegner analysenivå 1?</p>
-        <label><input type="radio" name="q5" value="a"> Overordnet visuell inspeksjon uten inngrep i konstruksjonen</label>
-        <label><input type="radio" name="q5" value="b"> Målinger og enkle destruktive prøver</label>
-        <label><input type="radio" name="q5" value="c"> Laboratorieanalyser og spesialistkompetanse</label>
-        <label><input type="radio" name="q5" value="d"> Kun gjennomgang av eksisterende dokumentasjon</label>
-        <div class="feedback" id="fb-q5"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="a" data-id="q6">
-        <p>6. Hva kombinerer risikoøvelsen i denne demoen?</p>
-        <label><input type="radio" name="q6" value="a"> Konsekvensgrad og sannsynlighet</label>
-        <label><input type="radio" name="q6" value="b"> Tilstandsgrad og byggets alder</label>
-        <label><input type="radio" name="q6" value="c"> Tilstandsgrad og sannsynlighet</label>
-        <label><input type="radio" name="q6" value="d"> Byggets verdi og vedlikeholdskostnad</label>
-        <div class="feedback" id="fb-q6"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="c" data-id="q7">
-        <p>7. I demoens forenklede modell: KG2 × sannsynlighet 3 gir hvilken klasse?</p>
-        <label><input type="radio" name="q7" value="a"> Lav</label>
-        <label><input type="radio" name="q7" value="b"> Middels</label>
-        <label><input type="radio" name="q7" value="c"> Høy</label>
-        <label><input type="radio" name="q7" value="d"> Kritisk</label>
-        <div class="feedback" id="fb-q7"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="b" data-id="q8">
-        <p>8. Hva er et referansenivå?</p>
-        <label><input type="radio" name="q8" value="a"> Minimumsstandarden for nybygg etter TEK17</label>
-        <label><input type="radio" name="q8" value="b"> Det definerte nivået bygningsdelen vurderes mot</label>
-        <label><input type="radio" name="q8" value="c"> Gjennomsnittstilstanden for tilsvarende bygninger</label>
-        <label><input type="radio" name="q8" value="d"> Den beste oppnåelige tilstanden for bygningsdelen</label>
-        <div class="feedback" id="fb-q8"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="a" data-id="q9">
-        <p>9. Hva er «svikt» i henhold til NS3424?</p>
-        <label><input type="radio" name="q9" value="a"> En tilstand som avviker negativt fra referansenivået</label>
-        <label><input type="radio" name="q9" value="b"> En bygningsdel som har kollapset</label>
-        <label><input type="radio" name="q9" value="c"> Manglende vedlikehold over tid</label>
-        <label><input type="radio" name="q9" value="d"> Feil i prosjektering eller utførelse</label>
-        <div class="feedback" id="fb-q9"></div>
-      </div>
-
-      <div class="quiz-q" data-correct="c" data-id="q10">
-        <p>10. Hvilken tilstandsgrad tilsvarer «normal slitasje og aldring»?</p>
-        <label><input type="radio" name="q10" value="a"> TG0</label>
-        <label><input type="radio" name="q10" value="b"> TG2</label>
-        <label><input type="radio" name="q10" value="c"> TG1</label>
-        <label><input type="radio" name="q10" value="d"> TG3</label>
-        <div class="feedback" id="fb-q10"></div>
-      </div>
+      <div class="quiz-q" data-correct="c" data-id="q1_analysenivå" data-explain-correct="Riktig! Nivå 3 krever dokumenterte målinger og beregninger for verifisering." data-explain-wrong="Nivå 3 er korrekt – dette nivået krever målinger og teknisk verifisering, ikke bare visuell inspeksjon."><p>1. Hvilket analysenivå kreves når du skal verifisere teknisk ytelse med målinger og beregninger?</p><label><input type="radio" name="q1_analysenivå" value="a"> Nivå 1 (Enkel screening)</label><label><input type="radio" name="q1_analysenivå" value="b"> Nivå 2 (Utvidet analyse)</label><label><input type="radio" name="q1_analysenivå" value="c"> Nivå 3 (Detaljert analyse med målinger)</label><div class="feedback" id="fb-q1_analysenivå"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q2_tgiu" data-explain-correct="Korrekt! TGIU brukes når du ikke har nok informasjon til å sette en sikker TG-vurdering." data-explain-wrong="TGIU brukes når underlaget er utilstrekkelig – du trenger mer informasjon eller undersøkelse for å kunne sette TG."><p>2. Når skal du bruke TGIU (Tilstandsgrad ikke vurderbar)?</p><label><input type="radio" name="q2_tgiu" value="a"> Når tilstanden er normal (TG0)</label><label><input type="radio" name="q2_tgiu" value="b"> Når underlaget er utilstrekkelig for å sette TG</label><label><input type="radio" name="q2_tgiu" value="c"> Når tilstanden er dårlig, men ikke kritisk</label><div class="feedback" id="fb-q2_tgiu"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q3_referansenivå" data-explain-correct="Riktig! Referansenivået er det regelverket eller kravet du måler avvik mot (f.eks. TEK17, NS 3424)." data-explain-wrong="Referansenivået er det regelverket eller standarden du måler avvik mot – ikke den opprinnelige tilstanden."><p>3. Hva er et referansenivå i tilstandsanalyse?</p><label><input type="radio" name="q3_referansenivå" value="a"> Den opprinnelige byggetilstanden</label><label><input type="radio" name="q3_referansenivå" value="b"> Standard/krav som bygget skal måles mot (TEK, NS, funksjonskrav)</label><label><input type="radio" name="q3_referansenivå" value="c"> Gjennomsnittlig tilstand for bygningstypen</label><div class="feedback" id="fb-q3_referansenivå"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q4_kg_definisjon" data-explain-correct="Korrekt! KG måler alvorligheten av konsekvensen (f.eks. påvirkning på HMS, økonomi, drift)." data-explain-wrong="KG handler om alvorligheten av konsekvensen, ikke sannsynligheten (det er sannsynlighetsvurderingen)."><p>4. Hva beskriver konsekvensgrad (KG)?</p><label><input type="radio" name="q4_kg_definisjon" value="a"> Sannsynligheten for at en skade oppstår</label><label><input type="radio" name="q4_kg_definisjon" value="b"> Alvorligheten av konsekvensen hvis skaden utvikler seg</label><label><input type="radio" name="q4_kg_definisjon" value="c"> Kostnad for å utbedre en skade</label><div class="feedback" id="fb-q4_kg_definisjon"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q5_risiko_beregning" data-explain-correct="Riktig! Risiko beregnes som KG × sannsynlighet (konsekvens ganger sannsynlighet)." data-explain-wrong="Risiko = KG × sannsynlighet. Dette gir en score fra 1 til 9 som brukes til å klassifisere risiko (lav/middels/høy)."><p>5. Hvordan beregnes risiko i NS 3424-metodikk?</p><label><input type="radio" name="q5_risiko_beregning" value="a"> Risiko = TG + sannsynlighet</label><label><input type="radio" name="q5_risiko_beregning" value="b"> Risiko = KG × sannsynlighet</label><label><input type="radio" name="q5_risiko_beregning" value="c"> Risiko = KG + TG</label><div class="feedback" id="fb-q5_risiko_beregning"></div></div>
+      <div class="quiz-q" data-correct="a" data-id="q6_observasjon" data-explain-correct="Korrekt! En god observasjon skiller mellom hva du faktisk ser (observasjon) og hva du tror det betyr (tolkning)." data-explain-wrong="Observasjon er det du faktisk ser/måler (fakta), mens tolkning er din vurdering av årsak eller konsekvens."><p>6. Hva er forskjellen på observasjon og tolkning?</p><label><input type="radio" name="q6_observasjon" value="a"> Observasjon er fakta du ser; tolkning er din vurdering av årsak/konsekvens</label><label><input type="radio" name="q6_observasjon" value="b"> Observasjon og tolkning er det samme</label><label><input type="radio" name="q6_observasjon" value="c"> Tolkning kommer før observasjon</label><div class="feedback" id="fb-q6_observasjon"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q7_tiltak_nå" data-explain-correct="Riktig! 'Tiltak nå' er umiddelbare tiltak ved HMS-risiko, funksjonssvikt eller kritisk avvik." data-explain-wrong="'Tiltak nå' er for kritiske situasjoner som krever rask handling – ikke noe som kan vente."><p>7. Hva kjennetegner et 'tiltak nå' (umiddelbart tiltak)?</p><label><input type="radio" name="q7_tiltak_nå" value="a"> Noe som kan vente til neste planlagte vedlikehold</label><label><input type="radio" name="q7_tiltak_nå" value="b"> Tiltak som må gjøres raskt pga. HMS-risiko eller funksjonssvikt</label><label><input type="radio" name="q7_tiltak_nå" value="c"> Tiltak som krever lang planlegging</label><div class="feedback" id="fb-q7_tiltak_nå"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q8_tg2_beskrivelse" data-explain-correct="Korrekt! TG2 = vesentlige symptomer hvor tiltak bør planlegges (men ikke kritisk som TG3)." data-explain-wrong="TG2 er vesentlige symptomer hvor tiltak bør planlegges – mellomkategorien mellom moderate (TG1) og kritiske (TG3) symptomer."><p>8. Hva beskriver TG2?</p><label><input type="radio" name="q8_tg2_beskrivelse" value="a"> Ingen symptomer på svikt</label><label><input type="radio" name="q8_tg2_beskrivelse" value="b"> Vesentlige symptomer – tiltak bør planlegges</label><label><input type="radio" name="q8_tg2_beskrivelse" value="c"> Kraftige symptomer – tiltak haster</label><div class="feedback" id="fb-q8_tg2_beskrivelse"></div></div>
+      <div class="quiz-q" data-correct="a" data-id="q9_analysenivå_trigger" data-explain-correct="Riktig! Funn av vesentlige avvik eller usikkerhet kan trigge behov for nivå 2 (utvidet analyse)." data-explain-wrong="Analysenivået eskaleres basert på funn og behov for verifisering – ikke bare størrelse eller ekstern forespørsel."><p>9. Hva kan trigge behovet for å gå opp fra nivå 1 til nivå 2?</p><label><input type="radio" name="q9_analysenivå_trigger" value="a"> Funn av avvik som krever utvidet dokumentasjon eller verifisering</label><label><input type="radio" name="q9_analysenivå_trigger" value="b"> Kun dersom byggherre ber om det</label><label><input type="radio" name="q9_analysenivå_trigger" value="c"> Alltid ved store bygg</label><div class="feedback" id="fb-q9_analysenivå_trigger"></div></div>
+      <div class="quiz-q" data-correct="b" data-id="q10_videre_undersøkelser" data-explain-correct="Korrekt! 'Videre undersøkelser' er anbefalinger om å utføre mer detaljerte analyser ved usikkerhet." data-explain-wrong="'Videre undersøkelser' handler om å anbefale oppfølgende analyser/målinger – ikke umiddelbare tiltak."><p>10. Hva innebærer 'videre undersøkelser' i en tilstandsrapport?</p><label><input type="radio" name="q10_videre_undersøkelser" value="a"> Forslag til umiddelbare akutt-tiltak</label><label><input type="radio" name="q10_videre_undersøkelser" value="b"> Anbefaling om ytterligere analyser/målinger for å avklare usikkerhet</label><label><input type="radio" name="q10_videre_undersøkelser" value="c"> Kun relevant for nivå 1</label><div class="feedback" id="fb-q10_videre_undersøkelser"></div></div>
     </div>
 
     <div style="text-align:center; margin:1.5rem 0;">
@@ -1536,11 +1547,10 @@ function checkQuiz() {
     if (selected.value === correctAns) {
       correct++;
       fb.className = 'feedback correct';
-      fb.textContent = 'Riktig!';
+      fb.textContent = q.dataset.explainCorrect;
     } else {
       fb.className = 'feedback wrong';
-      const correctLabel = q.querySelector('input[value="' + correctAns + '"]').parentElement.textContent.trim();
-      fb.textContent = 'Feil. Riktig svar: ' + correctLabel;
+      fb.textContent = q.dataset.explainWrong;
     }
   });
 
@@ -1584,6 +1594,223 @@ document.getElementById('reset-all').addEventListener('click', () => {
   });
   document.querySelectorAll('.section').forEach((section, index) => section.classList.toggle('active', index === 0));
   window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Source-parity learning path. All state is held in this page's memory only.
+const learningModules = [
+  {id:'start_intro',section:'Start',title:'Start her: NS 3424 i praksis (demo)',summary:'Slik bruker du demoen og hva du skal trene på.'},
+  {id:'modul_lovverk',section:'Grunnleggende',title:'NS 3424: Formål, leveranser og avgrensning',summary:'Observasjoner, TG/TGIU, KG, risiko, tiltak og videre undersøkelser.'},
+  {id:'modul_hierarki',section:'Grunnleggende',title:'Analysenivå 1–3: Velg riktig nivå',summary:'Velg mellom screening, utvidet analyse og detaljert analyse.'},
+  {id:'modul_tg_trainer',section:'Trening',title:'TG0–TG3 + TGIU og referansenivå',summary:'Velg referansenivå, TG/TGIU og begrunn vurderingen.'},
+  {id:'modul_risiko_trainer',section:'Trening',title:'Konsekvens (KG) + sannsynlighet → risiko',summary:'Velg KG og sannsynlighet og drøft en enkel risikovurdering.'},
+  {id:'modul_observasjon_trainer',section:'Trening',title:'Hva er en god observasjon? (observasjon vs tolkning)',summary:'Sorter syntetiske utsagn og få umiddelbar tilbakemelding.'},
+  {id:'case_1',section:'Caser (bolig)',title:'Case 1: Fuktspor på bad (enkel)',summary:'Syntetisk case om fuktspor i våtrom.'},
+  {id:'case_2',section:'Caser (bolig)',title:'Case 2: Sprekker i pusset fasade (lett–middels)',summary:'Syntetisk case om riss og behov for verifisering.'},
+  {id:'case_3',section:'Caser (næring)',title:'Case 3: Ventilasjon og inneklima (middels)',summary:'Syntetisk case om drift, komfort og manglende måledata.'},
+  {id:'case_4',section:'Caser (næring)',title:'Case 4: Branncelle-dør og rømningsvei (middels–høy)',summary:'Syntetisk case om dørfunksjon og fri rømningsvei.'},
+  {id:'case_5',section:'Caser (helhet)',title:'Case 5: Kombinasjonsbygg bolig + næring (kompleks)',summary:'Syntetisk sammensatt case med flere funn.'}
+];
+const completedLearningModules = new Set();
+let visitedHierarchyLevels = new Set();
+const learningGroups = document.getElementById('learning-groups');
+const moduleContent = document.getElementById('module-content');
+let activeLearningModule = null;
+let moduleQuizSkipped = false;
+const hierarchyLevels = [
+  {title:'Nivå 1 – Screening',text:'Enkel tilstandsvurdering for å avdekke om det finnes forhold som krever tiltak eller mer detaljert analyse.',example:'Overordnet befaring for å avdekke synlige avvik og behov for videre undersøkelser.'},
+  {title:'Nivå 2 – Utvidet analyse',text:'Mer systematisk vurdering med noe dokumentasjon og verifisering. Brukes når funn kan ha vesentlige konsekvenser.',example:'Kombiner observasjoner med enkel dokumentasjon, driftsinformasjon eller målinger for å begrunne TG/KG.'},
+  {title:'Nivå 3 – Detaljert analyse',text:'Detaljert vurdering med tydelige krav til verifikasjon/undersøkelser. Brukes når usikkerhet, risiko eller konsekvens er høy.',example:'Spesialundersøkelser eller tilstandskontroll for å fastslå årsak, omfang og nødvendige tiltak.'}
+];
+const tgScale = [
+  ['TG0','Ingen symptomer på svikt. Normal tilstand.'],['TG1','Mindre/moderate symptomer. Begrenset behov for tiltak.'],['TG2','Vesentlige symptomer. Tiltak bør planlegges.'],['TG3','Kraftige symptomer / funksjonssvikt. Tiltak haster.'],['TGIU','Tilstandsgrad ikke vurderbar: utilstrekkelig underlag (må undersøkes/verifiseres).']
+];
+const kgScale = [[1,'KG1','Liten konsekvens (funksjon/komfort/økonomi påvirkes lite).'],[2,'KG2','Middels konsekvens (merkbar påvirkning / økt kost/risiko).'],[3,'KG3','Stor konsekvens (HMS, drift eller store kostnader kan bli påvirket).']];
+const probabilityScale = [[1,'Lav','Lite sannsynlig på kort sikt.'],[2,'Middels','Kan inntreffe – bør følges opp.'],[3,'Høy','Sannsynlig/forventet utvikling uten tiltak.']];
+const caseScenarios = {
+ case_1:{synthetic:'SYN-01',name:'Fuktspor på bad',level:'Anbefalt nivå 1',situation:'Oppdiktet leilighet med misfarging ved gulv/våtromssone og litt løs fug i dusjsonen.',reference:'Normal funksjon for våtrom: tette overflater uten tegn til fuktpåvirkning i normal bruk.',required:2},
+ case_2:{synthetic:'SYN-02',name:'Sprekker i pusset fasade',level:'Anbefalt nivå 1–2',situation:'Oppdiktet bolig med vertikale sprekker ved vindushjørner og riss i sokkel.',reference:'Fasade uten sprekker som kan slippe inn vann eller indikere funksjonssvikt.',required:3},
+ case_3:{synthetic:'SYN-03',name:'Ventilasjon og inneklima',level:'Anbefalt nivå 2',situation:'Oppdiktet kontorbygg med klager på tung luft, uregelmessig filterbytte og varme soner.',reference:'Forutsatt funksjon og tilfredsstillende komfort/drift.',required:3},
+ case_4:{synthetic:'SYN-04',name:'Branncelle-dør og rømningsvei',level:'Anbefalt nivå 2 (sikkerhet)',situation:'Oppdiktet branndør står ofte i kile. Rømningsvei har lagring av varer.',reference:'Rømningsvei fri og barrierer fungerer som forutsatt.',required:2},
+ case_5:{synthetic:'SYN-05',name:'Kombinasjonsbygg bolig + næring',level:'Nivå 1 screening → eskalér enkelte funn',situation:'Oppdiktet kombinasjonsbygg med fuktindikasjoner, sprekker, ventilasjonsklager og branntekniske avvik.',reference:'Defineres per delsystem (konstruksjon, våtrom, ventilasjon, brann/rømningsvei).',required:4}
+};
+function updateLearningProgress(){
+  const total=learningModules.length, done=completedLearningModules.size;
+  document.getElementById('module-progress').textContent=`${done} / ${total} moduler fullført`;
+  document.getElementById('module-progress-fill').style.width=`${done/total*100}%`;
+  learningGroups.querySelectorAll('[data-module-open]').forEach(button=>{
+    const card=button.closest('.learning-card'); const module=learningModules.find(item=>item.id===button.dataset.moduleOpen);
+    const complete=completedLearningModules.has(button.dataset.moduleOpen);
+    card.querySelector('.module-state').textContent=complete?'Fullført i denne økten':'Ikke startet';
+    button.textContent=complete?'Åpne på nytt':'Åpne';
+  });
+}
+function renderLearningOverview(){
+  const sections=[...new Set(learningModules.map(item=>item.section))];
+  learningGroups.innerHTML=sections.map(section=>`<section class="learning-group"><h3>${section}</h3><div class="learning-grid">${learningModules.filter(item=>item.section===section).map(item=>`<article class="learning-card"><h4>${item.title}</h4><p>${item.summary}</p><span class="module-state" aria-live="polite">Ikke startet</span><button type="button" data-module-open="${item.id}">Åpne</button></article>`).join('')}</div></section>`).join('');
+  updateLearningProgress();
+}
+function escapeText(value){const node=document.createElement('span');node.textContent=value;return node.innerHTML;}
+function navTo(section){
+  document.querySelectorAll('.nav button').forEach(button=>{const on=button.dataset.section===section;button.classList.toggle('active',on);button.setAttribute('aria-current',on?'page':'false');});
+  document.querySelectorAll('.section').forEach(panel=>panel.classList.toggle('active',panel.id===`sec-${section}`));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){activeLearningModule=null;navTo('home');}
+document.getElementById('module-back').addEventListener('click',goHome);
+function actionButton(label='Fullfør modul'){return `<button type="button" class="module-action" data-complete-module>${label}</button>`;}
+function choiceGroup(name,choices){return `<div class="module-options">${choices.map((choice,index)=>`<button type="button" class="module-option" data-choice-group="${name}" data-choice="${index}" aria-pressed="false">${choice}</button>`).join('')}</div>`;}
+function renderModule(id){
+ const item=learningModules.find(module=>module.id===id); if(!item)return;
+ if(id==='modul_hierarki')visitedHierarchyLevels=new Set();
+ if(id==='start_intro'||id==='modul_lovverk')moduleQuizSkipped=false;
+ activeLearningModule=id;
+ let content=`<p class="module-progress">${item.section}</p><h2>${item.title}</h2>`;
+ if(id==='start_intro'){
+  content+=`<p>Dette er en <strong>åpen demo</strong> for å trene på <strong>NS 3424</strong> med korte tekster, øvelser og caser.</p><p><strong>Målet:</strong> Velge analysenivå, beskrive en god observasjon, sette TG/TGIU, vurdere KG, gjøre en enkel risikovurdering og foreslå tiltak.</p><ul><li>Start med Analysenivå 1–3.</li><li>Tren deretter på TG/TGIU, risiko og god observasjon.</li><li>Avslutt med Case 1–5 i stigende kompleksitet.</li></ul><h3>Kunnskapssjekk</h3><p>Hva er hovedmålet med denne demoen?</p>${choiceGroup('start',['Trene på metode og vurderinger i NS 3424 (nivå, TG, KG, risiko, tiltak)','Lære ordrett innhold i standarden','Samle persondata fra studenter'])}<button type="button" class="module-toolbar" data-skip-quiz>Hopp over kunnskapssjekk</button><div class="module-feedback" id="module-feedback" role="status" hidden></div>${actionButton('Fullfør startmodulen')}`;
+ }else if(id==='modul_lovverk'){
+  content+=`<h3>Hva er en tilstandsanalyse?</h3><p>En tilstandsanalyse beskriver tilstanden til byggverk og bygningsdeler. Den gir et grunnlag for beslutninger om drift, vedlikehold og tiltak.</p><h3>Hva skal en god leveranse inneholde?</h3><ul><li>Observasjoner (fakta)</li><li>Vurdering av tilstandsgrad (TG/TGIU)</li><li>Vurdering av konsekvens (KG)</li><li>En enkel risiko-forståelse (konsekvens + sannsynlighet)</li><li>Tiltak (nå / kort sikt / lang sikt) og eventuelle videre undersøkelser</li></ul><h3>Avgrensning (praktisk)</h3><ul><li>Ikke lat som du vet mer enn du har grunnlag for.</li><li>Marker usikkerhet og foreslå verifisering der det trengs.</li></ul><label class="module-form">Mini-oppgave: Når er det lurt å eskalere fra nivå 1 til nivå 2/3?<textarea data-purpose-answer maxlength="600" aria-label="Skriv svar på minioppgaven"></textarea></label><h3>Kunnskapssjekk</h3><p>Hva kjennetegner en god observasjon?</p>${choiceGroup('purpose',['Den er konkret, etterprøvbar og skiller fakta fra tolkning','Den bruker lange forklaringer og antakelser','Den inneholder navn og adresser for å være tydelig'])}<button type="button" class="module-toolbar" data-skip-quiz>Hopp over kunnskapssjekk</button><div class="module-feedback" id="module-feedback" role="status" hidden></div><h3>Caseoppgave</h3><p>Du er på befaring og ser et forhold du mistenker kan utvikle seg.</p><p>Skriv en kort observasjon på 2–3 setninger som holder seg til fakta, og foreslå én ting du må verifisere.</p><label class="module-form" for="module-case-answer">Svar (maks. 200 ord)<textarea id="module-case-answer" maxlength="1800" aria-describedby="module-case-word-count" placeholder="Skriv hva du ser, omfanget og hva du vil undersøke videre."></textarea></label><p id="module-case-word-count" class="source-note" aria-live="polite">0/200 ord</p><button type="button" class="module-action" data-submit-case>Send inn svar</button><p id="module-case-feedback" class="module-feedback" role="status" aria-live="polite" hidden></p><div id="module-case-suggestion" hidden><strong>Løsningsforslag:</strong> Struktur: 1) Hva du ser og hvor, uten identifiserende detaljer. 2) Omfang. 3) Hva som må undersøkes videre.</div>${actionButton('Fullfør grunnmodulen')}`;
+ }else if(id==='modul_hierarki'){
+  content+=`<p>Klikk på hvert nivå i pyramiden for å lese hva nivået innebærer. Besøk alle nivåene for å fullføre.</p><div class="module-options">${hierarchyLevels.map((level,index)=>`<button type="button" class="module-option" data-level="${index}" aria-pressed="false">${level.title}</button>`).join('')}</div><div class="card" id="level-detail" aria-live="polite">Velg et nivå for å se detaljer og et eksempel.</div><p class="module-progress" id="level-progress" aria-live="polite">0 / 3 nivåer besøkt</p>${actionButton('Fullfør nivåmodulen')}`;
+ }else if(id==='modul_tg_trainer'){
+  content+=`<p>Velg et kort referansenivå, sett TG/TGIU og skriv en kort begrunnelse. Tekstfeltene er kun lokale i denne nettleserøkten.</p><div class="module-form"><label>1) Referansenivå<textarea data-tg-reference maxlength="220" placeholder="Hva sammenligner du mot? (normal/forutsatt funksjon)"></textarea></label><fieldset><legend>2) Tilstandsgrad</legend><div class="module-options">${tgScale.map(([label,desc])=>`<button type="button" class="module-option" data-tg="${label}" aria-pressed="false"><strong>${label}</strong><br>${desc}</button>`).join('')}</div></fieldset><label>3) Begrunnelse<textarea data-tg-reason maxlength="280" placeholder="Hvorfor passer valgt TG/TGIU, gitt referansenivået?"></textarea></label><p id="tg-feedback" class="module-feedback" role="status" hidden></p>${actionButton('Fullfør TG-trener')}</div>`;
+ }else if(id==='modul_risiko_trainer'){
+  content+=`<p>Velg konsekvensgrad (KG) og sannsynlighet. Skriv en kort risikobegrunnelse.</p><div class="module-form"><fieldset><legend>1) Konsekvensgrad</legend><div class="module-options">${kgScale.map(([value,label,desc])=>`<button type="button" class="module-option" data-kg="${value}" aria-pressed="false"><strong>${label}</strong><br>${desc}</button>`).join('')}</div></fieldset><fieldset><legend>2) Sannsynlighet</legend><div class="module-options">${probabilityScale.map(([value,label,desc])=>`<button type="button" class="module-option" data-prob="${value}" aria-pressed="false"><strong>${label}</strong><br>${desc}</button>`).join('')}</div></fieldset><p id="risk-summary" class="module-feedback" role="status" aria-live="polite">Risiko: Udefinert</p><label>Kort risikobegrunnelse<textarea data-risk-note maxlength="280" placeholder="Skriv kort hvorfor valgene henger sammen."></textarea></label>${actionButton('Fullfør risiko-trener')}</div>`;
+ }else if(id==='modul_observasjon_trainer'){
+  const statements=['Det er misfarging langs gulvlist i våtromssonen.','Dette er helt sikkert en lekkasje fra rør i vegg.','Det er 2–3 mm riss i puss ved vindushjørne.','Setningsskade har oppstått og vil bli verre raskt.','Branndør står ofte i kile og rømningsvei har lagring.','Ventilasjonsanlegget er underdimensjonert og må byttes.'];
+  content+=`<p>Sorter hvert utsagn til <strong>Observasjon</strong> eller <strong>Tolkning</strong>.</p><div class="module-form">${statements.map((text,index)=>`<fieldset><legend>${index+1}. ${text}</legend><div class="module-options"><button type="button" class="module-option" data-sort="${index}" data-kind="obs" aria-pressed="false">Observasjon</button><button type="button" class="module-option" data-sort="${index}" data-kind="tolk" aria-pressed="false">Tolkning</button></div></fieldset>`).join('')}<div class="card"><h3>Huskeliste: God observasjon</h3><ul><li>Fakta først: hva, hvor, omfang.</li><li>Unngå årsak/konklusjon uten grunnlag.</li><li>Marker usikkerhet og foreslå verifisering.</li><li>Hold det kort og etterprøvbart.</li></ul></div><p id="observation-feedback" class="module-feedback" role="status" aria-live="polite">Sorter alle utsagn for å få tilbakemelding.</p>${actionButton('Fullfør observasjons-trener')}</div>`;
+ }else if(id.startsWith('case_')){
+  const scenario=caseScenarios[id];
+  content+=`<p><span class="source-demo-label">Syntetisk øvelsescase ${scenario.synthetic}</span></p><p><strong>${scenario.level}</strong></p><h3>Situasjon</h3><p>${scenario.situation}</p><h3>Referansenivå</h3><p>${scenario.reference}</p><p>Caseinnholdet er oppdiktet og merket syntetisk. Bruk ikke personnavn, adresser eller virkelige byggdata i svarene.</p><div class="module-form"><label>1) Analysenivå<select data-case-level aria-label="Velg analysenivå"><option value="">Velg nivå</option><option value="1">Nivå 1 · screening</option><option value="2">Nivå 2 · utvidet</option><option value="3">Nivå 3 · detaljert</option></select></label><label>Begrunn analysenivå<textarea data-case-level-reason maxlength="240" aria-label="Begrunn analysenivå"></textarea></label><label>Dokumentasjonstype<select data-case-documentation aria-label="Velg syntetisk dokumentasjonstype"><option value="">Velg type</option><option>Syntetisk visuell observasjon</option><option>Syntetisk dokumentgjennomgang</option><option>Syntetisk måling</option></select></label><fieldset><legend>2) Observasjoner (${scenario.required})</legend><p>Skriv fakta: hva, hvor, omfang. Unngå konklusjon.</p>${Array.from({length:scenario.required},(_,index)=>`<label>Observasjon ${index+1}<input data-case-observation maxlength="220" aria-label="Observasjon ${index+1}" placeholder="Fakta: hva, hvor, omfang"></label>`).join('')}</fieldset><fieldset data-case-evidence-panel hidden><legend>Underlagssjekkliste (nivå 2/3)</legend><label><input type="checkbox" data-case-evidence> Oppgitte syntetiske observasjoner er gjennomgått</label><label><input type="checkbox" data-case-evidence> Manglende måledata eller historikk er markert</label><label><input type="checkbox" data-case-evidence> Behov for videre undersøkelser er vurdert</label></fieldset><fieldset data-case-level3-panel hidden><legend>Ekstra verifisering (nivå 3)</legend><label>Hva må verifiseres?<textarea data-case-verification maxlength="240" aria-label="Nivå 3: beskriv hva som skal verifiseres"></textarea></label><label>Usikkerhet i grunnlaget<textarea data-case-uncertainty maxlength="240" aria-label="Nivå 3: beskriv usikkerhet"></textarea></label></fieldset><fieldset><legend>3) TG/TGIU</legend><div class="module-options">${tgScale.map(([label,desc])=>`<button type="button" class="module-option" data-case-tg="${label}" aria-pressed="false"><strong>${label}</strong><br>${desc}</button>`).join('')}</div><label>Begrunn TG/TGIU<textarea data-case-tg-reason maxlength="240" aria-label="Begrunn TG eller TGIU (minst 12 tegn)" placeholder="Minst 12 tegn"></textarea></label></fieldset><fieldset><legend>4) Konsekvensgrad (KG)</legend><div class="module-options">${kgScale.map(([value,label,desc])=>`<button type="button" class="module-option" data-case-kg="${value}" aria-pressed="false"><strong>${label}</strong><br>${desc}</button>`).join('')}</div><label>Begrunn KG<textarea data-case-kg-reason maxlength="240" aria-label="Begrunn KG (minst 12 tegn)" placeholder="Minst 12 tegn"></textarea></label></fieldset><fieldset><legend>5) Risiko (KG + sannsynlighet)</legend><div class="module-options">${probabilityScale.map(([value,label,desc])=>`<button type="button" class="module-option" data-case-prob="${value}" aria-pressed="false"><strong>${label}</strong><br>${desc}</button>`).join('')}</div><p id="case-risk-score" class="module-feedback" role="status" aria-live="polite">Risiko: Udefinert</p><label>Begrunn risiko<textarea data-case-risk-reason maxlength="260" aria-label="Begrunn risiko (minst 12 tegn)" placeholder="Minst 12 tegn"></textarea></label></fieldset><fieldset><legend>6) Tiltak</legend><label>Tiltak nå<textarea data-case-now maxlength="220" aria-label="Tiltak nå (minst 6 tegn)"></textarea></label><label>Tiltak på kort sikt<textarea data-case-short maxlength="220" aria-label="Tiltak på kort sikt (minst 6 tegn)"></textarea></label><label>Tiltak på lang sikt<textarea data-case-long maxlength="220" aria-label="Tiltak på lang sikt (minst 6 tegn)"></textarea></label></fieldset><label>7) Videre undersøkelser (påkrevd for nivå 2/3)<textarea data-case-further maxlength="240" aria-label="Videre undersøkelser"></textarea></label><label>Prioritet<select data-case-priority aria-label="Velg illustrativ prioritet"><option value="">Velg prioritet</option><option>Lav</option><option>Middels</option><option>Høy</option></select></label><label>Studentkommentar (valgfri)<textarea data-case-student-comment maxlength="240" aria-label="Studentkommentar"></textarea></label><p class="module-feedback" role="note">Tips: Du kan kopiere tekst manuelt hvis du vil ta den med inn i et rapportutkast. Bruk bare syntetiske øvingsdata her; ikke skriv person- eller byggopplysninger.</p><p id="case-feedback" class="module-feedback" role="status" aria-live="polite" hidden></p>${actionButton('Fullfør case')}</div>`;
+ }
+ moduleContent.innerHTML=content;
+ navTo('module');
+}
+const welcomeSteps=[
+  '<p>Dette er en åpen, pedagogisk demo av arbeidsflyter fra den arkiverte appen app-fdvu-ns3424.</p><p>Du kan øve på analysenivå, observasjon, TG/TGIU, KG, risiko, tiltak og fem syntetiske caser.</p>',
+  '<p>Velg et modulkort fra læringsstien. Start med introduksjonen, tren på skalaene og avslutt gjerne med casene i stigende kompleksitet.</p><p>Quiz og treningsfeedback er simulert lokalt i nettleseren.</p>',
+  '<p>Case-ID-er og byggforhold er oppdiktet. Ikke skriv inn personopplysninger eller detaljer om virkelige bygg.</p><p>Svar og fremdrift sendes ikke noe sted og forsvinner ved nullstilling, refresh eller når du lukker siden. Dette er ikke faglig veiledning.</p>'
+];
+let welcomeStep=0;
+const welcomeDialog=document.getElementById('welcome-dialog');
+function updateWelcome(){
+ document.getElementById('welcome-step-label').textContent=`Trinn ${welcomeStep+1} av ${welcomeSteps.length}`;
+ document.getElementById('welcome-copy').innerHTML=welcomeSteps[welcomeStep];
+ document.getElementById('welcome-back').disabled=welcomeStep===0;
+ document.getElementById('welcome-next').textContent=welcomeStep===welcomeSteps.length-1?'Start læringen':'Neste';
+}
+updateWelcome();
+if(typeof welcomeDialog.showModal==='function')welcomeDialog.showModal();
+document.getElementById('welcome-back').addEventListener('click',()=>{welcomeStep=Math.max(0,welcomeStep-1);updateWelcome();});
+document.getElementById('welcome-next').addEventListener('click',()=>{if(welcomeStep<welcomeSteps.length-1){welcomeStep++;updateWelcome();}else welcomeDialog.close();});
+document.getElementById('open-info').addEventListener('click',()=>document.getElementById('info-dialog').showModal());
+document.getElementById('open-feedback').addEventListener('click',()=>document.getElementById('feedback-dialog').showModal());
+document.querySelectorAll('[data-close-dialog]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.closeDialog).close()));
+const feedbackMessage=document.getElementById('feedback-message');
+feedbackMessage.addEventListener('input',()=>{document.getElementById('feedback-count').textContent=`${feedbackMessage.value.length}/280 tegn`;document.getElementById('feedback-status').hidden=true;});
+document.getElementById('submit-feedback').addEventListener('click',()=>{
+ const status=document.getElementById('feedback-status');status.hidden=false;
+ status.textContent=feedbackMessage.value.trim()?'Demo: tilbakemeldingen er ikke sendt eller lagret.':'Skriv en kort tilbakemelding først. Ingenting sendes eller lagres.';
+});
+document.getElementById('feedback-dialog').addEventListener('close',()=>{feedbackMessage.value='';document.getElementById('feedback-count').textContent='0/280 tegn';const status=document.getElementById('feedback-status');status.hidden=true;status.textContent='';});
+renderLearningOverview();
+learningGroups.addEventListener('click',event=>{const button=event.target.closest('[data-module-open]');if(button)renderModule(button.dataset.moduleOpen);});
+function completeCurrentModule(){
+ if(!activeLearningModule)return;
+ completedLearningModules.add(activeLearningModule);updateLearningProgress();
+ const item=learningModules.find(module=>module.id===activeLearningModule);
+ moduleContent.innerHTML=`<p class="module-progress">${item.section}</p><h2>Modul fullført!</h2><p>${item.summary}</p><p>Svarene er fortsatt bare i sideminnet. Fremdriften slettes når du nullstiller demoen eller lukker siden.</p><button type="button" class="module-action" id="module-return">Tilbake til oversikten</button><button type="button" class="module-action" id="module-repeat">Åpne modulen igjen</button>`;
+ document.getElementById('module-return').addEventListener('click',goHome);
+ document.getElementById('module-repeat').addEventListener('click',()=>renderModule(activeLearningModule));
+}
+moduleContent.addEventListener('click',event=>{
+ const target=event.target;
+ if(target.closest('[data-skip-quiz]')){moduleQuizSkipped=true;const feedback=document.getElementById('module-feedback');feedback.hidden=false;feedback.textContent='Kunnskapssjekken ble hoppet over i denne økten.';return;}
+ if(target.closest('[data-submit-case]')){
+  const input=document.getElementById('module-case-answer'),feedback=document.getElementById('module-case-feedback'),words=input.value.trim().split(/\s+/).filter(Boolean);
+  feedback.hidden=false;
+  if(!words.length){feedback.textContent='Skriv et kort svar før du sender det inn.';return;}
+  if(words.length>200){feedback.textContent='Svar på maks. 200 ord.';return;}
+  const answer=input.value.toLocaleLowerCase('no');const passed=['observasjon','fakta','verifisere'].every(term=>answer.includes(term));
+  feedback.textContent=passed?'Demonstrasjonstilbakemelding: Et godt svar skiller tydelig mellom fakta og behov for videre undersøkelser.':'Prøv igjen. Skriv en konkret observasjon med fakta, og si hva som må verifiseres.';
+  feedback.dataset.caseTaskDone=String(passed);document.getElementById('module-case-suggestion').hidden=!passed;return;
+ }
+ if(target.closest('[data-complete-module]')){
+  const id=activeLearningModule;
+  if(id==='modul_hierarki'&&visitedHierarchyLevels.size<3){document.getElementById('level-progress').textContent='Besøk alle tre nivåene før du fullfører.';return;}
+  if(id==='modul_tg_trainer'&&(moduleContent.querySelector('[data-tg-reference]').value.trim().length<12||moduleContent.querySelector('[data-tg-reason]').value.trim().length<12||!moduleContent.querySelector('[data-tg][aria-pressed="true"]'))){document.getElementById('tg-feedback').hidden=false;document.getElementById('tg-feedback').textContent='Skriv minst 12 tegn i referansenivå og begrunnelse, og velg TG/TGIU.';return;}
+  if(id==='modul_risiko_trainer'&&(!moduleContent.querySelector('[data-kg][aria-pressed="true"]')||!moduleContent.querySelector('[data-prob][aria-pressed="true"]')||moduleContent.querySelector('[data-risk-note]').value.trim().length<12))return;
+  if(id==='modul_observasjon_trainer'&&document.querySelectorAll('[data-sort][aria-pressed="true"]').length<6)return;
+  if(id.startsWith('case_')){
+   const observations=Array.from(moduleContent.querySelectorAll('[data-case-observation]')).map(input=>input.value.trim());
+   const level=moduleContent.querySelector('[data-case-level]').value;
+   const levelReason=moduleContent.querySelector('[data-case-level-reason]').value.trim();
+   const documentation=moduleContent.querySelector('[data-case-documentation]').value;
+   const further=moduleContent.querySelector('[data-case-further]').value.trim();
+   const priority=moduleContent.querySelector('[data-case-priority]').value;
+   const evidenceCount=moduleContent.querySelectorAll('[data-case-evidence]:checked').length;
+   const verification=moduleContent.querySelector('[data-case-verification]')?.value.trim()||'';
+   const uncertainty=moduleContent.querySelector('[data-case-uncertainty]')?.value.trim()||'';
+   const values=['[data-case-tg-reason]','[data-case-kg-reason]','[data-case-risk-reason]','[data-case-now]','[data-case-short]','[data-case-long]'].map(selector=>moduleContent.querySelector(selector).value.trim());
+   const selectedTg=moduleContent.querySelector('[data-case-tg][aria-pressed="true"]')?.dataset.caseTg;
+   const selectedKg=moduleContent.querySelector('[data-case-kg][aria-pressed="true"]')?.dataset.caseKg;
+   const selectedProb=moduleContent.querySelector('[data-case-prob][aria-pressed="true"]')?.dataset.caseProb;
+   const higherLevelReady=level==='1'||(further.length>=12&&evidenceCount>0);
+   const detailedReady=level!=='3'||(verification.length>=12&&uncertainty.length>=12);
+   const valid=!!level&&levelReason.length>=12&&!!documentation&&!!priority&&higherLevelReady&&detailedReady&&observations.length===caseScenarios[id].required&&observations.every(value=>value.length>=8)&&values[0].length>=12&&values[1].length>=12&&values[2].length>=12&&[values[3],values[4],values[5]].every(value=>value.length>=6)&&selectedTg&&selectedKg&&selectedProb;
+   if(!valid){const notice=document.getElementById('case-feedback');notice.hidden=false;notice.textContent=`Fyll ut analysenivå og begrunnelse, dokumentasjonstype, prioritet, ${caseScenarios[id].required} observasjoner, TG/KG/sannsynlighet, vurderingsbegrunnelser og alle tre tiltak. Nivå 2 krever videre undersøkelser og underlagssjekk; nivå 3 krever i tillegg verifisering og usikkerhetsmerking.`;return;}
+   const summary=document.getElementById('case-feedback');summary.hidden=false;
+   summary.textContent='Arbeidsarket er komplett for denne syntetiske øvelsen. Svarene sendes ikke eller lagres.';
+  }
+  if(id==='start_intro'||id==='modul_lovverk'){
+   const picked=moduleContent.querySelector('[data-choice-group][aria-pressed="true"]');
+   const fb=document.getElementById('module-feedback');
+   if(!moduleQuizSkipped&&!picked){fb.hidden=false;fb.textContent='Velg et svar eller hopp over kunnskapssjekken.';return;}
+   if(picked&&!moduleQuizSkipped){fb.hidden=false;fb.textContent=picked.dataset.choice==='0'?'Riktig. Dette er den pedagogiske demoens læringsmål.':'Se på målet for modulen og prøv en gang til. Demoen vurderer svaret lokalt.';if(picked.dataset.choice!=='0')return;}
+   if(id==='modul_lovverk'&&document.getElementById('module-case-feedback').dataset.caseTaskDone!=='true'){fb.hidden=false;fb.textContent='Fullfør caseoppgaven eller prøv svaret på nytt før du avslutter modulen.';return;}
+  }
+  if(id==='modul_observasjon_trainer'&&document.querySelectorAll('[data-sort][aria-pressed="true"]').length===6){
+   const correct=['obs','tolk','obs','tolk','obs','tolk'];
+   const correctCount=correct.filter((kind,index)=>document.querySelector(`[data-sort="${index}"][aria-pressed="true"]`)?.dataset.kind===kind).length;
+   const feedback=document.getElementById('observation-feedback');feedback.textContent=correctCount===6?'Riktig sortert. Bra!':'Nesten. Se om du har plassert antakelser og konklusjoner i «Tolkning».';
+  }
+  completeCurrentModule(); return;
+ }
+ const level=target.closest('[data-level]');
+ if(level){document.querySelectorAll('[data-level]').forEach(button=>button.setAttribute('aria-pressed',String(button===level)));visitedHierarchyLevels.add(level.dataset.level);const data=hierarchyLevels[Number(level.dataset.level)];document.getElementById('level-detail').innerHTML=`<h3>${data.title}</h3><p>${data.text}</p><p><strong>Eksempel fra bygg:</strong> ${data.example}</p>`;document.getElementById('level-progress').textContent=`${visitedHierarchyLevels.size} / 3 nivåer besøkt`;return;}
+ const tg=target.closest('[data-tg]');if(tg){document.querySelectorAll('[data-tg]').forEach(button=>button.setAttribute('aria-pressed',String(button===tg)));return;}
+ const caseTg=target.closest('[data-case-tg]');if(caseTg){moduleContent.querySelectorAll('[data-case-tg]').forEach(button=>button.setAttribute('aria-pressed',String(button===caseTg)));return;}
+ const caseKg=target.closest('[data-case-kg]');if(caseKg){moduleContent.querySelectorAll('[data-case-kg]').forEach(button=>button.setAttribute('aria-pressed',String(button===caseKg)));updateCaseRisk();return;}
+ const caseProb=target.closest('[data-case-prob]');if(caseProb){moduleContent.querySelectorAll('[data-case-prob]').forEach(button=>button.setAttribute('aria-pressed',String(button===caseProb)));updateCaseRisk();return;}
+ const kg=target.closest('[data-kg]');if(kg){document.querySelectorAll('[data-kg]').forEach(button=>button.setAttribute('aria-pressed',String(button===kg)));updateRiskTrainer();return;}
+ const prob=target.closest('[data-prob]');if(prob){document.querySelectorAll('[data-prob]').forEach(button=>button.setAttribute('aria-pressed',String(button===prob)));updateRiskTrainer();return;}
+ const sort=target.closest('[data-sort]');if(sort){const group=sort.dataset.sort;document.querySelectorAll(`[data-sort="${group}"]`).forEach(button=>button.setAttribute('aria-pressed',String(button===sort)));if(document.querySelectorAll('[data-sort][aria-pressed="true"]').length===6)document.getElementById('observation-feedback').textContent='Alle utsagn er sortert. Fullfør for å se tilbakemelding.';return;}
+ const choice=target.closest('[data-choice-group]');if(choice){const group=choice.dataset.choiceGroup;document.querySelectorAll(`[data-choice-group="${group}"]`).forEach(button=>button.setAttribute('aria-pressed',String(button===choice)));return;}
+});
+function updateCaseRisk(){
+ const kg=Number(moduleContent.querySelector('[data-case-kg][aria-pressed="true"]')?.dataset.caseKg||0),prob=Number(moduleContent.querySelector('[data-case-prob][aria-pressed="true"]')?.dataset.caseProb||0),output=document.getElementById('case-risk-score');if(!output)return;
+ if(!kg||!prob){output.textContent='Risiko: Udefinert';return;}const score=kg*prob,level=score<=2?'Lav':score<=4?'Middels':'Høy';output.textContent=`Risiko: ${level} · score ${score}/9. Dette er kun en illustrativ øvelse.`;
+}
+function updateRiskTrainer(){
+ const kg=Number(document.querySelector('[data-kg][aria-pressed="true"]')?.dataset.kg||0), prob=Number(document.querySelector('[data-prob][aria-pressed="true"]')?.dataset.prob||0), output=document.getElementById('risk-summary');if(!output)return;
+ if(!kg||!prob){output.textContent='Risiko: Udefinert';return;}const score=kg*prob;const level=score<=2?'Lav':score<=4?'Middels':'Høy';const note=score<=2?'Lav risiko. Følg opp ved anledning.':score<=4?'Middels risiko. Planlegg tiltak og/eller verifiser.':'Høy risiko. Vurder umiddelbare tiltak og tydelig prioritet.';output.textContent=`Risiko: ${level} · score ${score}/9. ${note}`;
+}
+moduleContent.addEventListener('change',event=>{
+ if(event.target.matches('[data-case-level]')){
+  const level=event.target.value;
+  const evidence=moduleContent.querySelector('[data-case-evidence-panel]');
+  const detailed=moduleContent.querySelector('[data-case-level3-panel]');
+  if(evidence)evidence.hidden=!['2','3'].includes(level);
+  if(detailed)detailed.hidden=level!=='3';
+ }
+});
+moduleContent.addEventListener('input',event=>{
+ if(event.target.id==='module-case-answer'){const words=event.target.value.trim().split(/\s+/).filter(Boolean);document.getElementById('module-case-word-count').textContent=`${event.target.value.trim()?words.length:0}/200 ord`;const feedback=document.getElementById('module-case-feedback');feedback.dataset.caseTaskDone='false';feedback.hidden=true;document.getElementById('module-case-suggestion').hidden=true;return;}
+ if(event.target.matches('[data-risk-note]')){updateRiskTrainer();return;}
+ if(event.target.matches('[data-case-observation],[data-case-tg-reason],[data-case-kg-reason],[data-case-risk-reason],[data-case-now],[data-case-short],[data-case-long],[data-case-further]'))return;
+});
+document.getElementById('reset-all').addEventListener('click',()=>{
+ completedLearningModules.clear();visitedHierarchyLevels.clear();renderLearningOverview();activeLearningModule=null;
+ document.querySelectorAll('.module-content').forEach(container=>container.replaceChildren());
 });
 </script>
 
