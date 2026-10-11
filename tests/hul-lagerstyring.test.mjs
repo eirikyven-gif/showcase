@@ -13,6 +13,7 @@ const readme = readFileSync(`${route}README.md`, 'utf8');
 const css = readFileSync(`${route}style.css`, 'utf8');
 const controls = readFileSync(`${route}demo-controls.js`, 'utf8');
 const appJs = readFileSync(`${route}app.js`);
+const accessibilityQa = readFileSync('qa/hul-lagerstyring-accessibility.cjs', 'utf8');
 
 test('HUL browser app preserves the complete source frontend at its pinned commit', () => {
   const app = JSON.parse(readFileSync('vibe/catalog.json', 'utf8')).apps.find((candidate) => candidate.slug === 'hul-lagerstyring');
@@ -45,6 +46,7 @@ test('source-faithful HUL route is mock-only, disclosed, and resettable', () => 
   assert.match(controls, /data-order-line-qty/);
   assert.match(controls, /aria-label', 'Antall for '/);
   assert.match(controls, /Navn på ny liste/);
+  assert.match(controls, /Velg variant /);
   assert.match(html, /localStorage/);
   assert.match(backend, /localStorage\.removeItem\(STORAGE_KEY\)/);
   assert.match(readme, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);
@@ -59,10 +61,16 @@ test('HUL accessibility corrections keep normal-text contrast and modal keyboard
   assert.match(controls, /makeModalKeyboardAccessible/);
   assert.match(controls, /event\.key !== 'Tab'/);
   assert.match(controls, /event\.shiftKey/);
-  assert.match(controls, /state\.opener\.focus\(\)/);
+  assert.match(controls, /opener\.focus\(\)/);
+  assert.match(controls, /openerSelector/);
   assert.match(appJs.toString('utf8'), /role="dialog" aria-modal="true" aria-labelledby=/);
   assert.match(readme, /axe-core 4\.10\.3/);
   assert.match(readme, /qa\/hul-lagerstyring-accessibility\.cjs/);
+  assert.match(accessibilityQa, /AA-QA-SYNTHETIC-ITEM/);
+  assert.match(accessibilityQa, /AA-QA-SYNTHETIC-VARIANT/);
+  assert.match(accessibilityQa, /#attachment-overlay/);
+  assert.match(accessibilityQa, /#bestilling-variant-overlay/);
+  assert.match(accessibilityQa, /contains reverse Tab/);
 });
 
 test('HUL route has no off-origin script, style, image, font, media, or network resource', () => {

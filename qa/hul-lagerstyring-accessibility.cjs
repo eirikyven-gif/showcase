@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 
 const baseUrl = process.env.HUL_BASE_URL || 'http://127.0.0.1:8766';
 const chromePath = process.env.CHROMIUM_PATH || '/usr/bin/chromium';
+let browser;
 
 function contrastRatio(foreground, background) {
   const luminance = (color) => {
@@ -18,7 +19,7 @@ function contrastRatio(foreground, background) {
 }
 
 (async () => {
-  const browser = await chromium.launch({ headless: true, executablePath: chromePath, args: ['--no-sandbox'] });
+  browser = await chromium.launch({ headless: true, executablePath: chromePath, args: ['--no-sandbox'] });
   const context = await browser.newContext({ viewport: { width: 1280, height: 1000 } });
   const page = await context.newPage();
   const errors = [];
@@ -37,6 +38,68 @@ function contrastRatio(foreground, background) {
 
   await page.goto(`${baseUrl}/vibe/hul-lagerstyring/`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(300);
+
+  // Add a disposable fixture to the browser's local mock database so the
+  // source UI exposes both document preview and variant selection overlays.
+  await page.evaluate(() => {
+    const key = 'HUL_MOCK_DB_v1';
+    const db = JSON.parse(localStorage.getItem(key));
+    const itemId = 'AA-QA-SYNTHETIC-ITEM';
+    const documentId = 'AA-QA-SYNTHETIC-DOCUMENT';
+    db.items.push({
+      id: itemId,
+      navn: 'Syntetisk AA-kontrollvare',
+      kategori: 'Utstyr',
+      plassering: 'Hylle A1',
+      status: 'Tilgjengelig',
+      tilstand: 'God',
+      beholdning: 5,
+      arrangementer: [],
+      aktiv: true,
+      underenheter: [{
+        id: 'AA-QA-SYNTHETIC-VARIANT',
+        type: 'variant',
+        navn: 'Syntetisk størrelse M',
+        antall: 3,
+        status: 'Tilgjengelig',
+        tilstand: 'God',
+        vedlegg: []
+      }]
+    });
+    db.documents[itemId] = [{
+      id: documentId,
+      dokumentId: documentId,
+      tittel: 'Syntetisk QA-bilde',
+      filnavn: 'synthetic-aa-qa.png',
+      mimeType: 'image/png',
+      erBilde: true,
+      driveUrl: '#',
+      sortering: 1
+    }];
+    localStorage.setItem(key, JSON.stringify(db));
+  });
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(250);
+  await page.evaluate(() => {
+    const mockFetch = window.fetch;
+    const image = {
+      mimeType: 'image/png',
+      previewType: 'image',
+      dataBase64: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+    };
+    window.fetch = function syntheticDocumentMedia(url, options) {
+      if (String(url).includes('/api/v1/documents/AA-QA-SYNTHETIC-DOCUMENT/media')) {
+        const body = JSON.stringify({ ok: true, data: image });
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          headers: { get: (name) => name.toLowerCase() === 'content-type' ? 'application/json' : null },
+          text: () => Promise.resolve(body)
+        });
+      }
+      return mockFetch.call(this, url, options);
+    };
+  });
 
   const assertWorkspace = async (name) => {
     await page.waitForFunction((expected) => {
@@ -71,6 +134,39 @@ function contrastRatio(foreground, background) {
     }
     return { foreground: getComputedStyle(element).color, background };
   });
+  const auditDialog = async ({ overlay, opener }) => {
+    const dialog = page.locator(overlay);
+    await dialog.waitFor({ state: 'visible' });
+    assert.equal(await dialog.getAttribute('role'), 'dialog');
+    assert.equal(await dialog.getAttribute('aria-modal'), 'true');
+    const labelledBy = await dialog.getAttribute('aria-labelledby');
+    assert.ok(labelledBy, `${overlay} has a programmatic label reference`);
+    assert.ok((await page.locator(`#${labelledBy}`).textContent()).trim(), `${overlay} label is not empty`);
+    assert.ok(await page.evaluate((selector) => !!document.activeElement.closest(selector), overlay), `${overlay} receives focus`);
+    await assertNamedControls();
+    if (overlay === '#attachment-overlay') {
+      assert.equal(await dialog.locator('img:visible').getAttribute('alt'), 'Syntetisk QA-bilde', 'synthetic attachment preview has alternative text');
+    }
+    if (overlay === '#bestilling-variant-overlay') {
+      assert.equal(await dialog.locator('[data-bestilling-variant-option]').getAttribute('aria-label'), 'Velg variant Syntetisk størrelse M (AA-QA-SYNTHETIC-VARIANT)');
+    }
+    const focusable = dialog.locator('a[href]:visible,button:not([disabled]):visible,input:not([disabled]):visible,select:not([disabled]):visible,textarea:not([disabled]):visible,[tabindex]:not([tabindex="-1"]):visible');
+    await focusable.last().focus();
+    await page.keyboard.press('Tab');
+    assert.ok(await page.evaluate((selector) => !!document.activeElement.closest(selector), overlay), `${overlay} contains forward Tab`);
+    await focusable.first().focus();
+    await page.keyboard.press('Shift+Tab');
+    assert.ok(await page.evaluate((selector) => !!document.activeElement.closest(selector), overlay), `${overlay} contains reverse Tab`);
+    await page.keyboard.press('Escape');
+    await dialog.waitFor({ state: 'hidden' });
+    await page.waitForFunction((selector) => {
+      const element = document.querySelector(selector);
+      return element && element === document.activeElement;
+    }, opener);
+    const focusRestored = await page.locator(opener).evaluate((element) => element === document.activeElement);
+    const activeElement = focusRestored ? '' : await page.evaluate(() => document.activeElement.outerHTML.slice(0, 180));
+    assert.equal(focusRestored, true, `${overlay} restores focus to its opener (active: ${activeElement})`);
+  };
 
   assertWorkspace('liste');
   await assertNamedControls();
@@ -121,13 +217,26 @@ function contrastRatio(foreground, background) {
   const detailGreen = await colorRatio('#detail-workspace .tracking-\\[0\\.16em\\]');
   assert.ok(contrastRatio(detailGreen.foreground, detailGreen.background) >= 4.5, 'detail accent text meets normal-text contrast');
 
+  await openMenu();
+  await page.locator('#menu-lagerliste').click();
+  await assertWorkspace('liste');
+  await page.locator('[data-inventory-id="AA-QA-SYNTHETIC-ITEM"]').click();
+  await assertWorkspace('detaljgruppe');
+  const attachmentOpener = 'button[data-open-document-overlay="AA-QA-SYNTHETIC-DOCUMENT"]:has(img[data-main-image-id="AA-QA-SYNTHETIC-DOCUMENT"])';
+  await page.locator(attachmentOpener).click();
+  await auditDialog({ overlay: '#attachment-overlay', opener: attachmentOpener });
+
+  await page.locator('[data-detail-add-to-order="true"]').click();
+  await auditDialog({ overlay: '#bestilling-variant-overlay', opener: '[data-detail-add-to-order="true"]' });
+
   const headingLevels = await page.locator('#inventory-form-attachments-lists').locator('h1,h2,h3,h4,h5,h6').evaluateAll((elements) => elements.map((element) => element.tagName));
   assert.equal(headingLevels.includes('H4'), false, 'new-item attachments headings do not skip level 3');
   assert.deepEqual(errors, [], 'no JavaScript errors during accessibility interactions');
-  console.log(JSON.stringify({ workspaces: ['liste', 'bestilling', 'lager', 'lister', 'ny vare', 'utlån', 'innstillinger', 'detalj'], modal: 'focus entry, Tab/Shift+Tab containment, Escape close, and focus restoration passed', contrast: { inventoryCaption: contrastRatio(imageFallback.foreground, imageFallback.background), detailAccent: contrastRatio(detailGreen.foreground, detailGreen.background) }, initialFocus, pageErrors: errors }));
+  console.log(JSON.stringify({ workspaces: ['liste', 'bestilling', 'lager', 'lister', 'ny vare', 'utlån', 'innstillinger', 'detalj'], dialogs: ['add-to-list', 'attachment', 'variant'].map((id) => `${id}: label, focus entry, Tab/Shift+Tab containment, Escape close, and focus restoration passed`), fixture: 'synthetic item, image metadata, and variant in browser-local mock storage', contrast: { inventoryCaption: contrastRatio(imageFallback.foreground, imageFallback.background), detailAccent: contrastRatio(detailGreen.foreground, detailGreen.background) }, initialFocus, pageErrors: errors }));
   await context.close();
   await browser.close();
-})().catch((error) => {
+})().catch(async (error) => {
   console.error(error);
+  if (browser) await browser.close().catch(() => {});
   process.exit(1);
 });

@@ -31,6 +31,12 @@ document.getElementById('demo-reset').addEventListener('click', function () {
     if (listName && !document.querySelector('label[for="list-name-input"]')) {
       listName.setAttribute('aria-label', 'Navn på ny liste');
     }
+    var variantOptions = root.querySelectorAll ? root.querySelectorAll('[data-bestilling-variant-option]:not([aria-label])') : [];
+    variantOptions.forEach(function (option) {
+      var row = option.parentElement;
+      var name = row && row.querySelector('p') ? row.querySelector('p').textContent.trim() : '';
+      option.setAttribute('aria-label', 'Velg variant ' + (name || option.getAttribute('data-bestilling-variant-option') || 'vare'));
+    });
   }
   applyLabels(document);
   new MutationObserver(function (records) {
@@ -73,6 +79,12 @@ document.getElementById('demo-reset').addEventListener('click', function () {
   var selectors = ['attachment-overlay', 'add-to-list-overlay', 'bestilling-variant-overlay'];
   var modalStates = new Map();
   var focusableSelector = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  var lastExternalTrigger = null;
+
+  document.addEventListener('click', function (event) {
+    var target = event.target && event.target.closest ? event.target.closest(focusableSelector) : null;
+    if (target && !target.closest('[role="dialog"][aria-modal="true"]')) lastExternalTrigger = target;
+  }, true);
 
   function visibleFocusable(modal) {
     return Array.prototype.filter.call(modal.querySelectorAll(focusableSelector), function (element) {
@@ -80,17 +92,33 @@ document.getElementById('demo-reset').addEventListener('click', function () {
     });
   }
 
+  function stableSelector(element) {
+    if (!element) return '';
+    if (element.id) return '#' + CSS.escape(element.id);
+    var attributes = Array.prototype.slice.call(element.attributes || []);
+    for (var i = 0; i < attributes.length; i++) {
+      var attribute = attributes[i];
+      if (!attribute.name.startsWith('data-') || !attribute.value) continue;
+      var selector = '[' + attribute.name + '="' + CSS.escape(attribute.value) + '"]';
+      if (document.querySelectorAll(selector).length === 1) return selector;
+    }
+    return '';
+  }
+
   function updateModal(modal) {
     var open = !modal.classList.contains('hidden');
     var state = modalStates.get(modal);
     if (open && !state) {
-      state = { opener: document.activeElement };
+      var activeOutsideModal = document.activeElement && !modal.contains(document.activeElement) ? document.activeElement : null;
+      var opener = activeOutsideModal || (lastExternalTrigger && !modal.contains(lastExternalTrigger) ? lastExternalTrigger : null);
+      state = { opener: opener, openerSelector: stableSelector(opener) };
       modalStates.set(modal, state);
       var first = visibleFocusable(modal)[0];
       if (first) first.focus();
     } else if (!open && state) {
       modalStates.delete(modal);
-      if (state.opener && state.opener.isConnected && typeof state.opener.focus === 'function') state.opener.focus();
+      var opener = state.opener && state.opener.isConnected ? state.opener : (state.openerSelector ? document.querySelector(state.openerSelector) : null);
+      if (opener && typeof opener.focus === 'function') opener.focus();
     }
   }
 
@@ -115,9 +143,20 @@ document.getElementById('demo-reset').addEventListener('click', function () {
   }).observe(document.documentElement, { childList: true, subtree: true });
 
   document.addEventListener('keydown', function (event) {
-    if (event.key !== 'Tab') return;
     var modal = Array.from(modalStates.keys()).find(function (candidate) { return !candidate.classList.contains('hidden'); });
     if (!modal) return;
+    if (event.key === 'Escape') {
+      var state = modalStates.get(modal);
+      var selector = state && state.openerSelector ? state.openerSelector : stableSelector(lastExternalTrigger);
+      window.setTimeout(function () {
+        if (modal.classList.contains('hidden') && selector) {
+          var opener = document.querySelector(selector);
+          if (opener) opener.focus();
+        }
+      }, 0);
+      return;
+    }
+    if (event.key !== 'Tab') return;
     var focusable = visibleFocusable(modal);
     if (!focusable.length) {
       event.preventDefault();
