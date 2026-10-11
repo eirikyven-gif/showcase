@@ -584,8 +584,8 @@
     },
     {
       "slug": "bilag-v5",
-      "name": "Bilag v5 · batchstatus",
-      "useCase": "Se et syntetisk statusbilde av separate PDF-batch- og ZIP-importløp for bilagsflyt.",
+      "name": "Bilag v5 · PDF-batch og ZIP-import",
+      "useCase": "Utforsk separat PDF-normalisering og ZIP-import med stabile filer, retry, trygg sti-validering og batchlogger.",
       "category": "Gårdsadministrasjon og dokumentflyt",
       "audience": [
         "Gårdsbrukere",
@@ -593,11 +593,18 @@
         "Dokumentansvarlige",
         "Utviklere som vurderer batchflyt"
       ],
-      "status": "Beholdt i bred førstegangsvurdering; original, statisk konseptdemo laget. Ingen kuratering eller utsiling.",
-      "demoValue": "Gjør forskjellen mellom PDF-behandling og separat ZIP-import synlig gjennom køstatus og oppdiktede hendelseslinjer.",
-      "simplifications": "Kun fast eksempelstatus i to batchkort og en fiktiv logg. Ingen jobbkjøring, tidsstyring, ZIP-/PDF-tolkning, mappeoperasjoner, forsøk eller ekte revisjonslogg.",
-      "risk": "Kildearbeidsflyten håndterer økonomiske dokumenter og kan eksponere filnavn, lenker og identifikatorer i logger. Kildens dataklassifisering og tilgangsoppsett er ikke uavhengig verifisert. Demoen bruker bare syntetiske navn og statiske statuser.",
-      "scope": "Kun statisk /vibe/bilag-v5/-rute. Ingen filopplasting/nedlasting, PDF/ZIP-parsing, Drive, Sheet, trigger, SYSTEM-identitet, API, autentisering, lagring, PII eller hemmeligheter."
+      "status": "Kildebasert arbeidsflytdemo med syntetiske data. Issue #2 delvis løst.",
+      "demoValue": "Interaktive PDF- og ZIP-batcher gjengir kildens køvalg, konverterings- og flyttestatus, tre-feils blokkering og retry, ZIP-stivalidering, idempotens, kollisjonsnavn, batchgrenser og separate hendelseslogger.",
+      "simplifications": "Manuell start erstatter tidsutløsere; faste syntetiske fil- og ZIP-oppføringer erstatter Drive-innhold. Konvertering, flytting, utpakking og regnearklogging er kun klientbaserte statusendringer. Ingen opplastingsfelt eller fritekst. Demoen lagrer bare syntetiske tilstander i localStorage med synlig nullstilling.",
+      "risk": "Kilden håndterer økonomiske dokumenter og skriver filidentifikatorer/lenker til operative logger. Demoen viser bare oppdiktede navn/status og simulerer ingen tilgangskontroll, revisjonslogg eller faktisk dokumentbehandling. Kildens produksjonsdata og tilgangsoppsett er ikke revidert.",
+      "scope": "Eksisterende /vibe/bilag-v5/ oppgradert med separate interaktive PDF- og ZIP-simuleringer. Browser localStorage inneholder bare faste syntetiske scenarier; nullstillingsknapp fjerner nøkkelen. Ingen API, fetch/XHR, server, Drive, Sheets, autentisering, filopplasting/-nedlasting, ekte parsing, PII eller secrets.",
+      "source": "eirikyven-gif/apps-fornes-gard/apps/bilag-v5, offentlig commit 90014358fb3d70e89265b2b30d38e9376a6927b2 (lest 2026-10-11); aktive backend-, README- og testfiler gjennomgått. Kilde kun lest.",
+      "sourceStack": "Kilden bruker Google Apps Script, Drive, Sheets, tidsutløsere og ScriptLock. Showcase-kopien bruker statisk HTML/CSS/JavaScript og localStorage.",
+      "sourceTests": "Gjennomgått AutomationTest.gs og ZipImportTest.gs, inkludert kjøreprogrammene. Kildetestene ble ikke kjørt. Showcase-paritetstester validerer rute, metadata og sikkerhetsgrenser.",
+      "sourceApiAuthStoragePrivacy": "Kilden bruker interne Drive-/Sheet-identifikatorer, SYSTEM-jobber og to triggerkjørte backend-løp som deler ScriptLock; den har ikke brukerinnlogging i den beskrevne batchflyten. Showcase fjerner Drive, Sheets, triggere, låsetjeneste, ekte filer/bytes, ID-er, URL-er og serverpersistens. Kun syntetiske demoobjekter lagres i localStorage; synlig nullstilling finnes.",
+      "purpose": "Kilden flytter PDF-er direkte eller konverterer støttede dokumenter/bilder til PDF i kildemappen før flytting til Dokumentasjon. En separat ZIP-jobb validerer arkivoppføringer og legger dem flatt i Innboks med idempotens og kollisjonsunngåelse.",
+      "routeState": "Eksisterende /vibe/bilag-v5/ og slug beholdt. Oppdaterer rute, appspesifikk README/test og katalogmetadata; VERSION håndteres av koordinatoren.",
+      "sourceUncertainty": "Gjennomgått kildens aktive README, Config.gs, DriveAdapter.gs, SheetAdapter.gs, SyncService.gs, ZipImport.gs, AutomationTest.gs, ZipImportTest.gs og testkjørere på commit 90014358fb3d70e89265b2b30d38e9376a6927b2. Produksjonskjøring, rettigheter og faktisk dataoppsett er ikke verifisert."
     },
     {
       "slug": "gardsbehov-fornes",
