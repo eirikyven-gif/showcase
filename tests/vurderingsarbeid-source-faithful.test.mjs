@@ -19,7 +19,7 @@ test('assessment route cites exact source commit and current release metadata', 
   assert.match(entry.scope, /KI-fremovermelding\/sluttvurdering.*lokal deterministisk simulering/);
   assert.match(entry.sourceApiAuthStoragePrivacy, /localStorage/);
   assert.match(entry.routeState, /0\.60\.2.*0\.60\.3/);
-  assert.equal(read('VERSION').trim(), '0.60.3');
+  assert.equal(read('VERSION').trim(), '0.60.4');
   assert.match(read('vibe/vurderingsarbeid-fagskolen/README.md'), new RegExp(sha));
   assert.match(read('vibe/vurderingsarbeid-fagskolen/PARITY.md'), new RegExp(sha));
 });
