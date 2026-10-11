@@ -470,6 +470,10 @@ test('demo routes stay static and form data cannot fall through to a GET or POST
       } else if (file.includes(`${path.sep}ukelonn${path.sep}`)) {
         assert.match(pageScripts, /addEventListener\(['"]submit['"]/i, `${file} handles forms in browser JavaScript`);
         assert.match(pageScripts, /preventDefault\(\)/, `${file} prevents browser form navigation`);
+      } else if (file.includes(`${path.sep}lub-matrise${path.sep}`)) {
+        const formId = match[1].match(/\bid=['"]([^'"]+)['"]/i)?.[1];
+        assert.ok(['noteForm', 'editorForm'].includes(formId), `${file} only contains the expected local editing forms`);
+        assert.ok(pageScripts.includes(`${formId}.addEventListener('submit',event=>event.preventDefault())`), `${file} explicitly prevents network form navigation`);
       } else {
         assert.ok(formHasSubmitGuard(match[1], pageScripts), `${file} prevents submission for its form`);
       }

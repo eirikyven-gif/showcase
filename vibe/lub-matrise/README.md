@@ -1,36 +1,28 @@
-# LUB-matrise – demo
+# LUB-matrise – tro kopi for Vibe
 
 Direkterute: `/vibe/lub-matrise/`.
 
-## Første vurdering
+## Kilde og innhold
 
-- **Navn:** LUB-matrise
-- **Bruksområde:** Se og rediger koblinger mellom emner og læringsutbytter.
-- **Kategori / målgruppe:** Utdanning; faglærere, studieplanleggere og studenter.
-- **Kildestatus:** Aktiv statisk fagverktøykandidat, vurdert i første brede runde.
-- **Foreslått slug:** `lub-matrise`.
-- **Demoverdi:** Gjør matrisevisning og redigering av koblinger utforskbar uten innlogging.
-- **Forenklinger:** Ett syntetisk studieeksempel; ekte planer, notater og Excel er utelatt.
-- **Rettigheter/data:** Ingen kildekatalogtekst, logoer eller tredjepartskode er kopiert; ingen persondata/private data.
-- **Omfang:** Én selvstendig statisk side med in-memory redigering og nullstilling.
+Arbeidsflyt og offentlig studieinnhold er kopiert fra `eirikyven-gif/apps-fagskolen/apps/lub-matrise/index.html`, commit `3f76106dbef0bb4a3ffc9e87703f1240e5d09d3b` (lest 2026-10-11). Kildens `README.md`, `QA.md`, `SOURCES.md`, `THIRD_PARTY_NOTICES.md` og `catalog-2026-host.md` ble også gjennomgått. Kilden dokumenterer 28 offentlige studieplanoppføringer med emner og overordnede LUB-er.
 
-Alle emner, koder og læringsutbytteetiketter i denne ruten er nyskrevet,
-syntetisk eksempelinnhold. Ingen katalogtekst, kildefiler, logoer eller
-tredjepartsbiblioteker er kopiert. Kildeapplikasjonen er ikke endret. Risikoen
-for personopplysninger, privat datakilde og rettighetsavhengig fagtekst er
-fjernet ved å begrense kopien til en liten, original demonstrasjon.
+Demoen beholder studiesøk og valg, matrisen, redigering av studieplaner/emner/LUB-er, koblinger, dokumentasjon, dekningsoversikt og Excel-mal/import/eksport. Originalens faglige innhold og oppførte offentlige studieplankilder følger med. Sjekk innhold mot den gjeldende studieplanen.
 
-## Forenklinger og kontroller
+## Kontroller
 
-- Ingen autentisering, brukerroller, backend, nettverkskall eller lagring.
-- Koblinger redigeres i minnet og Nullstill eksempel gjenoppretter startbildet.
-- Excel-import/-eksport, ekte studieplaner, kildelenker og notater er utelatt.
-- Tastaturbetjente knapper bruker `aria-pressed`; status leses opp via `aria-live`.
-- Layouten bruker horisontal rulling for den brede matrisen på smale skjermer.
+- `node --test tests/lub-matrise-source-parity.test.mjs tests/vibe-static.test.mjs`: 23 tester bestått.
+- `node --test tests/*.test.mjs`: 132 tester bestått.
+- Inline JavaScript-syntaks og `git diff --check`: bestått.
+- Chromium ved 390 px: direkte rute, 28 studieplaner, søk, matrise med 400 ruter, ingen sideskrolling, JavaScript-feil eller eksterne forespørsler ved innlasting.
+- Excel-import/eksport er ikke kjørt manuelt i nettleseren. Katalogsnapshotet er datert 2026-10-05; kilden synkroniseres ikke live.
 
-## QA
+## Sikkerhetsavgrensning
 
-Kontrolleres med `node --test tests/vibe-static.test.mjs`, `git diff --check`
-og JavaScript-syntakskontroll. Nettleser-QA: direkterute, endre og nullstill
-en rute, tastaturfokus, smal visning og ingen eksterne forespørsler. Deploy
-venter på PR-merge og tilgjengelige One.com-credentials; ruten er ikke publisert.
+- Statisk klientapp: ingen innlogging, server, backend, eksterne API-kall eller skjema-posting.
+- Koblinger, notater og egendefinerte planer lagres bare i `localStorage` under den isolerte nøkkelen `vibeLubPilotV1`.
+- «Nullstill demodata» sletter denne nøkkelen og laster startinnholdet på nytt.
+- Ikke skriv personopplysninger eller fortrolig informasjon i notatene. Excel-import leses lokalt i nettleseren; eksport lastes ned til brukerens enhet.
+- De 28 studieplanene kommer fra offentlig kataloginnhold. Private konto-/studentdata er ikke med.
+- Den eksisterende JSZip 3.10.1-komponenten og tilhørende pako-komponent følger med for Excel-funksjonene; lisensinformasjon følger med i [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+Visuell styling er tilpasset Vibes røde palett, med «Til apphub»-lenke og lokal reset-knapp. Ingen kilderepoer er endret.

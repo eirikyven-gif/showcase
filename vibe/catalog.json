@@ -410,7 +410,13 @@
         "Faglærere",
         "Studieplanleggere",
         "Studenter"
-      ]
+      ],
+      "scope": "Standalone Vibe route with 28 public THYF study-plan records. No authentication, server, backend, form submission, or API. Original browser autosave and Excel import/export are retained using only localStorage key vibeLubPilotV1; the visible reset control clears it. Excel processing is local in the browser. authMode=none.",
+      "source": "eirikyven-gif/apps-fagskolen/apps/lub-matrise/index.html, commit 3f76106dbef0bb4a3ffc9e87703f1240e5d09d3b; source README, QA, SOURCES, THIRD_PARTY_NOTICES and catalog-2026-host reviewed 2026-10-11.",
+      "sourceStack": "Source: self-contained HTML/CSS/JavaScript and embedded JSZip for .xlsx. Demo: source application with isolated browser-storage key, reset, hub link, and Vibe red palette.",
+      "sourceTests": "Source QA documents 7 Node tests and manual checks. Showcase adds static parity/privacy tests; no browser-based import/export test has been run.",
+      "sourceApiAuthStoragePrivacy": "No source login, server calls or API in the inspected app. Source autosaves changes in browser localStorage and handles Excel files client-side. Showcase uses an isolated localStorage key and exposes full reset. Public THYF catalog data and source links retained; do not enter personal or confidential notes.",
+      "risk": "Public curriculum data can change; check linked study plans. Local notes persist in this browser until reset. Do not enter personal or confidential information. JSZip and pako license notices are preserved in source code and documented in route README."
     },
     {
       "slug": "opptelling",
