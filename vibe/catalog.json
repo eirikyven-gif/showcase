@@ -850,7 +850,7 @@
       "rightsUncertainty": "Ingen lisens eller eksplisitt gjenbrukstillatelse ble kontrollert. Demoen gjenskaper observerte arbeidsflyter med selvstendig markup/styling og syntetiske data; juridisk status er uavklart.",
       "risk": "Ingen reell tilgangskontroll, serverlagring, lånebehandling eller publisering. Demoens rollevelger er bare presentasjon; alle forhåndslastede identiteter/kontaktfelt/media er merket syntetiske, og valgte filer forblir lokale i nettleserøkten. Rute til source shortcode-side kan ikke fastslås fordi WP-admin velger siden.",
       "scope": "Isolert `/vibe/lagerstyring-hell-ultra/`-rute. Showcase-rutene `#/item/{id}` og `#/list/{id}` erstatter WordPress magic-linkmønstrene; dette er ikke tokens. Ingen kilde-PII/media/secrets, auth, cookies, nettleserlagring, backend, private services eller nettverkskall.",
-      "routeState": "Isolert route /vibe/lagerstyring-hell-ultra/ på showcase main 0.60.1; draft PR #94 korrigerer den allerede merged route og oppdaterer SemVer til 0.61.0. Issue #2 delvis løst. Ikke merget/deployet. Kildeportalens WP-side-slug er adminstyrt; showcase foreslår /vibe/lagerstyring-hell-ultra/."
+      "routeState": "Isolert route /vibe/lagerstyring-hell-ultra/ på showcase main 0.60.2; draft PR #94 korrigerer den allerede merged route. Neste versjon er ikke satt her; releaseversjon koordineres sentralt. Issue #2 delvis løst. Ikke merget/deployet. Kildeportalens WP-side-slug er adminstyrt; showcase foreslår /vibe/lagerstyring-hell-ultra/."
     },
     {
       "slug": "hul-lagerstyring",
