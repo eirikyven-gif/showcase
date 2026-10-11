@@ -56,14 +56,16 @@ test('source agreements, admin areas, config fields and import/export schemas ar
 });
 
 test('safety simplifications are explicit; only source view preference uses browser storage', () => {
-  assert.match(html, /Ingen WordPress, PHP, konto, server, database eller API er tilkoblet/i);
+  assert.match(html, /Ingen WordPress, PHP, innlogging, server, database eller API er tilkoblet/i);
   assert.match(js, /hu_inv_view_mode/);
   assert.doesNotMatch(js, /\b(fetch|XMLHttpRequest|WebSocket|EventSource)\b|upload_to_server|wp_handle_upload/i);
   assert.doesNotMatch(js, /sessionStorage|indexedDB|document\.cookie/);
   assert.match(js, /mailto:\$\{encodeURIComponent\(c\.email\)\}/);
   assert.match(js, /@example\.invalid/);
-  assert.match(js, /Ingen offentlig lenke eller e-post opprettet/);
-  assert.match(js, /Ingen privat fil lastes opp/);
+  assert.match(js, /ingen offentlig URL eller token opprettes/i);
+  assert.match(js, /Ingen dokumentbytes er lastet opp eller lagret/);
+  assert.match(js, /#share-preview/);
+  assert.match(js, /Ruten kopiert|Tokenløs lokal forhåndsvisningsrute kopiert/);
   for (const source of [html, css]) {
     assert.doesNotMatch(source, /https?:\/\//i);
     assert.doesNotMatch(source, /sessionStorage|indexedDB|document\.cookie|wp_ajax|wp_remote_|wp_nonce/i);
@@ -71,4 +73,25 @@ test('safety simplifications are explicit; only source view preference uses brow
   }
   assert.match(html, /href="\/vibe\/assets\/hub\.css"/);
   assert.match(css, /:focus-visible/);
+});
+
+test('source capabilities have local role presets and individual in-memory gates', () => {
+  for (const cap of ['hu_inventory_read','hu_inventory_manage_items','hu_inventory_manage_categories','hu_inventory_manage_locations','hu_inventory_manage_attachments','hu_inventory_manage_notes','hu_inventory_manage_contacts','hu_inventory_manage_rentals','hu_inventory_manage_import_export','hu_inventory_view_reports']) assert.ok(js.includes(`'${cap}'`), cap);
+  for (const role of ['administrator','manager','reader','visitor','custom']) assert.ok(html.includes(`value="${role}"`), role);
+  assert.match(js, /function hasCap\(cap\)/);
+  assert.match(js, /function actionCapability\(button\)/);
+  assert.match(html, /Valget simulerer UI-gating/);
+  assert.match(audit, /Local role selector presets/i);
+});
+
+test('share and attachment source interactions map to safe local previews and metadata lifecycle', () => {
+  assert.match(js, /function sharePreviewView\(\)/);
+  assert.match(js, /data-action="copy-share-route"/);
+  assert.match(js, /location\.href\.split\('#'\)\[0\]\}#share-preview/);
+  assert.match(js, /function fixturePreview\(fixture\)/);
+  assert.match(js, /Slett syntetisk vedleggsmetadata/);
+  assert.match(js, /synthetic-inventory-photo\.png/);
+  assert.match(js, /synthetic-instructions\.pdf/);
+  assert.match(audit, /metadata record/i);
+  assert.match(audit, /tokenless route/i);
 });
