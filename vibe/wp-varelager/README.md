@@ -10,7 +10,7 @@ Sikkerhetssubstitusjoner: ingen ekte innlogging/roller, konto- eller persondata,
 
 ## Status og QA
 
-Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kildearbeidsflytene er implementert lokalt, inkludert separate adminskjermer, avtaler, rapport/opptelling, delingsoppføringer, CSV/XLSX, innstillinger, notater og vedleggsreferanser. Matrisen oppgir sikkerhetsblokker og må verifiseres mot alle kildehandlinger i browser-QA før parity kan vurderes som løst; derfor markeres demoen ikke som fullstendig trofast.
+Se matrisen for kildefil/funksjonsbevis, felt, handlinger, nåværende dekning og konkrete gap per område. Kildearbeidsflytene er implementert lokalt, inkludert separate adminskjermer, avtaler, rapport/opptelling, delingsoppføringer, CSV/XLSX, innstillinger, notater og vedleggsreferanser. Matrisen oppgir sikkerhetsblokker og Chromium-QA-dekning per kildeområde. Korreksjoner for tomme varevalg, SKU-validering/-generering, leiedatofeil og egendefinerte felt er kildebasert og dokumentert der. Reelle auth/lagring, private filer, offentlig deling og e-post er fortsatt sikkerhetsblokker, så demoen markeres ikke som fullstendig trofast.
 
 Kontroller: `node --test tests/wp-varelager.test.mjs` dekker proveniens, katalogversjon, kildefaner, workflow-handlinger, feltskjemaer og sikkerhetsgrenser. Full lokal browser-QA og CI kjøres på denne revisjonen; parity-aksept gjenstår til matrisens sikkerhetsblokker er bekreftet som eneste gap.
 

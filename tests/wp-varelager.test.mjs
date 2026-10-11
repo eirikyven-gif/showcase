@@ -10,7 +10,7 @@ const audit = read('vibe/wp-varelager/PARITY.md');
 const catalog = JSON.parse(read('vibe/catalog.json'));
 
 test('source provenance is pinned and parity gaps remain explicit', () => {
-  assert.equal(read('VERSION').trim(), '0.61.0');
+  assert.equal(read('VERSION').trim(), '0.60.3');
   assert.equal(catalog.apps.length, 42);
   const app = catalog.apps.find(item => item.slug === 'wp-varelager');
   assert.ok(app);
@@ -45,6 +45,13 @@ test('source agreements, admin areas, config fields and import/export schemas ar
   assert.match(js, /opts\(db\.statuses,db\.statuses\[0\],'--'\)/);
   assert.match(js, /opts\(db\.locations,db\.locations\[0\],'--'\)/);
   assert.match(js, /start\.reportValidity\(\);end\.reportValidity\(\)/);
+  assert.ok(js.includes("field('sku',item?'SKU *':'SKU',x.sku,'text',{required:!!item})"));
+  assert.match(js, /candidate=`AUTO-/);
+  assert.match(js, /i\.id!==item\.id&&i\.sku\.toLowerCase\(\)===data\.sku\.toLowerCase\(\)/);
+  assert.match(js, /function sortedMetaFields\(activeOnly=false\)/);
+  assert.match(js, /existing\.key===key/);
+  assert.match(js, /\[a-z0-9_\]\{1,64\}/);
+  assert.doesNotMatch(js, /it\.meta\[key\]=it\.meta\[old\]/);
   assert.doesNotMatch(js, /form\.reportValidity\(\)/);
 });
 
