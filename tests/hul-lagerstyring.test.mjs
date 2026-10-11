@@ -42,6 +42,8 @@ test('source-faithful HUL route is mock-only, disclosed, and resettable', () => 
   assert.doesNotMatch(html, /Klargjører innlogging og sesjon/);
   assert.match(html, /Nullstill demo/);
   assert.match(controls, /HUL_MOCK_DB_v1/);
+  assert.match(controls, /data-order-line-qty/);
+  assert.match(controls, /aria-label', 'Antall for '/);
   assert.match(html, /localStorage/);
   assert.match(backend, /localStorage\.removeItem\(STORAGE_KEY\)/);
   assert.match(readme, /fdda6419dbe8c8891eb9d27f9f6e56ec3151a602/);

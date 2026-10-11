@@ -15,3 +15,25 @@ document.getElementById('demo-reset').addEventListener('click', function () {
   } catch (_error) { /* Private browsing may disable storage. */ }
   window.location.reload();
 });
+
+// The source frontend's dynamically rendered cart quantity fields have no
+// associated label. Add a contextual accessible name without changing its
+// pinned source bundle or changing the cart interaction.
+(function labelOrderQuantityFields() {
+  function applyLabels(root) {
+    var fields = root.querySelectorAll ? root.querySelectorAll('[data-order-line-qty]:not([aria-label])') : [];
+    fields.forEach(function (field) {
+      var row = field.closest('li');
+      var name = row && row.querySelector('p') ? row.querySelector('p').textContent.trim() : '';
+      field.setAttribute('aria-label', 'Antall for ' + (name || 'bestillingsvare'));
+    });
+  }
+  applyLabels(document);
+  new MutationObserver(function (records) {
+    records.forEach(function (record) {
+      record.addedNodes.forEach(function (node) {
+        if (node.nodeType === 1) applyLabels(node);
+      });
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+})();
